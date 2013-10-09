@@ -69,9 +69,26 @@ public class GSPebble extends GSEllipse {
 
         if (isFilled) {
             g2d.fill(this.shape);
+            if (showAxes) {
+                g2d.setColor(this.colorContrast);
+                this.drawAxes(g2d);
+            }
         } else {
             g2d.draw(this.shape);
+            if (showAxes) {
+                this.drawAxes(g2d);
+            }
         }
+    }
+    
+    private void drawAxes(Graphics2D g2d) {
+        // long axis
+        g2d.drawLine((int)(this.x - Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius),
+                     (int)(this.x + Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y + Math.sin(this.theta)*this.majorRadius));
+
+        // short axis
+        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
+                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
     }
     
     /*------------------------------------------------------------------------*/

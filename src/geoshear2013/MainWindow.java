@@ -20,9 +20,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         
         this.gscUI = new GSComplexUI(new GSComplex());
-        
-        this.gscUI.gsc.pebbles.add(new GSPebble(150,200,100,150,1));
-        
+
         int w = this.displayPanel.getWidth();
         int h = this.displayPanel.getHeight();
         this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
@@ -30,6 +28,10 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.setDoubleBuffered (true);
         this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);
         this.displayPanel.add(this.gscUI);
+
+        // dev data
+        this.gscUI.gsc.pebbles.add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
+//        this.gscUI.gsc.pebbles.add(new GSPebble(0,0,100,150,1));
 
     }
 
@@ -167,6 +169,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainWindow().setVisible(true);
             }

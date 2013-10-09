@@ -23,7 +23,7 @@ public class GSComplex implements Watchable {
 
     /*------------------------------------------------------------------------*/
     public GSComplex() {
-        this.pebbles = new GSPebbleSet();
+        this.pebbles = new GSPebbleSet(this);
         this.deformations = new GSEllipseSeries();
         this.center = new GSPoint(0,0);
     }
@@ -43,24 +43,29 @@ public class GSComplex implements Watchable {
      */
     private ArrayList watchedBy = new ArrayList();
 
+    @Override
     public void addWatcher(Watcher w) {
         watchedBy.add(w);
         //w.setWatched(this);
         w.reactTo(this, null);
     }
 
+    @Override
     public void removeWatcher(Watcher w) {
         watchedBy.remove(w);
     }
 
+    @Override
     public void removeAllWatchers() {
         watchedBy.clear();
     }
 
+    @Override
     public void notifyWatchers() {
         this.notifyWatchers(null);
     }
 
+    @Override
     public void notifyWatchers(Object arg) {
         ListIterator li = watchedBy.listIterator();
         while (li.hasNext())
@@ -76,7 +81,7 @@ public class GSComplex implements Watchable {
      * @return the center
      */
     public GSPoint getCenter() {
-        return center;
+        return this.center;
     }
 
     /**

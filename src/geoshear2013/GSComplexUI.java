@@ -7,8 +7,11 @@ package geoshear2013;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -65,13 +68,23 @@ class GSComplexUI extends JPanel {
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
 //        System.err.println("mouse drag in gscomplex ui");
 //        System.err.println("evt is: "+evt.toString());
+        System.out.println("mouse event is: "+evt.toString());
+        Point2D evtPointInGSCSystem = null;
+        try {
+            evtPointInGSCSystem = this.displayTransform.inverseTransform(evt.getPoint(), evtPointInGSCSystem);
+            evtPointInGSCSystem.setLocation(evtPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - evtPointInGSCSystem.getY());
+            System.out.println("transformed evt point is : "+evtPointInGSCSystem.toString());
+        } catch (NoninvertibleTransformException ex) {
+            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
             if (evt.isAltDown()) {
-                System.err.println("to be implemented: UI_MODE_DEFORMS mouse drag with ALT down");
+                System.err.println("TODO: UI_MODE_DEFORMS mouse drag with ALT down (rotate)");
             }  else if (evt.isControlDown()) {
-                System.err.println("to be implemented: UI_MODE_DEFORMS mouse drag with CTRL down");
+                System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
             } else if (evt.isShiftDown()) {
-                System.err.println("to be implemented: UI_MODE_DEFORMS mouse drag with SHIFT down");
+                System.err.println("TODO: UI_MODE_DEFORMS mouse drag with SHIFT down (shear)");
+
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -149,7 +162,7 @@ class GSComplexUI extends JPanel {
 
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
 
-        this.gsc.drawOnto(g2d, true, true);
+        this.gsc.drawOnto(g2d, false, true);
     }
     
     

@@ -8,7 +8,7 @@ package geoshear2013;
  *
  * @author cwarren
  */
-class GSPoint {
+public class GSPoint {
     public double x;
     public double y;
 

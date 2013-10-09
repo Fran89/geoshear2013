@@ -16,14 +16,16 @@ public class GSPebbleSet extends ArrayList {
     protected double harmonicMean = 0;
     protected double vectorMean = 0;
 
+    public GSComplex ofComplex;
 
     private final static String SERIAL_TOKEN = "\n%";
 
     //private ArrayList boundSets;
 
-    public GSPebbleSet() {
+    public GSPebbleSet(GSComplex gsc) {
         super();
        // this.boundSets = new ArrayList(4);
+        this.ofComplex = gsc;
     }
 
     public GSPebbleSet(int initialCapacity) {

@@ -13,11 +13,11 @@ import java.awt.geom.Ellipse2D;
  * @author cwarren
  */
 public class GSEllipse {
-    private double x,y;
-    private double majorRadius,minorRadius;
-    private double theta;
+    protected double x,y;
+    protected double majorRadius,minorRadius;
+    protected double theta;
     
-    private AffineTransform matrix; // the affine tranform matrix that converts the unit circle into this ellipse;
+    protected AffineTransform matrix; // the affine tranform matrix that converts the unit circle into this ellipse;
     
     public Shape shape;
     
@@ -46,11 +46,11 @@ public class GSEllipse {
     /**
      * set the matrix that defines this ellipse from its center (x and y), axes (majorRadius and minorRadius) and rotation (theta)
      */
-    public void setMatrix() {        
+    public final void setMatrix() {        
         this.matrix = new AffineTransform();
 //        this.matrix = T*R*S
-        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y));
-        this.matrix.concatenate(AffineTransform.getRotateInstance(this.theta));
+        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
+        this.matrix.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
         this.matrix.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
 
         System.err.println(this.matrix);
@@ -140,7 +140,7 @@ public class GSEllipse {
      * @return the theta
      */
     public double getTheta() {
-        return theta * -1;
+        return theta;
     }
 
     /**
@@ -148,7 +148,7 @@ public class GSEllipse {
      * @param theta the theta to set
      */
     public void setTheta(double theta) {
-        this.theta = theta * -1;
+        this.theta = theta;
         this.setMatrix();
     }
 }
