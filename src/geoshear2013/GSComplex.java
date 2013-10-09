@@ -5,6 +5,7 @@
 package geoshear2013;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -30,7 +31,7 @@ public class GSComplex implements Watchable {
     
     /*------------------------------------------------------------------------*/
 
-    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes) {
+    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, AffineTransform tenativeDeformation) {
        for (int i=0; i<this.pebbles.size(); i++) {
            this.pebbles.get(i).drawOnto(g2d, isFilled, showAxes);
        }

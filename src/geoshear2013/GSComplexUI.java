@@ -25,7 +25,7 @@ class GSComplexUI extends JPanel {
     
     public GSComplex gsc;
 
-    private GSEllipse tenativeDeformation;
+    private AffineTransform tenativeDeformation;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -46,7 +46,7 @@ class GSComplexUI extends JPanel {
     public GSComplexUI(GSComplex gsc) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
         this.displayTransform = new AffineTransform();
-        this.tenativeDeformation = new GSEllipse();
+        this.tenativeDeformation = new AffineTransform();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
 
@@ -162,7 +162,7 @@ class GSComplexUI extends JPanel {
 
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
 
-        this.gsc.drawOnto(g2d, false, true);
+        this.gsc.drawOnto(g2d, false, true, this.tenativeDeformation);
     }
     
     

@@ -4,7 +4,9 @@
  */
 package geoshear2013;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  *
@@ -12,16 +14,38 @@ import java.util.ArrayList;
  */
 public class GSEllipseSeries extends ArrayList {
 
+    private AffineTransform compositeTransform;
+    
     public GSEllipseSeries() {
         super();
        // this.boundSets = new ArrayList(4);
+        this.compositeTransform = new AffineTransform();
     }
 
     public GSEllipseSeries(int initialCapacity) {
         super(initialCapacity);
        // this.boundSets = new ArrayList(4);
+        this.compositeTransform = new AffineTransform();
     }
 
+
+    /*---------------------------------------------------------------------*/
+    
+    /**
+     * 
+     * @return an ellipse that is the composite of all ellipses in the series as if each were a strain applied to the next (sans translations)
+     */
+    public AffineTransform getCompositeTransform() {
+        return this.compositeTransform;
+    }
+    
+    private void rebuildCompositeTransform() {
+        this.compositeTransform = new AffineTransform();
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            this.compositeTransform.concatenate(((GSPebble)(li.next())).getMatrix());
+        }
+    }
     /*---------------------------------------------------------------------*/
     
     @Override
@@ -36,6 +60,9 @@ public class GSEllipseSeries extends ArrayList {
      */
     public boolean add(GSEllipse e) {
         boolean res = super.add(e);
+        if (res) {
+           this.rebuildCompositeTransform();
+        }
         return res;
     }    
 }
