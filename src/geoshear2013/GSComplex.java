@@ -90,7 +90,8 @@ public class GSComplex implements Watchable {
      */
     public void setCenter(GSPoint center) {
         this.resetPositionOfPebblesRelativeToNewOrigin(this.center.x, this.center.y, center.x, center.y);
-        this.center = center;
+        this.center.x = center.x;
+        this.center.y = center.y;
     }
     
     /**
@@ -103,8 +104,13 @@ public class GSComplex implements Watchable {
     }
     
     private void resetPositionOfPebblesRelativeToNewOrigin(double initial_origin_x, double initial_origin_y, double new_origin_x, double new_origin_y) {
-       for (int i=0; i<this.pebbles.size(); i++) {
-           this.pebbles.get(i).resetPositionRelativeToNewOrigin(new_origin_x-initial_origin_x,new_origin_y-initial_origin_y);
+//        System.err.println("orig origin: "+initial_origin_x+","+initial_origin_y);
+//        System.err.println("new origin: "+new_origin_x+","+new_origin_y);
+        double origin_shift_x = new_origin_x - initial_origin_x;
+        double origin_shift_y = initial_origin_y - new_origin_y;
+//        System.err.println("re-centering shift: "+origin_shift_x+","+origin_shift_y);
+        for (int i=0; i<this.pebbles.size(); i++) {
+            this.pebbles.get(i).shiftPosition(origin_shift_x,origin_shift_y);
        }
     }
 }

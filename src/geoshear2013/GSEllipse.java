@@ -91,10 +91,7 @@ public class GSEllipse {
     /**
      * set the center (x and y) of this ellipse relative to a new origin that's given in the coordinate of the original
      */
-    public void resetPositionRelativeToNewOrigin(double x, double y) {
-        
-        System.err.println("ERROR: re-centering relocates existing ellipses on the screen rather than adjusting the center coords to leave it unmoved");
-        
+    public void shiftPosition(double x, double y) {
         this.x = this.x - x;
         this.y = this.y - y;
         this.setMatrixFromKeyData();
