@@ -30,7 +30,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.displayPanel.add(this.gscUI);
 
         // dev data
-        this.gscUI.gsc.pebbles.add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
 //        this.gscUI.gsc.pebbles.add(new GSPebble(0,0,100,150,1));
 
     }
@@ -60,6 +60,9 @@ public class MainWindow extends javax.swing.JFrame {
         displayPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 displayPanelMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                displayPanelMouseReleased(evt);
             }
         });
         displayPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -139,6 +142,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void displayPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_displayPanelMouseWheelMoved
         this.gscUI.handleMouseWheelMoved(evt);
     }//GEN-LAST:event_displayPanelMouseWheelMoved
+
+    private void displayPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMouseReleased
+        this.gscUI.handleMouseReleased(evt);
+    }//GEN-LAST:event_displayPanelMouseReleased
 
     /**
      * @param args the command line arguments

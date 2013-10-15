@@ -62,6 +62,13 @@ public class GSPebble extends GSEllipse {
     }
     
     /*------------------------------------------------------------------------*/
+    public GSPebble clone() {
+        GSPebble theClone = new GSPebble(this.x, this.y, this.majorRadius, this.minorRadius, this.theta);
+        theClone.setColor(this.color);
+        return theClone;
+    }
+    
+    /*------------------------------------------------------------------------*/
 
     public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes) {
         g2d.setColor(this.color);
@@ -95,10 +102,10 @@ public class GSPebble extends GSEllipse {
 
     public void setColor(Color c) {
         this.color = c;
-        this.setColorContrast();
+        this.determineColorContrast();
     }
     
-    private void setColorContrast() {
+    private void determineColorContrast() {
         this.colorContrast = Color.LIGHT_GRAY;
         if (((this.color.getRed() + this.color.getGreen() + this.color.getBlue()) / 3) > 128) {
             this.colorContrast = Color.DARK_GRAY;

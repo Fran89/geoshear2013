@@ -4,6 +4,7 @@
  */
 package geoshear2013;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ListIterator;
  * @author cwarren
  */
 public class GSComplex implements Watchable {
-    public GSPebbleSet pebbles;
+    public GSPebbleSetSeries pebbleSets;
     public GSEllipseSeries deformations;
     
     /**
@@ -24,7 +25,8 @@ public class GSComplex implements Watchable {
 
     /*------------------------------------------------------------------------*/
     public GSComplex() {
-        this.pebbles = new GSPebbleSet(this);
+        this.pebbleSets = new GSPebbleSetSeries();
+        this.pebbleSets.add(new GSPebbleSet(this));
         this.deformations = new GSEllipseSeries();
         this.center = new GSPoint(0,0);
     }
@@ -32,9 +34,22 @@ public class GSComplex implements Watchable {
     /*------------------------------------------------------------------------*/
 
     public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, AffineTransform tenativeDeformation) {
-       for (int i=0; i<this.pebbles.size(); i++) {
-           this.pebbles.get(i).drawOnto(g2d, isFilled, showAxes);
-       }
+        if (tenativeDeformation.isIdentity()) {
+            for (int i=0; i<this.pebbleSets.getLast().size(); i++) {
+                this.pebbleSets.getLast().get(i).drawOnto(g2d, isFilled, showAxes);
+            }
+        } else {
+            GSPebbleSet tenativelyDeformedPebbles = this.pebbleSets.getLast().clone();
+            tenativelyDeformedPebbles.applyDeformation(tenativeDeformation);
+            for (int i=0; i<tenativelyDeformedPebbles.size(); i++) {
+                tenativelyDeformedPebbles.get(i).drawOnto(g2d, isFilled, showAxes);
+                tenativelyDeformedPebbles.get(i).errDump();
+            }
+            GSPebble strain = new GSPebble(100, 100);
+            strain.setColor(Color.red);
+            strain.deform(tenativeDeformation);
+            strain.drawOnto(g2d, false, true);
+        }
     }
     
     /*------------------------------------------------------------------------*/
@@ -109,8 +124,11 @@ public class GSComplex implements Watchable {
         double origin_shift_x = new_origin_x - initial_origin_x;
         double origin_shift_y = initial_origin_y - new_origin_y;
 //        System.err.println("re-centering shift: "+origin_shift_x+","+origin_shift_y);
-        for (int i=0; i<this.pebbles.size(); i++) {
-            this.pebbles.get(i).shiftPosition(origin_shift_x,origin_shift_y);
-       }
+        for (int i_sets=0; i_sets<this.pebbleSets.size(); i_sets++) {
+            GSPebbleSet pebbles = this.pebbleSets.get(i_sets);
+            for (int i_pebbles=0; i_pebbles<pebbles.size(); i_pebbles++) {
+                pebbles.get(i_pebbles).shiftPosition(origin_shift_x,origin_shift_y);
+            }
+        }
     }
 }

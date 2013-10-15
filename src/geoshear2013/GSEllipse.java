@@ -40,26 +40,48 @@ public class GSEllipse {
         
         this.setMatrixFromKeyData();
     }
+    public GSEllipse(AffineTransform t) { // unit circle is the default
+        new GSEllipse().deform(t);
+    }
+    /*------------------------------------------------------------------------*/
+
+    @Override
+    public GSEllipse clone() {
+        return new GSEllipse(this.x,this.y,this.majorRadius,this.minorRadius,this.theta);
+    }
     
+    @Override
+    public String toString() {
+        return this.keyDataAsString()+"\n"+this.getMatrix().toString();
+    }
+
+    public String keyDataAsString() {
+        return "x: "+this.x+", y: "+this.y+", majorRadius: "+this.majorRadius+", minorRadius: "+this.minorRadius+", theta: "+this.theta;
+    }
+
+    public void errDump() {
+        System.err.println(this.toString());
+    }
     /*------------------------------------------------------------------------*/
 
     public GSEllipse getDeformedGSEllipse(AffineTransform deformation) {
-        
-        AffineTransform base = (AffineTransform)(this.getMatrix().clone());
-        
-        base.concatenate(deformation);
-        
-        System.err.println("TODO: implement SVD of an affine transform");
-        
-        double newMajorRadius = 0;
-        double newMinorRadius = 0;
-        double newTheta = 0;
-        
-        GSEllipse deformedEllipse = new GSEllipse(base.getTranslateX(), base.getTranslateY(), newMajorRadius, newMinorRadius, newTheta);
-
+        GSEllipse deformedEllipse = this.clone();
+        deformedEllipse.deform(deformation);
         return deformedEllipse;
     }
-        
+
+    public void deform(AffineTransform deformation) {
+        System.err.println("predeform key data: "+this.keyDataAsString());
+        System.err.println("predeform matrix: "+this.getMatrix().toString());
+        System.err.println("deformation: "+deformation.toString());
+        this.getMatrix().concatenate(deformation);
+        System.err.println("postdeform key data: "+this.keyDataAsString());
+        System.err.println("postdeform matrix: "+this.getMatrix().toString());
+        this.setKeyDataFromMatrix();
+        this.setMatrixFromKeyData();
+        System.err.println("postset key data: "+this.keyDataAsString());
+    }
+    
     /*------------------------------------------------------------------------*/
 
     /**
@@ -78,14 +100,21 @@ public class GSEllipse {
     }
     
     public void setKeyDataFromMatrix() {
-        System.err.println("TODO: implement setKeyDataFromMatrix in GSEllipse");
+        Matrix2x2[] u_sig_vt = Matrix2x2.svdOf(this.getMatrix());
+
+        this.majorRadius = u_sig_vt[1].m00;
+        this.minorRadius = u_sig_vt[1].m11;
+        System.err.println("sig: "+u_sig_vt[1].toString());
+        System.err.println("vt: "+u_sig_vt[2].toString());
+//        this.theta = Math.acos(u_sig_vt[2].m00);
+        this.theta = Math.asin(u_sig_vt[2].m01);
     }
 
     /**
      * set the shape object for this ellipse from its internal data
      */
     public void setShape() {
-        this.shape = matrix.createTransformedShape(new Ellipse2D.Double(-1,-1,2,2)); // transform the unit circle
+        this.shape = this.getMatrix().createTransformedShape(new Ellipse2D.Double(-1,-1,2,2)); // transform the unit circle
     }
     
     /**

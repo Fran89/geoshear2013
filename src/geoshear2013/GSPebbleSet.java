@@ -5,6 +5,7 @@
 package geoshear2013;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -33,6 +34,21 @@ public class GSPebbleSet extends ArrayList {
        // this.boundSets = new ArrayList(4);
     }
 
+    /*---------------------------------------------------------------------*/
+    @Override
+    public GSPebbleSet clone() {
+        GSPebbleSet theClone = new GSPebbleSet(this.ofComplex);
+        
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            theClone.add( ((GSPebble)(li.next())).clone() );
+        }
+        theClone.harmonicMean = this.harmonicMean;
+        theClone.vectorMean = this.vectorMean;
+        
+        return theClone;
+    }
+    
     /*---------------------------------------------------------------------*/
     
     @Override
@@ -83,4 +99,10 @@ public class GSPebbleSet extends ArrayList {
         }
     }
 
+    public void applyDeformation(AffineTransform deformation) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            ((GSPebble)(li.next())).deform(deformation);
+        }
+    }
 }

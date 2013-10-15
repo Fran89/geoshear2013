@@ -4,6 +4,8 @@
  */
 package geoshear2013;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * implementation of 2x2 matrices, supporting a number of operations on them
  * 
@@ -24,6 +26,13 @@ public class Matrix2x2 {
         this(1,0,0,1);
     }
         
+    /**
+     * create a 2x2 identity matrix
+     */
+    public Matrix2x2(AffineTransform t) {
+        this(t.getScaleX(),t.getShearY(),t.getShearX(),t.getScaleY());
+    }
+    
     /**
      * create a new 2x2 matrix of the form 
      *   m00 m01
@@ -153,6 +162,11 @@ V = W*C;
         u_sig_v[2] = V.transposed();
         
         return u_sig_v;
+    }
+
+    public static Matrix2x2[] svdOf(AffineTransform t) {
+        Matrix2x2 base = new Matrix2x2(t);
+        return base.svd();
     }
     
     /**
