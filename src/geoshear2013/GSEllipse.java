@@ -7,6 +7,9 @@ package geoshear2013;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+//import java.awt.geom.NoninvertibleTransformException;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +20,7 @@ public class GSEllipse {
     protected double majorRadius,minorRadius;
     protected double theta;
     
-    protected AffineTransform matrix; // the affine tranform matrix that converts the unit circle into this ellipse;
+    protected Matrix2x2 matrix; // the affine tranform matrix that converts the unit circle into this ellipse;
     
     public Shape shape;
     
@@ -40,7 +43,7 @@ public class GSEllipse {
         
         this.setMatrixFromKeyData();
     }
-    public GSEllipse(AffineTransform t) { // unit circle is the default
+    public GSEllipse(Matrix2x2 t) { // unit circle is the default
         new GSEllipse().deform(t);
     }
     /*------------------------------------------------------------------------*/
@@ -64,22 +67,27 @@ public class GSEllipse {
     }
     /*------------------------------------------------------------------------*/
 
-    public GSEllipse getDeformedGSEllipse(AffineTransform deformation) {
-        GSEllipse deformedEllipse = this.clone();
-        deformedEllipse.deform(deformation);
-        return deformedEllipse;
-    }
+//    public GSEllipse getDeformedGSEllipse(AffineTransform deformation) {
+//        GSEllipse deformedEllipse = this.clone();
+//        deformedEllipse.deform(deformation);
+//        return deformedEllipse;
+//    }
 
-    public void deform(AffineTransform deformation) {
+    public void deform(Matrix2x2 deformation) {
+        
+        //problem - basically taking the un-rotated ellipse, doing the deformation, then applying the base rotation for that ellipse; the rotated ellipse is NOT getting transformed!!!
+        
         System.err.println("predeform key data: "+this.keyDataAsString());
         System.err.println("predeform matrix: "+this.getMatrix().toString());
-        System.err.println("deformation: "+deformation.toString());
-        this.getMatrix().concatenate(deformation);
-        System.err.println("postdeform key data: "+this.keyDataAsString());
+//        System.err.println("deformation: "+deformation.toString());
+//        this.matrix = deformation.times(this.matrix);
+        this.matrix = this.matrix.times(deformation);
+//        this.matrix.timesInPlace(deformation);
+//        System.err.println("postdeform key data: "+this.keyDataAsString());
         System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
-        this.setMatrixFromKeyData();
         System.err.println("postset key data: "+this.keyDataAsString());
+        System.err.println("");
     }
     
     /*------------------------------------------------------------------------*/
@@ -88,33 +96,44 @@ public class GSEllipse {
      * set the matrix that defines this ellipse from its center (x and y), axes (majorRadius and minorRadius) and rotation (theta)
      */
     public final void setMatrixFromKeyData() {        
-        this.matrix = new AffineTransform();
-//        this.matrix = T*R*S
-        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
-        this.matrix.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
-        this.matrix.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
+//        this.matrix = new AffineTransform();
+////        this.matrix = T*R*S
+//        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
+//        this.matrix.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
+//        this.matrix.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
 
         //System.err.println(this.matrix);
         
+//        this.matrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
+//        this.matrix.timesInPlace(new Matrix2x2(Math.cos(this.theta), -1*Math.sin(this.theta), Math.sin(this.theta), Math.cos(this.theta)));
+//      
+        Matrix2x2 scalingMatrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
+        Matrix2x2 rotationMatrix = new Matrix2x2(Math.cos(this.theta), -1*Math.sin(this.theta), Math.sin(this.theta), Math.cos(this.theta));
+        
+        this.matrix = scalingMatrix.times(rotationMatrix);
+
         this.setShape();
     }
     
     public void setKeyDataFromMatrix() {
-        Matrix2x2[] u_sig_vt = Matrix2x2.svdOf(this.getMatrix());
+        Matrix2x2[] u_sig_vt = this.matrix.svd();
 
         this.majorRadius = u_sig_vt[1].m00;
         this.minorRadius = u_sig_vt[1].m11;
+        System.err.println("u: "+u_sig_vt[0].toString());
         System.err.println("sig: "+u_sig_vt[1].toString());
         System.err.println("vt: "+u_sig_vt[2].toString());
 //        this.theta = Math.acos(u_sig_vt[2].m00);
-        this.theta = Math.asin(u_sig_vt[2].m01);
+        this.theta = Math.asin(u_sig_vt[2].m10);
+        this.setShape();
     }
 
     /**
      * set the shape object for this ellipse from its internal data
      */
     public void setShape() {
-        this.shape = this.getMatrix().createTransformedShape(new Ellipse2D.Double(-1,-1,2,2)); // transform the unit circle
+        this.shape = this.getAffineTransform().createTransformedShape(new Ellipse2D.Double(-1,-1,2,2)); // transform the unit circle
+//        this.shape = this.getAffineTransform().
     }
     
     /**
@@ -212,8 +231,19 @@ public class GSEllipse {
     /**
      * @return the affine transform that converts the unit circle to this ellipse
      */
-    public AffineTransform getMatrix() {
+    public Matrix2x2 getMatrix() {
         return this.matrix;
     }
 
+    /**
+     * @return the affine transform that converts the unit circle to this ellipse
+     */
+    public AffineTransform getAffineTransform() {
+//        AffineTransform af = new AffineTransform();
+//        af.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
+//        af.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
+//        af.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
+        AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
+        return af;
+    }
 }

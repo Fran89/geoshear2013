@@ -62,6 +62,10 @@ public class Matrix2x2 {
         return this.m00==other.m00 && this.m01==other.m01 && this.m10==other.m10 && this.m11==other.m11;
     }
     
+    public boolean isIdentity() {
+        return this.m00==1 && this.m01==0 && this.m10==0 && this.m11==1;
+    }
+    
     /**
      * flip the matrix around its diagonal
      */
@@ -97,7 +101,20 @@ public class Matrix2x2 {
                 this.m10*other.m01+this.m11*other.m11
                 );
     }
-    
+    /**
+     * @param other
+     * @return a new matrix that is a product of this and the other one
+     */
+    public void timesInPlace(Matrix2x2 other) {
+        double newM00 = this.m00*other.m00+this.m01*other.m10;
+        double newM01 = this.m00*other.m01+this.m01*other.m11;
+        double newM10 = this.m10*other.m00+this.m11*other.m10;
+        double newM11 = this.m10*other.m01+this.m11*other.m11;
+        this.m00 = newM00;
+        this.m01 = newM01;
+        this.m10 = newM10;
+        this.m11 = newM11;
+    }    
     /**
      * performs a single value decomposition on this matrix, generating three
      * matrices u, sig, and v such that this = u * sig * v'

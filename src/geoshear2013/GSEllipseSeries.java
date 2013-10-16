@@ -14,18 +14,18 @@ import java.util.ListIterator;
  */
 public class GSEllipseSeries extends ArrayList {
 
-    private AffineTransform compositeTransform;
+    private Matrix2x2 compositeTransform;
     
     public GSEllipseSeries() {
         super();
        // this.boundSets = new ArrayList(4);
-        this.compositeTransform = new AffineTransform();
+        this.compositeTransform = new Matrix2x2();
     }
 
     public GSEllipseSeries(int initialCapacity) {
         super(initialCapacity);
        // this.boundSets = new ArrayList(4);
-        this.compositeTransform = new AffineTransform();
+        this.compositeTransform = new Matrix2x2();
     }
 
 
@@ -35,15 +35,15 @@ public class GSEllipseSeries extends ArrayList {
      * 
      * @return an ellipse that is the composite of all ellipses in the series as if each were a strain applied to the next (sans translations)
      */
-    public AffineTransform getCompositeTransform() {
+    public Matrix2x2 getCompositeTransform() {
         return this.compositeTransform;
     }
     
     private void rebuildCompositeTransform() {
-        this.compositeTransform = new AffineTransform();
+        this.compositeTransform = new Matrix2x2();
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            this.compositeTransform.concatenate(((GSPebble)(li.next())).getMatrix());
+            this.compositeTransform.timesInPlace(((GSPebble)(li.next())).getMatrix());
         }
     }
     /*---------------------------------------------------------------------*/

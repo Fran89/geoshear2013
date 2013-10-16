@@ -33,7 +33,7 @@ public class GSComplex implements Watchable {
     
     /*------------------------------------------------------------------------*/
 
-    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, AffineTransform tenativeDeformation) {
+    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, Matrix2x2 tenativeDeformation) {
         if (tenativeDeformation.isIdentity()) {
             for (int i=0; i<this.pebbleSets.getLast().size(); i++) {
                 this.pebbleSets.getLast().get(i).drawOnto(g2d, isFilled, showAxes);
@@ -43,11 +43,12 @@ public class GSComplex implements Watchable {
             tenativelyDeformedPebbles.applyDeformation(tenativeDeformation);
             for (int i=0; i<tenativelyDeformedPebbles.size(); i++) {
                 tenativelyDeformedPebbles.get(i).drawOnto(g2d, isFilled, showAxes);
-                tenativelyDeformedPebbles.get(i).errDump();
+                //tenativelyDeformedPebbles.get(i).errDump();
             }
             GSPebble strain = new GSPebble(100, 100);
             strain.setColor(Color.red);
             strain.deform(tenativeDeformation);
+            strain.errDump();
             strain.drawOnto(g2d, false, true);
         }
     }

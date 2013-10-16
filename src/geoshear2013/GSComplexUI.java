@@ -25,7 +25,7 @@ class GSComplexUI extends JPanel {
     
     public GSComplex gsc;
 
-    private AffineTransform tenativeDeformation;
+    private Matrix2x2 tenativeDeformation;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -41,21 +41,30 @@ class GSComplexUI extends JPanel {
 
     private double lastMouseDragX;
     private double lastMouseDragY;
+    
+    private boolean shiftIsDown = false;
+    private boolean ctrlIsDown = false;
+    private boolean altIsDown = false;
+    
     /*------------------------------------------------------------------------*/
 
     public GSComplexUI(GSComplex gsc) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
         this.displayTransform = new AffineTransform();
-        this.tenativeDeformation = new AffineTransform();
+        this.tenativeDeformation = new Matrix2x2();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
 
-//    public void handleKeyDown() {
-//        
-//    }
-//    public void handleKeyUp() {
-//        
-//    }
+    public void handleKeyPressed(java.awt.event.KeyEvent evt) {
+        this.altIsDown = evt.isAltDown();
+        this.ctrlIsDown = evt.isControlDown();
+        this.shiftIsDown = evt.isShiftDown();
+    }
+    public void handleKeyReleased(java.awt.event.KeyEvent evt) {
+        this.altIsDown = evt.isAltDown();
+        this.ctrlIsDown = evt.isControlDown();
+        this.shiftIsDown = evt.isShiftDown();
+    }
 
     public void handleMousePressed(java.awt.event.MouseEvent evt) {
         this.lastMouseDownX = evt.getPoint().x;
@@ -63,10 +72,19 @@ class GSComplexUI extends JPanel {
 
         this.lastMouseDragX = evt.getPoint().x;
         this.lastMouseDragY = evt.getPoint().y;
+    
+        this.altIsDown = evt.isAltDown();
+        this.ctrlIsDown = evt.isControlDown();
+        this.shiftIsDown = evt.isShiftDown();
     }  
 
     public void handleMouseReleased(java.awt.event.MouseEvent evt) {
-        this.tenativeDeformation = new AffineTransform();
+        this.tenativeDeformation = new Matrix2x2();
+
+        this.altIsDown = evt.isAltDown();
+        this.ctrlIsDown = evt.isControlDown();
+        this.shiftIsDown = evt.isShiftDown();
+        
         this.repaint();
     } 
     
@@ -75,11 +93,18 @@ class GSComplexUI extends JPanel {
 //        System.err.println("evt is: "+evt.toString());
 //        System.out.println("mouse event is: "+evt.toString());
         Point2D evtPointInGSCSystem = null;
+        Point2D dragOriginPointInGSCSystem = null;
         try {
             evtPointInGSCSystem = this.displayTransform.inverseTransform(evt.getPoint(), evtPointInGSCSystem);
             evtPointInGSCSystem.setLocation(evtPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - evtPointInGSCSystem.getY());
 //            System.out.println("transformed evt point is : "+evtPointInGSCSystem.toString());
 
+            dragOriginPointInGSCSystem = this.displayTransform.inverseTransform(new Point2D.Double(lastMouseDownX, lastMouseDownY), dragOriginPointInGSCSystem);
+            dragOriginPointInGSCSystem.setLocation(dragOriginPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - dragOriginPointInGSCSystem.getY());
+            
+            double deltaX = evt.getX() - this.lastMouseDownX;
+            double deltaY = this.lastMouseDownY - evt.getY();
+            
             if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
                 if (evt.isAltDown()) {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with ALT down (rotate)");
@@ -87,7 +112,14 @@ class GSComplexUI extends JPanel {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
                 } else if (evt.isShiftDown()) {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with SHIFT down (shear)");
-                    this.tenativeDeformation = new AffineTransform(1, -.5, 0, 1, 0, 0);
+                    double xShear = deltaX/dragOriginPointInGSCSystem.getY();
+                    double yShear = deltaY/dragOriginPointInGSCSystem.getX();
+                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                        this.tenativeDeformation = new Matrix2x2(1, 0, xShear*-1, 1);
+                    } else {
+                        this.tenativeDeformation = new Matrix2x2(1, yShear*-1, 0, 1);
+                    }
+                    System.err.println("tenative def: "+this.tenativeDeformation.toString());
                 } else {
                     this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                     (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -154,6 +186,24 @@ class GSComplexUI extends JPanel {
         
         g2d.setColor (Color.WHITE);
         g2d.fillRect (0,0, this.getWidth (), this.getHeight ());
+
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+            if (this.altIsDown) {
+                System.err.println("TODO: paint UI_MODE_DEFORMS with ALT down (rotate)");
+            }  else if (this.ctrlIsDown) {
+                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
+            } else if (this.shiftIsDown) {
+//                System.err.println("TODO: paint UI_MODE_DEFORMS with SHIFT down (shear)");
+                if ((this.lastMouseDownX != this.lastMouseDragX) || (this.lastMouseDownY != this.lastMouseDragY)) {
+                    g2d.setColor (Color.RED);
+                    if (this.tenativeDeformation.m10 != 0) {
+                        g2d.drawLine((int) this.lastMouseDownX, (int) this.lastMouseDownY, (int) this.lastMouseDragX, (int) this.lastMouseDownY);
+                    } else {
+                        g2d.drawLine((int) this.lastMouseDownX, (int) this.lastMouseDownY, (int) this.lastMouseDownX, (int) this.lastMouseDragY);
+                    }
+                }
+            }
+        }
         
         g2d.transform(this.displayTransform);
 //        g2d.translate(this.displayTransform.getTranslateX(),this.displayTransform.getTranslateY());
@@ -166,7 +216,7 @@ class GSComplexUI extends JPanel {
         g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
                 
 //        g2d.scale(this.displayTransform.getScaleX(),this.displayTransform.getScaleX()); // NOTE: for display the scaling is the same in both dimensions
-
+        
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
 
         this.gsc.drawOnto(g2d, false, true, this.tenativeDeformation);

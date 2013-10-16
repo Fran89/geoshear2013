@@ -4,6 +4,9 @@
  */
 package geoshear2013;
 
+import java.awt.Color;
+import java.awt.geom.AffineTransform;
+
 /**
  *
  * @author cwarren
@@ -30,8 +33,21 @@ public class MainWindow extends javax.swing.JFrame {
         this.displayPanel.add(this.gscUI);
 
         // dev data
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
-//        this.gscUI.gsc.pebbles.add(new GSPebble(0,0,100,150,1));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,200,100,100,Math.PI/2 + Math.PI / 5));
+        
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,200,150,100,0));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,200,150,100,.5));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,1));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,-200,150,100,1.5));
+       
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,100,60,40,0, Color.CYAN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,100,60,40,.5, Color.GREEN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,200,60,40,1, Color.BLUE));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,200,60,40,1.5, Color.MAGENTA));
+
+        
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(0,0,150,150,0));
 
     }
 
@@ -73,6 +89,14 @@ public class MainWindow extends javax.swing.JFrame {
         displayPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 displayPanelMouseDragged(evt);
+            }
+        });
+        displayPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                displayPanelKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                displayPanelKeyReleased(evt);
             }
         });
 
@@ -146,6 +170,14 @@ public class MainWindow extends javax.swing.JFrame {
     private void displayPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMouseReleased
         this.gscUI.handleMouseReleased(evt);
     }//GEN-LAST:event_displayPanelMouseReleased
+
+    private void displayPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayPanelKeyPressed
+        this.gscUI.handleKeyPressed(evt);
+    }//GEN-LAST:event_displayPanelKeyPressed
+
+    private void displayPanelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayPanelKeyReleased
+        this.gscUI.handleKeyReleased(evt);
+    }//GEN-LAST:event_displayPanelKeyReleased
 
     /**
      * @param args the command line arguments

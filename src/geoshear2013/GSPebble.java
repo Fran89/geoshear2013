@@ -61,6 +61,11 @@ public class GSPebble extends GSEllipse {
         super(x, y, major, minor, theta);
     }
     
+    public GSPebble(double x, double y, double major, double minor, double theta, Color color) {
+        super(x, y, major, minor, theta);
+        this.setColor(color);
+    }
+    
     /*------------------------------------------------------------------------*/
     public GSPebble clone() {
         GSPebble theClone = new GSPebble(this.x, this.y, this.majorRadius, this.minorRadius, this.theta);
