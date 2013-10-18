@@ -116,10 +116,11 @@ public class Matrix2x2 {
         this.m01 = newM01;
         this.m10 = newM10;
         this.m11 = newM11;
-    }    
+    }
     /**
      * performs a single value decomposition on this matrix, generating three
-     * matrices u, sig, and v such that this = u * sig * v'
+     * matrices u, sig, and v such that this = u * sig * v'; the current matrix 
+     * is not altered
      * NOTE: this algorithm is from http://www.ualberta.ca/~mlipsett/ENGM541/Readings/svd_ellis.pdf
      * 
      * @return three matrices u, sig, and v' such that this = u * sig * v'

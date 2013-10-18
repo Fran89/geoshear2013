@@ -74,13 +74,34 @@ public class GSEllipse {
 //    }
 
     public void deform(Matrix2x2 deformation) {
-//        System.err.println("predeform key data: "+this.keyDataAsString());
-//        System.err.println("predeform matrix: "+this.getMatrix().toString());
+        System.err.println("predeform key data: "+this.keyDataAsString());
+        System.err.println("deformation matrix: "+deformation.toString());
+        Matrix2x2 dT = deformation.clone();
+        if (dT.m00==1 && dT.m11==1) {
+            dT.m01 = dT.m01*-1;
+            dT.m10 = dT.m10*-1;
+            double tmpX = this.x*dT.m00 + this.x*dT.m10;
+            double tmpY = this.y*dT.m01 + this.y*dT.m11;
+    //        double tmpX = this.x*deformation.m00 + this.x*deformation.m10*-1;
+    //        double tmpY = this.y*deformation.m01*-1 + this.y*deformation.m11;
+            this.x = tmpX;
+            this.y = tmpY;
+        } else {
+            double thetaDeg = Math.acos(deformation.m00) * (180/Math.PI) * ((deformation.m01 > 0) ? -1 : 1);
+            System.err.println("backed out rot degr: "+thetaDeg);
+        }
+
+        
+                
+//        this.getAffineTransform()
+
         this.matrix = this.matrix.times(deformation);
-//        System.err.println("postdeform matrix: "+this.getMatrix().toString());
+        //        System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
-//        System.err.println("postset key data: "+this.keyDataAsString());
-//        System.err.println("");
+
+
+        System.err.println("postset key data: "+this.keyDataAsString());
+        System.err.println("");
     }
     
     /*------------------------------------------------------------------------*/

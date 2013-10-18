@@ -118,6 +118,18 @@ class GSComplexUI extends JPanel {
                     double dragOriginAngle = Math.atan(dragOriginPointInGSCSystem.getY()/dragOriginPointInGSCSystem.getX());
                     double dragCurrentAngle = Math.atan(evtPointInGSCSystem.getY()/evtPointInGSCSystem.getX());
                     double angleDiff = dragCurrentAngle - dragOriginAngle;
+
+                    if (((evtPointInGSCSystem.getX() > 0) && (dragOriginPointInGSCSystem.getX() <= 0)) || ((evtPointInGSCSystem.getX() <= 0) && (dragOriginPointInGSCSystem.getX() > 0))) {
+                        if (angleDiff < 0) {
+                            angleDiff = angleDiff + Math.PI;
+                        } else {
+                            angleDiff = angleDiff - Math.PI;
+                        }
+                    }
+                    
+                    double angleDiffDeg = angleDiff * (180/Math.PI);
+                    System.err.println("baserot degr: "+angleDiffDeg);
+    
                     this.tenativeDeformation = new Matrix2x2(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
                     
                 }  else if (evt.isControlDown()) {
