@@ -112,6 +112,14 @@ class GSComplexUI extends JPanel {
             if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
                 if (evt.isAltDown()) {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with ALT down (rotate)");
+                    // get the angle of the drag origin point
+                    // get the angle of the drag current point
+                    // rotate by the difference between them
+                    double dragOriginAngle = Math.atan(dragOriginPointInGSCSystem.getY()/dragOriginPointInGSCSystem.getX());
+                    double dragCurrentAngle = Math.atan(evtPointInGSCSystem.getY()/evtPointInGSCSystem.getX());
+                    double angleDiff = dragCurrentAngle - dragOriginAngle;
+                    this.tenativeDeformation = new Matrix2x2(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
+                    
                 }  else if (evt.isControlDown()) {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
                     double xCompress = evtPointInGSCSystem.getX()/dragOriginPointInGSCSystem.getX();
