@@ -48,7 +48,7 @@ public class GSComplex implements Watchable {
             GSPebble strain = new GSPebble(100, 100);
             strain.setColor(Color.red);
             strain.deform(tenativeDeformation);
-            strain.errDump();
+//            strain.errDump();
             strain.drawOnto(g2d, false, true);
         }
     }

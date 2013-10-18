@@ -5,7 +5,6 @@
 package geoshear2013;
 
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 
 /**
  *
