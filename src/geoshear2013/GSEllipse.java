@@ -7,6 +7,7 @@ package geoshear2013;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 //import java.awt.geom.NoninvertibleTransformException;
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
@@ -74,34 +75,36 @@ public class GSEllipse {
 //    }
 
     public void deform(Matrix2x2 deformation) {
-        System.err.println("predeform key data: "+this.keyDataAsString());
-        System.err.println("deformation matrix: "+deformation.toString());
+//        System.err.println("predeform key data: "+this.keyDataAsString());
+//        System.err.println("deformation matrix: "+deformation.toString());
         Matrix2x2 dT = deformation.clone();
         if (dT.m00==1 && dT.m11==1) {
-            dT.m01 = dT.m01*-1;
-            dT.m10 = dT.m10*-1;
-            double tmpX = this.x*dT.m00 + this.x*dT.m10;
-            double tmpY = this.y*dT.m01 + this.y*dT.m11;
-    //        double tmpX = this.x*deformation.m00 + this.x*deformation.m10*-1;
-    //        double tmpY = this.y*deformation.m01*-1 + this.y*deformation.m11;
-            this.x = tmpX;
-            this.y = tmpY;
+            AffineTransform shearTrans = AffineTransform.getShearInstance(deformation.m10*-1, deformation.m01*-1);
+            Point2D curCenter = new Point2D.Double(this.x, this.y);
+            shearTrans.transform(curCenter, curCenter);
+            this.x = curCenter.getX();
+            this.y = curCenter.getY();
+        } else if (dT.m01==0 && dT.m10==0) {
+            AffineTransform scaleTrans = AffineTransform.getScaleInstance(deformation.m00, deformation.m11);
+            Point2D curCenter = new Point2D.Double(this.x, this.y);
+            scaleTrans.transform(curCenter, curCenter);
+            this.x = curCenter.getX();
+            this.y = curCenter.getY();
         } else {
-            double thetaDeg = Math.acos(deformation.m00) * (180/Math.PI) * ((deformation.m01 > 0) ? -1 : 1);
-            System.err.println("backed out rot degr: "+thetaDeg);
+//            double thetaDeg = Math.acos(deformation.m00) * (180/Math.PI) * ((deformation.m01 > 0) ? -1 : 1);
+//            System.err.println("backed out rot degr: "+thetaDeg);
+            AffineTransform rotTrans = AffineTransform.getRotateInstance(Math.acos(deformation.m00) * ((deformation.m01 > 0) ? -1 : 1));
+            Point2D curCenter = new Point2D.Double(this.x, this.y);
+            rotTrans.transform(curCenter, curCenter);
+            this.x = curCenter.getX();
+            this.y = curCenter.getY();
         }
-
-        
-                
-//        this.getAffineTransform()
 
         this.matrix = this.matrix.times(deformation);
         //        System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
-
-
-        System.err.println("postset key data: "+this.keyDataAsString());
-        System.err.println("");
+//        System.err.println("postset key data: "+this.keyDataAsString());
+//        System.err.println("");
     }
     
     /*------------------------------------------------------------------------*/
