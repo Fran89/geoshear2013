@@ -27,7 +27,7 @@ public class Matrix2x2 {
     }
         
     /**
-     * create a 2x2 identity matrix
+     * create a 2x2 matrix from the upper left square of the given affine transform
      */
     public Matrix2x2(AffineTransform t) {
         this(t.getScaleX(),t.getShearY(),t.getShearX(),t.getScaleY());
@@ -50,10 +50,12 @@ public class Matrix2x2 {
         this.m11 = m11;
     }
     
+    @Override
     public Matrix2x2 clone() {
         return new Matrix2x2(this.m00,this.m01,this.m10,this.m11);
     }
     
+    @Override
     public String toString() {
         return "["+this.m00+" , "+this.m01+" ; "+this.m10+" , "+this.m11+"]";
     }
@@ -123,7 +125,7 @@ public class Matrix2x2 {
      * @return three matrices u, sig, and v' such that this = u * sig * v'
      */
     public Matrix2x2[] svd() {
-        Matrix2x2[] u_sig_v = new Matrix2x2[3];
+        Matrix2x2[] u_sig_vt = new Matrix2x2[3];
 
 /* from http://www.ualberta.ca/~mlipsett/ENGM541/Readings/svd_ellis.pdf
  * 
@@ -160,7 +162,7 @@ V = W*C;
         double phi = .5 * Math.atan2(Su.m01+Su.m10, Su.m00-Su.m11);
         double Cphi = Math.cos(phi);
         double Sphi = Math.sin(phi);
-        u_sig_v[0] = new Matrix2x2(Cphi,-Sphi, Sphi, Cphi);
+        u_sig_vt[0] = new Matrix2x2(Cphi,-Sphi, Sphi, Cphi);
         
         Matrix2x2 Sw = this.transposed().times(this);
         double theta = .5 * Math.atan2(Sw.m01+Sw.m10, Sw.m00-Sw.m11);
@@ -170,17 +172,18 @@ V = W*C;
         
         double SUsum = Su.m00+Su.m11;
         double SUdiff = Math.pow( Math.pow(Su.m00-Su.m11,2) + 4*Su.m01*Su.m10,.5);
-        u_sig_v[1] = new Matrix2x2(Math.pow((SUsum+SUdiff)/2,.5), 0, 0, Math.pow((SUsum-SUdiff)/2,.5));
+        u_sig_vt[1] = new Matrix2x2(Math.pow((SUsum+SUdiff)/2,.5), 0, 0, Math.pow((SUsum-SUdiff)/2,.5));
         
-        Matrix2x2 S = u_sig_v[0].transposed().times(this).times(W);
+        Matrix2x2 SA = this.times(W);
+        Matrix2x2 S = u_sig_vt[0].transposed().times(SA);
         Matrix2x2 C = new Matrix2x2(((S.m00 < 0) ? -1 : 1),0,0,((S.m11 < 0) ? -1 : 1));
         Matrix2x2 V = W.times(C);
         
-        u_sig_v[2] = V.transposed();
-        
-        return u_sig_v;
+        u_sig_vt[2] = V.transposed();
+      
+        return u_sig_vt;
     }
-
+    
     public static Matrix2x2[] svdOf(AffineTransform t) {
         Matrix2x2 base = new Matrix2x2(t);
         return base.svd();

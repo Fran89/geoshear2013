@@ -74,20 +74,13 @@ public class GSEllipse {
 //    }
 
     public void deform(Matrix2x2 deformation) {
-        
-        //problem - basically taking the un-rotated ellipse, doing the deformation, then applying the base rotation for that ellipse; the rotated ellipse is NOT getting transformed!!!
-        
-        System.err.println("predeform key data: "+this.keyDataAsString());
-        System.err.println("predeform matrix: "+this.getMatrix().toString());
-//        System.err.println("deformation: "+deformation.toString());
-//        this.matrix = deformation.times(this.matrix);
+//        System.err.println("predeform key data: "+this.keyDataAsString());
+//        System.err.println("predeform matrix: "+this.getMatrix().toString());
         this.matrix = this.matrix.times(deformation);
-//        this.matrix.timesInPlace(deformation);
-//        System.err.println("postdeform key data: "+this.keyDataAsString());
-        System.err.println("postdeform matrix: "+this.getMatrix().toString());
+//        System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
-        System.err.println("postset key data: "+this.keyDataAsString());
-        System.err.println("");
+//        System.err.println("postset key data: "+this.keyDataAsString());
+//        System.err.println("");
     }
     
     /*------------------------------------------------------------------------*/
@@ -117,15 +110,19 @@ public class GSEllipse {
     
     public void setKeyDataFromMatrix() {
         Matrix2x2[] u_sig_vt = this.matrix.svd();
-
+        
         this.majorRadius = u_sig_vt[1].m00;
         this.minorRadius = u_sig_vt[1].m11;
-        System.err.println("u: "+u_sig_vt[0].toString());
-        System.err.println("sig: "+u_sig_vt[1].toString());
-        System.err.println("vt: "+u_sig_vt[2].toString());
-//        this.theta = Math.acos(u_sig_vt[2].m00);
-        this.theta = Math.asin(u_sig_vt[2].m10);
-        this.setShape();
+//        System.err.println("u: "+u_sig_vt[0].toString());
+//        System.err.println("sig: "+u_sig_vt[1].toString());
+//        System.err.println("vt: "+u_sig_vt[2].toString());
+        this.theta = Math.acos(u_sig_vt[2].m00);
+        
+        if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
+            this.theta = this.theta * -1;
+        }
+        
+        this.setMatrixFromKeyData(); // resets the matrix based on the appropriately signed theta
     }
 
     /**

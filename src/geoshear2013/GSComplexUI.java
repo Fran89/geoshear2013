@@ -76,10 +76,14 @@ class GSComplexUI extends JPanel {
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
+
+        if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
+            this.tenativeDeformation = new Matrix2x2();
+        }
     }  
 
     public void handleMouseReleased(java.awt.event.MouseEvent evt) {
-        this.tenativeDeformation = new Matrix2x2();
+        //this.tenativeDeformation = new Matrix2x2();
 
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();

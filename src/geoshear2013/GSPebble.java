@@ -67,6 +67,7 @@ public class GSPebble extends GSEllipse {
     }
     
     /*------------------------------------------------------------------------*/
+    @Override
     public GSPebble clone() {
         GSPebble theClone = new GSPebble(this.x, this.y, this.majorRadius, this.minorRadius, this.theta);
         theClone.setColor(this.color);
@@ -102,7 +103,7 @@ public class GSPebble extends GSEllipse {
         g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
                      (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
     }
-    
+
     /*------------------------------------------------------------------------*/
 
     public void setColor(Color c) {
