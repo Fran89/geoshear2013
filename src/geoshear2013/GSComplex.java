@@ -45,11 +45,18 @@ public class GSComplex implements Watchable {
                 tenativelyDeformedPebbles.get(i).drawOnto(g2d, isFilled, showAxes);
                 //tenativelyDeformedPebbles.get(i).errDump();
             }
+            
             GSPebble strain = new GSPebble(100, 100);
             strain.setColor(Color.red);
-            strain.deform(tenativeDeformation);
-//            strain.errDump();
-            strain.drawOnto(g2d, false, true);
+            if (tenativeDeformation.isRotational()) {
+                g2d.setColor(strain.color);
+                double rotDegr = (180/Math.PI) * Math.acos(tenativeDeformation.m00) * ((tenativeDeformation.m01 > 0) ? -1 : 1);
+//                System.err.println("strain rot: "+rotDegr);
+                g2d.fillArc(-100, -100, 200, 200, 0, (int)rotDegr);
+            } else {
+                strain.deform(tenativeDeformation);
+                strain.drawOnto(g2d, false, true);
+            }
         }
     }
     

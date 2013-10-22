@@ -266,5 +266,5 @@ public class GSEllipse {
 //        af.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
         AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
         return af;
-    }
+    }    
 }
