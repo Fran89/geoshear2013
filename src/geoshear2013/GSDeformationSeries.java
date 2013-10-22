@@ -12,20 +12,20 @@ import java.util.ListIterator;
  *
  * @author cwarren
  */
-public class GSEllipseSeries extends ArrayList {
+public class GSDeformationSeries extends ArrayList {
 
-    private Matrix2x2 compositeTransform;
+    private Deformation compositeDeformation;
     
-    public GSEllipseSeries() {
+    public GSDeformationSeries() {
         super();
        // this.boundSets = new ArrayList(4);
-        this.compositeTransform = new Matrix2x2();
+        this.compositeDeformation = new Deformation();
     }
 
-    public GSEllipseSeries(int initialCapacity) {
+    public GSDeformationSeries(int initialCapacity) {
         super(initialCapacity);
        // this.boundSets = new ArrayList(4);
-        this.compositeTransform = new Matrix2x2();
+        this.compositeDeformation = new Deformation();
     }
 
 
@@ -36,21 +36,21 @@ public class GSEllipseSeries extends ArrayList {
      * @return an ellipse that is the composite of all ellipses in the series as if each were a strain applied to the next (sans translations)
      */
     public Matrix2x2 getCompositeTransform() {
-        return this.compositeTransform;
+        return this.compositeDeformation;
     }
     
     private void rebuildCompositeTransform() {
-        this.compositeTransform = new Matrix2x2();
+        this.compositeDeformation = new Deformation();
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            this.compositeTransform.timesInPlace(((GSPebble)(li.next())).getMatrix());
+            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
         }
     }
     /*---------------------------------------------------------------------*/
     
     @Override
-    public GSEllipse get(int index) {
-        return (GSEllipse)(super.get(index));
+    public Deformation get(int index) {
+        return (Deformation)(super.get(index));
     }
 
     /**
@@ -58,8 +58,8 @@ public class GSEllipseSeries extends ArrayList {
      * @param p
      * @return
      */
-    public boolean add(GSEllipse e) {
-        boolean res = super.add(e);
+    public boolean add(Deformation d) {
+        boolean res = super.add(d);
         if (res) {
            this.rebuildCompositeTransform();
         }

@@ -257,25 +257,4 @@ V = W*C;
             System.out.println("USV': "+svdcheck.toString());
         }
     }
-    
-    /**
-     * @return true if ththis matrix represents a simple rotational transformation
-     */
-    public boolean isRotational() {
-        return this.m00==this.m11 && this.m01==(-1*this.m10);
-    }
-
-    /**
-     * @return true if this matrix represents a simple scaling transformation
-     */
-    public boolean isScaling() {
-        return this.m01==0 && this.m10==0;
-    }
-
-    /**
-     * @return true if this matrix represents a simple shearing transformation
-     */
-    public boolean isShearing() {
-        return this.m00==1 && this.m11==1 && (this.m01!=0 || this.m10!=0);
-    }
 }

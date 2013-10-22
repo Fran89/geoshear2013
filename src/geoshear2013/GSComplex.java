@@ -16,7 +16,7 @@ import java.util.ListIterator;
  */
 public class GSComplex implements Watchable {
     public GSPebbleSetSeries pebbleSets;
-    public GSEllipseSeries deformations;
+    public GSDeformationSeries deformations;
     
     /**
      * the center of this complex relative to 0,0 as the upper left
@@ -27,13 +27,13 @@ public class GSComplex implements Watchable {
     public GSComplex() {
         this.pebbleSets = new GSPebbleSetSeries();
         this.pebbleSets.add(new GSPebbleSet(this));
-        this.deformations = new GSEllipseSeries();
+        this.deformations = new GSDeformationSeries();
         this.center = new GSPoint(0,0);
     }
     
     /*------------------------------------------------------------------------*/
 
-    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, Matrix2x2 tenativeDeformation) {
+    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, Deformation tenativeDeformation) {
         if (tenativeDeformation.isIdentity()) {
             for (int i=0; i<this.pebbleSets.getLast().size(); i++) {
                 this.pebbleSets.getLast().get(i).drawOnto(g2d, isFilled, showAxes);
@@ -46,17 +46,17 @@ public class GSComplex implements Watchable {
                 //tenativelyDeformedPebbles.get(i).errDump();
             }
             
-            GSPebble strain = new GSPebble(100, 100);
-            strain.setColor(Color.red);
-            if (tenativeDeformation.isRotational()) {
-                g2d.setColor(strain.color);
-                double rotDegr = (180/Math.PI) * Math.acos(tenativeDeformation.m00) * ((tenativeDeformation.m01 > 0) ? -1 : 1);
-//                System.err.println("strain rot: "+rotDegr);
-                g2d.fillArc(-100, -100, 200, 200, 0, (int)rotDegr);
-            } else {
-                strain.deform(tenativeDeformation);
-                strain.drawOnto(g2d, false, true);
-            }
+//            GSPebble strain = new GSPebble(100, 100);
+//            strain.setColor(Color.red);
+//            if (tenativeDeformation.isRotational()) {
+//                g2d.setColor(strain.color);
+//                double rotDegr = (180/Math.PI) * Math.acos(tenativeDeformation.m00) * ((tenativeDeformation.m01 > 0) ? -1 : 1);
+////                System.err.println("strain rot: "+rotDegr);
+//                g2d.fillArc(-100, -100, 200, 200, 0, (int)rotDegr);
+//            } else {
+//                strain.deform(tenativeDeformation);
+//                strain.drawOnto(g2d, false, true);
+//            }
         }
     }
     

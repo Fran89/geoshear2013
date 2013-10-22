@@ -25,7 +25,7 @@ class GSComplexUI extends JPanel {
     
     public GSComplex gsc;
 
-    private Matrix2x2 tenativeDeformation;
+    private Deformation tenativeDeformation;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -51,7 +51,7 @@ class GSComplexUI extends JPanel {
     public GSComplexUI(GSComplex gsc) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
         this.displayTransform = new AffineTransform();
-        this.tenativeDeformation = new Matrix2x2();
+        this.tenativeDeformation = new Deformation();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
 
@@ -78,7 +78,7 @@ class GSComplexUI extends JPanel {
         this.shiftIsDown = evt.isShiftDown();
 
         if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
-            this.tenativeDeformation = new Matrix2x2();
+            this.tenativeDeformation = new Deformation();
         }
     }  
 
@@ -130,7 +130,7 @@ class GSComplexUI extends JPanel {
                     double angleDiffDeg = angleDiff * (180/Math.PI);
                     System.err.println("baserot degr: "+angleDiffDeg);
     
-                    this.tenativeDeformation = new Matrix2x2(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
+                    this.tenativeDeformation = new Deformation(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
                     
                 }  else if (evt.isControlDown()) {
                     System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
@@ -139,9 +139,9 @@ class GSComplexUI extends JPanel {
                     if (xCompress < .01) { xCompress = .01; }
                     if (yCompress < .01) { yCompress = .01; }
                     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                        this.tenativeDeformation = new Matrix2x2(xCompress, 0, 0, 1/xCompress);
+                        this.tenativeDeformation = new Deformation(xCompress, 0, 0, 1/xCompress);
                     } else {
-                        this.tenativeDeformation = new Matrix2x2(1/yCompress, 0, 0, yCompress);
+                        this.tenativeDeformation = new Deformation(1/yCompress, 0, 0, yCompress);
                     }
                     System.err.println("tenative compress def: "+this.tenativeDeformation.toString());
                 } else if (evt.isShiftDown()) {
@@ -149,9 +149,9 @@ class GSComplexUI extends JPanel {
                     double xShear = deltaX/dragOriginPointInGSCSystem.getY();
                     double yShear = deltaY/dragOriginPointInGSCSystem.getX();
                     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                        this.tenativeDeformation = new Matrix2x2(1, 0, xShear*-1, 1);
+                        this.tenativeDeformation = new Deformation(1, 0, xShear*-1, 1);
                     } else {
-                        this.tenativeDeformation = new Matrix2x2(1, yShear*-1, 0, 1);
+                        this.tenativeDeformation = new Deformation(1, yShear*-1, 0, 1);
                     }
                     System.err.println("tenative shear def: "+this.tenativeDeformation.toString());
                 } else {
@@ -254,6 +254,8 @@ class GSComplexUI extends JPanel {
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
 
         this.gsc.drawOnto(g2d, false, true, this.tenativeDeformation);
+
+        this.tenativeDeformation.drawOnto(g2d);
     }
     
     
