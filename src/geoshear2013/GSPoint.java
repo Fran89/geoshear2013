@@ -4,6 +4,8 @@
  */
 package geoshear2013;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author cwarren
@@ -24,5 +26,9 @@ public class GSPoint {
     void set(double sx, double sy) {
         this.x = sx;
         this.y = sy;
+    }
+    
+    public Point2D asPoint2D() {
+        return new Point2D.Double(this.x, this.y);
     }
 }
