@@ -38,10 +38,14 @@ class GSComplexUI extends JPanel {
 
     private double lastMouseDownX;
     private double lastMouseDownY;
+    private double lastMouseDownAngle;
+    private Point2D lastMouseDownPointInGSCSystem;
 
     private double lastMouseDragX;
     private double lastMouseDragY;
-    
+    private double lastMouseDragAngle;
+    private Point2D lastMouseDragPointInGSCSystem;
+        
     private boolean shiftIsDown = false;
     private boolean ctrlIsDown = false;
     private boolean altIsDown = false;
@@ -69,9 +73,22 @@ class GSComplexUI extends JPanel {
     public void handleMousePressed(java.awt.event.MouseEvent evt) {
         this.lastMouseDownX = evt.getPoint().x;
         this.lastMouseDownY = evt.getPoint().y;
-
+        this.lastMouseDownAngle = 0;
+        this.lastMouseDownPointInGSCSystem = null;
+        
+        
+        try {
+            this.lastMouseDownPointInGSCSystem = this.displayTransform.inverseTransform(evt.getPoint(), this.lastMouseDownPointInGSCSystem);
+            this.lastMouseDownPointInGSCSystem.setLocation(this.lastMouseDownPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - this.lastMouseDownPointInGSCSystem.getY());
+            
+            this.lastMouseDownAngle = Math.atan(this.lastMouseDownPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getX());
+        } catch (NoninvertibleTransformException ex) {
+            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.lastMouseDragX = evt.getPoint().x;
         this.lastMouseDragY = evt.getPoint().y;
+        this.lastMouseDragAngle = this.lastMouseDownAngle;
+        this.lastMouseDragPointInGSCSystem = (Point2D) this.lastMouseDownPointInGSCSystem.clone();
     
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
@@ -97,29 +114,24 @@ class GSComplexUI extends JPanel {
 //        System.err.println("evt is: "+evt.toString());
 //        System.out.println("mouse event is: "+evt.toString());
         Point2D evtPointInGSCSystem = null;
-        Point2D dragOriginPointInGSCSystem = null;
         try {
             evtPointInGSCSystem = this.displayTransform.inverseTransform(evt.getPoint(), evtPointInGSCSystem);
             evtPointInGSCSystem.setLocation(evtPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - evtPointInGSCSystem.getY());
 //            System.out.println("transformed evt point is : "+evtPointInGSCSystem.toString());
-
-            dragOriginPointInGSCSystem = this.displayTransform.inverseTransform(new Point2D.Double(lastMouseDownX, lastMouseDownY), dragOriginPointInGSCSystem);
-            dragOriginPointInGSCSystem.setLocation(dragOriginPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - dragOriginPointInGSCSystem.getY());
             
             double deltaX = evt.getX() - this.lastMouseDownX;
             double deltaY = this.lastMouseDownY - evt.getY();
-            
+                        
             if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
                 if (evt.isAltDown()) {
-                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with ALT down (rotate)");
+//                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with ALT down (rotate)");
                     // get the angle of the drag origin point
                     // get the angle of the drag current point
                     // rotate by the difference between them
-                    double dragOriginAngle = Math.atan(dragOriginPointInGSCSystem.getY()/dragOriginPointInGSCSystem.getX());
-                    double dragCurrentAngle = Math.atan(evtPointInGSCSystem.getY()/evtPointInGSCSystem.getX());
-                    double angleDiff = dragCurrentAngle - dragOriginAngle;
+                    
+                    double angleDiff = this.lastMouseDragAngle - this.lastMouseDownAngle;
 
-                    if (((evtPointInGSCSystem.getX() > 0) && (dragOriginPointInGSCSystem.getX() <= 0)) || ((evtPointInGSCSystem.getX() <= 0) && (dragOriginPointInGSCSystem.getX() > 0))) {
+                    if (((evtPointInGSCSystem.getX() > 0) && (this.lastMouseDragPointInGSCSystem.getX() <= 0)) || ((evtPointInGSCSystem.getX() <= 0) && (this.lastMouseDragPointInGSCSystem.getX() > 0))) {
                         if (angleDiff < 0) {
                             angleDiff = angleDiff + Math.PI;
                         } else {
@@ -128,14 +140,14 @@ class GSComplexUI extends JPanel {
                     }
                     
                     double angleDiffDeg = angleDiff * (180/Math.PI);
-                    System.err.println("baserot degr: "+angleDiffDeg);
+//                    System.err.println("baserot degr: "+angleDiffDeg);
     
                     this.tenativeDeformation = new Deformation(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
                     
                 }  else if (evt.isControlDown()) {
-                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
-                    double xCompress = evtPointInGSCSystem.getX()/dragOriginPointInGSCSystem.getX();
-                    double yCompress = evtPointInGSCSystem.getY()/dragOriginPointInGSCSystem.getY();
+//                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with CTRL down (compress)");
+                    double xCompress = evtPointInGSCSystem.getX()/this.lastMouseDragPointInGSCSystem.getX();
+                    double yCompress = evtPointInGSCSystem.getY()/this.lastMouseDragPointInGSCSystem.getY();
                     if (xCompress < .01) { xCompress = .01; }
                     if (yCompress < .01) { yCompress = .01; }
                     if (Math.abs(deltaX) > Math.abs(deltaY)) {
@@ -143,34 +155,37 @@ class GSComplexUI extends JPanel {
                     } else {
                         this.tenativeDeformation = new Deformation(1/yCompress, 0, 0, yCompress);
                     }
-                    System.err.println("tenative compress def: "+this.tenativeDeformation.toString());
+//                    System.err.println("tenative compress def: "+this.tenativeDeformation.toString());
                 } else if (evt.isShiftDown()) {
-                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with SHIFT down (shear)");
-                    double xShear = deltaX/dragOriginPointInGSCSystem.getY();
-                    double yShear = deltaY/dragOriginPointInGSCSystem.getX();
+//                    System.err.println("TODO: UI_MODE_DEFORMS mouse drag with SHIFT down (shear)");
+                    double xShear = deltaX/this.lastMouseDragPointInGSCSystem.getY();
+                    double yShear = deltaY/this.lastMouseDragPointInGSCSystem.getX();
                     if (Math.abs(deltaX) > Math.abs(deltaY)) {
                         this.tenativeDeformation = new Deformation(1, 0, xShear*-1, 1);
                     } else {
                         this.tenativeDeformation = new Deformation(1, yShear*-1, 0, 1);
                     }
-                    System.err.println("tenative shear def: "+this.tenativeDeformation.toString());
+//                    System.err.println("tenative shear def: "+this.tenativeDeformation.toString());
                 } else {
                     this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                     (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
                 }
                 this.repaint();
             }
-
+      
+            this.lastMouseDragX = evt.getPoint().x;
+            this.lastMouseDragY = evt.getPoint().y;
+            this.lastMouseDragAngle = Math.atan(evtPointInGSCSystem.getY()/evtPointInGSCSystem.getX());
+            this.lastMouseDragPointInGSCSystem = this.displayTransform.inverseTransform(new Point2D.Double(lastMouseDownX, lastMouseDownY), this.lastMouseDragPointInGSCSystem);
+            this.lastMouseDragPointInGSCSystem.setLocation(this.lastMouseDragPointInGSCSystem.getX() - this.gsc.getCenter().x, this.gsc.getCenter().y - this.lastMouseDragPointInGSCSystem.getY());
         } catch (NoninvertibleTransformException ex) {
             Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        this.lastMouseDragX = evt.getPoint().x;
-        this.lastMouseDragY = evt.getPoint().y;
+        }  
     }
     
     public void handleMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-        System.err.println("mouse wheel move in gscomplex ui");
-        System.err.println("evt is: "+evt.toString());
+//        System.err.println("mouse wheel move in gscomplex ui");
+//        System.err.println("evt is: "+evt.toString());
         
         double zoom_factor = 1- ((evt.getPreciseWheelRotation() * evt.getScrollAmount()) * GSComplexUI.zoomPerScrollFactor);
         
@@ -225,7 +240,15 @@ class GSComplexUI extends JPanel {
             if (this.altIsDown) {
                 System.err.println("TODO: paint UI_MODE_DEFORMS with ALT down (rotate)");
             }  else if (this.ctrlIsDown) {
-                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
+//                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
+                if ((this.lastMouseDownX != this.lastMouseDragX) || (this.lastMouseDownY != this.lastMouseDragY)) {
+                    g2d.setColor (Color.RED);
+                    if (Math.abs(this.lastMouseDragX-this.lastMouseDownX) >= Math.abs(this.lastMouseDragY-this.lastMouseDownY)) {
+                        g2d.drawLine((int) this.lastMouseDownX, (int) this.lastMouseDownY, (int) this.lastMouseDragX, (int) this.lastMouseDownY);
+                    } else {
+                        g2d.drawLine((int) this.lastMouseDownX, (int) this.lastMouseDownY, (int) this.lastMouseDownX, (int) this.lastMouseDragY);
+                    }
+                }
             } else if (this.shiftIsDown) {
 //                System.err.println("TODO: paint UI_MODE_DEFORMS with SHIFT down (shear)");
                 if ((this.lastMouseDownX != this.lastMouseDragX) || (this.lastMouseDownY != this.lastMouseDragY)) {
