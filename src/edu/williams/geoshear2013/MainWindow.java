@@ -15,6 +15,7 @@ public class MainWindow extends javax.swing.JFrame {
 //    private double cy;
     private GSComplexUI gscUI;
     private HelpWindow helpWindow;
+    private AboutWindow aboutWindow;
     
     /**
      * Creates new form MainWindow
@@ -23,8 +24,11 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         
         this.helpWindow = new HelpWindow();
-        this.helpWindow.setLocation(this.displayPanel.getLocation());
+        this.helpWindow.setLocationByPlatform(true);
         this.helpWindow.setSize(this.displayPanel.getWidth() + 50,this.displayPanel.getHeight() + 50);
+        
+        this.aboutWindow = new AboutWindow();
+        this.aboutWindow.setLocationByPlatform(true);
         
         this.gscUI = new GSComplexUI(new GSComplex());
 
@@ -253,7 +257,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_displayPanelKeyReleased
 
     private void AboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutMenuItemActionPerformed
-        // TODO add your handling code here:
+        this.aboutWindow.setVisible(true);
     }//GEN-LAST:event_AboutMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed
