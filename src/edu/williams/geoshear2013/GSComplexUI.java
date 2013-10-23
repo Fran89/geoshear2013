@@ -8,6 +8,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
@@ -32,8 +33,11 @@ class GSComplexUI extends JPanel {
     
     private int currentUIMode;
     
-    private static int UI_MODE_DEFORMS = 1;
-    private static int UI_MODE_EDIT_PEBBLES = 2;
+    public static int UI_MODE_DEFORMS = 1;
+    public static int UI_MODE_EDIT_PEBBLES = 2;
+
+    public static double ZOOM_MIN = .1;
+    public static double ZOOM_MAX = 10;
     
     private static double zoomPerScrollFactor = .025;
 
@@ -85,7 +89,7 @@ class GSComplexUI extends JPanel {
     }
     
     public void handleMousePressed(java.awt.event.MouseEvent evt) {
-//        System.out.println("click point is : "+evt.getPoint().toString());
+//        System.out.println("handleMousePressed is : "+evt.toString());
         this.lastMouseDownX = evt.getPoint().x;
         this.lastMouseDownY = evt.getPoint().y;
         this.lastMouseDownPoint = (Point2D) evt.getPoint().clone();
@@ -115,7 +119,7 @@ class GSComplexUI extends JPanel {
     }  
 
     public void handleMouseReleased(java.awt.event.MouseEvent evt) {
-        //this.tentativeDeformation = new Matrix2x2();
+//        System.out.println("handleMouseReleased is : "+evt.toString());
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
@@ -186,47 +190,73 @@ class GSComplexUI extends JPanel {
     }
     
     public void handleMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-//        System.err.println("mouse wheel move in gscomplex ui");
-//        System.err.println("evt is: "+evt.toString());
-        
         double zoom_factor = 1- ((evt.getPreciseWheelRotation() * evt.getScrollAmount()) * GSComplexUI.zoomPerScrollFactor);
-        
-//        AffineTransform zoomTransform = new AffineTransform(zoom_factor, 0, 0, zoom_factor, this.gsc.getCenter().x, this.gsc.getCenter().y);
 
-        this.displayTransform.scale(zoom_factor, zoom_factor);
-        
-        // this re-centers the display around the point at which the zoom occurs
-        // TODO: this doesn't work quite right, but it's close enough for now...
-        this.displayTransform.translate(-1 * (evt.getPoint().x - evt.getPoint().x / zoom_factor), 
-                                        -1 * (evt.getPoint().y - evt.getPoint().y / zoom_factor));
+        this.setDisplayZoom(zoom_factor, false,evt.getPoint());
+    }
+
+    public void setDisplayZoom(double amt, boolean isExact, Point2D toPoint) {
+        Point2D toPointInGCSprescale = this.inGSCSystem(toPoint);
+
+        double initAmt = amt;
+        if (! isExact) {
+            amt = this.displayTransform.getScaleX() * amt;
+        }
+        if (amt < GSComplexUI.ZOOM_MIN) { amt = GSComplexUI.ZOOM_MIN; }
+        if (amt > GSComplexUI.ZOOM_MAX) { amt = GSComplexUI.ZOOM_MAX; }
+        double zoomFactor = amt/this.displayTransform.getScaleX();
+        this.displayTransform.scale(zoomFactor,zoomFactor);
+
+        Point2D toPointInGCSpostscale = this.inGSCSystem(toPoint);
+        this.shiftPan((toPointInGCSprescale.getX()-toPointInGCSpostscale.getX())*this.displayTransform.getScaleX(),
+                      (toPointInGCSpostscale.getY()-toPointInGCSprescale.getY())*this.displayTransform.getScaleX());
 
         this.repaint();
     }
-            
+    
     /*------------------------------------------------------------------------*/
 
     public void setCenter(double x, double y) {
         this.gsc.setCenter(x,y);
+        this.repaint();
     }
-    
+    public void centerDisplay() {
+        this.setPan(this.getWidth()/2 - this.gsc.getCenter().x*this.displayTransform.getScaleX(),
+                    this.getHeight()/2 - this.gsc.getCenter().y*this.displayTransform.getScaleX());    
+    }   
     public void setPan(double x, double y) {
         // REFACTOR? a way to just update the translate vals of the display transform
+        //System.err.println("setting pan to: "+x+","+y);
         double[] matrixVals = new double[6];
         this.displayTransform.getMatrix(matrixVals);
         matrixVals[4] = x;
         matrixVals[5] = y;
         this.displayTransform = new AffineTransform(matrixVals);
+        this.repaint();
     }
-    public void setZoom(double scale) {
+
+    public void shiftPan(double deltaX, double deltaY) {
         // REFACTOR? a way to just update the translate vals of the display transform
+        //System.err.println("setting pan to: "+x+","+y);
         double[] matrixVals = new double[6];
         this.displayTransform.getMatrix(matrixVals);
-        matrixVals[0] = scale;
-        matrixVals[3] = scale;
+        matrixVals[4] -= deltaX;
+        matrixVals[5] -= deltaY;
         this.displayTransform = new AffineTransform(matrixVals);
-    }
+        this.repaint();
+    }    
+    //    public void setZoom(double scale) {
+//        // REFACTOR? a way to just update the translate vals of the display transform
+//        double[] matrixVals = new double[6];
+//        this.displayTransform.getMatrix(matrixVals);
+//        matrixVals[0] = scale;
+//        matrixVals[3] = scale;
+//        this.displayTransform = new AffineTransform(matrixVals);
+//        this.repaint();
+//    }
     public void resetDisplayTransform() {
         this.displayTransform = new AffineTransform();
+        this.repaint ();
     }
     
     @Override
@@ -285,6 +315,21 @@ class GSComplexUI extends JPanel {
                 }
             }
 
+        }
+    }
+
+    void handleMouseClicked(MouseEvent evt) {
+//        System.out.println("handleMouseClicked is : "+evt.toString());
+        if (evt.getButton() == 3) { // right-click to center on the selected point
+//            System.out.println("right-click");
+            Point2D displayCenterInGCS = this.inGSCSystem(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
+            Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
+            System.out.println("clickPtInGCS: "+clickPtInGCS.toString());
+            double deltaX = clickPtInGCS.getX()-displayCenterInGCS.getX();
+            double deltaY = displayCenterInGCS.getY()-clickPtInGCS.getY();
+            deltaX = deltaX * this.displayTransform.getScaleX();
+            deltaY = deltaY * this.displayTransform.getScaleX();
+            this.shiftPan(deltaX, deltaY);
         }
     }
     

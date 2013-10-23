@@ -92,6 +92,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelZoom = new javax.swing.JLabel();
         jSliderZoom = new javax.swing.JSlider();
         jPanelResetButtons = new javax.swing.JPanel();
+        jButtonUnzoom = new javax.swing.JButton();
+        jButtonCenter = new javax.swing.JButton();
+        jButtonReset = new javax.swing.JButton();
         jPanelDeformControls = new javax.swing.JPanel();
         jPanelStrainControls = new javax.swing.JPanel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
@@ -117,6 +120,9 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jPanelContainerDisplay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelContainerDisplayMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanelContainerDisplayMousePressed(evt);
             }
@@ -169,21 +175,44 @@ public class MainWindow extends javax.swing.JFrame {
         jSliderZoom.setMinorTickSpacing(5);
         jSliderZoom.setPaintTicks(true);
         jSliderZoom.setToolTipText("left to zoom out, right to zoom in");
+        jSliderZoom.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderZoomStateChanged(evt);
+            }
+        });
         jPanelZoomControl.add(jSliderZoom);
         jSliderZoom.getAccessibleContext().setAccessibleName("zoom control");
 
         jPanelDisplayControls.add(jPanelZoomControl);
 
-        javax.swing.GroupLayout jPanelResetButtonsLayout = new javax.swing.GroupLayout(jPanelResetButtons);
-        jPanelResetButtons.setLayout(jPanelResetButtonsLayout);
-        jPanelResetButtonsLayout.setHorizontalGroup(
-            jPanelResetButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 187, Short.MAX_VALUE)
-        );
-        jPanelResetButtonsLayout.setVerticalGroup(
-            jPanelResetButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 68, Short.MAX_VALUE)
-        );
+        jPanelResetButtons.setLayout(new javax.swing.BoxLayout(jPanelResetButtons, javax.swing.BoxLayout.X_AXIS));
+
+        jButtonUnzoom.setText("Unzoom");
+        jButtonUnzoom.setMargin(new java.awt.Insets(2, 8, 2, 8));
+        jButtonUnzoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUnzoomActionPerformed(evt);
+            }
+        });
+        jPanelResetButtons.add(jButtonUnzoom);
+
+        jButtonCenter.setText("Center");
+        jButtonCenter.setMargin(new java.awt.Insets(2, 8, 2, 8));
+        jButtonCenter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCenterActionPerformed(evt);
+            }
+        });
+        jPanelResetButtons.add(jButtonCenter);
+
+        jButtonReset.setText("Reset");
+        jButtonReset.setMargin(new java.awt.Insets(2, 8, 2, 8));
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
+        jPanelResetButtons.add(jButtonReset);
 
         jPanelDisplayControls.add(jPanelResetButtons);
 
@@ -351,6 +380,61 @@ public class MainWindow extends javax.swing.JFrame {
         this.helpWindow.setVisible(true);
     }//GEN-LAST:event_HelpMenuItemActionPerformed
 
+    private void jSliderZoomStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderZoomStateChanged
+        double amt = this.jSliderZoom.getModel().getValue();
+        double scaling = 1.0;
+        double outIncr = (1-GSComplexUI.ZOOM_MIN) / 50;
+        double inIncr = (GSComplexUI.ZOOM_MAX - 1) / 50;
+        
+        if (amt < 50)
+        {
+            this.gscUI.setDisplayZoom(GSComplexUI.ZOOM_MIN + outIncr*amt, true, this.gscUI.gsc.getCenter().asPoint2D());
+        }
+        else if (amt > 50)
+        {
+            this.gscUI.setDisplayZoom(1 + inIncr*(amt-50), true, this.gscUI.gsc.getCenter().asPoint2D());
+        } else {
+            this.gscUI.setDisplayZoom(1, true, this.gscUI.gsc.getCenter().asPoint2D());
+        }
+        
+        this.repaint();
+        /*
+        int amt = this.jSliderDisplayZoom.getModel ().getValue ();
+        //System.out.print("slider amount is "+Integer.toString(amt)+", ");
+        double scaling = 1.0;
+        if (amt < 50)
+        {
+            scaling = ((1.0-this.ZOOM_MIN) * ((double)amt/50.0)) + this.ZOOM_MIN;
+            //this.getXSect ().setMagnifierScale (((1.0 - this.getXSect ().MIN_MAGNIFIER) * (double)amt/50.0) + this.getXSect ().MIN_MAGNIFIER);
+        }
+        else
+        {
+            scaling = ((this.ZOOM_MAX-1.0) * ((double)(amt-50.0)/50.0)) + 1.0;
+        }
+        //System.out.print("scaling is "+Double.toString(scaling)+"\n");
+        this.gscUI.setDisplayScaling(scaling);
+        this.repaint ();         */
+    }//GEN-LAST:event_jSliderZoomStateChanged
+
+    private void jButtonUnzoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnzoomActionPerformed
+        this.gscUI.setDisplayZoom(1, true, this.gscUI.gsc.getCenter().asPoint2D());
+        this.jSliderZoom.getModel().setValue(50);
+        this.repaint ();
+    }//GEN-LAST:event_jButtonUnzoomActionPerformed
+
+    private void jButtonCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCenterActionPerformed
+        this.gscUI.centerDisplay();
+    }//GEN-LAST:event_jButtonCenterActionPerformed
+
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+        this.jSliderZoom.getModel().setValue(50);
+        this.gscUI.resetDisplayTransform();
+    }//GEN-LAST:event_jButtonResetActionPerformed
+
+    private void jPanelContainerDisplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseClicked
+        this.gscUI.handleMouseClicked(evt);
+    }//GEN-LAST:event_jPanelContainerDisplayMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -395,6 +479,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu GeoshearMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenuBar MainWindowMenuBar;
+    private javax.swing.JButton jButtonCenter;
+    private javax.swing.JButton jButtonReset;
+    private javax.swing.JButton jButtonUnzoom;
     private javax.swing.JLabel jLabelZoom;
     private javax.swing.JPanel jPanelContainerControls;
     private javax.swing.JPanel jPanelContainerDisplay;
