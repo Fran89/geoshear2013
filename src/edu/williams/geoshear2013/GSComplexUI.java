@@ -26,7 +26,7 @@ class GSComplexUI extends JPanel {
     
     public GSComplex gsc;
 
-    private Deformation tenativeDeformation;
+    private Deformation tentativeDeformation;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -60,7 +60,7 @@ class GSComplexUI extends JPanel {
     public GSComplexUI(GSComplex gsc) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
         this.displayTransform = new AffineTransform();
-        this.tenativeDeformation = new Deformation();
+        this.tentativeDeformation = new Deformation();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
 
@@ -110,17 +110,43 @@ class GSComplexUI extends JPanel {
         this.shiftIsDown = evt.isShiftDown();
 
         if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
-            this.tenativeDeformation = new Deformation();
+            this.tentativeDeformation = new Deformation();
         }
     }  
 
     public void handleMouseReleased(java.awt.event.MouseEvent evt) {
-        //this.tenativeDeformation = new Matrix2x2();
+        //this.tentativeDeformation = new Matrix2x2();
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
         this.repaint();
     } 
+    
+    public void tentativeDeformationSetToRotate(double angleRad) {
+        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
+    }
+    
+    public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
+        if (compressionFactorX < .01) { compressionFactorX = .01; }
+        if (compressionFactorY < .01) { compressionFactorY = .01; }
+        if (isInXDirection) {
+            this.tentativeDeformation = new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX);
+        } else {
+            this.tentativeDeformation = new Deformation(1/compressionFactorY, 0, 0, compressionFactorY);
+        }
+    }
+    
+    public void tentativeDeformationSetToShear(double shearFactorX,double shearFactorY,boolean isInXDirection) {
+        if (shearFactorX > 100) { shearFactorX = 100; }
+        if (shearFactorX < -100) { shearFactorX = -100; }
+        if (shearFactorY > 100) { shearFactorY = 100; }
+        if (shearFactorY < -100) { shearFactorY = -100; }
+        if (isInXDirection) {
+            this.tentativeDeformation = new Deformation(1, 0, shearFactorX*-1, 1);;
+        } else {
+            this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
+        }
+    }
     
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
         Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
@@ -128,26 +154,16 @@ class GSComplexUI extends JPanel {
         double deltaY = this.lastMouseDownY - evt.getY();
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
             if (evt.isAltDown()) {
-                double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;    
-                this.tenativeDeformation = new Deformation(Math.cos(angleDiff), -1 * Math.sin(angleDiff), Math.sin(angleDiff), Math.cos(angleDiff));
+                this.tentativeDeformationSetToRotate(this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem);
             }  else if (evt.isControlDown()) {
-                double xCompress = evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX();
-                double yCompress = evtPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getY();
-                if (xCompress < .01) { xCompress = .01; }
-                if (yCompress < .01) { yCompress = .01; }
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    this.tenativeDeformation = new Deformation(xCompress, 0, 0, 1/xCompress);
-                } else {
-                    this.tenativeDeformation = new Deformation(1/yCompress, 0, 0, yCompress);
-                }
+                this.tentativeDeformationSetToCompression(evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX(),
+                                                          evtPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getY(),
+                                                          Math.abs(deltaX) > Math.abs(deltaY));
             } else if (evt.isShiftDown()) {
-                double xShear = deltaX/this.lastMouseDragPointInGSCSystem.getY();
-                double yShear = deltaY/this.lastMouseDragPointInGSCSystem.getX();
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    this.tenativeDeformation = new Deformation(1, 0, xShear*-1, 1);
-                } else {
-                    this.tenativeDeformation = new Deformation(1, yShear*-1, 0, 1);
-                }
+                this.tentativeDeformationSetToShear(deltaX/this.lastMouseDragPointInGSCSystem.getY(),
+                                                    deltaY/this.lastMouseDragPointInGSCSystem.getX(), 
+                                                    Math.abs(deltaX) > Math.abs(deltaY));
+                
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -233,12 +249,12 @@ class GSComplexUI extends JPanel {
                 
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
         
-        this.gsc.drawOnto(g2d, false, true, this.tenativeDeformation);
+        this.gsc.drawOnto(g2d, false, true, this.tentativeDeformation);
         
         // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
-        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tenativeDeformation.isIdentity()) {
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
             g2d.setStroke(GSComplexUI.INFO_STROKE);
-            this.tenativeDeformation.drawOnto(g2d);
+            this.tentativeDeformation.drawOnto(g2d);
         
             g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
             g2d.setColor (Color.BLUE);
