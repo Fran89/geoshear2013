@@ -26,6 +26,7 @@ class GSComplexUI extends JPanel {
 //    public GSPebble p;
     
     public GSComplex gsc;
+    private MainWindow mainWindow;
 
     private Deformation tentativeDeformation;
     
@@ -61,8 +62,9 @@ class GSComplexUI extends JPanel {
     
     /*------------------------------------------------------------------------*/
 
-    public GSComplexUI(GSComplex gsc) {
+    public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
+        this.mainWindow = mainWindow;
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
@@ -193,6 +195,8 @@ class GSComplexUI extends JPanel {
         double zoom_factor = 1- ((evt.getPreciseWheelRotation() * evt.getScrollAmount()) * GSComplexUI.zoomPerScrollFactor);
 
         this.setDisplayZoom(zoom_factor, false,evt.getPoint());
+        
+        this.mainWindow.updateZoomSlider(this.displayTransform.getScaleX());
     }
 
     public void setDisplayZoom(double amt, boolean isExact, Point2D toPoint) {
@@ -324,7 +328,7 @@ class GSComplexUI extends JPanel {
 //            System.out.println("right-click");
             Point2D displayCenterInGCS = this.inGSCSystem(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
             Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
-            System.out.println("clickPtInGCS: "+clickPtInGCS.toString());
+//            System.out.println("clickPtInGCS: "+clickPtInGCS.toString());
             double deltaX = clickPtInGCS.getX()-displayCenterInGCS.getX();
             double deltaY = displayCenterInGCS.getY()-clickPtInGCS.getY();
             deltaX = deltaX * this.displayTransform.getScaleX();

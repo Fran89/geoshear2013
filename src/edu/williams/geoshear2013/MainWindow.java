@@ -30,7 +30,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.aboutWindow = new AboutWindow();
         this.aboutWindow.setLocationByPlatform(true);
         
-        this.gscUI = new GSComplexUI(new GSComplex());
+        this.gscUI = new GSComplexUI(new GSComplex(),this);
 
         int w = this.jPanelContainerDisplay.getWidth();
         int h = this.jPanelContainerDisplay.getHeight();
@@ -398,24 +398,23 @@ public class MainWindow extends javax.swing.JFrame {
         }
         
         this.repaint();
-        /*
-        int amt = this.jSliderDisplayZoom.getModel ().getValue ();
-        //System.out.print("slider amount is "+Integer.toString(amt)+", ");
-        double scaling = 1.0;
-        if (amt < 50)
-        {
-            scaling = ((1.0-this.ZOOM_MIN) * ((double)amt/50.0)) + this.ZOOM_MIN;
-            //this.getXSect ().setMagnifierScale (((1.0 - this.getXSect ().MIN_MAGNIFIER) * (double)amt/50.0) + this.getXSect ().MIN_MAGNIFIER);
-        }
-        else
-        {
-            scaling = ((this.ZOOM_MAX-1.0) * ((double)(amt-50.0)/50.0)) + 1.0;
-        }
-        //System.out.print("scaling is "+Double.toString(scaling)+"\n");
-        this.gscUI.setDisplayScaling(scaling);
-        this.repaint ();         */
     }//GEN-LAST:event_jSliderZoomStateChanged
 
+    public void updateZoomSlider(double zoomValue) {
+        double outIncr = (1-GSComplexUI.ZOOM_MIN) / 50;
+        double inIncr = (GSComplexUI.ZOOM_MAX - 1) / 50;
+        int sliderVal = 50;
+        if (zoomValue < 1) {
+            zoomValue -= GSComplexUI.ZOOM_MIN;
+            sliderVal = (int) (zoomValue/outIncr);
+        } else if (zoomValue > 1) {
+            zoomValue -= 1;
+            sliderVal = (int) (zoomValue/inIncr)+50;
+        }
+        this.jSliderZoom.getModel().setValue(sliderVal);
+        this.repaint ();
+    }
+    
     private void jButtonUnzoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnzoomActionPerformed
         this.gscUI.setDisplayZoom(1, true, this.gscUI.gsc.getCenter().asPoint2D());
         this.jSliderZoom.getModel().setValue(50);
