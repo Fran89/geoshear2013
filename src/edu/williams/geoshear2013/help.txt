@@ -1,0 +1,34 @@
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu neque justo. Vivamus dignissim tincidunt ipsum, vitae suscipit magna congue vel. Cras eget augue in urna pharetra egestas. Nulla luctus eleifend porttitor. Donec sed ipsum neque, at dictum turpis. Fusce eu rutrum urna. Donec ullamcorper commodo porta. Phasellus vitae luctus tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas nec lacus sit amet sapien facilisis rhoncus in ac risus. Nunc magna lacus, interdum et malesuada eu, euismod et neque. Praesent ac elit nunc, non semper massa. Fusce nisl erat, luctus quis venenatis non, posuere eu purus. Nulla blandit congue fringilla.
+
+main window
+    menus
+        GeoShear
+        File
+            reference file format, explained in appendices
+        Display
+        Charts
+    display controls
+    deformation controls
+    pebble editing
+        pebble selecting
+    snapshot
+    pebble display window
+        dragging deformations
+        hot keys ctrl-enter, ctrl-a, and crtl-space all apply the current deformation
+        hot key esc cancels/resets the current deformation
+charts
+    rf-phi
+        general
+            view menu
+            snapshot
+            info-click (and shift to hide it)
+        cartesian
+        polar
+    strain
+data format
+    info modeled
+    geoshear2 format
+    export
+the math
+    general approach
+    proofs
