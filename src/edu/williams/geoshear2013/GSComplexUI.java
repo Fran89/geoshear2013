@@ -276,8 +276,10 @@ class GSComplexUI extends JPanel {
         g2d.transform(this.displayTransform);
  
         g2d.setColor (Color.BLACK);
-        g2d.drawLine(0,(int)this.gsc.getCenter().y,this.getWidth(),(int)this.gsc.getCenter().y); // horizontal axis
-        g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
+//        g2d.drawLine(0,(int)this.gsc.getCenter().y,this.getWidth(),(int)this.gsc.getCenter().y); // horizontal axis
+//        g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
+        g2d.drawLine(-10000,(int)this.gsc.getCenter().y,10000,(int)this.gsc.getCenter().y); // horizontal axis
+        g2d.drawLine((int)this.gsc.getCenter().x,-10000,(int)this.gsc.getCenter().x,10000); // vertical axis
         // TODO: figure out how to get 1px wide axes (e.g. apply translation and scaling transforms separately, manually calc the additional scaling offset needed for the axes?
         // TODO: figure out how to draw the axes to the edge of the widow regarless of other factors (quick and dirty would be to set limits to extreme values - e.g. +/- 32000
                 
