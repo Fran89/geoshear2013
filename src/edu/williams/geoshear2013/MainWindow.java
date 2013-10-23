@@ -25,20 +25,20 @@ public class MainWindow extends javax.swing.JFrame {
         
         this.helpWindow = new HelpWindow();
         this.helpWindow.setLocationByPlatform(true);
-        this.helpWindow.setSize(this.displayPanel.getWidth() + 50,this.displayPanel.getHeight() + 50);
+        this.helpWindow.setSize(this.jPanelContainerDisplay.getWidth() + 50,this.jPanelContainerDisplay.getHeight() + 50);
         
         this.aboutWindow = new AboutWindow();
         this.aboutWindow.setLocationByPlatform(true);
         
         this.gscUI = new GSComplexUI(new GSComplex());
 
-        int w = this.displayPanel.getWidth();
-        int h = this.displayPanel.getHeight();
+        int w = this.jPanelContainerDisplay.getWidth();
+        int h = this.jPanelContainerDisplay.getHeight();
         this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
         this.gscUI.setBounds(0, 0, w, h);
         this.gscUI.setDoubleBuffered (true);
-        this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);
-        this.displayPanel.add(this.gscUI);
+        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
+        this.jPanelContainerDisplay.add(this.gscUI);
 
         // dev data
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
@@ -71,6 +71,8 @@ public class MainWindow extends javax.swing.JFrame {
         
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(0,0,150,150,0));
 
+//        this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);
+//        this.gscUI.repaint();
     }
 
     /**
@@ -83,8 +85,17 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jPanelContainerDisplay = new javax.swing.JPanel();
+        jPanelContainerControls = new javax.swing.JPanel();
+        jPanelDisplayControls = new javax.swing.JPanel();
+        jPanelZoomControl = new javax.swing.JPanel();
+        jLabelZoom = new javax.swing.JLabel();
+        jSliderZoom = new javax.swing.JSlider();
+        jPanelResetButtons = new javax.swing.JPanel();
+        jPanelDeformControls = new javax.swing.JPanel();
+        jPanelStrainControls = new javax.swing.JPanel();
+        jPanelEditPebbleControls = new javax.swing.JPanel();
+        jPanelSnapshotControls = new javax.swing.JPanel();
         MainWindowMenuBar = new javax.swing.JMenuBar();
         GeoshearMenu = new javax.swing.JMenu();
         HelpMenuItem = new javax.swing.JMenuItem();
@@ -97,57 +108,138 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        displayPanel.setBackground(new java.awt.Color(255, 255, 255));
-        displayPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        displayPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+        jPanelContainerDisplay.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelContainerDisplay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelContainerDisplay.setPreferredSize(new java.awt.Dimension(701, 701));
+        jPanelContainerDisplay.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-                displayPanelMouseWheelMoved(evt);
+                jPanelContainerDisplayMouseWheelMoved(evt);
             }
         });
-        displayPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanelContainerDisplay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                displayPanelMousePressed(evt);
+                jPanelContainerDisplayMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                displayPanelMouseReleased(evt);
+                jPanelContainerDisplayMouseReleased(evt);
             }
         });
-        displayPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+        jPanelContainerDisplay.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
-                displayPanelComponentResized(evt);
+                jPanelContainerDisplayComponentResized(evt);
             }
         });
-        displayPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        jPanelContainerDisplay.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                displayPanelMouseDragged(evt);
+                jPanelContainerDisplayMouseDragged(evt);
             }
         });
-        displayPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+        jPanelContainerDisplay.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                displayPanelKeyPressed(evt);
+                jPanelContainerDisplayKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                displayPanelKeyReleased(evt);
+                jPanelContainerDisplayKeyReleased(evt);
             }
         });
 
-        javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
-        displayPanel.setLayout(displayPanelLayout);
-        displayPanelLayout.setHorizontalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 699, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelContainerDisplayLayout = new javax.swing.GroupLayout(jPanelContainerDisplay);
+        jPanelContainerDisplay.setLayout(jPanelContainerDisplayLayout);
+        jPanelContainerDisplayLayout.setHorizontalGroup(
+            jPanelContainerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 705, Short.MAX_VALUE)
         );
-        displayPanelLayout.setVerticalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelContainerDisplayLayout.setVerticalGroup(
+            jPanelContainerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setText("set center");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
+        jPanelContainerControls.setLayout(new javax.swing.BoxLayout(jPanelContainerControls, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanelDisplayControls.setAlignmentY(0.0F);
+        jPanelDisplayControls.setPreferredSize(new java.awt.Dimension(187, 100));
+        jPanelDisplayControls.setLayout(new javax.swing.BoxLayout(jPanelDisplayControls, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanelZoomControl.setLayout(new javax.swing.BoxLayout(jPanelZoomControl, javax.swing.BoxLayout.X_AXIS));
+
+        jLabelZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/magnifier.gif"))); // NOI18N
+        jPanelZoomControl.add(jLabelZoom);
+
+        jSliderZoom.setMajorTickSpacing(50);
+        jSliderZoom.setMinorTickSpacing(5);
+        jSliderZoom.setPaintTicks(true);
+        jSliderZoom.setToolTipText("left to zoom out, right to zoom in");
+        jPanelZoomControl.add(jSliderZoom);
+        jSliderZoom.getAccessibleContext().setAccessibleName("zoom control");
+
+        jPanelDisplayControls.add(jPanelZoomControl);
+
+        javax.swing.GroupLayout jPanelResetButtonsLayout = new javax.swing.GroupLayout(jPanelResetButtons);
+        jPanelResetButtons.setLayout(jPanelResetButtonsLayout);
+        jPanelResetButtonsLayout.setHorizontalGroup(
+            jPanelResetButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 187, Short.MAX_VALUE)
+        );
+        jPanelResetButtonsLayout.setVerticalGroup(
+            jPanelResetButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 68, Short.MAX_VALUE)
+        );
+
+        jPanelDisplayControls.add(jPanelResetButtons);
+
+        jPanelContainerControls.add(jPanelDisplayControls);
+
+        javax.swing.GroupLayout jPanelDeformControlsLayout = new javax.swing.GroupLayout(jPanelDeformControls);
+        jPanelDeformControls.setLayout(jPanelDeformControlsLayout);
+        jPanelDeformControlsLayout.setHorizontalGroup(
+            jPanelDeformControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 187, Short.MAX_VALUE)
+        );
+        jPanelDeformControlsLayout.setVerticalGroup(
+            jPanelDeformControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 336, Short.MAX_VALUE)
+        );
+
+        jPanelContainerControls.add(jPanelDeformControls);
+
+        javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
+        jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
+        jPanelStrainControlsLayout.setHorizontalGroup(
+            jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 187, Short.MAX_VALUE)
+        );
+        jPanelStrainControlsLayout.setVerticalGroup(
+            jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 86, Short.MAX_VALUE)
+        );
+
+        jPanelContainerControls.add(jPanelStrainControls);
+
+        javax.swing.GroupLayout jPanelEditPebbleControlsLayout = new javax.swing.GroupLayout(jPanelEditPebbleControls);
+        jPanelEditPebbleControls.setLayout(jPanelEditPebbleControlsLayout);
+        jPanelEditPebbleControlsLayout.setHorizontalGroup(
+            jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 187, Short.MAX_VALUE)
+        );
+        jPanelEditPebbleControlsLayout.setVerticalGroup(
+            jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 93, Short.MAX_VALUE)
+        );
+
+        jPanelContainerControls.add(jPanelEditPebbleControls);
+
+        javax.swing.GroupLayout jPanelSnapshotControlsLayout = new javax.swing.GroupLayout(jPanelSnapshotControls);
+        jPanelSnapshotControls.setLayout(jPanelSnapshotControlsLayout);
+        jPanelSnapshotControlsLayout.setHorizontalGroup(
+            jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 187, Short.MAX_VALUE)
+        );
+        jPanelSnapshotControlsLayout.setVerticalGroup(
+            jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 93, Short.MAX_VALUE)
+        );
+
+        jPanelContainerControls.add(jPanelSnapshotControls);
 
         GeoshearMenu.setText("GeoShear");
         GeoshearMenu.setToolTipText("Control the application");
@@ -200,61 +292,52 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jButton1)
-                .addGap(77, 77, 77)
-                .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelContainerControls, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(480, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(193, 193, 193))
+            .addComponent(jPanelContainerControls, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+            .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);
-        this.gscUI.repaint();
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void displayPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_displayPanelComponentResized
-        int w = this.displayPanel.getWidth();
-        int h = this.displayPanel.getHeight();
+    private void jPanelContainerDisplayComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayComponentResized
+        int w = this.jPanelContainerDisplay.getWidth();
+        int h = this.jPanelContainerDisplay.getHeight();
         if (this.gscUI != null) {
             this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
             this.gscUI.setBounds(0, 0, w, h);
             this.gscUI.repaint();
         }
-    }//GEN-LAST:event_displayPanelComponentResized
+    }//GEN-LAST:event_jPanelContainerDisplayComponentResized
 
-    private void displayPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMouseDragged
+    private void jPanelContainerDisplayMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseDragged
         this.gscUI.handleMouseDrag(evt);
-    }//GEN-LAST:event_displayPanelMouseDragged
+    }//GEN-LAST:event_jPanelContainerDisplayMouseDragged
 
-    private void displayPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMousePressed
+    private void jPanelContainerDisplayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMousePressed
         this.gscUI.handleMousePressed(evt);
-    }//GEN-LAST:event_displayPanelMousePressed
+    }//GEN-LAST:event_jPanelContainerDisplayMousePressed
 
-    private void displayPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_displayPanelMouseWheelMoved
+    private void jPanelContainerDisplayMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseWheelMoved
         this.gscUI.handleMouseWheelMoved(evt);
-    }//GEN-LAST:event_displayPanelMouseWheelMoved
+    }//GEN-LAST:event_jPanelContainerDisplayMouseWheelMoved
 
-    private void displayPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMouseReleased
+    private void jPanelContainerDisplayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseReleased
         this.gscUI.handleMouseReleased(evt);
-    }//GEN-LAST:event_displayPanelMouseReleased
+    }//GEN-LAST:event_jPanelContainerDisplayMouseReleased
 
-    private void displayPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayPanelKeyPressed
+    private void jPanelContainerDisplayKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayKeyPressed
         this.gscUI.handleKeyPressed(evt);
-    }//GEN-LAST:event_displayPanelKeyPressed
+    }//GEN-LAST:event_jPanelContainerDisplayKeyPressed
 
-    private void displayPanelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayPanelKeyReleased
+    private void jPanelContainerDisplayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayKeyReleased
         this.gscUI.handleKeyReleased(evt);
-    }//GEN-LAST:event_displayPanelKeyReleased
+    }//GEN-LAST:event_jPanelContainerDisplayKeyReleased
 
     private void AboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutMenuItemActionPerformed
         this.aboutWindow.setVisible(true);
@@ -312,8 +395,17 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu GeoshearMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenuBar MainWindowMenuBar;
-    private javax.swing.JPanel displayPanel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabelZoom;
+    private javax.swing.JPanel jPanelContainerControls;
+    private javax.swing.JPanel jPanelContainerDisplay;
+    private javax.swing.JPanel jPanelDeformControls;
+    private javax.swing.JPanel jPanelDisplayControls;
+    private javax.swing.JPanel jPanelEditPebbleControls;
+    private javax.swing.JPanel jPanelResetButtons;
+    private javax.swing.JPanel jPanelSnapshotControls;
+    private javax.swing.JPanel jPanelStrainControls;
+    private javax.swing.JPanel jPanelZoomControl;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSlider jSliderZoom;
     // End of variables declaration//GEN-END:variables
 }
