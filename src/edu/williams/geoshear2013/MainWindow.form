@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="GeoshearMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Geoshear"/>
+            <Property name="text" type="java.lang.String" value="GeoShear"/>
             <Property name="toolTipText" type="java.lang.String" value="Control the application"/>
           </Properties>
           <SubComponents>

@@ -15,7 +15,7 @@ public class MainWindow extends javax.swing.JFrame {
 //    private double cy;
     private GSComplexUI gscUI;
     private HelpWindow helpWindow;
-
+    
     /**
      * Creates new form MainWindow
      */
@@ -145,7 +145,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        GeoshearMenu.setText("Geoshear");
+        GeoshearMenu.setText("GeoShear");
         GeoshearMenu.setToolTipText("Control the application");
 
         HelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));

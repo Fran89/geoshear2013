@@ -12,9 +12,17 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -27,6 +35,17 @@ public class HelpWindow extends javax.swing.JFrame {
         initComponents();
         this.jTextAreaHelpText.setMargin(new Insets(10,10,10,10));
 
+        // all this is used to bind the escape key to hide this window
+        JPanel theContentPanel = (JPanel) this.getContentPane();
+        theContentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "hideit");
+        theContentPanel.getActionMap().put("hideit", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+               setVisible(false);
+            }
+        });        
+        
         // load the help text from the file
         BufferedInputStream bis = new BufferedInputStream(getClass().getResourceAsStream("/edu/williams/geoshear2013/help.txt"));
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -61,6 +80,11 @@ public class HelpWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(400, 300));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         jLabelTitleHelp.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -87,6 +111,7 @@ public class HelpWindow extends javax.swing.JFrame {
 
         jButtonClose.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonClose.setText("Close");
+        jButtonClose.setToolTipText("Close the help window");
         jButtonClose.setAlignmentX(1.0F);
         jButtonClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +129,10 @@ public class HelpWindow extends javax.swing.JFrame {
     private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCloseActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        System.out.println("help window key pressed: "+evt.toString());
+    }//GEN-LAST:event_formKeyPressed
 
     /**
     * @param args the command line arguments
