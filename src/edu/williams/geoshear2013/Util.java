@@ -42,7 +42,7 @@ public class Util
     /**
      * max number of places to show after the decimal on displayed numbers
      */
-    public static int DISPLAY_PRECISION = 2;
+    public static int DISPLAY_PRECISION = 3;
 
     /**
      * A number used in the truncation process
@@ -378,19 +378,74 @@ public class Util
      * @param tf
      */
     public static void sanitizeForDoubleNumberFormat(javax.swing.JTextField tf) {
-        String t = tf.getText().replaceAll("/[\\S\\s&&[^\\d\\.\\-]]/", ""); // strip out all except numbers, ., and -
+//        String t = tf.getText().replaceAll("/[\\S\\s&&[^\\d\\.\\-]]/", ""); // strip out all except numbers, ., and -
+//        if (t.indexOf(".") <0) { t += ".0"; } // tack a .0 on the end of bare integers
+//        boolean isNegative = t.startsWith("-");
+//        if (isNegative) {
+//            t = t.substring(1); // chop the front character, the - sign
+//        }
+//        //System.out.println("t is |"+t+"|");
+//        while (t.startsWith("0")) { // huh - tried to use t.replaceAll("/^0*/",""), but it completely failed, as did every other attempted replaceAll thing.. I suspect some pattern caching issue
+//            t = t.substring(1); // chop the front character, the leading 0
+//        }
+//        //System.out.println("post repl t is |"+t+"|");
+//        if (t.startsWith(".")) { t = "0" + t; } // add a leading 0 if it starts with a .
+//        tf.setText((isNegative?"-":"")+t);
+        int origCaretPosition = tf.getCaretPosition();
+        String origText = tf.getText();
+        String newText = Util.sanitizeForDoubleNumberFormat(origText);
+//        System.out.println(origText+"; "+newText);
+//        System.out.println("text equality: "+newText.equalsIgnoreCase(origText));
+        tf.setText(newText);
+        if ((! newText.equalsIgnoreCase(origText)) && (origCaretPosition > 0)) {
+            tf.setCaretPosition(origCaretPosition-1);
+        } else {
+            tf.setCaretPosition(origCaretPosition);
+        }
+    }
+    
+    public static String sanitizeForDoubleNumberFormat(String s) {
+//        System.out.println("sanitize for double- orig string: "+s);
+        String t = s.replaceAll("[\\S\\s&&[^\\d\\.\\-]]", ""); // strip out all except numbers, ., and -
+//        String t;
+//        t = s.replaceAll("\\w", "");
+//        System.out.println("sanitize for double- regex sanitized string: "+t);
         if (t.indexOf(".") <0) { t += ".0"; } // tack a .0 on the end of bare integers
         boolean isNegative = t.startsWith("-");
-        if (isNegative) {
-            t = t.substring(1); // chop the front character, the - sign
+//        if (isNegative) {
+//            t = t.substring(1); // chop the front character, the - sign
+//        }
+//        System.out.println("A t is |"+t+"|");
+
+        t = t.replaceAll("[\\S\\s&&[^\\d\\.]]", ""); // remove all dashes
+
+//        System.out.println("B t is |"+t+"|");
+        
+        //System.out.println("post repl t is |"+t+"|");
+        int decimalPointPos = t.indexOf(".");
+        if (decimalPointPos > -1) {
+            t = t.replaceAll("[\\S\\s&&[^\\d]]", ""); // remove all .'s
+            t = t.substring(0, decimalPointPos)+"."+t.substring(decimalPointPos);
         }
-        //System.out.println("t is |"+t+"|");
+
+//        System.out.println("C t is |"+t+"|");
+
         while (t.startsWith("0")) { // huh - tried to use t.replaceAll("/^0*/",""), but it completely failed, as did every other attempted replaceAll thing.. I suspect some pattern caching issue
             t = t.substring(1); // chop the front character, the leading 0
         }
-        //System.out.println("post repl t is |"+t+"|");
+        
+//        System.out.println("D t is |"+t+"|");
+
         if (t.startsWith(".")) { t = "0" + t; } // add a leading 0 if it starts with a .
-        tf.setText((isNegative?"-":"")+t);
+        
+//        System.out.println("E t is |"+t+"|");
+//        System.out.println("t matches number "+t.matches(".*[1-9].*"));        
+        
+        t=((isNegative && (t.matches(".*[1-9].*")))?"-":"")+t;
+
+//        System.out.println("F t is |"+t+"|");
+
+        return t;
     }
 
     /**
@@ -418,5 +473,20 @@ public class Util
         }
 
         return newValue;
+    }
+    
+        /**
+     * 
+     * @param origValue
+     * @param evt
+     * @param increment
+     * @return
+     */
+    public static String adjustedFieldValue(String origString, double increment)
+    {
+        String stringValue = sanitizeForDoubleNumberFormat(origString);
+        double origValue = Double.parseDouble(stringValue);
+        double newValue = origValue + increment;
+        return String.valueOf(Util.truncForDisplay(newValue));
     }
 }
