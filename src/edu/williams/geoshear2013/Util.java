@@ -374,29 +374,25 @@ public class Util
     }
 
     /**
-     * Makes sure the text in a text field is a string that can be read by ParseDouble
+     * Makes sure the text in a text field is a string that can be read by ParseDouble and is truncated to the default number of decimal places
      * @param tf
      */
     public static void sanitizeForDoubleNumberFormat(javax.swing.JTextField tf) {
-//        String t = tf.getText().replaceAll("/[\\S\\s&&[^\\d\\.\\-]]/", ""); // strip out all except numbers, ., and -
-//        if (t.indexOf(".") <0) { t += ".0"; } // tack a .0 on the end of bare integers
-//        boolean isNegative = t.startsWith("-");
-//        if (isNegative) {
-//            t = t.substring(1); // chop the front character, the - sign
-//        }
-//        //System.out.println("t is |"+t+"|");
-//        while (t.startsWith("0")) { // huh - tried to use t.replaceAll("/^0*/",""), but it completely failed, as did every other attempted replaceAll thing.. I suspect some pattern caching issue
-//            t = t.substring(1); // chop the front character, the leading 0
-//        }
-//        //System.out.println("post repl t is |"+t+"|");
-//        if (t.startsWith(".")) { t = "0" + t; } // add a leading 0 if it starts with a .
-//        tf.setText((isNegative?"-":"")+t);
+        Util.sanitizeForDoubleNumberFormat(tf, Util.DISPLAY_PRECISION);
+    }
+    /**
+     * Makes sure the text in a text field is a string that can be read by ParseDouble and is truncated to the given number of decimal places
+     * @param tf
+     * @param precision the number of places after the decimal place
+     */
+    public static void sanitizeForDoubleNumberFormat(javax.swing.JTextField tf,  int precision) {
         int origCaretPosition = tf.getCaretPosition();
         String origText = tf.getText();
-        String newText = Util.sanitizeForDoubleNumberFormat(origText);
-//        System.out.println(origText+"; "+newText);
-//        System.out.println("text equality: "+newText.equalsIgnoreCase(origText));
+        String newText = Util.sanitizeForDoubleNumberFormat(origText,precision);
         tf.setText(newText);
+        if (origCaretPosition > newText.length()) {
+            tf.setCaretPosition(newText.length());
+        } else
         if ((! newText.equalsIgnoreCase(origText)) && (origCaretPosition > 0)) {
             tf.setCaretPosition(origCaretPosition-1);
         } else {
@@ -404,50 +400,30 @@ public class Util
         }
     }
     
-    public static String sanitizeForDoubleNumberFormat(String s) {
-//        System.out.println("sanitize for double- orig string: "+s);
+    /**
+     * Makes sure the string can be read by ParseDouble (strips out offending chars
+     * @param s
+     * @param precision the number of places after the decimal place
+     */
+    public static String sanitizeForDoubleNumberFormat(String s,  int precision) {
         String t = s.replaceAll("[\\S\\s&&[^\\d\\.\\-]]", ""); // strip out all except numbers, ., and -
-//        String t;
-//        t = s.replaceAll("\\w", "");
-//        System.out.println("sanitize for double- regex sanitized string: "+t);
         if (t.indexOf(".") <0) { t += ".0"; } // tack a .0 on the end of bare integers
         boolean isNegative = t.startsWith("-");
-//        if (isNegative) {
-//            t = t.substring(1); // chop the front character, the - sign
-//        }
-//        System.out.println("A t is |"+t+"|");
-
         t = t.replaceAll("[\\S\\s&&[^\\d\\.]]", ""); // remove all dashes
-
-//        System.out.println("B t is |"+t+"|");
-        
-        //System.out.println("post repl t is |"+t+"|");
         int decimalPointPos = t.indexOf(".");
         if (decimalPointPos > -1) {
             t = t.replaceAll("[\\S\\s&&[^\\d]]", ""); // remove all .'s
             t = t.substring(0, decimalPointPos)+"."+t.substring(decimalPointPos);
         }
-
-//        System.out.println("C t is |"+t+"|");
-
         while (t.startsWith("0")) { // huh - tried to use t.replaceAll("/^0*/",""), but it completely failed, as did every other attempted replaceAll thing.. I suspect some pattern caching issue
             t = t.substring(1); // chop the front character, the leading 0
         }
-        
-//        System.out.println("D t is |"+t+"|");
-
         if (t.startsWith(".")) { t = "0" + t; } // add a leading 0 if it starts with a .
-        
-//        System.out.println("E t is |"+t+"|");
-//        System.out.println("t matches number "+t.matches(".*[1-9].*"));        
-        
         t=((isNegative && (t.matches(".*[1-9].*")))?"-":"")+t;
 
-//        System.out.println("F t is |"+t+"|");
-
-        return t;
+        return Util.truncForDisplay(t, precision);
     }
-
+  
     /**
      * 
      * @param origValue
@@ -458,35 +434,27 @@ public class Util
     public static double adjustFieldValue(double origValue, double increment)
     {
         double newValue = origValue;
-
-        // NOTE: to deal with stupid floating-point math issues
-        double largeIncrement = increment * 1.000001;
-        double smallIncrement = increment * .999999;
-
-
-        if (origValue >= 0)
-        {
-            newValue =  Util.truncForDisplayNumber (origValue + largeIncrement);
-        } else
-        {
-            newValue = Util.truncForDisplayNumber (origValue + smallIncrement);
-        }
-
+        newValue =  Util.truncForDisplayNumber (origValue + increment);
         return newValue;
     }
     
-        /**
+    /**
      * 
      * @param origValue
      * @param evt
      * @param increment
      * @return
      */
-    public static String adjustedFieldValue(String origString, double increment)
+    public static String adjustedFieldValue(String origString, double increment, int precision)
     {
-        String stringValue = sanitizeForDoubleNumberFormat(origString);
+        String stringValue = sanitizeForDoubleNumberFormat(origString,precision);
         double origValue = Double.parseDouble(stringValue);
         double newValue = origValue + increment;
-        return String.valueOf(Util.truncForDisplay(newValue));
+        return String.valueOf(Util.truncForDisplay(newValue,precision));
     }
+    public static String adjustedFieldValue(String origString, double increment)
+    {
+        return Util.adjustedFieldValue(origString, increment, Util.DISPLAY_PRECISION);
+    }
+
 }

@@ -108,16 +108,16 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCompressX = new javax.swing.JLabel();
         jLabelCompressrY = new javax.swing.JLabel();
         jTextFieldCompressY = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonLinkCompressionDeform = new javax.swing.JButton();
         jPanelDeformRotateControls = new javax.swing.JPanel();
         jLabelShearControl1 = new javax.swing.JLabel();
         jLabelShearY1 = new javax.swing.JLabel();
         jLabelShearX1 = new javax.swing.JLabel();
-        jTextFieldShearX2 = new javax.swing.JTextField();
-        jTextFieldShearX3 = new javax.swing.JTextField();
+        jTextFieldRotDeg = new javax.swing.JTextField();
+        jTextFieldRotRad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanelDeformNavControls = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jButtonDeformApplyRemove = new javax.swing.JButton();
         jPanelDeformMatrixLeft = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
@@ -307,9 +307,12 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldShearY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldShearY.setMinimumSize(new java.awt.Dimension(42, 14));
         jTextFieldShearY.setPreferredSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldShearYActionPerformed(evt);
+        jTextFieldShearY.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldShearYKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldShearYKeyReleased(evt);
             }
         });
         jPanelDeformShearControls.add(jTextFieldShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
@@ -332,6 +335,14 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldCompressX.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressX.setMinimumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressX.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressX.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldCompressXKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldCompressXKeyReleased(evt);
+            }
+        });
         jPanelDeformCompressControls.add(jTextFieldCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 30, -1, -1));
 
         jLabelCompressX.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -348,10 +359,18 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldCompressY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.setMinimumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressY.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldCompressYKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldCompressYKeyReleased(evt);
+            }
+        });
         jPanelDeformCompressControls.add(jTextFieldCompressY, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 50, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
-        jPanelDeformCompressControls.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 22, 23, -1));
+        jButtonLinkCompressionDeform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jPanelDeformCompressControls.add(jButtonLinkCompressionDeform, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 22, 23, -1));
 
         jPanelDeformControls.add(jPanelDeformCompressControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 1, 110, 79));
 
@@ -373,26 +392,37 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelShearX1.setText("deg.");
         jPanelDeformRotateControls.add(jLabelShearX1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 31, -1, -1));
 
-        jTextFieldShearX2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldShearX2.setText("0.00");
-        jTextFieldShearX2.setBorder(null);
-        jTextFieldShearX2.setMaximumSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearX2.setMinimumSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearX2.setPreferredSize(new java.awt.Dimension(42, 14));
-        jPanelDeformRotateControls.add(jTextFieldShearX2, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 31, -1, -1));
-
-        jTextFieldShearX3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldShearX3.setText("0.000");
-        jTextFieldShearX3.setBorder(null);
-        jTextFieldShearX3.setMaximumSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearX3.setMinimumSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearX3.setPreferredSize(new java.awt.Dimension(42, 14));
-        jTextFieldShearX3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldShearX3ActionPerformed(evt);
+        jTextFieldRotDeg.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldRotDeg.setText("0.0");
+        jTextFieldRotDeg.setBorder(null);
+        jTextFieldRotDeg.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotDeg.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotDeg.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotDeg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldRotDegKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldRotDegKeyReleased(evt);
             }
         });
-        jPanelDeformRotateControls.add(jTextFieldShearX3, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 51, -1, -1));
+        jPanelDeformRotateControls.add(jTextFieldRotDeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 31, -1, -1));
+
+        jTextFieldRotRad.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldRotRad.setText("0.000");
+        jTextFieldRotRad.setBorder(null);
+        jTextFieldRotRad.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotRad.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotRad.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotRad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldRotRadKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldRotRadKeyReleased(evt);
+            }
+        });
+        jPanelDeformRotateControls.add(jTextFieldRotRad, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 51, -1, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
@@ -406,18 +436,18 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformNavControls.setPreferredSize(new java.awt.Dimension(100, 75));
         jPanelDeformNavControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton2.setText("Remove");
-        jButton2.setToolTipText("delete the current deformation from the series");
-        jButton2.setAlignmentX(0.5F);
-        jButton2.setEnabled(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDeformApplyRemove.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButtonDeformApplyRemove.setText("Remove");
+        jButtonDeformApplyRemove.setToolTipText("delete the current deformation from the series");
+        jButtonDeformApplyRemove.setAlignmentX(0.5F);
+        jButtonDeformApplyRemove.setEnabled(false);
+        jButtonDeformApplyRemove.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jButtonDeformApplyRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonDeformApplyRemoveActionPerformed(evt);
             }
         });
-        jPanelDeformNavControls.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 13, 80, 60));
+        jPanelDeformNavControls.add(jButtonDeformApplyRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 13, 80, 60));
 
         jPanelDeformControls.add(jPanelDeformNavControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 110, 79));
 
@@ -707,37 +737,92 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.handleMouseClicked(evt);
     }//GEN-LAST:event_jPanelContainerDisplayMouseClicked
 
-    private void jTextFieldShearYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShearYActionPerformed
+    private void jButtonDeformApplyRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeformApplyRemoveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldShearYActionPerformed
-
-    private void jTextFieldShearX3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShearX3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldShearX3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
 
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldShearX, evt.getKeyCode(),.1);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldShearX, evt.getKeyCode(),.01,3);
     }//GEN-LAST:event_jTextFieldShearXKeyPressed
 
     private void jTextFieldShearXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyReleased
-        Util.sanitizeForDoubleNumberFormat(this.jTextFieldShearX);
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldShearX,evt);
     }//GEN-LAST:event_jTextFieldShearXKeyReleased
 
-    private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode,double alterAmt) {
+    private void jTextFieldShearYKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearYKeyPressed
+        this.alterDeformValueByKeyPressInField(this.jTextFieldShearY, evt.getKeyCode(),.01,3);
+    }//GEN-LAST:event_jTextFieldShearYKeyPressed
+
+    private void jTextFieldShearYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearYKeyReleased
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldShearY,evt);
+    }//GEN-LAST:event_jTextFieldShearYKeyReleased
+
+    private void jTextFieldCompressXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressXKeyPressed
+        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressX, evt.getKeyCode(),.01,3);
+    }//GEN-LAST:event_jTextFieldCompressXKeyPressed
+
+    private void jTextFieldCompressXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressXKeyReleased
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldCompressX,evt);
+    }//GEN-LAST:event_jTextFieldCompressXKeyReleased
+
+    private void jTextFieldCompressYKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressYKeyPressed
+        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressY, evt.getKeyCode(),.01,3);
+    }//GEN-LAST:event_jTextFieldCompressYKeyPressed
+
+    private void jTextFieldCompressYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressYKeyReleased
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldCompressY,evt);
+    }//GEN-LAST:event_jTextFieldCompressYKeyReleased
+
+    private void jTextFieldRotDegKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotDegKeyPressed
+        this.alterDeformValueByKeyPressInField(this.jTextFieldRotDeg, evt.getKeyCode(),1,1);
+    }//GEN-LAST:event_jTextFieldRotDegKeyPressed
+
+    private void jTextFieldRotDegKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotDegKeyReleased
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldRotDeg,evt);
+    }//GEN-LAST:event_jTextFieldRotDegKeyReleased
+
+    private void jTextFieldRotRadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotRadKeyPressed
+        this.alterDeformValueByKeyPressInField(this.jTextFieldRotRad, evt.getKeyCode(),.01,3);
+    }//GEN-LAST:event_jTextFieldRotRadKeyPressed
+
+    private void jTextFieldRotRadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotRadKeyReleased
+        this.processKeyReleaseOnDeformValueField(this.jTextFieldRotRad,evt);
+    }//GEN-LAST:event_jTextFieldRotRadKeyReleased
+
+    private void processKeyReleaseOnDeformValueField(javax.swing.JTextField theField, java.awt.event.KeyEvent evt) {
+        if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
+            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                Util.sanitizeForDoubleNumberFormat(theField);
+            }
+        }
+    }
+    
+    private boolean keyCodeIgnoredOnRelease(int kc) {
+        return 
+            (kc == java.awt.event.KeyEvent.VK_UP) ||
+            (kc == java.awt.event.KeyEvent.VK_DOWN) ||
+            (kc == java.awt.event.KeyEvent.VK_LEFT) ||
+            (kc == java.awt.event.KeyEvent.VK_RIGHT) ||
+            (kc == java.awt.event.KeyEvent.VK_SHIFT) ||
+            (kc == java.awt.event.KeyEvent.VK_ALT) ||
+            (kc == java.awt.event.KeyEvent.VK_CONTROL) ||
+            (kc == java.awt.event.KeyEvent.VK_HOME) ||
+            (kc == java.awt.event.KeyEvent.VK_END);
+    }
+    
+    private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode,double alterAmt,int precision) {
 //        System.out.println("alterDefVal using key code: "+keyCode);
         String initialFieldText = theField.getText();
 //        System.out.println("initial text: "+initialFieldText);
 //        String initialField Double.parseDouble(initialFieldText);
         if (keyCode == java.awt.event.KeyEvent.VK_UP) {
 //            System.out.println("up key");
-            theField.setText(Util.adjustedFieldValue(initialFieldText,.1));
+            Util.sanitizeForDoubleNumberFormat(theField);
+            theField.setText(Util.adjustedFieldValue(initialFieldText,alterAmt, precision));
         } else if (keyCode == java.awt.event.KeyEvent.VK_DOWN) {
 //            System.out.println("down key");
-            theField.setText(Util.adjustedFieldValue(initialFieldText,-.1));
+            Util.sanitizeForDoubleNumberFormat(theField);
+            theField.setText(Util.adjustedFieldValue(initialFieldText,-1*alterAmt, precision));
         }
     }
     
@@ -785,11 +870,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu GeoshearMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenuBar MainWindowMenuBar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonCenter;
+    private javax.swing.JButton jButtonDeformApplyRemove;
+    private javax.swing.JButton jButtonLinkCompressionDeform;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUnzoom;
     private javax.swing.JLabel jLabel1;
@@ -832,9 +917,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextFieldCompressX;
     private javax.swing.JTextField jTextFieldCompressY;
+    private javax.swing.JTextField jTextFieldRotDeg;
+    private javax.swing.JTextField jTextFieldRotRad;
     private javax.swing.JTextField jTextFieldShearX;
-    private javax.swing.JTextField jTextFieldShearX2;
-    private javax.swing.JTextField jTextFieldShearX3;
     private javax.swing.JTextField jTextFieldShearY;
     // End of variables declaration//GEN-END:variables
 }
