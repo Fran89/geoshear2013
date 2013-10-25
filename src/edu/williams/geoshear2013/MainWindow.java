@@ -108,7 +108,14 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCompressX = new javax.swing.JLabel();
         jLabelCompressrY = new javax.swing.JLabel();
         jTextFieldCompressY = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanelDeformRotateControls = new javax.swing.JPanel();
+        jLabelShearControl1 = new javax.swing.JLabel();
+        jLabelShearY1 = new javax.swing.JLabel();
+        jLabelShearX1 = new javax.swing.JLabel();
+        jTextFieldShearX2 = new javax.swing.JTextField();
+        jTextFieldShearX3 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanelDeformNavControls = new javax.swing.JPanel();
         jPanelDeformMatrixLeft = new javax.swing.JPanel();
         jPanelDeformMatrixRight = new javax.swing.JPanel();
@@ -129,6 +136,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelContainerDisplay.setBackground(new java.awt.Color(255, 255, 255));
         jPanelContainerDisplay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelContainerDisplay.setMinimumSize(new java.awt.Dimension(20, 20));
         jPanelContainerDisplay.setPreferredSize(new java.awt.Dimension(700, 700));
         jPanelContainerDisplay.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -169,7 +177,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelContainerDisplay.setLayout(jPanelContainerDisplayLayout);
         jPanelContainerDisplayLayout.setHorizontalGroup(
             jPanelContainerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 705, Short.MAX_VALUE)
+            .addGap(0, 698, Short.MAX_VALUE)
         );
         jPanelContainerDisplayLayout.setVerticalGroup(
             jPanelContainerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,130 +256,124 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformShearControls.setMaximumSize(new java.awt.Dimension(93, 75));
         jPanelDeformShearControls.setMinimumSize(new java.awt.Dimension(93, 75));
         jPanelDeformShearControls.setPreferredSize(new java.awt.Dimension(93, 75));
+        jPanelDeformShearControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelShearControl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearControl.setText("shear");
         jLabelShearControl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanelDeformShearControls.add(jLabelShearControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 64, -1));
 
         jTextFieldShearX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearX.setText("0.000");
         jTextFieldShearX.setBorder(null);
+        jTextFieldShearX.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX.setPreferredSize(new java.awt.Dimension(42, 14));
+        jPanelDeformShearControls.add(jTextFieldShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabelShearX.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearX.setText("X");
+        jPanelDeformShearControls.add(jLabelShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 14, -1));
 
         jLabelShearY.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearY.setText("Y");
+        jPanelDeformShearControls.add(jLabelShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 14, -1));
 
         jTextFieldShearY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearY.setText("0.000");
         jTextFieldShearY.setBorder(null);
-
-        javax.swing.GroupLayout jPanelDeformShearControlsLayout = new javax.swing.GroupLayout(jPanelDeformShearControls);
-        jPanelDeformShearControls.setLayout(jPanelDeformShearControlsLayout);
-        jPanelDeformShearControlsLayout.setHorizontalGroup(
-            jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDeformShearControlsLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addGroup(jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelShearControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanelDeformShearControlsLayout.createSequentialGroup()
-                        .addGroup(jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelShearY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelShearX, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextFieldShearY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                            .addComponent(jTextFieldShearX, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        jPanelDeformShearControlsLayout.setVerticalGroup(
-            jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDeformShearControlsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelShearControl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldShearX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelShearX))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelDeformShearControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldShearY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelShearY))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        jTextFieldShearY.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearY.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearY.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldShearYActionPerformed(evt);
+            }
+        });
+        jPanelDeformShearControls.add(jTextFieldShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         jPanelDeformControls.add(jPanelDeformShearControls);
 
         jPanelDeformCompressControls.setMaximumSize(new java.awt.Dimension(93, 75));
         jPanelDeformCompressControls.setMinimumSize(new java.awt.Dimension(93, 75));
         jPanelDeformCompressControls.setPreferredSize(new java.awt.Dimension(93, 75));
+        jPanelDeformCompressControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelCompressControl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCompressControl.setText("compress");
         jLabelCompressControl.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jPanelDeformCompressControls.add(jLabelCompressControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 66, -1));
 
         jTextFieldCompressX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressX.setText("0.000");
         jTextFieldCompressX.setBorder(null);
+        jTextFieldCompressX.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressX.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressX.setPreferredSize(new java.awt.Dimension(42, 14));
+        jPanelDeformCompressControls.add(jTextFieldCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 30, -1, -1));
 
         jLabelCompressX.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCompressX.setText("X");
+        jPanelDeformCompressControls.add(jLabelCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 30, 14, -1));
 
         jLabelCompressrY.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCompressrY.setText("Y");
+        jPanelDeformCompressControls.add(jLabelCompressrY, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 50, 14, -1));
 
         jTextFieldCompressY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressY.setText("0.000");
         jTextFieldCompressY.setBorder(null);
+        jTextFieldCompressY.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressY.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressY.setPreferredSize(new java.awt.Dimension(42, 14));
+        jPanelDeformCompressControls.add(jTextFieldCompressY, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 50, -1, -1));
 
-        javax.swing.GroupLayout jPanelDeformCompressControlsLayout = new javax.swing.GroupLayout(jPanelDeformCompressControls);
-        jPanelDeformCompressControls.setLayout(jPanelDeformCompressControlsLayout);
-        jPanelDeformCompressControlsLayout.setHorizontalGroup(
-            jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDeformCompressControlsLayout.createSequentialGroup()
-                .addGroup(jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelCompressControl, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelDeformCompressControlsLayout.createSequentialGroup()
-                        .addGroup(jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelCompressrY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCompressX, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextFieldCompressY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                            .addComponent(jTextFieldCompressX, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        jPanelDeformCompressControlsLayout.setVerticalGroup(
-            jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDeformCompressControlsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelCompressControl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCompressX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCompressX))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelDeformCompressControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCompressY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCompressrY))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jPanelDeformCompressControls.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 23, 23, -1));
 
         jPanelDeformControls.add(jPanelDeformCompressControls);
 
         jPanelDeformRotateControls.setPreferredSize(new java.awt.Dimension(93, 75));
+        jPanelDeformRotateControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanelDeformRotateControlsLayout = new javax.swing.GroupLayout(jPanelDeformRotateControls);
-        jPanelDeformRotateControls.setLayout(jPanelDeformRotateControlsLayout);
-        jPanelDeformRotateControlsLayout.setHorizontalGroup(
-            jPanelDeformRotateControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
-        );
-        jPanelDeformRotateControlsLayout.setVerticalGroup(
-            jPanelDeformRotateControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
-        );
+        jLabelShearControl1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelShearControl1.setText("rotation");
+        jLabelShearControl1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanelDeformRotateControls.add(jLabelShearControl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 11, 68, -1));
+
+        jLabelShearY1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelShearY1.setText("rad.");
+        jPanelDeformRotateControls.add(jLabelShearY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 51, 22, -1));
+
+        jLabelShearX1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelShearX1.setText("deg.");
+        jPanelDeformRotateControls.add(jLabelShearX1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 31, -1, -1));
+
+        jTextFieldShearX2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldShearX2.setText("0.00");
+        jTextFieldShearX2.setBorder(null);
+        jTextFieldShearX2.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX2.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX2.setPreferredSize(new java.awt.Dimension(42, 14));
+        jPanelDeformRotateControls.add(jTextFieldShearX2, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 31, -1, -1));
+
+        jTextFieldShearX3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldShearX3.setText("0.000");
+        jTextFieldShearX3.setBorder(null);
+        jTextFieldShearX3.setMaximumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX3.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX3.setPreferredSize(new java.awt.Dimension(42, 14));
+        jTextFieldShearX3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldShearX3ActionPerformed(evt);
+            }
+        });
+        jPanelDeformRotateControls.add(jTextFieldShearX3, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 51, -1, -1));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jLabel1.setEnabled(false);
+        jPanelDeformRotateControls.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 20, 55));
 
         jPanelDeformControls.add(jPanelDeformRotateControls);
 
@@ -381,7 +383,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformNavControls.setLayout(jPanelDeformNavControlsLayout);
         jPanelDeformNavControlsLayout.setHorizontalGroup(
             jPanelDeformNavControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGap(0, 101, Short.MAX_VALUE)
         );
         jPanelDeformNavControlsLayout.setVerticalGroup(
             jPanelDeformNavControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,7 +398,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.setLayout(jPanelDeformMatrixLeftLayout);
         jPanelDeformMatrixLeftLayout.setHorizontalGroup(
             jPanelDeformMatrixLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGap(0, 101, Short.MAX_VALUE)
         );
         jPanelDeformMatrixLeftLayout.setVerticalGroup(
             jPanelDeformMatrixLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,7 +413,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixRight.setLayout(jPanelDeformMatrixRightLayout);
         jPanelDeformMatrixRightLayout.setHorizontalGroup(
             jPanelDeformMatrixRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGap(0, 101, Short.MAX_VALUE)
         );
         jPanelDeformMatrixRightLayout.setVerticalGroup(
             jPanelDeformMatrixRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,9 +526,10 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanelContainerControls, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanelContainerControls, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
+                .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -637,6 +640,14 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.handleMouseClicked(evt);
     }//GEN-LAST:event_jPanelContainerDisplayMouseClicked
 
+    private void jTextFieldShearYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShearYActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldShearYActionPerformed
+
+    private void jTextFieldShearX3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShearX3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldShearX3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -681,15 +692,20 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu GeoshearMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenuBar MainWindowMenuBar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCenter;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUnzoom;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;
     private javax.swing.JLabel jLabelCompressrY;
     private javax.swing.JLabel jLabelShearControl;
+    private javax.swing.JLabel jLabelShearControl1;
     private javax.swing.JLabel jLabelShearX;
+    private javax.swing.JLabel jLabelShearX1;
     private javax.swing.JLabel jLabelShearY;
+    private javax.swing.JLabel jLabelShearY1;
     private javax.swing.JLabel jLabelZoom;
     private javax.swing.JPanel jPanelContainerControls;
     private javax.swing.JPanel jPanelContainerDisplay;
@@ -711,6 +727,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCompressX;
     private javax.swing.JTextField jTextFieldCompressY;
     private javax.swing.JTextField jTextFieldShearX;
+    private javax.swing.JTextField jTextFieldShearX2;
+    private javax.swing.JTextField jTextFieldShearX3;
     private javax.swing.JTextField jTextFieldShearY;
     // End of variables declaration//GEN-END:variables
 }
