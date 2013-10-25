@@ -31,6 +31,7 @@ package edu.williams.geoshear2013;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.io.File;
+import javax.swing.JTextField;
 
 /**
  * This is a utility class to hold a number of commonly used functions
@@ -455,6 +456,18 @@ public class Util
     public static String adjustedFieldValue(String origString, double increment)
     {
         return Util.adjustedFieldValue(origString, increment, Util.DISPLAY_PRECISION);
+    }
+    public static void fieldValueUp(JTextField tf, ValueConstrainer vc)
+    {
+        String stringValue = sanitizeForDoubleNumberFormat(tf.getText(), vc.getDisplayPrecision());
+        double newValue = vc.up(Double.parseDouble(stringValue));
+        tf.setText(Util.truncForDisplay(newValue, vc.getDisplayPrecision()));
+    }
+    public static void fieldValueDown(JTextField tf, ValueConstrainer vc)
+    {
+        String stringValue = sanitizeForDoubleNumberFormat(tf.getText(), vc.getDisplayPrecision());
+        double newValue = vc.down(Double.parseDouble(stringValue));
+        tf.setText(Util.truncForDisplay(newValue, vc.getDisplayPrecision()));
     }
 
 }

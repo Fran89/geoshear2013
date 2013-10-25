@@ -5,7 +5,9 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
-
+import java.util.HashMap;
+import java.util.Iterator;
+import javax.swing.JTextField;
 /**
  *
  * @author cwarren
@@ -16,6 +18,9 @@ public class MainWindow extends javax.swing.JFrame {
     private GSComplexUI gscUI;
     private HelpWindow helpWindow;
     private AboutWindow aboutWindow;
+
+    private HashMap displayNumberConstraints;
+    
     
     /**
      * Creates new form MainWindow
@@ -23,6 +28,19 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
+        this.displayNumberConstraints = new HashMap();
+        this.displayNumberConstraints.put(this.jTextFieldShearX, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
+        this.displayNumberConstraints.put(this.jTextFieldShearY, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
+        this.displayNumberConstraints.put(this.jTextFieldCompressX, new ValueConstrainer(.1, .1, 10, 10, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldCompressY, new ValueConstrainer(.1, .1, 10, 10, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldRotDeg, new ValueConstrainer(-180, 180, 180, -180, 1, 1, 0, ValueConstrainer.CONSTRAINT_WRAP));
+        this.displayNumberConstraints.put(this.jTextFieldRotRad, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
+        Iterator keyIter = this.displayNumberConstraints.keySet().iterator();
+        while(keyIter.hasNext()) {
+            JTextField tf = (JTextField) keyIter.next();
+            tf.setText(Util.truncTextDecimal(Double.toString(((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDefaultVal()), ((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDisplayPrecision()));
+        }
+                
         this.helpWindow = new HelpWindow();
         this.helpWindow.setLocationByPlatform(true);
         this.helpWindow.setSize(this.jPanelContainerDisplay.getWidth() + 50,this.jPanelContainerDisplay.getHeight() + 50);
@@ -330,7 +348,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformCompressControls.add(jLabelCompressControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 66, -1));
 
         jTextFieldCompressX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldCompressX.setText("0.000");
+        jTextFieldCompressX.setText("1");
         jTextFieldCompressX.setBorder(null);
         jTextFieldCompressX.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressX.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -354,7 +372,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformCompressControls.add(jLabelCompressrY, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 50, 14, -1));
 
         jTextFieldCompressY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldCompressY.setText("0.000");
+        jTextFieldCompressY.setText("1");
         jTextFieldCompressY.setBorder(null);
         jTextFieldCompressY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -742,7 +760,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
 
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldShearX, evt.getKeyCode(),.01,3);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldShearX, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldShearXKeyPressed
 
     private void jTextFieldShearXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyReleased
@@ -750,7 +768,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldShearXKeyReleased
 
     private void jTextFieldShearYKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearYKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldShearY, evt.getKeyCode(),.01,3);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldShearY, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldShearYKeyPressed
 
     private void jTextFieldShearYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearYKeyReleased
@@ -758,7 +776,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldShearYKeyReleased
 
     private void jTextFieldCompressXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressXKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressX, evt.getKeyCode(),.01,3);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressX, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldCompressXKeyPressed
 
     private void jTextFieldCompressXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressXKeyReleased
@@ -766,7 +784,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCompressXKeyReleased
 
     private void jTextFieldCompressYKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressYKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressY, evt.getKeyCode(),.01,3);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldCompressY, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldCompressYKeyPressed
 
     private void jTextFieldCompressYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCompressYKeyReleased
@@ -774,7 +792,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCompressYKeyReleased
 
     private void jTextFieldRotDegKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotDegKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldRotDeg, evt.getKeyCode(),1,1);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldRotDeg, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldRotDegKeyPressed
 
     private void jTextFieldRotDegKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotDegKeyReleased
@@ -782,7 +800,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldRotDegKeyReleased
 
     private void jTextFieldRotRadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotRadKeyPressed
-        this.alterDeformValueByKeyPressInField(this.jTextFieldRotRad, evt.getKeyCode(),.01,3);
+        this.alterDeformValueByKeyPressInField(this.jTextFieldRotRad, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldRotRadKeyPressed
 
     private void jTextFieldRotRadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotRadKeyReleased
@@ -792,7 +810,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void processKeyReleaseOnDeformValueField(javax.swing.JTextField theField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                Util.sanitizeForDoubleNumberFormat(theField);
+                ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
+                Util.sanitizeForDoubleNumberFormat(theField, vc.getDisplayPrecision());
+                double d = Double.parseDouble(theField.getText());
+                if (vc.isOutOfRange(d)) {
+                    theField.setText(Util.truncForDisplay(vc.constrain(d), vc.getDisplayPrecision()));
+                }
             }
         }
     }
@@ -810,19 +833,17 @@ public class MainWindow extends javax.swing.JFrame {
             (kc == java.awt.event.KeyEvent.VK_END);
     }
     
-    private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode,double alterAmt,int precision) {
+    private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode) {
 //        System.out.println("alterDefVal using key code: "+keyCode);
         String initialFieldText = theField.getText();
 //        System.out.println("initial text: "+initialFieldText);
-//        String initialField Double.parseDouble(initialFieldText);
+        ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
         if (keyCode == java.awt.event.KeyEvent.VK_UP) {
 //            System.out.println("up key");
-            Util.sanitizeForDoubleNumberFormat(theField);
-            theField.setText(Util.adjustedFieldValue(initialFieldText,alterAmt, precision));
+            Util.fieldValueUp(theField, vc);
         } else if (keyCode == java.awt.event.KeyEvent.VK_DOWN) {
 //            System.out.println("down key");
-            Util.sanitizeForDoubleNumberFormat(theField);
-            theField.setText(Util.adjustedFieldValue(initialFieldText,-1*alterAmt, precision));
+            Util.fieldValueDown(theField, vc);
         }
     }
     
