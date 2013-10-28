@@ -759,6 +759,46 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
 
+    public void updateDeformControlsFromDeformation(Deformation d) {
+        if (d.isShearing()) {
+            if (d.m10 != 0 ) { 
+                this.setValueForDeformControlExclusively(this.jTextFieldShearX,d.m10*-1);
+            } else {
+                this.setValueForDeformControlExclusively(this.jTextFieldShearY,d.m01*-1);
+            }            
+        } else if (d.isScaling()) {
+            if ((d.m00 != 1) || (d.m11 != 1)) { 
+                this.setValueForDeformControlExclusively(this.jTextFieldCompressX,d.m00);
+                this.setValueForDeformControl(this.jTextFieldCompressY,d.m11);
+            }
+        } else if (d.isRotational()) {
+            this.setValueForDeformControlExclusively(this.jTextFieldRotDeg,d.getRotAngleDegr());
+            this.setValueForDeformControl(this.jTextFieldRotRad,d.getRotAngleRad());
+        }
+    }
+
+    private void setValueForDeformControl(javax.swing.JTextField controlField, double val) {
+        controlField.setText(Util.truncForDisplay(val, ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDisplayPrecision()));
+    }
+
+    private void setValueForDeformControlExclusively(javax.swing.JTextField controlField, double val) {
+        controlField.setText(Util.truncForDisplay(val, ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDisplayPrecision()));
+        this.clearOutDeformControlFieldsOtherThan(controlField);
+    }
+    
+//    (ValueConstrainer) this.displayNumberConstraints.get(theField);
+    
+    
+    private void clearOutDeformControlFieldsOtherThan(javax.swing.JTextField stableControlField) {
+        Iterator keyIter = this.displayNumberConstraints.keySet().iterator();
+        while(keyIter.hasNext()) {
+            JTextField tf = (JTextField) keyIter.next();
+            if (! tf.equals(stableControlField)) {
+                tf.setText(Util.truncTextDecimal(Double.toString(((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDefaultVal()), ((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDisplayPrecision()));
+            }
+        }        
+    }
+    
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
         this.alterDeformValueByKeyPressInField(this.jTextFieldShearX, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldShearXKeyPressed

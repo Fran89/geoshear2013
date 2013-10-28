@@ -153,7 +153,7 @@ class GSComplexUI extends JPanel {
             this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
         }
     }
-    
+        
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
         Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
         double deltaX = evt.getX() - this.lastMouseDownX;
@@ -170,10 +170,12 @@ class GSComplexUI extends JPanel {
                                                     deltaY/this.lastMouseDragPointInGSCSystem.getX(), 
                                                     Math.abs(deltaX) > Math.abs(deltaY));
                 
+                this.mainWindow.updateDeformControlsFromDeformation(this.tentativeDeformation);
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
             }
+            this.mainWindow.updateDeformControlsFromDeformation(this.tentativeDeformation);
             this.repaint();
         }
 

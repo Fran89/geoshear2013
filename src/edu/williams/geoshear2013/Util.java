@@ -369,8 +369,8 @@ public class Util
      */
     public static double toDegrees(double rad)
     {
-        while (rad >= Math.PI) {rad -= Math.PI; }
-        while (rad < 0) {rad += Math.PI; }
+//        while (rad >= Math.PI) {rad -= Math.PI; }
+//        while (rad < 0) {rad += Math.PI; }
         return (rad/Math.PI)*180.0;
     }
 

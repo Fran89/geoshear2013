@@ -76,12 +76,25 @@ public class Deformation extends Matrix2x2 {
         return this.m00==1 && this.m11==1 && ( this.m01!=0 || this.m10!=0);
     }
     
+    public double getRotAngleDegr() {
+//        return Util.toDegrees(Math.acos(this.m00) * ((this.m01 > 0) ? -1 : 1));
+        return Util.toDegrees(this.getRotAngleRad());
+    }
+
+    public double getRotAngleRad() {
+        return Math.acos(this.m00) * ((this.m01 > 0) ? -1 : 1);
+    }
+    
     public void drawOnto(Graphics2D g2d) {
         if (this.isRotational()) {
             g2d.setColor(Deformation.DEFORMATION_COLOR);
-            double rotDegr = (180/Math.PI) * Math.acos(this.m00) * ((this.m01 > 0) ? -1 : 1);
+//            double rotDegr = (180/Math.PI) * Math.acos(this.m00) * ((this.m01 > 0) ? -1 : 1);
+//            // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
+//            g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)rotDegr);
+
             // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
-            g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)rotDegr);
+            g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)this.getRotAngleDegr());
+            
             g2d.drawLine(0,0, Deformation.DISPLAY_RADIUS, 0);
         } else {
             GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
