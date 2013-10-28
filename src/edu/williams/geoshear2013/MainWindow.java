@@ -133,7 +133,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelResetButtons = new javax.swing.JPanel();
         jButtonUnzoom = new javax.swing.JButton();
         jButtonCenter = new javax.swing.JButton();
-        jButtonReset = new javax.swing.JButton();
         jPanelDeformControls = new javax.swing.JPanel();
         jPanelDeformShearControls = new javax.swing.JPanel();
         jLabelShearControl = new javax.swing.JLabel();
@@ -157,6 +156,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelDeformNavControls = new javax.swing.JPanel();
         jButtonDeformApplyRemove = new javax.swing.JButton();
+        jButtonDeformReset = new javax.swing.JButton();
         jPanelDeformMatrixLeft = new javax.swing.JPanel();
         jButtonStrainNavPrevious = new javax.swing.JButton();
         jTextFieldStrainM00 = new javax.swing.JTextField();
@@ -284,7 +284,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jPanelResetButtons.add(jButtonUnzoom);
 
-        jButtonCenter.setText("Center");
+        jButtonCenter.setText("Center in view");
         jButtonCenter.setMargin(new java.awt.Insets(2, 8, 2, 8));
         jButtonCenter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -292,15 +292,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jPanelResetButtons.add(jButtonCenter);
-
-        jButtonReset.setText("Reset");
-        jButtonReset.setMargin(new java.awt.Insets(2, 8, 2, 8));
-        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonResetActionPerformed(evt);
-            }
-        });
-        jPanelResetButtons.add(jButtonReset);
 
         jPanelDisplayControls.add(jPanelResetButtons);
 
@@ -492,7 +483,15 @@ public class MainWindow extends javax.swing.JFrame {
                 jButtonDeformApplyRemoveActionPerformed(evt);
             }
         });
-        jPanelDeformNavControls.add(jButtonDeformApplyRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 13, 80, 60));
+        jPanelDeformNavControls.add(jButtonDeformApplyRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 40));
+
+        jButtonDeformReset.setText("Reset");
+        jButtonDeformReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeformResetActionPerformed(evt);
+            }
+        });
+        jPanelDeformNavControls.add(jButtonDeformReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 80, -1));
 
         jPanelDeformControls.add(jPanelDeformNavControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 110, 79));
 
@@ -800,11 +799,6 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.centerDisplay();
     }//GEN-LAST:event_jButtonCenterActionPerformed
 
-    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
-        this.jSliderZoom.getModel().setValue(50);
-        this.gscUI.resetDisplayTransform();
-    }//GEN-LAST:event_jButtonResetActionPerformed
-
     private void jPanelContainerDisplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseClicked
         this.gscUI.handleMouseClicked(evt);
     }//GEN-LAST:event_jPanelContainerDisplayMouseClicked
@@ -901,6 +895,12 @@ public class MainWindow extends javax.swing.JFrame {
         this.processKeyReleaseOnDeformValueField(this.jTextFieldRotRad,evt);
     }//GEN-LAST:event_jTextFieldRotRadKeyReleased
 
+    private void jButtonDeformResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeformResetActionPerformed
+        this.clearOutDeformControlFieldsOtherThan(null);
+        this.gscUI.tentativeDeformationClear();
+        this.gscUI.repaint();
+    }//GEN-LAST:event_jButtonDeformResetActionPerformed
+
     private void processKeyReleaseOnDeformValueField(javax.swing.JTextField theField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
@@ -912,7 +912,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
                 // NOTE: these three lines dupe some code twice in alterDeformValueByKeyPressInField - refactor to centralize
                 this.clearOutDeformControlFieldsOtherThan(theField);
-                setDeformFieldsLinkedToThisField(theField);
+                this.setDeformFieldsLinkedToThisField(theField);
                 this.updateGSCUITentativeDeformBasedOn(theField);
             }
         }
@@ -949,7 +949,7 @@ public class MainWindow extends javax.swing.JFrame {
             Util.fieldValueUp(theField, vc);
             // NOTE: these three lines dupe some code in processKeyReleaseOnDeformValueField and just below - refactor to centralize
             this.clearOutDeformControlFieldsOtherThan(theField);
-            setDeformFieldsLinkedToThisField(theField);
+            this.setDeformFieldsLinkedToThisField(theField);
             this.updateGSCUITentativeDeformBasedOn(theField);
         } else if (keyCode == java.awt.event.KeyEvent.VK_DOWN) {
 //            System.out.println("down key");
@@ -1041,8 +1041,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar MainWindowMenuBar;
     private javax.swing.JButton jButtonCenter;
     private javax.swing.JButton jButtonDeformApplyRemove;
+    private javax.swing.JButton jButtonDeformReset;
     private javax.swing.JButton jButtonLinkCompressionDeform;
-    private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonStrainNavNext;
     private javax.swing.JButton jButtonStrainNavPrevious;
     private javax.swing.JButton jButtonUnzoom;

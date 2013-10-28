@@ -153,6 +153,10 @@ class GSComplexUI extends JPanel {
             this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
         }
     }
+    
+    public void tentativeDeformationClear() {
+        this.tentativeDeformation = new Deformation();
+    }
         
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
         Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
