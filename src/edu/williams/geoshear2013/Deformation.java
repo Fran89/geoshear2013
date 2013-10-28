@@ -4,7 +4,6 @@
  */
 package edu.williams.geoshear2013;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -88,9 +87,6 @@ public class Deformation extends Matrix2x2 {
     public void drawOnto(Graphics2D g2d) {
         if (this.isRotational()) {
             g2d.setColor(Deformation.DEFORMATION_COLOR);
-//            double rotDegr = (180/Math.PI) * Math.acos(this.m00) * ((this.m01 > 0) ? -1 : 1);
-//            // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
-//            g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)rotDegr);
 
             // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
             g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)this.getRotAngleDegr());

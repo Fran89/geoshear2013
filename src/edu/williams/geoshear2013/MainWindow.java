@@ -856,6 +856,10 @@ public class MainWindow extends javax.swing.JFrame {
                 if (vc.isOutOfRange(d)) {
                     theField.setText(Util.truncForDisplay(vc.constrain(d), vc.getDisplayPrecision()));
                 }
+                // NOTE: these three lines dupe some code twice in alterDeformValueByKeyPressInField - refactor to centralize
+                this.clearOutDeformControlFieldsOtherThan(theField);
+                setDeformFieldsLinkedToThisField(theField);
+                this.updateGSCUITentativeDeformBasedOn(theField);
             }
         }
     }
@@ -881,10 +885,52 @@ public class MainWindow extends javax.swing.JFrame {
         if (keyCode == java.awt.event.KeyEvent.VK_UP) {
 //            System.out.println("up key");
             Util.fieldValueUp(theField, vc);
+            // NOTE: these three lines dupe some code in processKeyReleaseOnDeformValueField and just below - refactor to centralize
+            this.clearOutDeformControlFieldsOtherThan(theField);
+            setDeformFieldsLinkedToThisField(theField);
+            this.updateGSCUITentativeDeformBasedOn(theField);
         } else if (keyCode == java.awt.event.KeyEvent.VK_DOWN) {
 //            System.out.println("down key");
             Util.fieldValueDown(theField, vc);
+            this.clearOutDeformControlFieldsOtherThan(theField);
+            this.setDeformFieldsLinkedToThisField(theField);
+            this.updateGSCUITentativeDeformBasedOn(theField);
         }
+    }
+    
+    private void setDeformFieldsLinkedToThisField(javax.swing.JTextField theField) {
+        if (theField.equals(this.jTextFieldCompressX)) {
+            this.setValueForDeformControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
+        } else
+        if (theField.equals(this.jTextFieldCompressY)) {
+            this.setValueForDeformControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
+        } else
+        if (theField.equals(this.jTextFieldRotDeg)) {
+            this.setValueForDeformControl(this.jTextFieldRotRad, Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
+        } else
+        if (theField.equals(this.jTextFieldRotRad)) {
+            this.setValueForDeformControl(this.jTextFieldRotDeg, Util.toDegrees(Double.parseDouble(this.jTextFieldRotRad.getText())));
+        }
+    }
+    
+    private void updateGSCUITentativeDeformBasedOn(javax.swing.JTextField theField) {
+        if ((theField.equals(this.jTextFieldShearX)) || (theField.equals(this.jTextFieldShearY))) {
+            this.gscUI.tentativeDeformationSetToShear(Double.parseDouble(this.jTextFieldShearX.getText()), 
+                                                      Double.parseDouble(this.jTextFieldShearY.getText()),
+                                                      theField.equals(this.jTextFieldShearX));
+        } else
+        if ((theField.equals(this.jTextFieldCompressX)) || (theField.equals(this.jTextFieldCompressY))) {
+            this.gscUI.tentativeDeformationSetToCompression(Double.parseDouble(this.jTextFieldCompressX.getText()), 
+                                                            Double.parseDouble(this.jTextFieldCompressY.getText()),
+                                                            theField.equals(this.jTextFieldCompressX));
+        } else
+        if (theField.equals(this.jTextFieldRotDeg)) {
+            this.gscUI.tentativeDeformationSetToRotate(Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
+        } else
+        if (theField.equals(this.jTextFieldRotRad)) {
+            this.gscUI.tentativeDeformationSetToRotate(Double.parseDouble(this.jTextFieldRotRad.getText()));
+        }
+        this.gscUI.repaint();
     }
     
     /**

@@ -355,8 +355,8 @@ public class Util
     public static double toRadians(double deg)
     {
         //System.out.println("init deg:"+deg);
-        while (deg >= 180) {deg -= 180.0; }
-        while (deg < 0) {deg += 180.0; }
+//        while (deg >= 180) {deg -= 180.0; }
+//        while (deg < 0) {deg += 180.0; }
         //System.out.println("bound deg:"+deg);
         //System.out.println("converted:"+((deg/180.0) * Math.PI));
         return (deg/180.0) * Math.PI;
