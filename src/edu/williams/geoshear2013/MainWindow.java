@@ -869,29 +869,26 @@ public class MainWindow extends javax.swing.JFrame {
             this.setValueForDeformControlExclusively(this.jTextFieldRotDeg,d.getRotAngleDegr());
             this.setValueForDeformOrStrainControl(this.jTextFieldRotRad,d.getRotAngleRad());
         }
+        this.updateOtherControlsFromDeformControls();
+
         this.updateStrainControlsFromDeformation(d);
     }
     
-    public void updateStrainControlsFromDeformation(Deformation d) {
+    public void updateStrainControlsFromDeformation(Matrix2x2 d) {
         this.setValueForDeformOrStrainControl(this.jTextFieldStrainM00, d.m00);
         this.setValueForDeformOrStrainControl(this.jTextFieldStrainM01, d.m01*-1);
         this.setValueForDeformOrStrainControl(this.jTextFieldStrainM10, d.m10*-1);
         this.setValueForDeformOrStrainControl(this.jTextFieldStrainM11, d.m11);
     }
 
-    public void updateStrainControlsFromDeformControls() {
+    
+    public void updateOtherControlsFromDeformControls() {
         if (controlFieldHasDefaultValue(this.jTextFieldRotDeg)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldStrainM00, Double.parseDouble(this.jTextFieldCompressX.getText()));
             this.setValueForDeformOrStrainControl(this.jTextFieldStrainM01, Double.parseDouble(this.jTextFieldShearY.getText()));
             this.setValueForDeformOrStrainControl(this.jTextFieldStrainM10, Double.parseDouble(this.jTextFieldShearX.getText()));
             this.setValueForDeformOrStrainControl(this.jTextFieldStrainM11, Double.parseDouble(this.jTextFieldCompressY.getText()));
-        } else {
-            this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
-        }
-    }
-
-    public void updateRFPhiControlsFromDeformControls() {
-        if (controlFieldHasDefaultValue(this.jTextFieldRotDeg)) {
+            
             Deformation d = new Deformation(Double.parseDouble(this.jTextFieldCompressX.getText()),
                                             Double.parseDouble(this.jTextFieldShearY.getText()),
                                             Double.parseDouble(this.jTextFieldShearX.getText()),
@@ -901,9 +898,19 @@ public class MainWindow extends javax.swing.JFrame {
             this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentRF, s.getMajorRadius()/s.getMinorRadius());
             this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentPhi, Util.toDegrees(s.getTheta()*-1));
         } else {
+            this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
             this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentRF, 1);
             this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentPhi, Double.parseDouble(this.jTextFieldRotDeg.getText()));
         }
+    }
+        
+    public void updateStrainControlsFromRFPhiControls() {
+        Deformation dRF = Deformation.createFromRF(Double.parseDouble(this.jTextFieldRFPhiCurrentRF.getText()));
+        Deformation dPhi = Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRFPhiCurrentPhi.getText()));
+        GSPebble s = new GSPebble(10,10);
+        s.deform(dRF);
+        s.deform(dPhi);
+        this.updateStrainControlsFromDeformation(s.getMatrix());
     }
         
     private boolean controlFieldHasDefaultValue(javax.swing.JTextField controlField) {
@@ -950,8 +957,7 @@ public class MainWindow extends javax.swing.JFrame {
                 tf.setText(Util.truncTextDecimal(Double.toString(((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDefaultVal()), ((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDisplayPrecision()));
             }
         }
-        this.updateStrainControlsFromDeformControls();
-        this.updateRFPhiControlsFromDeformControls();
+        this.updateOtherControlsFromDeformControls();
     }
     
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
@@ -1094,6 +1100,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.clearOutDeformAndStrainControlFieldsOtherThan(null);
         this.enableDeformControls();
         this.enableStrainMatrixControls();
+        this.enableRfPhiControls();
     }
     
     // TODO: genearl to handle strain field (L2)
@@ -1104,40 +1111,36 @@ public class MainWindow extends javax.swing.JFrame {
         if (this.gscUI.isTentativeDeformationCleared()) {
             this.enableDeformControls();
             this.enableStrainMatrixControls();
+            this.enableRfPhiControls();
         } else {
             this.disableStrainMatrixControls();
+            this.disableRfPhiControls();
         }
     }
     
     // TODO: genearl to handle strain field (L3)
     private void setDeformAndStrainFieldsLinkedToThisField(javax.swing.JTextField theField) {
         if (this.jTextFieldShearX.equals(theField)) {
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldShearY.equals(theField)) {
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressX.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressY.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldRotDeg.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldRotRad, Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldRotRad.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldRotDeg, Util.toDegrees(Double.parseDouble(this.jTextFieldRotRad.getText())));
-            this.updateStrainControlsFromDeformControls();
-            this.updateRFPhiControlsFromDeformControls();
+            this.updateOtherControlsFromDeformControls();
         }
     }
     
@@ -1190,6 +1193,18 @@ public class MainWindow extends javax.swing.JFrame {
         this.jTextFieldStrainM10.setEnabled(state);
         this.jTextFieldStrainM11.setEnabled(state);
     }
+
+    private void disableRfPhiControls() {
+        this.setEnableOnRfPhiControls(false);
+    }
+    private void enableRfPhiControls() {
+        this.setEnableOnRfPhiControls(true);
+    }
+    private void setEnableOnRfPhiControls(boolean state) {
+        this.jTextFieldRFPhiCurrentRF.setEnabled(state);
+        this.jTextFieldRFPhiCurrentPhi.setEnabled(state);
+    }
+    
     
     /**
      * @param args the command line arguments
