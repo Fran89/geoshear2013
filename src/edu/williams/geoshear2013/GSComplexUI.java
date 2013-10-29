@@ -29,6 +29,7 @@ class GSComplexUI extends JPanel {
     private MainWindow mainWindow;
 
     private Deformation tentativeDeformation;
+    private GSPebble tentativeStrain;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -69,7 +70,13 @@ class GSComplexUI extends JPanel {
         this.mainWindow = mainWindow;
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
+        this.setTentativeStrain();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
+    }
+    
+    private void setTentativeStrain() {
+        this.tentativeStrain = new GSPebble(100,100);
+        this.tentativeStrain.deform(this.tentativeDeformation);
     }
 
     public void handleKeyPressed(java.awt.event.KeyEvent evt) {
@@ -119,6 +126,7 @@ class GSComplexUI extends JPanel {
 
         if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
             this.tentativeDeformation = new Deformation();
+            this.setTentativeStrain();
         }
     }  
 
@@ -134,6 +142,7 @@ class GSComplexUI extends JPanel {
     public void tentativeDeformationSetToRotate(double angleRad) {
 //        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
         this.tentativeDeformation = Deformation.createFromAngle(angleRad);
+        this.setTentativeStrain();
     }
     
     public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
@@ -144,6 +153,7 @@ class GSComplexUI extends JPanel {
         } else {
             this.tentativeDeformation = new Deformation(1/compressionFactorY, 0, 0, compressionFactorY);
         }
+        this.setTentativeStrain();
     }
     
     public void tentativeDeformationSetToShear(double shearFactorX,double shearFactorY,boolean isInXDirection) {
@@ -156,10 +166,12 @@ class GSComplexUI extends JPanel {
         } else {
             this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
         }
+        this.setTentativeStrain();
     }
     
     public void tentativeDeformationClear() {
         this.tentativeDeformation = new Deformation();
+        this.setTentativeStrain();
     }
     
     public boolean isTentativeDeformationCleared() {
@@ -168,6 +180,10 @@ class GSComplexUI extends JPanel {
     
     public Deformation getTentativeDeformationCopy() {
         return this.tentativeDeformation.clone();
+    }
+    
+    public GSPebble getTentativeStrainCopy() {
+        return this.tentativeStrain.clone();
     }
             
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {

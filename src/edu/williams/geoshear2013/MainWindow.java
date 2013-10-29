@@ -57,6 +57,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.displayNumberConstraints.put(this.jTextFieldRotDeg, new ValueConstrainer(-180, 180, 180, -180, 1, 2, 0, ValueConstrainer.CONSTRAINT_WRAP));
         this.displayNumberConstraints.put(this.jTextFieldRotRad, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
 
+        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentRF, new ValueConstrainer(-10000, -10000, 10000, 10000, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentPhi, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
+        
         this.displayNumberConstraints.put(this.jTextFieldStrainM00, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 1));
         this.displayNumberConstraints.put(this.jTextFieldStrainM01, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
         this.displayNumberConstraints.put(this.jTextFieldStrainM10, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
@@ -167,7 +170,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonStrainNavPrevious = new javax.swing.JButton();
         jTextFieldStrainM00 = new javax.swing.JTextField();
         jTextFieldStrainM10 = new javax.swing.JTextField();
-        jTextFieldStrainCurrentRF = new javax.swing.JTextField();
+        jTextFieldRFPhiCurrentRF = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldStrainCumuRF = new javax.swing.JTextField();
@@ -177,7 +180,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonStrainNavNext = new javax.swing.JButton();
         jTextFieldStrainM01 = new javax.swing.JTextField();
         jTextFieldStrainM11 = new javax.swing.JTextField();
-        jTextFieldStrainCurrentPhi = new javax.swing.JTextField();
+        jTextFieldRFPhiCurrentPhi = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -535,90 +538,88 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonStrainNavPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_left_light.gif"))); // NOI18N
-        jPanelDeformMatrixLeft.add(jButtonStrainNavPrevious, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 60, -1));
+        jPanelDeformMatrixLeft.add(jButtonStrainNavPrevious, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, -1));
 
         jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM00.setText("1.000");
-        jPanelDeformMatrixLeft.add(jTextFieldStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 60, -1));
+        jPanelDeformMatrixLeft.add(jTextFieldStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, -1));
 
         jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM10.setText("0.000");
-        jPanelDeformMatrixLeft.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 60, -1));
+        jPanelDeformMatrixLeft.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
 
-        jTextFieldStrainCurrentRF.setEditable(false);
-        jTextFieldStrainCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextFieldStrainCurrentRF.setText("1.000");
-        jTextFieldStrainCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelDeformMatrixLeft.add(jTextFieldStrainCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 60, 20));
+        jTextFieldRFPhiCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldRFPhiCurrentRF.setText("1.000");
+        jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelDeformMatrixLeft.add(jTextFieldRFPhiCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 6, 60, 20));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("RF");
-        jPanelDeformMatrixLeft.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 20, 20));
+        jPanelDeformMatrixLeft.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 18, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("[");
-        jPanelDeformMatrixLeft.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 30, 90));
+        jPanelDeformMatrixLeft.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 90));
 
         jTextFieldStrainCumuRF.setEditable(false);
         jTextFieldStrainCumuRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuRF.setText("1.000");
         jTextFieldStrainCumuRF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelDeformMatrixLeft.add(jTextFieldStrainCumuRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 60, 20));
+        jPanelDeformMatrixLeft.add(jTextFieldStrainCumuRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 60, 20));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("RF");
-        jPanelDeformMatrixLeft.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 20, 20));
+        jPanelDeformMatrixLeft.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 18, 20));
 
         jLabelStrainNavPosition.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelStrainNavPosition.setText("0 /");
-        jPanelDeformMatrixLeft.add(jLabelStrainNavPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 130, 30, 20));
+        jPanelDeformMatrixLeft.add(jLabelStrainNavPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 150, 30, 20));
 
-        jPanelDeformControls.add(jPanelDeformMatrixLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 110, 200));
+        jPanelDeformControls.add(jPanelDeformMatrixLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 110, 210));
 
         jPanelDeformMatrixRight.setPreferredSize(new java.awt.Dimension(93, 75));
         jPanelDeformMatrixRight.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonStrainNavNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_right_light.gif"))); // NOI18N
-        jPanelDeformMatrixRight.add(jButtonStrainNavNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 60, -1));
+        jPanelDeformMatrixRight.add(jButtonStrainNavNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 60, -1));
 
         jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM01.setText("0.000");
-        jPanelDeformMatrixRight.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 60, -1));
+        jPanelDeformMatrixRight.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
 
         jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM11.setText("1.000");
-        jPanelDeformMatrixRight.add(jTextFieldStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 60, -1));
+        jPanelDeformMatrixRight.add(jTextFieldStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, -1));
 
-        jTextFieldStrainCurrentPhi.setEditable(false);
-        jTextFieldStrainCurrentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextFieldStrainCurrentPhi.setText("0.000");
-        jTextFieldStrainCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelDeformMatrixRight.add(jTextFieldStrainCurrentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 60, 20));
+        jTextFieldRFPhiCurrentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldRFPhiCurrentPhi.setText("0.000");
+        jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelDeformMatrixRight.add(jTextFieldRFPhiCurrentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 60, 20));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("phi");
-        jPanelDeformMatrixRight.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 20, 20));
+        jPanelDeformMatrixRight.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 20, 20));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("]");
-        jPanelDeformMatrixRight.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 30, 90));
+        jPanelDeformMatrixRight.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 90));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("phi");
-        jPanelDeformMatrixRight.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 20, 20));
+        jPanelDeformMatrixRight.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 20, 20));
 
         jTextFieldStrainCumuPhi.setEditable(false);
         jTextFieldStrainCumuPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuPhi.setText("0.000");
         jTextFieldStrainCumuPhi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelDeformMatrixRight.add(jTextFieldStrainCumuPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 60, 20));
+        jPanelDeformMatrixRight.add(jTextFieldStrainCumuPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 60, 20));
 
         jLabelStrainNavCount.setText("0");
-        jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 30, 20));
+        jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 30, 20));
 
-        jPanelDeformControls.add(jPanelDeformMatrixRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 110, 190));
+        jPanelDeformControls.add(jPanelDeformMatrixRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 110, 210));
 
         jPanelContainerControls.add(jPanelDeformControls);
 
@@ -888,7 +889,23 @@ public class MainWindow extends javax.swing.JFrame {
             this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
         }
     }
-    
+
+    public void updateRFPhiControlsFromDeformControls() {
+        if (controlFieldHasDefaultValue(this.jTextFieldRotDeg)) {
+            Deformation d = new Deformation(Double.parseDouble(this.jTextFieldCompressX.getText()),
+                                            Double.parseDouble(this.jTextFieldShearY.getText()),
+                                            Double.parseDouble(this.jTextFieldShearX.getText()),
+                                            Double.parseDouble(this.jTextFieldCompressY.getText()));
+            GSPebble s = new GSPebble(10,10);
+            s.deform(d);
+            this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentRF, s.getMajorRadius()/s.getMinorRadius());
+            this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentPhi, Util.toDegrees(s.getTheta()*-1));
+        } else {
+            this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentRF, 1);
+            this.setValueForDeformOrStrainControl(this.jTextFieldRFPhiCurrentPhi, Double.parseDouble(this.jTextFieldRotDeg.getText()));
+        }
+    }
+        
     private boolean controlFieldHasDefaultValue(javax.swing.JTextField controlField) {
         String curVal = controlField.getText();
         double defaultVal = ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDefaultVal();
@@ -917,7 +934,7 @@ public class MainWindow extends javax.swing.JFrame {
         if (controlField != null) {
             controlField.setText(Util.truncForDisplay(val, ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDisplayPrecision()));
         }
-        this.clearOutDeformControlFieldsOtherThan(controlField);
+        this.clearOutDeformAndStrainControlFieldsOtherThan(controlField);
     }
         
     /**
@@ -925,7 +942,7 @@ public class MainWindow extends javax.swing.JFrame {
      * NOTE: safely handles a null (i.e. reset every deform control field)
      * @param stableControlField 
      */
-    private void clearOutDeformControlFieldsOtherThan(javax.swing.JTextField stableControlField) {
+    private void clearOutDeformAndStrainControlFieldsOtherThan(javax.swing.JTextField stableControlField) {
         Iterator keyIter = this.displayNumberConstraints.keySet().iterator();
         while(keyIter.hasNext()) {
             JTextField tf = (JTextField) keyIter.next();
@@ -934,6 +951,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
         this.updateStrainControlsFromDeformControls();
+        this.updateRFPhiControlsFromDeformControls();
     }
     
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
@@ -1014,32 +1032,32 @@ public class MainWindow extends javax.swing.JFrame {
         this.processLostFocusOnDeformValueField(this.jTextFieldRotRad);
     }//GEN-LAST:event_jTextFieldRotRadFocusLost
     
-    // TODO: consider how to generalize this support strain matrix controls
-    private void processKeyReleaseOnDeformValueField(javax.swing.JTextField theField, java.awt.event.KeyEvent evt) {
+    // TODO: consider how to generalize this support strain matrix controls (L1)
+    private void processKeyReleaseOnDeformValueField(javax.swing.JTextField controlField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                this.handleDeformControlActivation(theField);
+                this.handleDeformControlActivation(controlField);
             }
         }
     }
     
-    // TODO: consider how to generalize this support strain matrix controls
-    private void processLostFocusOnDeformValueField(javax.swing.JTextField theField) {        
-        ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
-        if (vc.getDefaultVal() != Double.parseDouble(theField.getText())) {
-            this.handleDeformControlActivation(theField);
+    // TODO: consider how to generalize this support strain matrix controls (L1)
+    private void processLostFocusOnDeformValueField(javax.swing.JTextField controlField) {        
+        ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(controlField);
+        if (vc.getDefaultVal() != Double.parseDouble(controlField.getText())) {
+            this.handleDeformControlActivation(controlField);
         }
     }
         
-    // TODO: consider how to generalize this support strain matrix controls
-    private void handleDeformControlActivation(javax.swing.JTextField theField) {
-        ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
-        Util.sanitizeForDoubleNumberFormat(theField, vc.getDisplayPrecision());
-        double d = Double.parseDouble(theField.getText());
+    // TODO: consider how to generalize this support strain matrix controls (L1)
+    private void handleDeformControlActivation(javax.swing.JTextField controlField) {
+        ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(controlField);
+        Util.sanitizeForDoubleNumberFormat(controlField, vc.getDisplayPrecision());
+        double d = Double.parseDouble(controlField.getText());
         if (vc.isOutOfRange(d)) {
-            theField.setText(Util.truncForDisplay(vc.constrain(d), vc.getDisplayPrecision()));
+            controlField.setText(Util.truncForDisplay(vc.constrain(d), vc.getDisplayPrecision()));
         }
-        this.handleDeformControlChange(theField);
+        this.handleDeformControlChange(controlField);
     }
     
     private boolean keyCodeIgnoredOnRelease(int kc) {
@@ -1055,7 +1073,7 @@ public class MainWindow extends javax.swing.JFrame {
             (kc == java.awt.event.KeyEvent.VK_END);
     }
     
-    // TODO: consider how to generalize this support strain matrix controls
+    // TODO: consider how to generalize this support strain matrix controls (L1)
     private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode) {
 //        System.out.println("alterDefVal using key code: "+keyCode);
         String initialFieldText = theField.getText();
@@ -1073,14 +1091,15 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void handleDeformationReset() {
-        this.clearOutDeformControlFieldsOtherThan(null);
+        this.clearOutDeformAndStrainControlFieldsOtherThan(null);
         this.enableDeformControls();
         this.enableStrainMatrixControls();
     }
     
+    // TODO: genearl to handle strain field (L2)
     private void handleDeformControlChange(javax.swing.JTextField theField) {
-        this.clearOutDeformControlFieldsOtherThan(theField);
-        this.setDeformFieldsLinkedToThisField(theField);
+        this.clearOutDeformAndStrainControlFieldsOtherThan(theField);
+        this.setDeformAndStrainFieldsLinkedToThisField(theField);
         this.updateGSCUITentativeDeformBasedOn(theField);
         if (this.gscUI.isTentativeDeformationCleared()) {
             this.enableDeformControls();
@@ -1090,28 +1109,35 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    private void setDeformFieldsLinkedToThisField(javax.swing.JTextField theField) {
+    // TODO: genearl to handle strain field (L3)
+    private void setDeformAndStrainFieldsLinkedToThisField(javax.swing.JTextField theField) {
         if (this.jTextFieldShearX.equals(theField)) {
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         } else
         if (this.jTextFieldShearY.equals(theField)) {
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressX.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressY.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         } else
         if (this.jTextFieldRotDeg.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldRotRad, Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         } else
         if (this.jTextFieldRotRad.equals(theField)) {
             this.setValueForDeformOrStrainControl(this.jTextFieldRotDeg, Util.toDegrees(Double.parseDouble(this.jTextFieldRotRad.getText())));
             this.updateStrainControlsFromDeformControls();
+            this.updateRFPhiControlsFromDeformControls();
         }
     }
     
@@ -1254,14 +1280,14 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JSlider jSliderZoom;
     private javax.swing.JTextField jTextFieldCompressX;
     private javax.swing.JTextField jTextFieldCompressY;
+    private javax.swing.JTextField jTextFieldRFPhiCurrentPhi;
+    private javax.swing.JTextField jTextFieldRFPhiCurrentRF;
     private javax.swing.JTextField jTextFieldRotDeg;
     private javax.swing.JTextField jTextFieldRotRad;
     private javax.swing.JTextField jTextFieldShearX;
     private javax.swing.JTextField jTextFieldShearY;
     private javax.swing.JTextField jTextFieldStrainCumuPhi;
     private javax.swing.JTextField jTextFieldStrainCumuRF;
-    private javax.swing.JTextField jTextFieldStrainCurrentPhi;
-    private javax.swing.JTextField jTextFieldStrainCurrentRF;
     private javax.swing.JTextField jTextFieldStrainM00;
     private javax.swing.JTextField jTextFieldStrainM01;
     private javax.swing.JTextField jTextFieldStrainM10;
