@@ -59,6 +59,8 @@ class GSComplexUI extends JPanel {
     private boolean shiftIsDown = false;
     private boolean ctrlIsDown = false;
     private boolean altIsDown = false;
+
+    private boolean isDragDeform = false;
     
     /*------------------------------------------------------------------------*/
 
@@ -125,11 +127,13 @@ class GSComplexUI extends JPanel {
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
+        this.isDragDeform = false;
         this.repaint();
     } 
     
     public void tentativeDeformationSetToRotate(double angleRad) {
-        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
+//        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
+        this.tentativeDeformation = Deformation.createFromAngle(angleRad);
     }
     
     public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
@@ -161,7 +165,11 @@ class GSComplexUI extends JPanel {
     public boolean isTentativeDeformationCleared() {
         return this.tentativeDeformation.isIdentity();
     }
-        
+    
+    public Deformation getTentativeDeformationCopy() {
+        return this.tentativeDeformation.clone();
+    }
+            
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
         Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
         double deltaX = evt.getX() - this.lastMouseDownX;
@@ -169,16 +177,19 @@ class GSComplexUI extends JPanel {
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
             if (evt.isAltDown()) {
                 this.tentativeDeformationSetToRotate(this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem);
+                this.isDragDeform = true;
             }  else if (evt.isControlDown()) {
                 this.tentativeDeformationSetToCompression(evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX(),
                                                           evtPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getY(),
                                                           Math.abs(deltaX) > Math.abs(deltaY));
+                this.isDragDeform = true;
             } else if (evt.isShiftDown()) {
                 this.tentativeDeformationSetToShear(deltaX/this.lastMouseDragPointInGSCSystem.getY(),
                                                     deltaY/this.lastMouseDragPointInGSCSystem.getX(), 
                                                     Math.abs(deltaX) > Math.abs(deltaY));
                 
                 this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
+                this.isDragDeform = true;
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -302,35 +313,36 @@ class GSComplexUI extends JPanel {
             g2d.setStroke(GSComplexUI.INFO_STROKE);
             this.tentativeDeformation.drawOnto(g2d);
         
-            g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
-            g2d.setColor (Color.BLUE);
-            if (this.altIsDown) {
-                double rad = this.lastMouseDownPointInGSCSystem.distance(0,0);
-                double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;
-                double angleDiffDeg = (angleDiff)*180/Math.PI;
-                if (angleDiffDeg > 180) {
-                    angleDiffDeg -= 360;
-                } else if (angleDiffDeg < -180) {
-                    angleDiffDeg += 360;
-                }
-                g2d.drawArc((int)(this.gsc.getCenter().x - rad), (int)(this.gsc.getCenter().y - rad), (int) (2*rad), (int) (2*rad), 
-                            (int) (this.lastMouseDownAngleInGSCSystem*180/Math.PI), (int)angleDiffDeg);
-            }  else if (this.ctrlIsDown || this.shiftIsDown) {
-//                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
-                Point2D invertedLastDown = (Point2D) this.lastMouseDownPoint.clone();
-                Point2D invertedLastDrag = (Point2D) this.lastMouseDragPoint.clone();
-                try {
-                    this.displayTransform.inverseTransform(invertedLastDown, invertedLastDown);
-                    this.displayTransform.inverseTransform(invertedLastDrag, invertedLastDrag);
-                } catch (NoninvertibleTransformException noninvertibleTransformException) {
-                }
-                if (Math.abs(this.lastMouseDragX-this.lastMouseDownX) >= Math.abs(this.lastMouseDragY-this.lastMouseDownY)) {
-                    g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDrag.getX(), (int) invertedLastDown.getY());
-                } else {
-                    g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDown.getX(), (int) invertedLastDrag.getY());
+            if (this.isDragDeform) {
+                g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
+                g2d.setColor (Color.BLUE);
+                if (this.altIsDown) {
+                    double rad = this.lastMouseDownPointInGSCSystem.distance(0,0);
+                    double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;
+                    double angleDiffDeg = (angleDiff)*180/Math.PI;
+                    if (angleDiffDeg > 180) {
+                        angleDiffDeg -= 360;
+                    } else if (angleDiffDeg < -180) {
+                        angleDiffDeg += 360;
+                    }
+                    g2d.drawArc((int)(this.gsc.getCenter().x - rad), (int)(this.gsc.getCenter().y - rad), (int) (2*rad), (int) (2*rad), 
+                                (int) (this.lastMouseDownAngleInGSCSystem*180/Math.PI), (int)angleDiffDeg);
+                }  else if (this.ctrlIsDown || this.shiftIsDown) {
+    //                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
+                    Point2D invertedLastDown = (Point2D) this.lastMouseDownPoint.clone();
+                    Point2D invertedLastDrag = (Point2D) this.lastMouseDragPoint.clone();
+                    try {
+                        this.displayTransform.inverseTransform(invertedLastDown, invertedLastDown);
+                        this.displayTransform.inverseTransform(invertedLastDrag, invertedLastDrag);
+                    } catch (NoninvertibleTransformException noninvertibleTransformException) {
+                    }
+                    if (Math.abs(this.lastMouseDragX-this.lastMouseDownX) >= Math.abs(this.lastMouseDragY-this.lastMouseDownY)) {
+                        g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDrag.getX(), (int) invertedLastDown.getY());
+                    } else {
+                        g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDown.getX(), (int) invertedLastDrag.getY());
+                    }
                 }
             }
-
         }
     }
 

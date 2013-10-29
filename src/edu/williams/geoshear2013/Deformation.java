@@ -52,7 +52,9 @@ public class Deformation extends Matrix2x2 {
         return new Deformation(this.m00,this.m01,this.m10,this.m11);
     }
     
-    
+    public static Deformation createFromAngle(double angleRad) {
+        return new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
+    }
     
     /**
      * @return true if ththis matrix represents a simple rotational transformation

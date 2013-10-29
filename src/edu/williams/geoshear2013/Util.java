@@ -67,6 +67,11 @@ public class Util
         //System.out.println("textDecimal: "+textDecimal);
         //System.out.println("places: "+places);
         if (places < 0) { places = 0; }
+        String sign = "";
+        if (textDecimal.startsWith("-")) {
+            sign = "-";
+            textDecimal = textDecimal.substring(1);
+        }
         if (places > 0)
         {
             if (textDecimal.indexOf (".") > 0)
@@ -79,30 +84,41 @@ public class Util
                     for (int i=0; i<padSize; i++) {
                         textDecimal += "0";
                     }
-                    return textDecimal;
+                    return Util.signAsNeeded(textDecimal,sign);
                 }
                 if (truncLength > places)
                 {
                     truncLength = places;
                 }
-                return textDecimal.substring (0,textDecimal.indexOf (".")+truncLength);
+                return Util.signAsNeeded(textDecimal.substring (0,textDecimal.indexOf (".")+truncLength),sign);
             } else { // starts with no decimal places, so pad with 0's
                 textDecimal += ".";
                 for (int i=0; i<places; i++) {
                     textDecimal += "0";
                 }
             }
-            return textDecimal;
+            return Util.signAsNeeded(textDecimal,sign);
         } else { // places == 0
             if (textDecimal.indexOf (".") > 0)
             {
-                return textDecimal.substring(0,textDecimal.indexOf (".")); // chop decimal point and everything after
+                return Util.signAsNeeded(textDecimal.substring(0,textDecimal.indexOf (".")),sign); // chop decimal point and everything after
             } else {
-                return textDecimal; // no decimal point so return as is
+                return Util.signAsNeeded(textDecimal,sign); // no decimal point so return as is
             }
         }
     }
 
+    // add given sign to non-zero numbers
+    public static String signAsNeeded(String numberAsString, String signSymbol) {
+        if (signSymbol.equalsIgnoreCase("")) {
+            return numberAsString;
+        }
+        if (Double.parseDouble(numberAsString) == 0) {
+            return numberAsString;
+        }
+        return signSymbol+numberAsString;
+    }
+    
     public static String fillIntLeft(int base, int fullSize)
     {
         return Util.fillLeftWith(Integer.toString(base), fullSize, "0");
@@ -213,9 +229,9 @@ public class Util
     public static String truncForDisplay (double numAsDouble, int places)
     {
         if (numAsDouble > 0) {
-            numAsDouble += .0001;
+            numAsDouble += .00000001;
         } else if (numAsDouble < 0) {
-            numAsDouble -= .0001;
+            numAsDouble -= .00000001;
         }
         return Util.truncTextDecimal (Double.toString(numAsDouble), places);
     }

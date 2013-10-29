@@ -49,13 +49,19 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         
         this.displayNumberConstraints = new HashMap();
+
         this.displayNumberConstraints.put(this.jTextFieldShearX, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
         this.displayNumberConstraints.put(this.jTextFieldShearY, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
         this.displayNumberConstraints.put(this.jTextFieldCompressX, new ValueConstrainer(.1, .1, 10, 10, .01, 3, 1));
         this.displayNumberConstraints.put(this.jTextFieldCompressY, new ValueConstrainer(.1, .1, 10, 10, .01, 3, 1));
         this.displayNumberConstraints.put(this.jTextFieldRotDeg, new ValueConstrainer(-180, 180, 180, -180, 1, 2, 0, ValueConstrainer.CONSTRAINT_WRAP));
         this.displayNumberConstraints.put(this.jTextFieldRotRad, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
-//        this.displayNumberConstraints.put(this.jTextFieldShearX, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
+
+        this.displayNumberConstraints.put(this.jTextFieldStrainM00, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldStrainM01, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
+        this.displayNumberConstraints.put(this.jTextFieldStrainM10, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
+        this.displayNumberConstraints.put(this.jTextFieldStrainM11, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 1));
+
         Iterator keyIter = this.displayNumberConstraints.keySet().iterator();
         while(keyIter.hasNext()) {
             JTextField tf = (JTextField) keyIter.next();
@@ -855,22 +861,47 @@ public class MainWindow extends javax.swing.JFrame {
         if (d.isScaling()) {
             if ((d.m00 != 1) || (d.m11 != 1)) { 
                 this.setValueForDeformControlExclusively(this.jTextFieldCompressX,d.m00);
-                this.setValueForDeformControl(this.jTextFieldCompressY,d.m11);
+                this.setValueForDeformOrStrainControl(this.jTextFieldCompressY,d.m11);
             }
         } else
         if (d.isRotational()) {
             this.setValueForDeformControlExclusively(this.jTextFieldRotDeg,d.getRotAngleDegr());
-            this.setValueForDeformControl(this.jTextFieldRotRad,d.getRotAngleRad());
+            this.setValueForDeformOrStrainControl(this.jTextFieldRotRad,d.getRotAngleRad());
         }
+        this.updateStrainControlsFromDeformation(d);
+    }
+    
+    public void updateStrainControlsFromDeformation(Deformation d) {
+        this.setValueForDeformOrStrainControl(this.jTextFieldStrainM00, d.m00);
+        this.setValueForDeformOrStrainControl(this.jTextFieldStrainM01, d.m01*-1);
+        this.setValueForDeformOrStrainControl(this.jTextFieldStrainM10, d.m10*-1);
+        this.setValueForDeformOrStrainControl(this.jTextFieldStrainM11, d.m11);
     }
 
+    public void updateStrainControlsFromDeformControls() {
+        if (controlFieldHasDefaultValue(this.jTextFieldRotDeg)) {
+            this.setValueForDeformOrStrainControl(this.jTextFieldStrainM00, Double.parseDouble(this.jTextFieldCompressX.getText()));
+            this.setValueForDeformOrStrainControl(this.jTextFieldStrainM01, Double.parseDouble(this.jTextFieldShearY.getText()));
+            this.setValueForDeformOrStrainControl(this.jTextFieldStrainM10, Double.parseDouble(this.jTextFieldShearX.getText()));
+            this.setValueForDeformOrStrainControl(this.jTextFieldStrainM11, Double.parseDouble(this.jTextFieldCompressY.getText()));
+        } else {
+            this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
+        }
+    }
+    
+    private boolean controlFieldHasDefaultValue(javax.swing.JTextField controlField) {
+        String curVal = controlField.getText();
+        double defaultVal = ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDefaultVal();
+        return defaultVal == Double.parseDouble(curVal);
+    }
+    
     /**
      * set the given field to the given value
      * NOTE: safely handles null fields (sets no field / does nothing)
      * @param controlField
      * @param val 
      */
-    private void setValueForDeformControl(javax.swing.JTextField controlField, double val) {
+    private void setValueForDeformOrStrainControl(javax.swing.JTextField controlField, double val) {
         if (controlField != null) {
             controlField.setText(Util.truncForDisplay(val, ((ValueConstrainer) this.displayNumberConstraints.get(controlField)).getDisplayPrecision()));
         }
@@ -901,7 +932,8 @@ public class MainWindow extends javax.swing.JFrame {
             if (! tf.equals(stableControlField)) {
                 tf.setText(Util.truncTextDecimal(Double.toString(((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDefaultVal()), ((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDisplayPrecision()));
             }
-        }        
+        }
+        this.updateStrainControlsFromDeformControls();
     }
     
     private void jTextFieldShearXKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldShearXKeyPressed
@@ -982,6 +1014,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.processLostFocusOnDeformValueField(this.jTextFieldRotRad);
     }//GEN-LAST:event_jTextFieldRotRadFocusLost
     
+    // TODO: consider how to generalize this support strain matrix controls
     private void processKeyReleaseOnDeformValueField(javax.swing.JTextField theField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
@@ -990,6 +1023,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
+    // TODO: consider how to generalize this support strain matrix controls
     private void processLostFocusOnDeformValueField(javax.swing.JTextField theField) {        
         ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
         if (vc.getDefaultVal() != Double.parseDouble(theField.getText())) {
@@ -997,6 +1031,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
         
+    // TODO: consider how to generalize this support strain matrix controls
     private void handleDeformControlActivation(javax.swing.JTextField theField) {
         ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(theField);
         Util.sanitizeForDoubleNumberFormat(theField, vc.getDisplayPrecision());
@@ -1020,6 +1055,7 @@ public class MainWindow extends javax.swing.JFrame {
             (kc == java.awt.event.KeyEvent.VK_END);
     }
     
+    // TODO: consider how to generalize this support strain matrix controls
     private void alterDeformValueByKeyPressInField(javax.swing.JTextField theField,int keyCode) {
 //        System.out.println("alterDefVal using key code: "+keyCode);
         String initialFieldText = theField.getText();
@@ -1055,17 +1091,27 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void setDeformFieldsLinkedToThisField(javax.swing.JTextField theField) {
+        if (this.jTextFieldShearX.equals(theField)) {
+            this.updateStrainControlsFromDeformControls();
+        } else
+        if (this.jTextFieldShearY.equals(theField)) {
+            this.updateStrainControlsFromDeformControls();
+        } else
         if (this.jTextFieldCompressX.equals(theField)) {
-            this.setValueForDeformControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
+            this.setValueForDeformOrStrainControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
+            this.updateStrainControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressY.equals(theField)) {
-            this.setValueForDeformControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
+            this.setValueForDeformOrStrainControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
+            this.updateStrainControlsFromDeformControls();
         } else
         if (this.jTextFieldRotDeg.equals(theField)) {
-            this.setValueForDeformControl(this.jTextFieldRotRad, Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
+            this.setValueForDeformOrStrainControl(this.jTextFieldRotRad, Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
+            this.updateStrainControlsFromDeformControls();
         } else
         if (this.jTextFieldRotRad.equals(theField)) {
-            this.setValueForDeformControl(this.jTextFieldRotDeg, Util.toDegrees(Double.parseDouble(this.jTextFieldRotRad.getText())));
+            this.setValueForDeformOrStrainControl(this.jTextFieldRotDeg, Util.toDegrees(Double.parseDouble(this.jTextFieldRotRad.getText())));
+            this.updateStrainControlsFromDeformControls();
         }
     }
     
