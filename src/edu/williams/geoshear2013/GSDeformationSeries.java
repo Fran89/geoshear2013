@@ -35,7 +35,7 @@ public class GSDeformationSeries extends ArrayList {
      * 
      * @return an ellipse that is the composite of all ellipses in the series as if each were a strain applied to the next (sans translations)
      */
-    public Matrix2x2 getCompositeTransform() {
+    public Deformation getCompositeTransform() {
         return this.compositeDeformation;
     }
     

@@ -133,6 +133,7 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel14 = new javax.swing.JLabel();
         jPanelContainerDisplay = new javax.swing.JPanel();
         jPanelContainerControls = new javax.swing.JPanel();
         jPanelDisplayControls = new javax.swing.JPanel();
@@ -176,6 +177,12 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuRF = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabelStrainNavPosition = new javax.swing.JLabel();
+        jLabelCumuStrainM00 = new javax.swing.JLabel();
+        jLabelCumuStrainM01 = new javax.swing.JLabel();
+        jLabelCumuStrainM10 = new javax.swing.JLabel();
+        jLabelCumuStrainM11 = new javax.swing.JLabel();
+        jLabelCumuStrainRightBracket = new javax.swing.JLabel();
+        jLabelCumuStrainLeftBracket = new javax.swing.JLabel();
         jPanelDeformMatrixRight = new javax.swing.JPanel();
         jButtonStrainNavNext = new javax.swing.JButton();
         jTextFieldStrainM01 = new javax.swing.JTextField();
@@ -186,6 +193,12 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextFieldStrainCumuPhi = new javax.swing.JTextField();
         jLabelStrainNavCount = new javax.swing.JLabel();
+        jLabelCumuTentStrainLeftBracket = new javax.swing.JLabel();
+        jLabelCumuTentStrainM00 = new javax.swing.JLabel();
+        jLabelCumuTentStrainM10 = new javax.swing.JLabel();
+        jLabelCumuTentStrainM11 = new javax.swing.JLabel();
+        jLabelCumuTentStrainM01 = new javax.swing.JLabel();
+        jLabelCumuTentStrainRightBracket = new javax.swing.JLabel();
         jPanelStrainControls = new javax.swing.JPanel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jPanelSnapshotControls = new javax.swing.JPanel();
@@ -198,6 +211,9 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu = new javax.swing.JMenu();
         DisplayMenu = new javax.swing.JMenu();
         ChartsMenu = new javax.swing.JMenu();
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel14.setText("[");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -592,6 +608,38 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelStrainNavPosition.setText("0 /");
         jPanelDeformMatrixLeft.add(jLabelStrainNavPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 150, 30, 20));
 
+        jLabelCumuStrainM00.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuStrainM00.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuStrainM00.setText("1");
+        jLabelCumuStrainM00.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 33, -1));
+
+        jLabelCumuStrainM01.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuStrainM01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuStrainM01.setText("0");
+        jLabelCumuStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 110, 33, -1));
+
+        jLabelCumuStrainM10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuStrainM10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuStrainM10.setText("0");
+        jLabelCumuStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 33, -1));
+
+        jLabelCumuStrainM11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuStrainM11.setText("1");
+        jLabelCumuStrainM11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 130, 33, -1));
+
+        jLabelCumuStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelCumuStrainRightBracket.setText("]");
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 98, 14, 50));
+
+        jLabelCumuStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelCumuStrainLeftBracket.setText("[");
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 98, 14, 50));
+
         jPanelDeformControls.add(jPanelDeformMatrixLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 110, 210));
 
         jPanelDeformMatrixRight.setPreferredSize(new java.awt.Dimension(93, 75));
@@ -650,6 +698,38 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelStrainNavCount.setText("0");
         jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 30, 20));
+
+        jLabelCumuTentStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelCumuTentStrainLeftBracket.setText("[");
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 98, 14, 50));
+
+        jLabelCumuTentStrainM00.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuTentStrainM00.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuTentStrainM00.setText("1");
+        jLabelCumuTentStrainM00.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 110, 33, -1));
+
+        jLabelCumuTentStrainM10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuTentStrainM10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuTentStrainM10.setText("0");
+        jLabelCumuTentStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, 33, -1));
+
+        jLabelCumuTentStrainM11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuTentStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuTentStrainM11.setText("1");
+        jLabelCumuTentStrainM11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 130, 33, -1));
+
+        jLabelCumuTentStrainM01.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelCumuTentStrainM01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCumuTentStrainM01.setText("0");
+        jLabelCumuTentStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 110, 33, -1));
+
+        jLabelCumuTentStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelCumuTentStrainRightBracket.setText("]");
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 98, 14, 50));
 
         jPanelDeformControls.add(jPanelDeformMatrixRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 110, 210));
 
@@ -882,7 +962,10 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public void updateDeformAndStrainControlsFromDeformation(Deformation d) {
         if (d.isIdentity()) {
+            this.setValuesForCumuTentStrain();
             this.handleDeformationReset();
+            this.jButtonDeformApplyRemove.setText("Remove");
+            this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
         } else
         if (d.isShearing()) {
             if (d.m10 != 0 ) { 
@@ -901,6 +984,12 @@ public class MainWindow extends javax.swing.JFrame {
             this.setValueForDeformControlExclusively(this.jTextFieldRotDeg,d.getRotAngleDegr());
             this.setValueForControl(this.jTextFieldRotRad,d.getRotAngleRad());
         }
+        this.jButtonDeformApplyRemove.setEnabled(! d.isIdentity());
+        if (! d.isIdentity()) {
+            this.jButtonDeformApplyRemove.setText("Apply");
+            this.jLabelStrainNavPosition.setText("* /");
+        }
+        this.setValuesForCumuTentStrain();
         this.updateOtherControlsFromDeformControls();
 
         this.updateStrainControlsFromDeformation(d);
@@ -1056,6 +1145,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void jButtonDeformResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeformResetActionPerformed
         this.handleDeformationReset();
         this.gscUI.tentativeDeformationClear();
+        this.setValuesForCumuTentStrain();
         this.gscUI.repaint();
     }//GEN-LAST:event_jButtonDeformResetActionPerformed
 
@@ -1166,6 +1256,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.enableDeformControls();
         this.enableStrainMatrixControls();
         this.enableRfPhiControls();
+        this.jButtonDeformApplyRemove.setText("Remove");
+        this.jButtonDeformApplyRemove.setEnabled(false);
+        this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
     }
     
     private void handleControlChange(javax.swing.JTextField controlField) {
@@ -1175,10 +1268,16 @@ public class MainWindow extends javax.swing.JFrame {
         this.setOtherFieldsLinkedToThisField(controlField);
         this.updateGSCUITentativeDeformBasedOn(controlField);
         if (this.gscUI.isTentativeDeformationCleared()) {
+            this.jButtonDeformApplyRemove.setText("Remove");
+            this.jButtonDeformApplyRemove.setEnabled(false);
+            this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
             this.enableDeformControls();
             this.enableStrainMatrixControls();
             this.enableRfPhiControls();
         } else {
+            this.jButtonDeformApplyRemove.setEnabled(true);
+            this.jButtonDeformApplyRemove.setText("Apply");
+            this.jLabelStrainNavPosition.setText("* /");
             if (this.isControlDeform(controlField)) {
                 this.disableStrainMatrixControls();
                 this.disableRfPhiControls();
@@ -1189,6 +1288,36 @@ public class MainWindow extends javax.swing.JFrame {
                 this.disableStrainMatrixControls();
                 this.disableDeformControls();
             }
+        }
+        this.setValuesForCumuTentStrain();
+    }
+    
+    private void setValuesForCumuStrain() {
+        Deformation d = this.gscUI.gsc.deformations.getCompositeTransform();
+        this.jLabelCumuStrainM00.setText(Util.truncForDisplay(d.m00));
+        this.jLabelCumuStrainM10.setText(Util.truncForDisplay(d.m10));
+        this.jLabelCumuStrainM01.setText(Util.truncForDisplay(d.m01));
+        this.jLabelCumuStrainM11.setText(Util.truncForDisplay(d.m11));
+    }
+    private void setValuesForCumuTentStrain() {
+        if (this.gscUI.isTentativeDeformationCleared()) {
+            this.jLabelCumuTentStrainM00.setText(this.jLabelCumuStrainM00.getText());
+            this.jLabelCumuTentStrainM10.setText(this.jLabelCumuStrainM10.getText());
+            this.jLabelCumuTentStrainM01.setText(this.jLabelCumuStrainM01.getText());
+            this.jLabelCumuTentStrainM11.setText(this.jLabelCumuStrainM11.getText());
+        } else {
+            Deformation dT = this.gscUI.getTentativeDeformationCopy();
+            //if (dT.isShearing()) {
+                dT.m01 *= -1;
+                dT.m10 *= -1;
+            //}
+            Matrix2x2 d =  this.gscUI.gsc.deformations.getCompositeTransform().times(dT);
+//            d.timesInPlace(this.gscUI.getTentativeDeformationCopy());
+//            System.err.println("cumu-tent is: "+d.toString());
+            this.jLabelCumuTentStrainM00.setText(Util.truncForDisplay(d.m00));
+            this.jLabelCumuTentStrainM10.setText(Util.truncForDisplay(d.m10));
+            this.jLabelCumuTentStrainM01.setText(Util.truncForDisplay(d.m01));
+            this.jLabelCumuTentStrainM11.setText(Util.truncForDisplay(d.m11));
         }
     }
     
@@ -1279,12 +1408,12 @@ public class MainWindow extends javax.swing.JFrame {
             this.jTextFieldRotRad.equals(controlField);
     }
     
-        
+    // NOTE: as of 2013/11/01 strain matrix controls are not active (until various pplication of deformation issues can be resolved)    
     private void disableStrainMatrixControls() {
-        this.setEnableOnStrainMatrixControls(false);
+//        this.setEnableOnStrainMatrixControls(false);
     }
     private void enableStrainMatrixControls() {
-        this.setEnableOnStrainMatrixControls(true);
+//        this.setEnableOnStrainMatrixControls(true);
     }
     private void setEnableOnStrainMatrixControls(boolean state) {
         this.jTextFieldStrainM00.setEnabled(state);
@@ -1300,11 +1429,12 @@ public class MainWindow extends javax.swing.JFrame {
             this.jTextFieldStrainM11.equals(controlField);
     }
 
+    // NOTE: as of 2013/11/01 rf-phi controls are not active (until various pplication of deformation issues can be resolved)    
     private void disableRfPhiControls() {
-        this.setEnableOnRfPhiControls(false);
+//        this.setEnableOnRfPhiControls(false);
     }
     private void enableRfPhiControls() {
-        this.setEnableOnRfPhiControls(true);
+//        this.setEnableOnRfPhiControls(true);
     }
     private void setEnableOnRfPhiControls(boolean state) {
         this.jTextFieldRFPhiCurrentRF.setEnabled(state);
@@ -1368,6 +1498,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonStrainNavPrevious;
     private javax.swing.JButton jButtonUnzoom;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1377,6 +1508,18 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;
     private javax.swing.JLabel jLabelCompressrY;
+    private javax.swing.JLabel jLabelCumuStrainLeftBracket;
+    private javax.swing.JLabel jLabelCumuStrainM00;
+    private javax.swing.JLabel jLabelCumuStrainM01;
+    private javax.swing.JLabel jLabelCumuStrainM10;
+    private javax.swing.JLabel jLabelCumuStrainM11;
+    private javax.swing.JLabel jLabelCumuStrainRightBracket;
+    private javax.swing.JLabel jLabelCumuTentStrainLeftBracket;
+    private javax.swing.JLabel jLabelCumuTentStrainM00;
+    private javax.swing.JLabel jLabelCumuTentStrainM01;
+    private javax.swing.JLabel jLabelCumuTentStrainM10;
+    private javax.swing.JLabel jLabelCumuTentStrainM11;
+    private javax.swing.JLabel jLabelCumuTentStrainRightBracket;
     private javax.swing.JLabel jLabelShearControl;
     private javax.swing.JLabel jLabelShearControl1;
     private javax.swing.JLabel jLabelShearX;
