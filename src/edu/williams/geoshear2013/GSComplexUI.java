@@ -139,6 +139,12 @@ class GSComplexUI extends JPanel {
         this.repaint();
     } 
     
+    public void tentativeDeformationSetFromRfPhi(double rf, double phiDeg) {
+        this.tentativeDeformation = Deformation.createFromRfPhi(rf,phiDeg);
+//        System.err.println("td on set from rf phi: "+this.tentativeDeformation.toString());
+        this.setTentativeStrain();
+    }
+    
     public void tentativeDeformationSetToRotate(double angleRad) {
 //        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
         this.tentativeDeformation = Deformation.createFromAngle(angleRad);
@@ -327,6 +333,7 @@ class GSComplexUI extends JPanel {
         // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
             g2d.setStroke(GSComplexUI.INFO_STROKE);
+//            System.err.println("about to draw ten def: "+this.tentativeDeformation.toString());
             this.tentativeDeformation.drawOnto(g2d);
         
             if (this.isDragDeform) {

@@ -57,8 +57,8 @@ public class MainWindow extends javax.swing.JFrame {
         this.displayNumberConstraints.put(this.jTextFieldRotDeg, new ValueConstrainer(-180, 180, 180, -180, 1, 2, 0, ValueConstrainer.CONSTRAINT_WRAP));
         this.displayNumberConstraints.put(this.jTextFieldRotRad, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
 
-        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentRF, new ValueConstrainer(-10000, -10000, 10000, 10000, .01, 3, 1));
-        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentPhi, new ValueConstrainer(-1*Math.PI, Math.PI, Math.PI, -1*Math.PI, .01, 3, 0, ValueConstrainer.CONSTRAINT_WRAP));
+        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentRF, new ValueConstrainer(1, 1, 1000, 1000, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldRFPhiCurrentPhi, new ValueConstrainer(-180, 180, 180, -180, 1, 2, 0, ValueConstrainer.CONSTRAINT_WRAP));
         
         this.displayNumberConstraints.put(this.jTextFieldStrainM00, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 1));
         this.displayNumberConstraints.put(this.jTextFieldStrainM01, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
@@ -540,17 +540,33 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonStrainNavPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_left_light.gif"))); // NOI18N
         jPanelDeformMatrixLeft.add(jButtonStrainNavPrevious, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, -1));
 
+        jTextFieldStrainM00.setEditable(false);
         jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM00.setText("1.000");
         jPanelDeformMatrixLeft.add(jTextFieldStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, -1));
 
+        jTextFieldStrainM10.setEditable(false);
         jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM10.setText("0.000");
         jPanelDeformMatrixLeft.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
 
+        jTextFieldRFPhiCurrentRF.setEditable(false);
         jTextFieldRFPhiCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentRF.setText("1.000");
         jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldRFPhiCurrentRF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldRFPhiCurrentRFFocusLost(evt);
+            }
+        });
+        jTextFieldRFPhiCurrentRF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldRFPhiCurrentRFKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldRFPhiCurrentRFKeyReleased(evt);
+            }
+        });
         jPanelDeformMatrixLeft.add(jTextFieldRFPhiCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 6, 60, 20));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -584,17 +600,33 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonStrainNavNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_right_light.gif"))); // NOI18N
         jPanelDeformMatrixRight.add(jButtonStrainNavNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 60, -1));
 
+        jTextFieldStrainM01.setEditable(false);
         jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM01.setText("0.000");
         jPanelDeformMatrixRight.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
 
+        jTextFieldStrainM11.setEditable(false);
         jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainM11.setText("1.000");
         jPanelDeformMatrixRight.add(jTextFieldStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, -1));
 
+        jTextFieldRFPhiCurrentPhi.setEditable(false);
         jTextFieldRFPhiCurrentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentPhi.setText("0.000");
         jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldRFPhiCurrentPhi.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldRFPhiCurrentPhiFocusLost(evt);
+            }
+        });
+        jTextFieldRFPhiCurrentPhi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldRFPhiCurrentPhiKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldRFPhiCurrentPhiKeyReleased(evt);
+            }
+        });
         jPanelDeformMatrixRight.add(jTextFieldRFPhiCurrentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 60, 20));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1050,6 +1082,30 @@ public class MainWindow extends javax.swing.JFrame {
     private void jTextFieldRotRadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRotRadFocusLost
         this.processLostFocusOnControl(this.jTextFieldRotRad);
     }//GEN-LAST:event_jTextFieldRotRadFocusLost
+
+    private void jTextFieldRFPhiCurrentRFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFKeyPressed
+//        this.alterValueByKeyPressInControl(this.jTextFieldRFPhiCurrentRF, evt.getKeyCode());
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFKeyPressed
+
+    private void jTextFieldRFPhiCurrentRFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFKeyReleased
+//        this.processKeyReleaseOnControl(this.jTextFieldRFPhiCurrentRF,evt);
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFKeyReleased
+
+    private void jTextFieldRFPhiCurrentPhiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiKeyPressed
+//        this.alterValueByKeyPressInControl(this.jTextFieldRFPhiCurrentPhi, evt.getKeyCode());
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiKeyPressed
+
+    private void jTextFieldRFPhiCurrentPhiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiKeyReleased
+//        this.processKeyReleaseOnControl(this.jTextFieldRFPhiCurrentPhi,evt);
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiKeyReleased
+
+    private void jTextFieldRFPhiCurrentRFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFFocusLost
+//        this.processLostFocusOnControl(this.jTextFieldRFPhiCurrentRF);
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFFocusLost
+
+    private void jTextFieldRFPhiCurrentPhiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiFocusLost
+//        this.processLostFocusOnControl(this.jTextFieldRFPhiCurrentPhi);
+    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiFocusLost
     
     private void processKeyReleaseOnControl(javax.swing.JTextField controlField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
@@ -1113,7 +1169,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void handleControlChange(javax.swing.JTextField controlField) {
-        this.clearOutControlFieldsOtherThan(controlField);
+        if (this.isControlDeform(controlField)) {
+            this.clearOutControlFieldsOtherThan(controlField);
+        }
         this.setOtherFieldsLinkedToThisField(controlField);
         this.updateGSCUITentativeDeformBasedOn(controlField);
         if (this.gscUI.isTentativeDeformationCleared()) {
@@ -1171,6 +1229,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
+    // TODO generalize for all controls
     private void updateGSCUITentativeDeformBasedOn(javax.swing.JTextField controlField) {
         if ((this.jTextFieldShearX.equals(controlField)) || (this.jTextFieldShearY.equals(controlField))) {
             this.gscUI.tentativeDeformationSetToShear(Double.parseDouble(this.jTextFieldShearX.getText()), 
@@ -1187,6 +1246,10 @@ public class MainWindow extends javax.swing.JFrame {
         } else
         if (this.jTextFieldRotRad.equals(controlField)) {
             this.gscUI.tentativeDeformationSetToRotate(Double.parseDouble(this.jTextFieldRotRad.getText()));
+        } else
+        if (this.jTextFieldRFPhiCurrentRF.equals(controlField) || this.jTextFieldRFPhiCurrentPhi.equals(controlField)) {
+            this.gscUI.tentativeDeformationSetFromRfPhi(Double.parseDouble(this.jTextFieldRFPhiCurrentRF.getText()),
+                                                        Double.parseDouble(this.jTextFieldRFPhiCurrentPhi.getText()));
         }
         this.gscUI.repaint();
     }

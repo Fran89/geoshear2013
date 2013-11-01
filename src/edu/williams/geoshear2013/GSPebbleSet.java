@@ -99,7 +99,7 @@ public class GSPebbleSet extends ArrayList {
         }
     }
 
-    public void applyDeformation(Matrix2x2 deformation) {
+    public void applyDeformation(Deformation deformation) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
             ((GSPebble)(li.next())).deform(deformation);

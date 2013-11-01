@@ -45,7 +45,7 @@ public class GSEllipse {
         this.setMatrixFromKeyData();
     }
     public GSEllipse(Matrix2x2 t) { // unit circle is the default
-        new GSEllipse().deform(t);
+        new GSEllipse().deform(new Deformation(t));
     }
     /*------------------------------------------------------------------------*/
 
@@ -74,28 +74,58 @@ public class GSEllipse {
 //        return deformedEllipse;
 //    }
 
-    public void deform(Matrix2x2 deformation) {
+    public void deform(Deformation deformation) {
 //        System.err.println("predeform key data: "+this.keyDataAsString());
 //        System.err.println("deformation matrix: "+deformation.toString());
-        Matrix2x2 dT = deformation.clone();
-        if (dT.m00==1 && dT.m11==1) {
+        Deformation dT = deformation.clone();
+        if (dT.isShearing()) {
             AffineTransform shearTrans = AffineTransform.getShearInstance(deformation.m10*-1, deformation.m01*-1);
             Point2D curCenter = new Point2D.Double(this.x, this.y);
             shearTrans.transform(curCenter, curCenter);
             this.x = curCenter.getX();
             this.y = curCenter.getY();
-        } else if (dT.m01==0 && dT.m10==0) {
+        } else if (dT.isScaling()) {
             AffineTransform scaleTrans = AffineTransform.getScaleInstance(deformation.m00, deformation.m11);
             Point2D curCenter = new Point2D.Double(this.x, this.y);
             scaleTrans.transform(curCenter, curCenter);
             this.x = curCenter.getX();
             this.y = curCenter.getY();
-        } else {
+        }  else if (dT.isRotational()) {
 //            double thetaDeg = Math.acos(deformation.m00) * (180/Math.PI) * ((deformation.m01 > 0) ? -1 : 1);
 //            System.err.println("backed out rot degr: "+thetaDeg);
             AffineTransform rotTrans = AffineTransform.getRotateInstance(Math.acos(deformation.m00) * ((deformation.m01 > 0) ? -1 : 1));
             Point2D curCenter = new Point2D.Double(this.x, this.y);
             rotTrans.transform(curCenter, curCenter);
+            this.x = curCenter.getX();
+            this.y = curCenter.getY();
+        } else {
+            System.err.println("potentially some problems in GSEllipse.deform with non-basic (i.e. basic shear, scale, or rotate) deformation");
+
+            Point2D curCenter = new Point2D.Double(this.x, this.y);
+
+            AffineTransform otherTrans = dT.asAffineTransform();
+            otherTrans.transform(curCenter, curCenter);
+
+//            Matrix2x2[] u_sig_vt = dT.svd();
+//        System.err.println("u: "+u_sig_vt[0].toString());
+//        System.err.println("sig: "+u_sig_vt[1].toString());
+//        System.err.println("vt: "+u_sig_vt[2].toString());
+//
+//            
+//            double major = u_sig_vt[1].m00;
+//            double minor = u_sig_vt[1].m11;
+//            AffineTransform scaleTrans = AffineTransform.getScaleInstance(major, minor);
+//
+//            double theta = Math.acos(u_sig_vt[2].m00);
+//            if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
+//                theta = theta * -1;
+//            }
+//            AffineTransform rotTrans = AffineTransform.getRotateInstance(theta);
+//
+//            scaleTrans.transform(curCenter, curCenter);
+//            rotTrans.transform(curCenter, curCenter);
+            
+
             this.x = curCenter.getX();
             this.y = curCenter.getY();
         }

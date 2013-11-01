@@ -715,6 +715,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldStrainM00">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
                   </Properties>
@@ -726,6 +727,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldStrainM10">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
                   </Properties>
@@ -737,6 +739,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldRFPhiCurrentRF">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -745,6 +748,11 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldRFPhiCurrentRFFocusLost"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldRFPhiCurrentRFKeyPressed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldRFPhiCurrentRFKeyReleased"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="40" y="6" width="60" height="20"/>
@@ -847,6 +855,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldStrainM01">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
                   </Properties>
@@ -858,6 +867,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldStrainM11">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
                   </Properties>
@@ -869,6 +879,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldRFPhiCurrentPhi">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -877,6 +888,11 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldRFPhiCurrentPhiFocusLost"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldRFPhiCurrentPhiKeyPressed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldRFPhiCurrentPhiKeyReleased"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="20" y="6" width="60" height="20"/>
