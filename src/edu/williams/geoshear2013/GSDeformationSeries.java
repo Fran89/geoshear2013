@@ -43,7 +43,8 @@ public class GSDeformationSeries extends ArrayList {
         this.compositeDeformation = new Deformation();
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+            this.compositeDeformation = new Deformation((((Deformation)(li.next()))).times(this.compositeDeformation));
         }
     }
     /*---------------------------------------------------------------------*/

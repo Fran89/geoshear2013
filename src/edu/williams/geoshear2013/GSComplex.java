@@ -139,4 +139,15 @@ public class GSComplex implements Watchable {
             }
         }
     }
+
+    void applyDeformation(Deformation d) {
+        this.deformations.add(d);
+        GSPebbleSet newPebbleSet = this.pebbleSets.get(0).clone();
+        ListIterator li = this.deformations.listIterator();
+        while (li.hasNext()) {
+//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+            newPebbleSet.applyDeformation((Deformation)(li.next()));
+        }
+        this.pebbleSets.add(newPebbleSet);
+    }
 }

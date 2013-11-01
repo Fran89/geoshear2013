@@ -59,6 +59,10 @@ public class Deformation extends Matrix2x2 {
         return new Deformation(this.m00,this.m01,this.m10,this.m11);
     }
     
+    public Deformation times(Deformation d) {
+        return new Deformation(super.times(d));
+    }
+    
     public static Deformation createFromAngle(double angleRad) {
         return new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
     }
@@ -126,7 +130,7 @@ public class Deformation extends Matrix2x2 {
      * @return true if ththis matrix represents a simple rotational transformation
      */
     public boolean isRotational() {
-        return this.m00==this.m11 && this.m01==(-1*this.m10);
+        return (! this.isIdentity()) && this.m00==this.m11 && this.m01==(-1*this.m10);
     }
 
     /**
@@ -153,8 +157,26 @@ public class Deformation extends Matrix2x2 {
     }
     
     public void drawOnto(Graphics2D g2d) {
+        this.drawOnto(g2d, Deformation.DEFORMATION_COLOR);
+//        if (this.isRotational()) {
+//            g2d.setColor(Deformation.DEFORMATION_COLOR);
+//
+//            // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
+//            g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)this.getRotAngleDegr());
+//            
+//            g2d.drawLine(0,0, Deformation.DISPLAY_RADIUS, 0);
+//        } else {
+//            GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
+//            strain.setColor(Deformation.DEFORMATION_COLOR);
+//            strain.deform(this);
+//            System.err.println("** drawing strain: "+strain.keyDataAsString());
+//            strain.drawOnto(g2d, false, true);
+//        }
+    }
+
+    public void drawOnto(Graphics2D g2d, Color c) {
         if (this.isRotational()) {
-            g2d.setColor(Deformation.DEFORMATION_COLOR);
+            g2d.setColor(c);
 
             // NOTE: using draw instead of fill so that we don't hide potentially important info near the origin
             g2d.drawArc(-1*Deformation.DISPLAY_RADIUS, -1*Deformation.DISPLAY_RADIUS,2*Deformation.DISPLAY_RADIUS, 2*Deformation.DISPLAY_RADIUS, 0, (int)this.getRotAngleDegr());
@@ -162,9 +184,9 @@ public class Deformation extends Matrix2x2 {
             g2d.drawLine(0,0, Deformation.DISPLAY_RADIUS, 0);
         } else {
             GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
-            strain.setColor(Deformation.DEFORMATION_COLOR);
+            strain.setColor(c);
             strain.deform(this);
-//            System.err.println("** drawing strain: "+strain.keyDataAsString());
+            System.err.println("** drawing strain: "+strain.keyDataAsString());
             strain.drawOnto(g2d, false, true);
         }
     }

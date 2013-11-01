@@ -29,7 +29,11 @@ class GSComplexUI extends JPanel {
     private MainWindow mainWindow;
 
     private Deformation tentativeDeformation;
+    private Deformation cumuDeformation;
+    private Deformation cumuTentativeDeformation;
     private GSPebble tentativeStrain;
+    private GSPebble cumuStrain;
+    private GSPebble cumuTentativeStrain;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
@@ -43,7 +47,16 @@ class GSComplexUI extends JPanel {
     
     private static double zoomPerScrollFactor = .025;
 
-    private static BasicStroke INFO_STROKE = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
+//    public static Color INFO_COLOR_TENT = Color.RED;
+//    public static Color INFO_COLOR_CUMUTENT = Color.PINK;
+//    public static Color INFO_COLOR_CUMU = Color.MAGENTA;
+    public static Color INFO_COLOR_TENT = new Color(180,0,0);
+    public static Color INFO_COLOR_CUMUTENT = new Color(140,0,0);
+    public static Color INFO_COLOR_CUMU = new Color(90,0,0);
+    
+    private static BasicStroke INFO_STROKE_TENT = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
+    private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
+    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
     
     private double lastMouseDownX;
     private double lastMouseDownY;
@@ -70,13 +83,31 @@ class GSComplexUI extends JPanel {
         this.mainWindow = mainWindow;
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
-        this.setTentativeStrain();
+        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.setStrains();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
     
-    private void setTentativeStrain() {
+    private void setDeformations() {
+        this.tentativeDeformation = new Deformation();
+        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+    }
+    
+    private void setDeformations(Deformation d) {
+        this.tentativeDeformation = d.clone();
+        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+    }
+
+    private void setStrains() {
         this.tentativeStrain = new GSPebble(100,100);
         this.tentativeStrain.deform(this.tentativeDeformation);
+        this.cumuStrain = new GSPebble(100,100);
+        this.cumuStrain.deform(this.cumuDeformation);
+        this.cumuTentativeStrain = new GSPebble(100,100);
+        this.cumuTentativeStrain.deform(this.cumuTentativeDeformation);
     }
 
     public void handleKeyPressed(java.awt.event.KeyEvent evt) {
@@ -125,8 +156,10 @@ class GSComplexUI extends JPanel {
         this.shiftIsDown = evt.isShiftDown();
 
         if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
-            this.tentativeDeformation = new Deformation();
-            this.setTentativeStrain();
+            this.setDeformations();
+//            this.tentativeDeformation = new Deformation();
+//            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+            this.setStrains();
         }
     }  
 
@@ -140,26 +173,34 @@ class GSComplexUI extends JPanel {
     } 
     
     public void tentativeDeformationSetFromRfPhi(double rf, double phiDeg) {
-        this.tentativeDeformation = Deformation.createFromRfPhi(rf,phiDeg);
+        this.setDeformations(Deformation.createFromRfPhi(rf,phiDeg));
+
+//        this.tentativeDeformation = ;
+//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
 //        System.err.println("td on set from rf phi: "+this.tentativeDeformation.toString());
-        this.setTentativeStrain();
+        this.setStrains();
     }
     
     public void tentativeDeformationSetToRotate(double angleRad) {
 //        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
-        this.tentativeDeformation = Deformation.createFromAngle(angleRad);
-        this.setTentativeStrain();
+        this.setDeformations(Deformation.createFromAngle(angleRad));
+//        this.tentativeDeformation = Deformation.createFromAngle(angleRad);
+//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.setStrains();
     }
     
     public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
         if (compressionFactorX < .01) { compressionFactorX = .01; }
         if (compressionFactorY < .01) { compressionFactorY = .01; }
         if (isInXDirection) {
-            this.tentativeDeformation = new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX);
+            this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX));
+//            this.tentativeDeformation = new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX);
         } else {
-            this.tentativeDeformation = new Deformation(1/compressionFactorY, 0, 0, compressionFactorY);
+            this.setDeformations(new Deformation(1/compressionFactorY, 0, 0, compressionFactorY));
+//            this.tentativeDeformation = new Deformation(1/compressionFactorY, 0, 0, compressionFactorY);
         }
-        this.setTentativeStrain();
+//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.setStrains();
     }
     
     public void tentativeDeformationSetToShear(double shearFactorX,double shearFactorY,boolean isInXDirection) {
@@ -168,16 +209,21 @@ class GSComplexUI extends JPanel {
         if (shearFactorY > 100) { shearFactorY = 100; }
         if (shearFactorY < -100) { shearFactorY = -100; }
         if (isInXDirection) {
-            this.tentativeDeformation = new Deformation(1, 0, shearFactorX*-1, 1);;
+            this.setDeformations(new Deformation(1, 0, shearFactorX*-1, 1));
+//            this.tentativeDeformation = new Deformation(1, 0, shearFactorX*-1, 1);;
         } else {
-            this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
+            this.setDeformations(new Deformation(1, shearFactorY*-1, 0, 1));
+//            this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
         }
-        this.setTentativeStrain();
+//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.setStrains();
     }
     
     public void tentativeDeformationClear() {
-        this.tentativeDeformation = new Deformation();
-        this.setTentativeStrain();
+        this.setDeformations();
+//        this.tentativeDeformation = new Deformation();
+//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.setStrains();
     }
     
     public boolean isTentativeDeformationCleared() {
@@ -216,6 +262,8 @@ class GSComplexUI extends JPanel {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
             }
+//            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+
             this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
             this.repaint();
         }
@@ -331,10 +379,24 @@ class GSComplexUI extends JPanel {
         this.gsc.drawOnto(g2d, false, true, this.tentativeDeformation);
         
         // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
+            System.err.println("");
+        
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuTentativeDeformation.isIdentity()) {
+            System.err.println("cumutent: "+this.cumuTentativeDeformation.toString());
+            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
+            this.cumuTentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
+        }
+            
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
+            System.err.println("cumu: "+this.cumuDeformation.toString());
+            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
+            this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
+        }
+        
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
-            g2d.setStroke(GSComplexUI.INFO_STROKE);
-//            System.err.println("about to draw ten def: "+this.tentativeDeformation.toString());
-            this.tentativeDeformation.drawOnto(g2d);
+            System.err.println("tent: "+this.tentativeDeformation.toString());
+            g2d.setStroke(GSComplexUI.INFO_STROKE_TENT);
+            this.tentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_TENT);
         
             if (this.isDragDeform) {
                 g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
@@ -367,6 +429,9 @@ class GSComplexUI extends JPanel {
                 }
             }
         }
+    
+
+        
     }
 
     void handleMouseClicked(MouseEvent evt) {
@@ -382,6 +447,14 @@ class GSComplexUI extends JPanel {
             deltaY = deltaY * this.displayTransform.getScaleX();
             this.shiftPan(deltaX, deltaY);
         }
+    }
+
+    void handleApplyTentativeTransform() {
+        this.gsc.applyDeformation(this.tentativeDeformation.clone());
+        this.tentativeDeformationClear();
+//        this.gsc.deformations.add(this.tentativeDeformation.clone());
+//        this.tentativeDeformation = new Deformation();
+//        this.tentativeDeformation = new Deformation();
     }
     
     

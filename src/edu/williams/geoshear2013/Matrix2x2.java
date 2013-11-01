@@ -93,7 +93,7 @@ public class Matrix2x2 {
     }
     /**
      * @param other
-     * @return a new matrix that is a product of this and the other one
+     * @return a new matrix C where C=(this)(other)
      */
     public Matrix2x2 times(Matrix2x2 other) {
         return new Matrix2x2(
@@ -104,8 +104,8 @@ public class Matrix2x2 {
                 );
     }
     /**
+     * sets this matrix to be C where C=(this)(other)
      * @param other
-     * @return a new matrix that is a product of this and the other one
      */
     public void timesInPlace(Matrix2x2 other) {
         double newM00 = this.m00*other.m00+this.m01*other.m10;
