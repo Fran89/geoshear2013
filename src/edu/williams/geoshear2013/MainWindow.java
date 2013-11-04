@@ -65,6 +65,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.displayNumberConstraints.put(this.jTextFieldStrainM10, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 0));
         this.displayNumberConstraints.put(this.jTextFieldStrainM11, new ValueConstrainer(-10, -10, 10, 10, .01, 3, 1));
 
+        this.displayNumberConstraints.put(this.jTextFieldStrainCumuRF, new ValueConstrainer(1, 1, 1000, 1000, .01, 3, 1));
+        this.displayNumberConstraints.put(this.jTextFieldStrainCumuPhi, new ValueConstrainer(-180, 180, 180, -180, 1, 2, 0, ValueConstrainer.CONSTRAINT_WRAP));
+
         Iterator keyIter = this.displayNumberConstraints.keySet().iterator();
         while(keyIter.hasNext()) {
             JTextField tf = (JTextField) keyIter.next();
@@ -974,6 +977,8 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.gscUI.handleApplyTentativeTransform();
         this.handleDeformationReset();
+        this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
+        this.setValuesForCumuRfPhi();
         this.gscUI.repaint();
     }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
 
@@ -1014,6 +1019,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.updateOtherControlsFromDeformControls();
 
         this.updateStrainControlsFromDeformation(d);
+        this.setValuesForCumuRfPhi();
     }
     
     public void updateStrainControlsFromDeformation(Matrix2x2 d) {
@@ -1281,6 +1287,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.jButtonDeformApplyRemove.setEnabled(false);
         this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
         this.setValuesForCumuStrain();
+        this.setValuesForCumuRfPhi();
         this.setValuesForCumuTentStrain();
     }
     
@@ -1321,6 +1328,15 @@ public class MainWindow extends javax.swing.JFrame {
         this.jLabelCumuStrainM10.setText(Util.truncForDisplay(d.m10*-1));
         this.jLabelCumuStrainM01.setText(Util.truncForDisplay(d.m01*-1));
         this.jLabelCumuStrainM11.setText(Util.truncForDisplay(d.m11));
+//        this.setValuesForCumuRfPhi();
+    }
+    private void setValuesForCumuRfPhi() {
+//        TODO: set cumu RF values here!
+        GSPebble s = new GSPebble(10,10);
+        s.deform(this.gscUI.gsc.deformations.getCompositeTransform());
+        System.err.println("cumu rf-phi peb is "+s.keyDataAsString());
+        this.setValueForControl(this.jTextFieldStrainCumuRF, s.getMajorRadius()/s.getMinorRadius());
+        this.setValueForControl(this.jTextFieldStrainCumuPhi, Util.toDegrees(s.getTheta()));        
     }
     private void setValuesForCumuTentStrain() {
         if (this.gscUI.isTentativeDeformationCleared()) {
