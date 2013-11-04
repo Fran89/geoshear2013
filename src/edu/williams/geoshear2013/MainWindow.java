@@ -1331,7 +1331,6 @@ public class MainWindow extends javax.swing.JFrame {
 //        this.setValuesForCumuRfPhi();
     }
     private void setValuesForCumuRfPhi() {
-//        TODO: set cumu RF values here!
         GSPebble s = new GSPebble(10,10);
         s.deform(this.gscUI.gsc.deformations.getCompositeTransform());
         System.err.println("cumu rf-phi peb is "+s.keyDataAsString());

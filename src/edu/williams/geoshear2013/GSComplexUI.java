@@ -396,6 +396,12 @@ class GSComplexUI extends JPanel {
             System.err.println("cumu: "+this.cumuDeformation.toString());
             g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
             this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
+            if (! this.tentativeDeformation.isIdentity()) {
+                Deformation ct = this.cumuDeformation.clone();
+                ct.timesInPlace(this.tentativeDeformation);
+                g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
+                ct.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
+            }   
         }
         
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
