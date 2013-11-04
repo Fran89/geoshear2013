@@ -104,10 +104,15 @@ class GSComplexUI extends JPanel {
     private void setStrains() {
         this.tentativeStrain = new GSPebble(100,100);
         this.tentativeStrain.deform(this.tentativeDeformation);
+
         this.cumuStrain = new GSPebble(100,100);
-        this.cumuStrain.deform(this.cumuDeformation);
-        this.cumuTentativeStrain = new GSPebble(100,100);
-        this.cumuTentativeStrain.deform(this.cumuTentativeDeformation);
+        this.gsc.deformations.runAllDeformationsOn(cumuStrain);
+        
+//        this.cumuStrain.deform(this.cumuDeformation);
+//        this.cumuTentativeStrain = cumuStrain.clone();
+//        this.cumuTentativeStrain = new GSPebble(100,100);
+//        this.gsc.deformations.runAllDeformationsOn(cumuTentativeStrain);
+//        this.cumuTentativeStrain.deform(this.tentativeDeformation);
     }
 
     public void handleKeyPressed(java.awt.event.KeyEvent evt) {
@@ -381,11 +386,11 @@ class GSComplexUI extends JPanel {
         // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
             System.err.println("");
         
-        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuTentativeDeformation.isIdentity()) {
-            System.err.println("cumutent: "+this.cumuTentativeDeformation.toString());
-            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
-            this.cumuTentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
-        }
+//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuTentativeDeformation.isIdentity()) {
+//            System.err.println("cumutent: "+this.cumuTentativeDeformation.toString());
+//            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
+//            this.cumuTentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
+//        }
             
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
             System.err.println("cumu: "+this.cumuDeformation.toString());

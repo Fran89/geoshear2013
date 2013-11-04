@@ -131,6 +131,7 @@ public class GSEllipse {
         }
 
         this.matrix = this.matrix.times(deformation);
+//        this.matrix = deformation.times(this.matrix);
         //        System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
 //        System.err.println("postset key data: "+this.keyDataAsString());

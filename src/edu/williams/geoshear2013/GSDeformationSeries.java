@@ -33,7 +33,7 @@ public class GSDeformationSeries extends ArrayList {
     
     /**
      * 
-     * @return an ellipse that is the composite of all ellipses in the series as if each were a strain applied to the next (sans translations)
+     * @return a deformation that is the composite of all deformations in the series as if each were a deformation applied to the next (sans translations)
      */
     public Deformation getCompositeTransform() {
         return this.compositeDeformation;
@@ -43,8 +43,16 @@ public class GSDeformationSeries extends ArrayList {
         this.compositeDeformation = new Deformation();
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
+            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+//            this.compositeDeformation = new Deformation((((Deformation)(li.next()))).times(this.compositeDeformation));
+        }
+    }
+    
+    public void runAllDeformationsOn(GSPebble p) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
 //            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
-            this.compositeDeformation = new Deformation((((Deformation)(li.next()))).times(this.compositeDeformation));
+            p.deform((Deformation)(li.next()));
         }
     }
     /*---------------------------------------------------------------------*/
