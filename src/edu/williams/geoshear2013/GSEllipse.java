@@ -264,6 +264,13 @@ public class GSEllipse {
     }
 
     /**
+     * @return the ration of the long axis to the short axis
+     */
+    public double getRF() {
+        return this.getMajorRadius()/this.getMinorRadius();
+    }
+    
+    /**
      * NOTE: theta is internally inverted to implement counter-clockwise rotation
      * @return the theta
      */

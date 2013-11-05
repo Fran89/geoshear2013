@@ -28,12 +28,12 @@ class GSComplexUI extends JPanel {
     public GSComplex gsc;
     private MainWindow mainWindow;
 
-    private Deformation tentativeDeformation;
-    private Deformation cumuDeformation;
-    private Deformation cumuTentativeDeformation;
-    private GSPebble tentativeStrain;
-    private GSPebble cumuStrain;
-    private GSPebble cumuTentativeStrain;
+    public Deformation tentativeDeformation;
+    public Deformation cumuDeformation;
+    public Deformation cumuTentativeDeformation;
+    public GSPebble tentativeStrain;
+    public GSPebble cumuStrain;
+    public GSPebble cumuTentativeStrain;
     
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     

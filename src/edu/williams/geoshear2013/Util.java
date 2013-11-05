@@ -235,7 +235,7 @@ public class Util
         }
         return Util.truncTextDecimal (Double.toString(numAsDouble), places);
     }
-
+    
     /**
      * A function to return the last (rightmost) N characters of a string. E.g.
      * rightmost("abcde",3) -> "cde"
