@@ -203,6 +203,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM01 = new javax.swing.JLabel();
         jLabelCumuTentStrainRightBracket = new javax.swing.JLabel();
         jPanelStrainControls = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jPanelSnapshotControls = new javax.swing.JPanel();
         MainWindowMenuBar = new javax.swing.JMenuBar();
@@ -560,21 +562,24 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.add(jButtonStrainNavPrevious, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, -1));
 
         jTextFieldStrainM00.setEditable(false);
-        jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM00.setText("1.000");
+        jTextFieldStrainM00.setBorder(null);
         jTextFieldStrainM00.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jTextFieldStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, -1));
 
         jTextFieldStrainM10.setEditable(false);
-        jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM10.setText("0.000");
+        jTextFieldStrainM10.setBorder(null);
         jTextFieldStrainM10.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
 
         jTextFieldRFPhiCurrentRF.setEditable(false);
         jTextFieldRFPhiCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentRF.setText("1.000");
-        jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
+        jTextFieldRFPhiCurrentRF.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jTextFieldRFPhiCurrentRF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldRFPhiCurrentRFFocusLost(evt);
@@ -592,6 +597,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("RF");
+        jLabel2.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 18, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
@@ -661,21 +667,24 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixRight.add(jButtonStrainNavNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 60, -1));
 
         jTextFieldStrainM01.setEditable(false);
-        jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM01.setText("0.000");
+        jTextFieldStrainM01.setBorder(null);
         jTextFieldStrainM01.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
 
         jTextFieldStrainM11.setEditable(false);
-        jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM11.setText("1.000");
+        jTextFieldStrainM11.setBorder(null);
         jTextFieldStrainM11.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jTextFieldStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, -1));
 
         jTextFieldRFPhiCurrentPhi.setEditable(false);
         jTextFieldRFPhiCurrentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentPhi.setText("0.000");
-        jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
+        jTextFieldRFPhiCurrentPhi.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jTextFieldRFPhiCurrentPhi.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldRFPhiCurrentPhiFocusLost(evt);
@@ -693,6 +702,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("phi");
+        jLabel4.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 20, 20));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
@@ -762,15 +772,31 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
+        jLabel8.setText("to do: shift UI to show CT rf-phi");
+
+        jLabel9.setText("and hide CT info when there is no CT");
+
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
         jPanelStrainControlsLayout.setHorizontalGroup(
             jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelStrainControlsLayout.setVerticalGroup(
             jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelContainerControls.add(jPanelStrainControls);
@@ -1540,6 +1566,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;
     private javax.swing.JLabel jLabelCompressrY;
