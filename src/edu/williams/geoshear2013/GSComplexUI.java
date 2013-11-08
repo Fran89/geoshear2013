@@ -41,6 +41,7 @@ class GSComplexUI extends JPanel {
     
     public static int UI_MODE_DEFORMS = 1;
     public static int UI_MODE_EDIT_PEBBLES = 2;
+    public static int UI_MODE_STRAIN_NAV = 3;
 
     public static double ZOOM_MIN = .1;
     public static double ZOOM_MAX = 10;
@@ -87,7 +88,8 @@ class GSComplexUI extends JPanel {
         Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
-        this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
+        this.setModeDeforms();
+//        this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
     
     private void setDeformations() {
@@ -254,22 +256,29 @@ class GSComplexUI extends JPanel {
         Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
         double deltaX = evt.getX() - this.lastMouseDownX;
         double deltaY = this.lastMouseDownY - evt.getY();
-        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+        if (this.currentUIMode != GSComplexUI.UI_MODE_EDIT_PEBBLES) {
             if (evt.isAltDown()) {
-                this.tentativeDeformationSetToRotate(this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem);
-                this.isDragDeform = true;
+                if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+                    this.tentativeDeformationSetToRotate(this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem);
+                    this.isDragDeform = true;
+                }
             }  else if (evt.isControlDown()) {
-                this.tentativeDeformationSetToCompression(evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX(),
+                if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+                    this.tentativeDeformationSetToCompression(evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX(),
                                                           evtPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getY(),
                                                           Math.abs(deltaX) > Math.abs(deltaY));
-                this.isDragDeform = true;
+                    this.isDragDeform = true;
+                }
             } else if (evt.isShiftDown()) {
-                this.tentativeDeformationSetToShear(deltaX/this.lastMouseDragPointInGSCSystem.getY(),
+                if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+                    this.tentativeDeformationSetToShear(deltaX/this.lastMouseDragPointInGSCSystem.getY(),
                                                     deltaY/this.lastMouseDragPointInGSCSystem.getX(), 
                                                     Math.abs(deltaX) > Math.abs(deltaY));
                 
-                this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
-                this.isDragDeform = true;
+                    this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
+                    this.isDragDeform = true;
+                }
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -399,7 +408,8 @@ class GSComplexUI extends JPanel {
 //            this.cumuTentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
 //        }
             
-        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
+//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
+        if (! this.cumuDeformation.isIdentity()) {
             System.err.println("cumu: "+this.cumuDeformation.toString());
             g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
             this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
@@ -483,4 +493,14 @@ class GSComplexUI extends JPanel {
 //        this.tentativeDeformation = new Deformation();
 //        this.tentativeDeformation = new Deformation();
     }
+
+    public void setModeDeforms() {
+        this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
+    }
+    public void setModeStrainNav() {
+        this.currentUIMode = GSComplexUI.UI_MODE_STRAIN_NAV;
+    }
+    public void setModeEditPebbles() {
+        this.currentUIMode = GSComplexUI.UI_MODE_EDIT_PEBBLES;
+    }    
 }
