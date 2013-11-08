@@ -54,10 +54,12 @@ class GSComplexUI extends JPanel {
     public static Color INFO_COLOR_TENT = new Color(180,0,0);
     public static Color INFO_COLOR_CUMUTENT = new Color(140,0,0);
     public static Color INFO_COLOR_CUMU = new Color(90,0,0);
+    public static Color INFO_COLOR_NAV_DEF = new Color(150,150,150);
     
     private static BasicStroke INFO_STROKE_TENT = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
     private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
-    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
+    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 5 }, 0);
+    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 8 }, 0);
     
     private double lastMouseDownX;
     private double lastMouseDownY;
@@ -428,6 +430,11 @@ class GSComplexUI extends JPanel {
 //                System.err.println(" vt angle: "+(Util.toDegrees(Math.acos(usigvt[2].m00))*(usigvt[2].m01 > 0 ? -1 : 1)));
 
             }   
+        }
+        
+        if ((this.currentUIMode == GSComplexUI.UI_MODE_STRAIN_NAV) || (this.tentativeDeformation.isIdentity() && this.gsc.deformations.size() > 0)) {
+            g2d.setStroke(GSComplexUI.INFO_STROKE_NAV_DEF);
+            this.gsc.deformations.get(this.gsc.getCurrentDeformationNumber()-2).drawOnto(g2d, GSComplexUI.INFO_COLOR_NAV_DEF);
         }
         
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
