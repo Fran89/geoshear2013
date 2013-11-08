@@ -83,7 +83,8 @@ class GSComplexUI extends JPanel {
         this.mainWindow = mainWindow;
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
-        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuDeformation = this.gsc.getCompositeTransform();
+        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
         this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
@@ -91,22 +92,28 @@ class GSComplexUI extends JPanel {
     
     private void setDeformations() {
         this.tentativeDeformation = new Deformation();
-        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuDeformation = this.gsc.getCompositeTransform();
+        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
     }
     
     private void setDeformations(Deformation d) {
         this.tentativeDeformation = d.clone();
-        this.cumuDeformation = this.gsc.deformations.getCompositeTransform();
+        this.cumuDeformation = this.gsc.getCompositeTransform();
+        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
     }
 
+
+    
     private void setStrains() {
         this.tentativeStrain = new GSPebble(100,100);
         this.tentativeStrain.deform(this.tentativeDeformation);
 
         this.cumuStrain = new GSPebble(100,100);
-        this.gsc.deformations.runAllDeformationsOn(cumuStrain);
+//        this.gsc.deformations.runAllDeformationsOn(cumuStrain);
+        this.gsc.deformations.runAllDeformationsOn(cumuStrain,this.gsc.getCurrentDeformationNumber());
+        Util.todo("uses runAllDeformationsOn");
         
 //        this.cumuStrain.deform(this.cumuDeformation);
 //        this.cumuTentativeStrain = cumuStrain.clone();
@@ -401,6 +408,15 @@ class GSComplexUI extends JPanel {
                 ct.timesInPlace(this.tentativeDeformation);
                 g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
                 ct.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
+// DEBUGGING
+//                Matrix2x2[] usigvt = ct.svd();
+//                System.err.println("cumu-tent svd");
+//                System.err.println(" u: "+usigvt[0].toString());
+//                System.err.println(" u angle: "+(Util.toDegrees(Math.acos(usigvt[0].m00))*(usigvt[0].m10 > 0 ? -1 : 1)));
+//                System.err.println(" sig: "+usigvt[1].toString());
+//                System.err.println(" vt: "+usigvt[2].toString());
+//                System.err.println(" vt angle: "+(Util.toDegrees(Math.acos(usigvt[2].m00))*(usigvt[2].m01 > 0 ? -1 : 1)));
+
             }   
         }
         
@@ -467,7 +483,4 @@ class GSComplexUI extends JPanel {
 //        this.tentativeDeformation = new Deformation();
 //        this.tentativeDeformation = new Deformation();
     }
-    
-    
-    
 }

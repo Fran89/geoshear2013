@@ -171,7 +171,8 @@ public class GSEllipse {
 //        System.err.println("u: "+u_sig_vt[0].toString());
 //        System.err.println("sig: "+u_sig_vt[1].toString());
 //        System.err.println("vt: "+u_sig_vt[2].toString());
-        this.theta = Math.acos(u_sig_vt[2].m00);
+//        this.theta = Math.acos(u_sig_vt[0].m00);
+        this.theta = Math.acos(u_sig_vt[2].m00); // 'REAL'
         
         if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
             this.theta = this.theta * -1;

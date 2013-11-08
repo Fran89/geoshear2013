@@ -39,6 +39,21 @@ public class GSDeformationSeries extends ArrayList {
         return this.compositeDeformation;
     }
     
+    /**
+     * @param nth the number of the series to compose up to (1-based index - i.e. uses the first n items, not up to item index n). NOTE: if counter <= 0 returns the identity deformation, and if nth > this.size returns a composite of everything in this series
+     * @return a deformation that is the composite of all deformations in the series up to the nth one, as if each were a deformation applied to the next (sans translations)
+     */
+    public Deformation getCompositeTransform(int nth) {
+        Deformation composite = new Deformation();
+        int counter = 0;
+        ListIterator li = this.listIterator();
+        while (li.hasNext() && counter < nth) {
+            composite.timesInPlace(((Deformation)(li.next())));
+            counter++;
+        }
+        return composite;
+    }
+    
     private void rebuildCompositeTransform() {
         this.compositeDeformation = new Deformation();
         ListIterator li = this.listIterator();
@@ -53,6 +68,15 @@ public class GSDeformationSeries extends ArrayList {
         while (li.hasNext()) {
 //            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
             p.deform((Deformation)(li.next()));
+        }
+    }
+    public void runAllDeformationsOn(GSPebble p, int nth) {
+        ListIterator li = this.listIterator();
+        int counter = 0;
+        while (li.hasNext() && counter < nth) {
+//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+            p.deform((Deformation)(li.next()));
+            counter++;
         }
     }
     /*---------------------------------------------------------------------*/

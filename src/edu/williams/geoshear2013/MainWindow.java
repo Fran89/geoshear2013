@@ -740,7 +740,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixRight.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 90));
 
         jLabelStrainNavCount.setText("0");
-        jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 30, 20));
+        jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 200, 26, 20));
 
         jLabelCumuTentStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuTentStrainLeftBracket.setText("[");
@@ -1396,7 +1396,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void setValuesForCumuStrain() {
-        Deformation d = this.gscUI.gsc.deformations.getCompositeTransform();
+//        Deformation d = this.gscUI.gsc.deformations.getCompositeTransform();
+        Deformation d = this.gscUI.gsc.getCompositeTransform();
+        Util.todo("uses getCompositeTransform");
         this.jLabelCumuStrainM00.setText(Util.truncForDisplay(d.m00));
         this.jLabelCumuStrainM10.setText(Util.truncForDisplay(d.m10*-1));
         this.jLabelCumuStrainM01.setText(Util.truncForDisplay(d.m01*-1));
@@ -1405,7 +1407,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     private void setValuesForCumuRfPhi() {
         GSPebble s = new GSPebble(10,10);
-        s.deform(this.gscUI.gsc.deformations.getCompositeTransform());
+//        s.deform(this.gscUI.gsc.deformations.getCompositeTransform());
+        s.deform(this.gscUI.gsc.getCompositeTransform());
+        Util.todo("uses getCompositeTransform");
         System.err.println("cumu rf-phi peb is "+s.keyDataAsString());
         this.setValueForControl(this.jTextFieldStrainCumuRF, s.getMajorRadius()/s.getMinorRadius());
         this.setValueForControl(this.jTextFieldStrainCumuPhi, Util.toDegrees(s.getTheta()));        
@@ -1420,7 +1424,9 @@ public class MainWindow extends javax.swing.JFrame {
 //            this.jTextFieldStrainCumuTentPhi.setText(this.jTextFieldStrainCumuPhi.getText());
         } else {
             Deformation dT = this.gscUI.getTentativeDeformationCopy();
-            Matrix2x2 d =  dT.times(this.gscUI.gsc.deformations.getCompositeTransform());
+//            Matrix2x2 d =  dT.times(this.gscUI.gsc.deformations.getCompositeTransform());
+            Matrix2x2 d =  dT.times(this.gscUI.gsc.getCompositeTransform());
+            Util.todo("uses getCompositeTransform");
             this.jLabelCumuTentStrainM00.setText(Util.truncForDisplay(d.m00));
             this.jLabelCumuTentStrainM10.setText(Util.truncForDisplay(d.m10*-1));
             this.jLabelCumuTentStrainM01.setText(Util.truncForDisplay(d.m01*-1));

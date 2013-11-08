@@ -486,4 +486,9 @@ public class Util
         tf.setText(Util.truncForDisplay(newValue, vc.getDisplayPrecision()));
     }
 
+    public static void todo(String s) {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        String callerInfo = stackTraceElements[2].getFileName() + " " + stackTraceElements[2].getMethodName() + " - line "+ stackTraceElements[2].getLineNumber();
+        System.out.println("TODO ("+callerInfo+"): "+s);
+    }
 }
