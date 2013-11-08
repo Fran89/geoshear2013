@@ -879,7 +879,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("make nav controls work");
+        jLabel8.setText("load and show a bg image");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -1102,13 +1102,25 @@ public class MainWindow extends javax.swing.JFrame {
         if (this.jButtonDeformApplyRemove.getText().equals(MainWindow.LABEL_DEFORM_APPLY)) {
             this.gscUI.handleApplyTentativeTransform();
             this.handleDeformationReset();
-            this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
+//            this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
         }
+        else if (this.jButtonDeformApplyRemove.getText().equals(MainWindow.LABEL_DEFORM_REMOVE)) {
+//            Util.todo("implement deform removal");
+//            this.gscUI.gsc.deformations.remove(this.gscUI.gsc.getCurrentDeformationNumber()-2);
+            this.gscUI.gsc.removeCurrentDeformation();
+            this.gscUI.resetDeformations();
+//            this.updateNavPositionInfo();
+//            this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
+        }
+        this.updateNavPositionInfo();
+        this.setValuesForCumuStrain();
         this.setValuesForCumuRfPhi();
+        this.setValuesForCumuTentStrain();
         this.setValuesForCumuTentRfPhi();
         this.updateDeformNavControlsStates();
         this.updateStrainMatricesVisibilities();
         this.updateNavStrainInfo();
+        this.updateStateOfCurrentDeformControls();
         this.gscUI.repaint();
     }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
 
@@ -1404,11 +1416,17 @@ public class MainWindow extends javax.swing.JFrame {
         this.setValuesForCumuRfPhi();
         this.setValuesForCumuTentRfPhi();
         this.setValuesForCumuStrain();
-        this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
+//        this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
+        this.updateNavPositionInfo();
         this.updateStateOfCurrentDeformControls();
         this.updateNavStrainInfo();
         this.updateStrainMatricesVisibilities();
         this.repaint();
+    }
+
+    public void updateNavPositionInfo() {
+        this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
+        this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
     }
     
 //    private void clearTentativeDeform() {
@@ -1524,8 +1542,6 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void updateStateOfCurrentDeformControls() {
         if (this.gscUI.isTentativeDeformationCleared()) {
-            this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_REMOVE);
-            this.jButtonDeformApplyRemove.setEnabled(this.gscUI.gsc.deformations.size() > 0);
             this.jButtonDeformReset.setEnabled(false);
             if (this.gscUI.gsc.getCurrentDeformationNumber()-1 == this.gscUI.gsc.deformations.size()) {
                 this.setEnableOnDeformControls(true);
@@ -1534,6 +1550,8 @@ public class MainWindow extends javax.swing.JFrame {
                 this.setEnableOnDeformControls(false);
                 this.gscUI.setModeStrainNav();
             }
+            this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_REMOVE);
+            this.jButtonDeformApplyRemove.setEnabled(this.gscUI.gsc.deformations.size() > 0);
         } else {
             this.jButtonDeformApplyRemove.setEnabled(true);
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_APPLY);

@@ -1442,7 +1442,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="make nav controls work"/>
+                <Property name="text" type="java.lang.String" value="load and show a bg image"/>
               </Properties>
             </Component>
           </SubComponents>

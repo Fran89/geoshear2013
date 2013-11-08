@@ -42,5 +42,9 @@ public class GSPebbleSetSeries extends ArrayList {
     public boolean add(GSPebbleSet ps) {
         boolean res = super.add(ps);
         return res;
-    }    
+    }
+    
+    public void truncateFrom(int i) {
+        this.removeRange(i, this.size());
+    }
 }

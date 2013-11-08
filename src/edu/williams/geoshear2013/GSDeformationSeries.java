@@ -87,8 +87,8 @@ public class GSDeformationSeries extends ArrayList {
     }
 
     /**
-     * Adds the given pebble to this set, making sure the pebble knows what set it's in
-     * @param p
+     * Adds the given Deformation to this set, rebuilding the composite
+     * @param d
      * @return
      */
     public boolean add(Deformation d) {
@@ -97,5 +97,17 @@ public class GSDeformationSeries extends ArrayList {
            this.rebuildCompositeTransform();
         }
         return res;
-    }    
+    }
+    
+    /**
+     * removes the deformation at the given index and rebuilds the composite
+     * @param i
+     * @return
+     */
+    @Override
+    public Deformation remove(int i) {
+        Deformation res = (Deformation) super.remove(i);
+        this.rebuildCompositeTransform();
+        return res;
+    }
 }

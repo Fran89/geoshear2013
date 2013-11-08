@@ -236,9 +236,15 @@ class GSComplexUI extends JPanel {
     }
     
     public void tentativeDeformationClear() {
+        this.resetDeformations();
+//        this.setDeformations();
+////        this.tentativeDeformation = new Deformation();
+////        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+//        this.setStrains();
+    }
+    
+    public void resetDeformations() {
         this.setDeformations();
-//        this.tentativeDeformation = new Deformation();
-//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
     }
     
@@ -432,7 +438,7 @@ class GSComplexUI extends JPanel {
             }   
         }
         
-        if ((this.currentUIMode == GSComplexUI.UI_MODE_STRAIN_NAV) || (this.tentativeDeformation.isIdentity() && this.gsc.deformations.size() > 0)) {
+        if (((this.currentUIMode == GSComplexUI.UI_MODE_STRAIN_NAV) || this.tentativeDeformation.isIdentity()) && this.gsc.deformations.size() > 0) {
             g2d.setStroke(GSComplexUI.INFO_STROKE_NAV_DEF);
             this.gsc.deformations.get(this.gsc.getCurrentDeformationNumber()-2).drawOnto(g2d, GSComplexUI.INFO_COLOR_NAV_DEF);
         }

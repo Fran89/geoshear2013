@@ -39,7 +39,28 @@ public class GSComplex implements Watchable {
      * @return the currentDeformationIndex
      */
     public int getCurrentDeformationNumber() {
-        return currentDeformationNumber;
+        return this.currentDeformationNumber;
+    }
+    
+    /**
+     * remove the deformation associated with currentDeformationNumber (lowering the index of subsequent ones) and rebuild the pebblesets to match the modified deformation series
+     * NOTE: the value of currentDeformationNumber is unchanged unless it would be out of bounds, in which case it is set to the end of the series
+     */
+    public void removeCurrentDeformation() {
+//        Util.todo("implement removeCurrentDeformation");
+//        System.err.println("   pre-remove currentDeformationNumber: "+this.currentDeformationNumber);
+//        System.err.println("   pre-remove deformation series size: "+this.deformations.size());
+//        System.err.println("   pre-remove pebble set series size: "+this.pebbleSets.size());
+        this.deformations.remove(this.currentDeformationNumber-2);
+//        Util.todo("handle pebble set rebuilding");
+//        this.pebbleSets.truncateFrom(currentDeformationNumber-1);
+        this.rebuildPebbleSetsFromDeformationSeries();
+        if (this.currentDeformationNumber > this.deformations.size()+1) {
+            this.currentDeformationNumber = this.deformations.size()+1;
+        }
+//        System.err.println("   post-remove currentDeformationNumber: "+this.currentDeformationNumber);
+//        System.err.println("   post-remove deformation series size: "+this.deformations.size());
+//        System.err.println("   post-remove pebble set series size: "+this.pebbleSets.size());
     }
     
     public void nextDeformation() {
@@ -175,4 +196,21 @@ public class GSComplex implements Watchable {
         this.pebbleSets.add(newPebbleSet);
         this.lastDeformation();
     }
+    
+    /**
+     * re-create the series of pebble sets based on the current contents of the deformation series
+     */
+    public void rebuildPebbleSetsFromDeformationSeries() {
+        GSPebbleSet base = this.pebbleSets.get(0);
+        this.pebbleSets.clear();
+        this.pebbleSets.add(base);
+        for (int deformationMaxIndex=0; deformationMaxIndex<this.deformations.size(); deformationMaxIndex++) {
+            GSPebbleSet newPebbleSet = this.pebbleSets.get(0).clone();
+            for (int deformationCurIndex=0; deformationCurIndex<=deformationMaxIndex; deformationCurIndex++) {
+                newPebbleSet.applyDeformation(this.deformations.get(deformationCurIndex));
+            }
+            this.pebbleSets.add(newPebbleSet);
+        }
+    }
+    
 }
