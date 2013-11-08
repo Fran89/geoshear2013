@@ -99,7 +99,7 @@ public class GSEllipse {
             this.x = curCenter.getX();
             this.y = curCenter.getY();
         } else {
-            System.err.println("potentially some problems in GSEllipse.deform with non-basic (i.e. basic shear, scale, or rotate) deformation");
+//            System.err.println("potentially some problems in GSEllipse.deform with non-basic (i.e. basic shear, scale, or rotate) deformation");
 
             Point2D curCenter = new Point2D.Double(this.x, this.y);
 

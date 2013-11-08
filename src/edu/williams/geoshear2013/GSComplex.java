@@ -46,19 +46,19 @@ public class GSComplex implements Watchable {
         if (this.currentDeformationNumber <= this.deformations.size()) {
             this.currentDeformationNumber++;
         }
-        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.nextDeformation");
+//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.nextDeformation");
     }
     
     public void prevDeformation() {
         if (this.currentDeformationNumber > 1) {
             this.currentDeformationNumber--;
         }
-        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.prevDeformation");
+//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.prevDeformation");
     }
     
     public void lastDeformation() {
         this.currentDeformationNumber = this.deformations.size() + 1;
-        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.lastDeformation");
+//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.lastDeformation");
     }
 
     public Deformation getCompositeTransform() {

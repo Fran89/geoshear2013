@@ -1170,7 +1170,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void updateNavStrainInfo() {
-        System.err.println("called updateNavStrainInfo");
+//        System.err.println("called updateNavStrainInfo");
         if (this.gscUI.gsc.getCurrentDeformationNumber() >= 2) {
             Deformation d = this.gscUI.gsc.deformations.get(this.gscUI.gsc.getCurrentDeformationNumber()-2);
             this.setValueForControl(this.jTextFieldNavStrainM00, d.m00);

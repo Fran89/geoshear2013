@@ -186,7 +186,7 @@ public class Deformation extends Matrix2x2 {
             GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
             strain.setColor(c);
             strain.deform(this);
-            System.err.println("** drawing strain: "+strain.keyDataAsString());
+//            System.err.println("** drawing strain: "+strain.keyDataAsString());
             strain.drawOnto(g2d, false, true);
         }
     }
