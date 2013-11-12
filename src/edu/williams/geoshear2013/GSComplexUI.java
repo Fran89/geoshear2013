@@ -56,10 +56,10 @@ class GSComplexUI extends JPanel {
     public static Color INFO_COLOR_CUMU = new Color(90,0,0);
     public static Color INFO_COLOR_NAV_DEF = new Color(150,150,150);
     
-    private static BasicStroke INFO_STROKE_TENT = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
-    private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 5 }, 0);
-    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 5 }, 0);
-    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 8 }, 0);
+    private static BasicStroke INFO_STROKE_TENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 2 }, 0);
+    private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 6 }, 0);
+    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 4, 5 }, 0);
+    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 6 }, 0);
     
     private double lastMouseDownX;
     private double lastMouseDownY;
@@ -402,23 +402,17 @@ class GSComplexUI extends JPanel {
         g2d.transform(this.displayTransform);
         g2d.setColor (Color.BLACK);
 
-        AffineTransform bgTransform = this.gsc.getCompositeTransform().transposed().asAffineTransform();
-
-//        bgTransform.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
-//
-        Point2D p = new Point2D.Double();
-        bgTransform.transform(this.gsc.getCenter().asPoint2D(), p);
-//        System.err.println("---------------");
-//        System.err.println("center point transformed :"+p);
+        // position and deform the bg axis and image appropriately
+        Matrix2x2 bgDeform = this.gsc.getCompositeTransform().clone();
+        if (! this.tentativeDeformation.isIdentity()) {
+            bgDeform.timesInPlace(this.tentativeDeformation);
+        }
+        AffineTransform bgTransform = bgDeform.transposed().asAffineTransform();
         
+        Point2D p = new Point2D.Double();
+        bgTransform.transform(this.gsc.getCenter().asPoint2D(), p);        
         int offsetX = (int) (this.gsc.getCenter().x-p.getX());
         int offsetY = (int) (this.gsc.getCenter().y-p.getY());
-//        System.err.println("offset x,y :"+offsetX+","+offsetY);
-                
-//        bgTransform.translate(offsetX, offsetY);
-        
-//        System.err.println("new center x,y :"+(offsetX+p.getX())+","+(offsetY+p.getY()));;
-        
         g2d.translate(offsetX, offsetY);
         g2d.transform(bgTransform);
         
@@ -438,13 +432,16 @@ class GSComplexUI extends JPanel {
             // TODO: figure out how to get 1px wide axes (e.g. apply translation and scaling transforms separately, manually calc the additional scaling offset needed for the axes?
             // TODO: figure out how to draw the axes to the edge of the widow regarless of other factors (quick and dirty would be to set limits to extreme values - e.g. +/- 32000
         }
+
+        // undo the BG stuff
         try {
             g2d.transform(bgTransform.createInverse());
             g2d.translate(offsetX*-1, offsetY*-1);
         } catch (NoninvertibleTransformException ex) {
             Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        // shift/center for drawing all the pebbles and the strain ellipses
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
         
         this.gsc.drawOnto(g2d, this.flagDisplayPebbleFill, this.flagDisplayPebbleAxes, this.tentativeDeformation);
