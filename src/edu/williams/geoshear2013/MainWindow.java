@@ -7,6 +7,8 @@ package edu.williams.geoshear2013;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 /**
  *
@@ -23,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     public static String LABEL_DEFORM_APPLY = "Apply";
     public static String LABEL_DEFORM_REMOVE = "Remove";
-    
+
 /**
      * Creates new form MainWindow
      * 
@@ -228,6 +230,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jToggleButtonEditPebbles = new javax.swing.JToggleButton();
+        jButtonPebbleColorSet = new javax.swing.JButton();
+        jButtonPebbleColorApply = new javax.swing.JButton();
+        jButtonBackgroundImage = new javax.swing.JButton();
         jPanelSnapshotControls = new javax.swing.JPanel();
         MainWindowMenuBar = new javax.swing.JMenuBar();
         GeoshearMenu = new javax.swing.JMenu();
@@ -919,20 +924,56 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jButtonPebbleColorSet.setBackground(new java.awt.Color(0, 0, 255));
+        jButtonPebbleColorSet.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButtonPebbleColorSet.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPebbleColorSet.setText("Pick Color");
+        jButtonPebbleColorSet.setEnabled(false);
+        jButtonPebbleColorSet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPebbleColorSetActionPerformed(evt);
+            }
+        });
+
+        jButtonPebbleColorApply.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButtonPebbleColorApply.setText("Apply");
+        jButtonPebbleColorApply.setEnabled(false);
+
+        jButtonBackgroundImage.setText("Background Image");
+        jButtonBackgroundImage.setEnabled(false);
+        jButtonBackgroundImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackgroundImageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEditPebbleControlsLayout = new javax.swing.GroupLayout(jPanelEditPebbleControls);
         jPanelEditPebbleControls.setLayout(jPanelEditPebbleControlsLayout);
         jPanelEditPebbleControlsLayout.setHorizontalGroup(
             jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEditPebbleControlsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToggleButtonEditPebbles, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addGroup(jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButtonEditPebbles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelEditPebbleControlsLayout.createSequentialGroup()
+                        .addComponent(jButtonPebbleColorSet, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonPebbleColorApply, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonBackgroundImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelEditPebbleControlsLayout.setVerticalGroup(
             jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEditPebbleControlsLayout.createSequentialGroup()
                 .addComponent(jToggleButtonEditPebbles)
-                .addGap(0, 77, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonPebbleColorSet)
+                    .addComponent(jButtonPebbleColorApply))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonBackgroundImage)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         jPanelContainerControls.add(jPanelEditPebbleControls);
@@ -1513,8 +1554,25 @@ public class MainWindow extends javax.swing.JFrame {
         }
    
         this.gscUI.toggleEditUIMode(this.jToggleButtonEditPebbles.isSelected());
-//        this.gscUI.setCurrentUIMode(GSComplexUI.UI_MODE_EDIT_PEBBLES);
+        this.setEnableOnPebbleEditingControls(this.jToggleButtonEditPebbles.isSelected());
     }//GEN-LAST:event_jToggleButtonEditPebblesActionPerformed
+
+    private void jButtonPebbleColorSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPebbleColorSetActionPerformed
+        Color newColor = JColorChooser.showDialog (this,"Pebble Color Chooser",this.gscUI.getColorOfNewPebbles());
+        if (newColor != null)
+        {
+            this.gscUI.setColorOfNewPebbles(newColor);
+            this.jButtonPebbleColorSet.setBackground (newColor);
+            this.jButtonPebbleColorSet.setForeground(Util.getContrastingTextColor(newColor));
+        }
+        this.repaint();
+    }//GEN-LAST:event_jButtonPebbleColorSetActionPerformed
+
+    private void jButtonBackgroundImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackgroundImageActionPerformed
+        this.gscUI.handleChooseBackgroundImage(evt);
+        this.jCheckBoxMenuItemShowBackgroundImage.setSelected(this.gscUI.isFlagDisplayBackgroundImage());
+        this.repaint ();
+    }//GEN-LAST:event_jButtonBackgroundImageActionPerformed
 
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
@@ -1894,6 +1952,18 @@ public class MainWindow extends javax.swing.JFrame {
         this.jLabelCumuRF.setVisible(state);
         this.jLabelCumuPhi.setVisible(state);
     }
+    
+    private void disablePebbleEditingControls() {
+        this.setEnableOnPebbleEditingControls(false);
+    }
+    private void enablePebbleEditingControls() {
+        this.setEnableOnPebbleEditingControls(true);
+    }
+    private void setEnableOnPebbleEditingControls(boolean state) {
+        this.jButtonPebbleColorSet.setEnabled(state);
+        this.jButtonPebbleColorApply.setEnabled(state);
+        this.jButtonBackgroundImage.setEnabled(state);
+    }    
     /**
      * @param args the command line arguments
      */
@@ -1938,10 +2008,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu GeoshearMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenuBar MainWindowMenuBar;
+    private javax.swing.JButton jButtonBackgroundImage;
     private javax.swing.JButton jButtonCenter;
     private javax.swing.JButton jButtonDeformApplyRemove;
     private javax.swing.JButton jButtonDeformReset;
     private javax.swing.JButton jButtonLinkCompressionDeform;
+    private javax.swing.JButton jButtonPebbleColorApply;
+    private javax.swing.JButton jButtonPebbleColorSet;
     private javax.swing.JButton jButtonStrainNavNext;
     private javax.swing.JButton jButtonStrainNavPrevious;
     private javax.swing.JButton jButtonUnzoom;

@@ -8,6 +8,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
@@ -15,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 /**
@@ -87,6 +89,12 @@ class GSComplexUI extends JPanel {
     private boolean flagDisplayBackgroundImage = true;
     private boolean flagDisplayStrainEllipses = true;
 
+    private Color colorOfNewPebbles = Color.BLUE;
+
+    private final JFileChooser fileChooser = new JFileChooser ();
+    private final FileFilterImage filterImage = new FileFilterImage();
+    private final FileFilterTab filterTab = new FileFilterTab();
+    private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();    
     /*------------------------------------------------------------------------*/
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
@@ -667,6 +675,32 @@ class GSComplexUI extends JPanel {
             this.currentUIMode = GSComplexUI.UI_MODE_EDIT_PEBBLES;
         } else {
             this.currentUIMode = this.cachedUIMode;
+        }
+    }
+
+    /**
+     * @return the colorOfNewPebbles
+     */
+    public Color getColorOfNewPebbles() {
+        return colorOfNewPebbles;
+    }
+
+    /**
+     * @param colorOfNewPebbles the colorOfNewPebbles to set
+     */
+    public void setColorOfNewPebbles(Color colorOfNewPebbles) {
+        this.colorOfNewPebbles = colorOfNewPebbles;
+    }
+
+    void handleChooseBackgroundImage(ActionEvent evt) {
+        fileChooser.setFileFilter (this.filterImage);
+        int returnVal = fileChooser.showOpenDialog (this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            // load the cross section from the file
+            this.gsc.setBgImageFileName(fileChooser.getSelectedFile ().getAbsolutePath ());
+            this.gsc.loadBgImage();
+           this.setFlagDisplayBackgroundImage(true);
         }
     }
 }
