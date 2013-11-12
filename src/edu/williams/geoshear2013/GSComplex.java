@@ -92,7 +92,7 @@ public class GSComplex implements Watchable {
 //        GSPebbleSet workingPebbleSet = this.pebbleSets.getLast();
 //        if (this.currentDeformationNumber < this.deformations.size()) {
 //            workingPebbleSet = this.pebbleSets.get(this.currentDeformationNumber-1);
-//        } 
+//        }       
         GSPebbleSet workingPebbleSet = this.pebbleSets.get(this.currentDeformationNumber-1);
         if (! tenativeDeformation.isIdentity()) {
             workingPebbleSet = this.pebbleSets.getLast().clone();

@@ -79,6 +79,12 @@ class GSComplexUI extends JPanel {
 
     private boolean isDragDeform = false;
     
+    private boolean flagDisplayPebbleAxes = true;
+    private boolean flagDisplayPebbleFill = false;
+    private boolean flagDisplayBackgroundAxis = true;
+    private boolean flagDisplayBackgroundImage = true;
+    private boolean flagDisplayStrainEllipses = true;
+    
     /*------------------------------------------------------------------------*/
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
@@ -394,18 +400,58 @@ class GSComplexUI extends JPanel {
 
         
         g2d.transform(this.displayTransform);
- 
         g2d.setColor (Color.BLACK);
-//        g2d.drawLine(0,(int)this.gsc.getCenter().y,this.getWidth(),(int)this.gsc.getCenter().y); // horizontal axis
-//        g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
-        g2d.drawLine(-10000,(int)this.gsc.getCenter().y,10000,(int)this.gsc.getCenter().y); // horizontal axis
-        g2d.drawLine((int)this.gsc.getCenter().x,-10000,(int)this.gsc.getCenter().x,10000); // vertical axis
-        // TODO: figure out how to get 1px wide axes (e.g. apply translation and scaling transforms separately, manually calc the additional scaling offset needed for the axes?
-        // TODO: figure out how to draw the axes to the edge of the widow regarless of other factors (quick and dirty would be to set limits to extreme values - e.g. +/- 32000
+
+        AffineTransform bgTransform = this.gsc.getCompositeTransform().transposed().asAffineTransform();
+
+//        bgTransform.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
+//
+        Point2D p = new Point2D.Double();
+        bgTransform.transform(this.gsc.getCenter().asPoint2D(), p);
+//        System.err.println("---------------");
+//        System.err.println("center point transformed :"+p);
+        
+        int offsetX = (int) (this.gsc.getCenter().x-p.getX());
+        int offsetY = (int) (this.gsc.getCenter().y-p.getY());
+//        System.err.println("offset x,y :"+offsetX+","+offsetY);
                 
+//        bgTransform.translate(offsetX, offsetY);
+        
+//        System.err.println("new center x,y :"+(offsetX+p.getX())+","+(offsetY+p.getY()));;
+        
+        g2d.translate(offsetX, offsetY);
+        g2d.transform(bgTransform);
+        
+        if (this.flagDisplayBackgroundImage) {
+            g2d.drawString("show background image is TRUE", 0, 0);
+        }
+         
+        if (this.flagDisplayBackgroundAxis) {
+            //        g2d.drawLine(0,(int)this.gsc.getCenter().y,this.getWidth(),(int)this.gsc.getCenter().y); // horizontal axis
+            //        g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
+            g2d.drawLine(-10000,(int)this.gsc.getCenter().y,10000,(int)this.gsc.getCenter().y); // horizontal axis
+            g2d.drawLine((int)this.gsc.getCenter().x,-10000,(int)this.gsc.getCenter().x,10000); // vertical axis
+//            System.err.println("drew axis at "+this.gsc.getCenter().x+","+this.gsc.getCenter().y);
+
+//            g2d.drawLine(-10000,0,10000,0); // horizontal axis
+//            g2d.drawLine(0,-10000,0,10000); // vertical axis
+            // TODO: figure out how to get 1px wide axes (e.g. apply translation and scaling transforms separately, manually calc the additional scaling offset needed for the axes?
+            // TODO: figure out how to draw the axes to the edge of the widow regarless of other factors (quick and dirty would be to set limits to extreme values - e.g. +/- 32000
+        }
+        try {
+            g2d.transform(bgTransform.createInverse());
+            g2d.translate(offsetX*-1, offsetY*-1);
+        } catch (NoninvertibleTransformException ex) {
+            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         g2d.translate(this.gsc.getCenter().x, this.gsc.getCenter().y);
         
-        this.gsc.drawOnto(g2d, false, true, this.tentativeDeformation);
+        this.gsc.drawOnto(g2d, this.flagDisplayPebbleFill, this.flagDisplayPebbleAxes, this.tentativeDeformation);
+
+//        if (this.flagDisplayBackgroundImage) {
+//            g2d.drawString("show background image is TRUE", 100, 100);
+//        }
         
         // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
 //            System.err.println("");
@@ -417,69 +463,70 @@ class GSComplexUI extends JPanel {
 //        }
             
 //        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
-        if (! this.cumuDeformation.isIdentity()) {
-//            System.err.println("cumu: "+this.cumuDeformation.toString());
-            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
-            this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
-            if (! this.tentativeDeformation.isIdentity()) {
-                Deformation ct = this.cumuDeformation.clone();
-                ct.timesInPlace(this.tentativeDeformation);
-                g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
-                ct.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
-// DEBUGGING
-//                Matrix2x2[] usigvt = ct.svd();
-//                System.err.println("cumu-tent svd");
-//                System.err.println(" u: "+usigvt[0].toString());
-//                System.err.println(" u angle: "+(Util.toDegrees(Math.acos(usigvt[0].m00))*(usigvt[0].m10 > 0 ? -1 : 1)));
-//                System.err.println(" sig: "+usigvt[1].toString());
-//                System.err.println(" vt: "+usigvt[2].toString());
-//                System.err.println(" vt angle: "+(Util.toDegrees(Math.acos(usigvt[2].m00))*(usigvt[2].m01 > 0 ? -1 : 1)));
+        if (this.flagDisplayStrainEllipses) {
+            if (! this.cumuDeformation.isIdentity()) {
+    //            System.err.println("cumu: "+this.cumuDeformation.toString());
+                g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
+                this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
+                if (! this.tentativeDeformation.isIdentity()) {
+                    Deformation ct = this.cumuDeformation.clone();
+                    ct.timesInPlace(this.tentativeDeformation);
+                    g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
+                    ct.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
+    // DEBUGGING
+    //                Matrix2x2[] usigvt = ct.svd();
+    //                System.err.println("cumu-tent svd");
+    //                System.err.println(" u: "+usigvt[0].toString());
+    //                System.err.println(" u angle: "+(Util.toDegrees(Math.acos(usigvt[0].m00))*(usigvt[0].m10 > 0 ? -1 : 1)));
+    //                System.err.println(" sig: "+usigvt[1].toString());
+    //                System.err.println(" vt: "+usigvt[2].toString());
+    //                System.err.println(" vt angle: "+(Util.toDegrees(Math.acos(usigvt[2].m00))*(usigvt[2].m01 > 0 ? -1 : 1)));
 
-            }   
-        }
-        
-        if (((this.currentUIMode == GSComplexUI.UI_MODE_STRAIN_NAV) || this.tentativeDeformation.isIdentity()) && this.gsc.deformations.size() > 0) {
-            g2d.setStroke(GSComplexUI.INFO_STROKE_NAV_DEF);
-            this.gsc.deformations.get(this.gsc.getCurrentDeformationNumber()-2).drawOnto(g2d, GSComplexUI.INFO_COLOR_NAV_DEF);
-        }
-        
-        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
-//            System.err.println("tent: "+this.tentativeDeformation.toString());
-            g2d.setStroke(GSComplexUI.INFO_STROKE_TENT);
-            this.tentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_TENT);
-        
-            if (this.isDragDeform) {
-                g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
-                g2d.setColor (Color.BLUE);
-                if (this.altIsDown) {
-                    double rad = this.lastMouseDownPointInGSCSystem.distance(0,0);
-                    double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;
-                    double angleDiffDeg = (angleDiff)*180/Math.PI;
-                    if (angleDiffDeg > 180) {
-                        angleDiffDeg -= 360;
-                    } else if (angleDiffDeg < -180) {
-                        angleDiffDeg += 360;
-                    }
-                    g2d.drawArc((int)(this.gsc.getCenter().x - rad), (int)(this.gsc.getCenter().y - rad), (int) (2*rad), (int) (2*rad), 
-                                (int) (this.lastMouseDownAngleInGSCSystem*180/Math.PI), (int)angleDiffDeg);
-                }  else if (this.ctrlIsDown || this.shiftIsDown) {
-    //                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
-                    Point2D invertedLastDown = (Point2D) this.lastMouseDownPoint.clone();
-                    Point2D invertedLastDrag = (Point2D) this.lastMouseDragPoint.clone();
-                    try {
-                        this.displayTransform.inverseTransform(invertedLastDown, invertedLastDown);
-                        this.displayTransform.inverseTransform(invertedLastDrag, invertedLastDrag);
-                    } catch (NoninvertibleTransformException noninvertibleTransformException) {
-                    }
-                    if (Math.abs(this.lastMouseDragX-this.lastMouseDownX) >= Math.abs(this.lastMouseDragY-this.lastMouseDownY)) {
-                        g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDrag.getX(), (int) invertedLastDown.getY());
-                    } else {
-                        g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDown.getX(), (int) invertedLastDrag.getY());
+                }   
+            }
+
+            if (((this.currentUIMode == GSComplexUI.UI_MODE_STRAIN_NAV) || this.tentativeDeformation.isIdentity()) && this.gsc.deformations.size() > 0) {
+                g2d.setStroke(GSComplexUI.INFO_STROKE_NAV_DEF);
+                this.gsc.deformations.get(this.gsc.getCurrentDeformationNumber()-2).drawOnto(g2d, GSComplexUI.INFO_COLOR_NAV_DEF);
+            }
+
+            if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
+    //            System.err.println("tent: "+this.tentativeDeformation.toString());
+                g2d.setStroke(GSComplexUI.INFO_STROKE_TENT);
+                this.tentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_TENT);
+
+                if (this.isDragDeform) {
+                    g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
+                    g2d.setColor (Color.BLUE);
+                    if (this.altIsDown) {
+                        double rad = this.lastMouseDownPointInGSCSystem.distance(0,0);
+                        double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;
+                        double angleDiffDeg = (angleDiff)*180/Math.PI;
+                        if (angleDiffDeg > 180) {
+                            angleDiffDeg -= 360;
+                        } else if (angleDiffDeg < -180) {
+                            angleDiffDeg += 360;
+                        }
+                        g2d.drawArc((int)(this.gsc.getCenter().x - rad), (int)(this.gsc.getCenter().y - rad), (int) (2*rad), (int) (2*rad), 
+                                    (int) (this.lastMouseDownAngleInGSCSystem*180/Math.PI), (int)angleDiffDeg);
+                    }  else if (this.ctrlIsDown || this.shiftIsDown) {
+        //                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
+                        Point2D invertedLastDown = (Point2D) this.lastMouseDownPoint.clone();
+                        Point2D invertedLastDrag = (Point2D) this.lastMouseDragPoint.clone();
+                        try {
+                            this.displayTransform.inverseTransform(invertedLastDown, invertedLastDown);
+                            this.displayTransform.inverseTransform(invertedLastDrag, invertedLastDrag);
+                        } catch (NoninvertibleTransformException noninvertibleTransformException) {
+                        }
+                        if (Math.abs(this.lastMouseDragX-this.lastMouseDownX) >= Math.abs(this.lastMouseDragY-this.lastMouseDownY)) {
+                            g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDrag.getX(), (int) invertedLastDown.getY());
+                        } else {
+                            g2d.drawLine((int) invertedLastDown.getX(), (int) invertedLastDown.getY(), (int) invertedLastDown.getX(), (int) invertedLastDrag.getY());
+                        }
                     }
                 }
             }
-        }
-    
+        }    // end if display strain ellipses
 
         
     }
@@ -516,4 +563,74 @@ class GSComplexUI extends JPanel {
     public void setModeEditPebbles() {
         this.currentUIMode = GSComplexUI.UI_MODE_EDIT_PEBBLES;
     }    
+
+    /**
+     * @return the flagDisplayPebbleAxes
+     */
+    public boolean isFlagDisplayPebbleAxes() {
+        return flagDisplayPebbleAxes;
+    }
+
+    /**
+     * @param flagDisplayPebbleAxes the flagDisplayPebbleAxes to set
+     */
+    public void setFlagDisplayPebbleAxes(boolean flagDisplayPebbleAxes) {
+        this.flagDisplayPebbleAxes = flagDisplayPebbleAxes;
+    }
+
+    /**
+     * @return the flagDisplayPebbleFill
+     */
+    public boolean isFlagDisplayPebbleFill() {
+        return flagDisplayPebbleFill;
+    }
+
+    /**
+     * @param flagDisplayPebbleFill the flagDisplayPebbleFill to set
+     */
+    public void setFlagDisplayPebbleFill(boolean flagDisplayPebbleFill) {
+        this.flagDisplayPebbleFill = flagDisplayPebbleFill;
+    }
+
+    /**
+     * @return the flagDisplayBackgroundAxis
+     */
+    public boolean isFlagDisplayBackgroundAxis() {
+        return flagDisplayBackgroundAxis;
+    }
+
+    /**
+     * @param flagDisplayBackgroundAxis the flagDisplayBackgroundAxis to set
+     */
+    public void setFlagDisplayBackgroundAxis(boolean flagDisplayBackgroundAxis) {
+        this.flagDisplayBackgroundAxis = flagDisplayBackgroundAxis;
+    }
+
+    /**
+     * @return the flagDisplayBackgroundImage
+     */
+    public boolean isFlagDisplayBackgroundImage() {
+        return flagDisplayBackgroundImage;
+    }
+
+    /**
+     * @param flagDisplayBackgroundImage the flagDisplayBackgroundImage to set
+     */
+    public void setFlagDisplayBackgroundImage(boolean flagDisplayBackgroundImage) {
+        this.flagDisplayBackgroundImage = flagDisplayBackgroundImage;
+    }
+
+    /**
+     * @return the flagDisplayStrainEllipses
+     */
+    public boolean isFlagDisplayStrainEllipses() {
+        return flagDisplayStrainEllipses;
+    }
+
+    /**
+     * @param flagDisplayStrainEllipses the flagDisplayStrainEllipses to set
+     */
+    public void setFlagDisplayStrainEllipses(boolean flagDisplayStrainEllipses) {
+        this.flagDisplayStrainEllipses = flagDisplayStrainEllipses;
+    }
 }

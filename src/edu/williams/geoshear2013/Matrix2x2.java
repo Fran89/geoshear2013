@@ -257,4 +257,9 @@ V = W*C;
             System.out.println("USV': "+svdcheck.toString());
         }
     }
+
+    public AffineTransform asAffineTransform() {
+        return new AffineTransform(this.m00, this.m10, this.m01, this.m11, 0, 0);
+    }
+    
 }

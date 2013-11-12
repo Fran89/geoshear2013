@@ -236,6 +236,11 @@ public class MainWindow extends javax.swing.JFrame {
         ExitMenuItem = new javax.swing.JMenuItem();
         FileMenu = new javax.swing.JMenu();
         DisplayMenu = new javax.swing.JMenu();
+        jCheckBoxMenuItemShowPebbleAxes = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemFillPebbles = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemShowBackgroundAxis = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemShowBackgroundImage = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemShowStrainEllipses = new javax.swing.JCheckBoxMenuItem();
         ChartsMenu = new javax.swing.JMenu();
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -976,6 +981,56 @@ public class MainWindow extends javax.swing.JFrame {
 
         DisplayMenu.setText("Display");
         DisplayMenu.setToolTipText("Options for the main display area");
+
+        jCheckBoxMenuItemShowPebbleAxes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItemShowPebbleAxes.setSelected(true);
+        jCheckBoxMenuItemShowPebbleAxes.setText("Show pebble axes");
+        jCheckBoxMenuItemShowPebbleAxes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemShowPebbleAxesActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(jCheckBoxMenuItemShowPebbleAxes);
+
+        jCheckBoxMenuItemFillPebbles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItemFillPebbles.setText("Fill pebbles");
+        jCheckBoxMenuItemFillPebbles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemFillPebblesActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(jCheckBoxMenuItemFillPebbles);
+
+        jCheckBoxMenuItemShowBackgroundAxis.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItemShowBackgroundAxis.setSelected(true);
+        jCheckBoxMenuItemShowBackgroundAxis.setText("Show background axis");
+        jCheckBoxMenuItemShowBackgroundAxis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemShowBackgroundAxisActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(jCheckBoxMenuItemShowBackgroundAxis);
+
+        jCheckBoxMenuItemShowBackgroundImage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItemShowBackgroundImage.setSelected(true);
+        jCheckBoxMenuItemShowBackgroundImage.setText("Show background image");
+        jCheckBoxMenuItemShowBackgroundImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemShowBackgroundImageActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(jCheckBoxMenuItemShowBackgroundImage);
+
+        jCheckBoxMenuItemShowStrainEllipses.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItemShowStrainEllipses.setSelected(true);
+        jCheckBoxMenuItemShowStrainEllipses.setText("Show strain ellipses");
+        jCheckBoxMenuItemShowStrainEllipses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemShowStrainEllipsesActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(jCheckBoxMenuItemShowStrainEllipses);
+
         MainWindowMenuBar.add(DisplayMenu);
 
         ChartsMenu.setText("Charts");
@@ -1408,6 +1463,31 @@ public class MainWindow extends javax.swing.JFrame {
         this.handleStrainNavPostAction();
     }//GEN-LAST:event_jButtonStrainNavPreviousActionPerformed
 
+    private void jCheckBoxMenuItemFillPebblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemFillPebblesActionPerformed
+        this.gscUI.setFlagDisplayPebbleFill(this.jCheckBoxMenuItemFillPebbles.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemFillPebblesActionPerformed
+
+    private void jCheckBoxMenuItemShowPebbleAxesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemShowPebbleAxesActionPerformed
+        this.gscUI.setFlagDisplayPebbleAxes(this.jCheckBoxMenuItemShowPebbleAxes.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemShowPebbleAxesActionPerformed
+
+    private void jCheckBoxMenuItemShowBackgroundAxisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemShowBackgroundAxisActionPerformed
+        this.gscUI.setFlagDisplayBackgroundAxis(this.jCheckBoxMenuItemShowBackgroundAxis.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemShowBackgroundAxisActionPerformed
+
+    private void jCheckBoxMenuItemShowBackgroundImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemShowBackgroundImageActionPerformed
+        this.gscUI.setFlagDisplayBackgroundImage(this.jCheckBoxMenuItemShowBackgroundImage.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemShowBackgroundImageActionPerformed
+
+    private void jCheckBoxMenuItemShowStrainEllipsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemShowStrainEllipsesActionPerformed
+        this.gscUI.setFlagDisplayStrainEllipses(this.jCheckBoxMenuItemShowStrainEllipses.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemShowStrainEllipsesActionPerformed
+
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
@@ -1837,6 +1917,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonStrainNavNext;
     private javax.swing.JButton jButtonStrainNavPrevious;
     private javax.swing.JButton jButtonUnzoom;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemFillPebbles;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowBackgroundAxis;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowBackgroundImage;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowPebbleAxes;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowStrainEllipses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel8;

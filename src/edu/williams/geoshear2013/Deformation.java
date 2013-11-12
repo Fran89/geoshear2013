@@ -122,9 +122,9 @@ public class Deformation extends Matrix2x2 {
 //        return dRF;
     }
     
-    public AffineTransform asAffineTransform() {
-        return new AffineTransform(this.m00, this.m10, this.m01, this.m11, 0, 0);
-    }
+//    public AffineTransform asAffineTransform() {
+//        return new AffineTransform(this.m00, this.m10, this.m01, this.m11, 0, 0);
+//    }
     
     /**
      * @return true if ththis matrix represents a simple rotational transformation
