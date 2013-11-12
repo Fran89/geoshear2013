@@ -437,10 +437,14 @@ class GSComplexUI extends JPanel {
         g2d.transform(bgTransform);
         
         if (this.flagDisplayBackgroundImage) {
-            g2d.drawString("show background image is TRUE", 0, 0);
+//            g2d.drawString("show background image is TRUE", 0,0);
             if (this.gsc.getBgImage() != null)
             {
-                g2d.drawImage (this.gsc.getBgImage(),null,0,0);
+                int imgPosX = (int) this.gsc.getCenter().x;       
+                int imgPosY = (int) this.gsc.getCenter().y;
+                imgPosX -= this.gsc.getBgImage().getWidth()/2;
+                imgPosY -= this.gsc.getBgImage().getHeight()/2;
+                g2d.drawImage (this.gsc.getBgImage(),null,imgPosX,imgPosY);
             }
         }
          
@@ -470,23 +474,8 @@ class GSComplexUI extends JPanel {
         
         this.gsc.drawOnto(g2d, this.flagDisplayPebbleFill, this.flagDisplayPebbleAxes, this.tentativeDeformation);
 
-//        if (this.flagDisplayBackgroundImage) {
-//            g2d.drawString("show background image is TRUE", 100, 100);
-//        }
-        
-        // This section draws hints/signifiers that show the drag action origin and current state re: the deformation
-//            System.err.println("");
-        
-//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuTentativeDeformation.isIdentity()) {
-//            System.err.println("cumutent: "+this.cumuTentativeDeformation.toString());
-//            g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
-//            this.cumuTentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
-//        }
-            
-//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.cumuDeformation.isIdentity()) {
         if (this.flagDisplayStrainEllipses) {
             if (! this.cumuDeformation.isIdentity()) {
-    //            System.err.println("cumu: "+this.cumuDeformation.toString());
                 g2d.setStroke(GSComplexUI.INFO_STROKE_CUMU);
                 this.cumuDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMU);
                 if (! this.tentativeDeformation.isIdentity()) {
@@ -494,15 +483,6 @@ class GSComplexUI extends JPanel {
                     ct.timesInPlace(this.tentativeDeformation);
                     g2d.setStroke(GSComplexUI.INFO_STROKE_CUMUTENT);
                     ct.drawOnto(g2d,GSComplexUI.INFO_COLOR_CUMUTENT);
-    // DEBUGGING
-    //                Matrix2x2[] usigvt = ct.svd();
-    //                System.err.println("cumu-tent svd");
-    //                System.err.println(" u: "+usigvt[0].toString());
-    //                System.err.println(" u angle: "+(Util.toDegrees(Math.acos(usigvt[0].m00))*(usigvt[0].m10 > 0 ? -1 : 1)));
-    //                System.err.println(" sig: "+usigvt[1].toString());
-    //                System.err.println(" vt: "+usigvt[2].toString());
-    //                System.err.println(" vt angle: "+(Util.toDegrees(Math.acos(usigvt[2].m00))*(usigvt[2].m01 > 0 ? -1 : 1)));
-
                 }   
             }
 
@@ -512,7 +492,6 @@ class GSComplexUI extends JPanel {
             }
 
             if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS && ! this.tentativeDeformation.isIdentity()) {
-    //            System.err.println("tent: "+this.tentativeDeformation.toString());
                 g2d.setStroke(GSComplexUI.INFO_STROKE_TENT);
                 this.tentativeDeformation.drawOnto(g2d,GSComplexUI.INFO_COLOR_TENT);
 
@@ -531,7 +510,6 @@ class GSComplexUI extends JPanel {
                         g2d.drawArc((int)(this.gsc.getCenter().x - rad), (int)(this.gsc.getCenter().y - rad), (int) (2*rad), (int) (2*rad), 
                                     (int) (this.lastMouseDownAngleInGSCSystem*180/Math.PI), (int)angleDiffDeg);
                     }  else if (this.ctrlIsDown || this.shiftIsDown) {
-        //                System.err.println("TODO: paint UI_MODE_DEFORMS with CTRL down (compress)");
                         Point2D invertedLastDown = (Point2D) this.lastMouseDownPoint.clone();
                         Point2D invertedLastDrag = (Point2D) this.lastMouseDragPoint.clone();
                         try {
