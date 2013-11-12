@@ -23,7 +23,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     public static String LABEL_DEFORM_APPLY = "Apply";
     public static String LABEL_DEFORM_REMOVE = "Remove";
-
+    
 /**
      * Creates new form MainWindow
      * 
@@ -227,6 +227,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
+        jToggleButtonEditPebbles = new javax.swing.JToggleButton();
         jPanelSnapshotControls = new javax.swing.JPanel();
         MainWindowMenuBar = new javax.swing.JMenuBar();
         GeoshearMenu = new javax.swing.JMenu();
@@ -911,15 +912,27 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelEditPebbleControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelEditPebbleControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
+        jToggleButtonEditPebbles.setText("Edit");
+        jToggleButtonEditPebbles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonEditPebblesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEditPebbleControlsLayout = new javax.swing.GroupLayout(jPanelEditPebbleControls);
         jPanelEditPebbleControls.setLayout(jPanelEditPebbleControlsLayout);
         jPanelEditPebbleControlsLayout.setHorizontalGroup(
             jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(jPanelEditPebbleControlsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jToggleButtonEditPebbles, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelEditPebbleControlsLayout.setVerticalGroup(
             jPanelEditPebbleControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanelEditPebbleControlsLayout.createSequentialGroup()
+                .addComponent(jToggleButtonEditPebbles)
+                .addGap(0, 77, Short.MAX_VALUE))
         );
 
         jPanelContainerControls.add(jPanelEditPebbleControls);
@@ -1488,6 +1501,21 @@ public class MainWindow extends javax.swing.JFrame {
         this.repaint();
     }//GEN-LAST:event_jCheckBoxMenuItemShowStrainEllipsesActionPerformed
 
+    private void jToggleButtonEditPebblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditPebblesActionPerformed
+        this.jToggleButtonEditPebbles.isSelected();
+        this.setEnableOnDeformControls(! this.jToggleButtonEditPebbles.isSelected());
+        this.setEnableOnRfPhiControls(! this.jToggleButtonEditPebbles.isSelected());
+        this.setEnableOnStrainMatrixControls(! this.jToggleButtonEditPebbles.isSelected());
+        this.jButtonDeformApplyRemove.setEnabled(! this.jToggleButtonEditPebbles.isSelected());
+        
+        if (this.jButtonDeformReset.isEnabled()) {
+            this.jButtonDeformResetActionPerformed(null); // editing always removes the current deformation - identical to hitting the reset button
+        }
+   
+        this.gscUI.toggleEditUIMode(this.jToggleButtonEditPebbles.isSelected());
+//        this.gscUI.setCurrentUIMode(GSComplexUI.UI_MODE_EDIT_PEBBLES);
+    }//GEN-LAST:event_jToggleButtonEditPebblesActionPerformed
+
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
@@ -1996,5 +2024,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldStrainM01;
     private javax.swing.JTextField jTextFieldStrainM10;
     private javax.swing.JTextField jTextFieldStrainM11;
+    private javax.swing.JToggleButton jToggleButtonEditPebbles;
     // End of variables declaration//GEN-END:variables
 }

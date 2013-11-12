@@ -6,9 +6,14 @@ package edu.williams.geoshear2013;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import javax.swing.JPanel;
 
 /**
  *
@@ -25,12 +30,16 @@ public class GSComplex implements Watchable {
      */
     private GSPoint center;
 
+    private BufferedImage bgImage;
+    private String bgImageFileName;        
     /*------------------------------------------------------------------------*/
     public GSComplex() {
         this.pebbleSets = new GSPebbleSetSeries();
         this.pebbleSets.add(new GSPebbleSet(this));
         this.deformations = new GSDeformationSeries();
         this.center = new GSPoint(0,0);
+        this.bgImage = null;
+        this.bgImageFileName = "";
     }
     
     /*------------------------------------------------------------------------*/
@@ -212,5 +221,43 @@ public class GSComplex implements Watchable {
             this.pebbleSets.add(newPebbleSet);
         }
     }
-    
+
+    public String getBgImageFileName() {
+        return bgImageFileName;
+    }
+
+    public void setBgImageFileName(String bgImageFileName) {
+        this.bgImageFileName = bgImageFileName;
+        this.loadBgImage();
+    }
+
+    @SuppressWarnings("static-access")
+    public void loadBgImage ()
+    {
+        if ((this.getBgImageFileName () != null) && (this.getBgImageFileName ().length () > 0))
+        {
+            Toolkit tk = Toolkit.getDefaultToolkit ();
+            Image img = null;
+            try
+            {
+                MediaTracker m = new MediaTracker (new JPanel ());
+                //System.out.println("bg file name is "+this.getBgImageFileName()); // debugging
+                img = tk.getImage (this.getBgImageFileName());
+                m.addImage (img, 0);
+                m.waitForAll ();
+                this.bgImage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_RGB);
+                this.bgImage.createGraphics ().drawImage (img,0,0,null);
+            }
+            catch (Exception e)
+            {
+                // ideally would have a more graceful failure here...
+                // TODO - pop up alert when BG image load fails
+                e.printStackTrace ();
+            }
+        }
+    }
+
+    public BufferedImage getBgImage() {
+        return bgImage;
+    }    
 }

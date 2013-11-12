@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -38,6 +39,7 @@ class GSComplexUI extends JPanel {
     private AffineTransform displayTransform; // the pan and zoom controlled by the user
     
     private int currentUIMode;
+    private int cachedUIMode;
     
     public static int UI_MODE_DEFORMS = 1;
     public static int UI_MODE_EDIT_PEBBLES = 2;
@@ -84,7 +86,7 @@ class GSComplexUI extends JPanel {
     private boolean flagDisplayBackgroundAxis = true;
     private boolean flagDisplayBackgroundImage = true;
     private boolean flagDisplayStrainEllipses = true;
-    
+
     /*------------------------------------------------------------------------*/
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
@@ -271,7 +273,7 @@ class GSComplexUI extends JPanel {
         double deltaX = evt.getX() - this.lastMouseDownX;
         double deltaY = this.lastMouseDownY - evt.getY();
 //        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
-        if (this.currentUIMode != GSComplexUI.UI_MODE_EDIT_PEBBLES) {
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
             if (evt.isAltDown()) {
                 if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
                     this.tentativeDeformationSetToRotate(this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem);
@@ -300,6 +302,16 @@ class GSComplexUI extends JPanel {
 //            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
 
             this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
+            this.repaint();
+        } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
+            if (evt.isShiftDown()) {
+                if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+                    Util.todo("shift drag in edit pebble mode");
+                }
+            } else {
+                this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
+                                                (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
+            }
             this.repaint();
         }
 
@@ -418,6 +430,10 @@ class GSComplexUI extends JPanel {
         
         if (this.flagDisplayBackgroundImage) {
             g2d.drawString("show background image is TRUE", 0, 0);
+            if (this.gsc.getBgImage() != null)
+            {
+                g2d.drawImage (this.gsc.getBgImage(),null,0,0);
+            }
         }
          
         if (this.flagDisplayBackgroundAxis) {
@@ -629,5 +645,28 @@ class GSComplexUI extends JPanel {
      */
     public void setFlagDisplayStrainEllipses(boolean flagDisplayStrainEllipses) {
         this.flagDisplayStrainEllipses = flagDisplayStrainEllipses;
+    }
+
+    /**
+     * @return the currentUIMode
+     */
+    public int getCurrentUIMode() {
+        return currentUIMode;
+    }
+
+    /**
+     * @param currentUIMode the currentUIMode to set
+     */
+    public void setCurrentUIMode(int currentUIMode) {
+        this.currentUIMode = currentUIMode;
+    }
+
+    void toggleEditUIMode(boolean inEditMode) {
+        if (inEditMode) {
+            this.cachedUIMode = this.currentUIMode;
+            this.currentUIMode = GSComplexUI.UI_MODE_EDIT_PEBBLES;
+        } else {
+            this.currentUIMode = this.cachedUIMode;
+        }
     }
 }
