@@ -619,12 +619,8 @@ class GSComplexUI extends JPanel {
         } else if (evt.getButton() == 1) {
             if (this.currentUIMode==GSComplexUI.UI_MODE_EDIT_PEBBLES) {
                 Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
-                System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
-                Util.todo("1. check the pebble set to see if that clicks on a pebble (i.e. within X of that pebble's center)");
-                Util.todo("2. if so, mark it as selected (in each pebble set)");
-                Util.todo("2.a if not, mark it as not selected (in each pebble set)");
-                Util.todo("TODO- special case handling of selecting/marking when shift-clicking");
-                Util.todo("TODO- alter pebble drawing to handle selection state display");
+//                System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
+                this.gsc.pebbleSets.selectPebblesByUndeformedPoint(clickPtInGCS, evt.isShiftDown());
             }            
             
         }

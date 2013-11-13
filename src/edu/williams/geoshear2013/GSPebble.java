@@ -7,6 +7,7 @@ package edu.williams.geoshear2013;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+
 /**
  *
  * @author cwarren
@@ -96,7 +97,7 @@ public class GSPebble extends GSEllipse {
             g2d.fill(this.shape);
             if (this.isSelected()) {
                 g2d.setColor(GSPebble.SELECTION_COLOR);
-                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
+                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, -1*((int) this.y+GSPebble.SELECTION_RADIUS/2), GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
             }
             if (showAxes) {
                 g2d.setColor(this.colorContrast);
@@ -105,7 +106,7 @@ public class GSPebble extends GSEllipse {
         } else {
             if (this.isSelected()) {
                 g2d.setColor(GSPebble.SELECTION_COLOR);
-                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
+                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, -1*((int) this.y+GSPebble.SELECTION_RADIUS/2), GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
             }
             g2d.setColor(this.color);
             g2d.draw(this.shape);
@@ -117,7 +118,8 @@ public class GSPebble extends GSEllipse {
         if (inEditMode) {
 //            System.err.println("center point: "+this.x+","+this.y);
             g2d.setColor(GSPebble.CENTER_MARK_COLOR);
-            g2d.fillOval((int) this.x-GSPebble.CENTER_MARK_RADIUS/2, (int) this.y-GSPebble.CENTER_MARK_RADIUS/2, GSPebble.CENTER_MARK_RADIUS, GSPebble.CENTER_MARK_RADIUS);
+            g2d.fillOval((int) this.x-GSPebble.CENTER_MARK_RADIUS/2, -1*((int) this.y+GSPebble.CENTER_MARK_RADIUS/2), GSPebble.CENTER_MARK_RADIUS, GSPebble.CENTER_MARK_RADIUS);
+//            g2d.drawString(""+this.x+","+this.y, (int)this.x, -1*(int)this.y);
         }
 
     }
@@ -126,30 +128,22 @@ public class GSPebble extends GSEllipse {
 //        System.err.println("center of axes: "+this.x+","+this.y);
 //        System.err.println("long A: "+(this.x - Math.cos(this.theta)*this.majorRadius)+","+(-1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius)));
         
-        // short axis
-        g2d.drawLine((int)(this.x - Math.sin(this.theta)*this.minorRadius), (int)(this.y - Math.cos(this.theta)*this.minorRadius),
-                     (int)(this.x + Math.sin(this.theta)*this.minorRadius), (int)(this.y + Math.cos(this.theta)*this.minorRadius));
+//        // short axis
+//        g2d.drawLine((int)(this.x - Math.sin(this.theta)*this.minorRadius), (int)(this.y - Math.cos(this.theta)*this.minorRadius),
+//                     (int)(this.x + Math.sin(this.theta)*this.minorRadius), (int)(this.y + Math.cos(this.theta)*this.minorRadius));
+//
+//        // long axis
+//        g2d.drawLine((int)(this.x - Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y - Math.cos(this.theta+Math.PI/2)*this.majorRadius),
+//                     (int)(this.x + Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y + Math.cos(this.theta+Math.PI/2)*this.majorRadius));
 
         // long axis
-        g2d.drawLine((int)(this.x - Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y - Math.cos(this.theta+Math.PI/2)*this.majorRadius),
-                     (int)(this.x + Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y + Math.cos(this.theta+Math.PI/2)*this.majorRadius));
+        g2d.drawLine((int)(this.x - Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius),
+                     (int)(this.x + Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y + Math.sin(this.theta)*this.majorRadius));
 
-//        // long axis
-//        g2d.drawLine((int)(this.x - Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius),
-//                     (int)(this.x + Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y + Math.sin(this.theta)*this.majorRadius));
-//
-//        // short axis
-//        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
-//                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
+        // short axis
+        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
+                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
         
-        
-        //        // long axis
-//        g2d.drawLine((int)(this.x - 25),(int)(this.y - 25),
-//                     (int)(this.x + 25),(int)(this.y + 25));
-
-//        // short axis
-//        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
-//                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
 
 
     }

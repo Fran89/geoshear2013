@@ -4,6 +4,8 @@
  */
 package edu.williams.geoshear2013;
 
+import java.util.List;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -25,6 +27,21 @@ public class GSPebbleSetSeries extends ArrayList {
     /*---------------------------------------------------------------------*/
     public GSPebbleSet getLast() {
         return (GSPebbleSet)(super.get(this.size()-1));
+    }
+
+    public void selectPebblesByUndeformedPoint(Point2D p, boolean shiftIsDown) {
+        GSPebbleSet baseSet = this.get(0);
+        List hitPebbleIds = baseSet.getIdsOfPebblesHitByPoint(p);
+//        System.out.println("hit pebble ids length: "+hitPebbleIds.toArray().length);
+        this.selectPebblesByIds(hitPebbleIds, shiftIsDown);
+    }
+    
+    public void selectPebblesByIds(List ids, boolean shiftIsDown) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebbleSet pebSet = (GSPebbleSet)(li.next());
+            pebSet.selectPebblesByIds(ids, shiftIsDown);
+        }
     }
     
     /*---------------------------------------------------------------------*/

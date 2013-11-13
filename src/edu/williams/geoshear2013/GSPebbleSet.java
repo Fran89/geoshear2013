@@ -6,8 +6,10 @@ package edu.williams.geoshear2013;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.List;
 
 /**
  *
@@ -103,6 +105,37 @@ public class GSPebbleSet extends ArrayList {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
             ((GSPebble)(li.next())).deform(deformation);
+        }
+    }
+
+    public List getIdsOfPebblesHitByPoint(Point2D p) {
+        List res = new ArrayList();
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (GSPebble.SELECTION_RADIUS >= peb.getCenterAsPoint2D().distance(p)) {
+                res.add(peb.getId());
+            }
+        }
+        
+        return res;
+    }
+    
+    public void selectPebblesByIds(List ids, boolean shiftIsDown) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (ids.contains(peb.getId())) {
+                if (shiftIsDown) {
+                    peb.setSelected(! peb.isSelected());
+                } else {
+                    peb.setSelected(true);
+                }
+            } else {
+                if (! shiftIsDown) {
+                    peb.setSelected(false);
+                }
+            }
         }
     }
 }

@@ -893,7 +893,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("sel a pebble");
+        jLabel8.setText("disable strain nav on editing");
 
         jLabel2.setText("delete a pebble");
 
