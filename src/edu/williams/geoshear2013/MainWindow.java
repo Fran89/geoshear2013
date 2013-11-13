@@ -228,6 +228,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldNavStrainM11 = new javax.swing.JTextField();
         jPanelStrainControls = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jToggleButtonEditPebbles = new javax.swing.JToggleButton();
         jButtonPebbleColorSet = new javax.swing.JButton();
@@ -890,7 +891,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("load and show a bg image");
+        jLabel8.setText("enter to apply a xform; sel a pebble");
+
+        jLabel2.setText("strain nav to position 0 - identity");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -898,15 +901,19 @@ public class MainWindow extends javax.swing.JFrame {
             jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addGroup(jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelStrainControlsLayout.setVerticalGroup(
             jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanelContainerControls.add(jPanelStrainControls);
@@ -1127,7 +1134,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelContainerDisplayMouseDragged
 
     private void jPanelContainerDisplayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMousePressed
+//        System.err.println("in jPanelContainerDisplayMousePressed");
         this.gscUI.handleMousePressed(evt);
+        this.jPanelContainerDisplay.requestFocus();
     }//GEN-LAST:event_jPanelContainerDisplayMousePressed
 
     private void jPanelContainerDisplayMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMouseWheelMoved
@@ -1143,6 +1152,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelContainerDisplayKeyPressed
 
     private void jPanelContainerDisplayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayKeyReleased
+//        System.err.println("in jPanelContainerDisplayKeyReleased");
         this.gscUI.handleKeyReleased(evt);
     }//GEN-LAST:event_jPanelContainerDisplayKeyReleased
 
@@ -1208,6 +1218,10 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelContainerDisplayMouseClicked
 
     private void jButtonDeformApplyRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeformApplyRemoveActionPerformed
+        this.handleDeformationApplyRemove();
+    }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
+
+    public void handleDeformationApplyRemove() {
         if (this.jButtonDeformApplyRemove.getText().equals(MainWindow.LABEL_DEFORM_APPLY)) {
             this.gscUI.handleApplyTentativeTransform();
             this.handleDeformationReset();
@@ -1230,9 +1244,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.updateStrainMatricesVisibilities();
         this.updateNavStrainInfo();
         this.updateStateOfCurrentDeformControls();
-        this.gscUI.repaint();
-    }//GEN-LAST:event_jButtonDeformApplyRemoveActionPerformed
-
+        this.gscUI.repaint();        
+    }
+    
     public void updateDeformNavControlsStates() {
         this.jButtonStrainNavPrevious.setEnabled(this.gscUI.gsc.getCurrentDeformationNumber()-1 > 1);
         this.jButtonStrainNavNext.setEnabled(this.gscUI.gsc.getCurrentDeformationNumber()-1 < this.gscUI.gsc.deformations.size());
@@ -1453,12 +1467,16 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldRotRadKeyReleased
 
     private void jButtonDeformResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeformResetActionPerformed
+        this.handleDeformReset();
+    }//GEN-LAST:event_jButtonDeformResetActionPerformed
+
+    public void handleDeformReset() {
         this.gscUI.tentativeDeformationClear();
         this.handleDeformationReset();
 //        this.setValuesForCumuTentStrain();
         this.gscUI.repaint();
-    }//GEN-LAST:event_jButtonDeformResetActionPerformed
-
+    }
+    
     private void jTextFieldShearXFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldShearXFocusLost
         this.processLostFocusOnControl(this.jTextFieldShearX);
     }//GEN-LAST:event_jTextFieldShearXFocusLost
@@ -1609,6 +1627,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void processLostFocusOnControl(javax.swing.JTextField controlField) {        
         ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(controlField);
+        Util.sanitizeForDoubleNumberFormat(controlField, vc.getDisplayPrecision());
         if (vc.getDefaultVal() != Double.parseDouble(controlField.getText())) {
             this.handleControlActivation(controlField);
         }
@@ -1626,6 +1645,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private boolean keyCodeIgnoredOnRelease(int kc) {
+//        System.err.println("checking ignore on keycode "+kc);
         return 
             (kc == java.awt.event.KeyEvent.VK_UP) ||
             (kc == java.awt.event.KeyEvent.VK_DOWN) ||
@@ -2025,6 +2045,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowStrainEllipses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;

@@ -148,9 +148,19 @@ class GSComplexUI extends JPanel {
         this.shiftIsDown = evt.isShiftDown();
     }
     public void handleKeyReleased(java.awt.event.KeyEvent evt) {
+//        System.err.println("gscui handleKeyReleased");
+//        System.err.println(" evt: "+evt.toString());
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
+        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
+            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER && ! this.isTentativeDeformationCleared()) {
+                this.mainWindow.handleDeformationApplyRemove();
+            } else 
+            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE  && ! this.isTentativeDeformationCleared()) {
+                this.mainWindow.handleDeformReset();
+            }
+        }
     }
 
     public Point2D inGSCSystem(Point2D panelClickP) {
