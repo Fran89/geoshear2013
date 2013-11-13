@@ -194,6 +194,13 @@ class GSComplexUI extends JPanel {
             System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
             Point2D altGscPoint = (Point2D) gscPoint.clone();
 //            for (int i=1; i < this.gsc.getCurrentDeformationNumber(); i++) {
+            if (! this.isTentativeDeformationCleared()) {
+                if (this.tentativeDeformation.isScaling()) {
+                    this.tentativeDeformation.asAffineTransform().inverseTransform(gscPoint, gscPoint);
+                } else {
+                    this.tentativeDeformation.transposed().asAffineTransform().transform(gscPoint, gscPoint);
+                }
+            }
             for (int i=this.gsc.getCurrentDeformationNumber()-1; i> 0; i--) {
                 Deformation d = this.gsc.deformations.get(i-1).clone();
                 if (d.isScaling()) {
