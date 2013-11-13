@@ -163,21 +163,72 @@ class GSComplexUI extends JPanel {
         }
     }
 
-    public Point2D inGSCSystem(Point2D panelClickP) {
+    /**
+     * @param panelClickP
+     * @return a new Point2D that is the initial point relative to the origin of the GS system
+     */
+    public Point2D fromGSCOrigin(Point2D panelClickP) {
         Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
         this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
-//        System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
+//        System.out.println("fromGSCOrigin: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
             
         return new Point2D.Double((panelClickP.getX()-pointOfGSCOrigin.getX())/this.displayTransform.getScaleX(),
                                   (pointOfGSCOrigin.getY()-panelClickP.getY())/this.displayTransform.getScaleX());
     }
+    
+    /**
+     * @param panelClickP
+     * @return a new Point2D that is the initial point in the GS coordinate system (i.e. w/ all relevant deforms in place)
+     */
+    public Point2D inGSCSystem(Point2D panelClickP) {
+        Point2D gscPoint = (Point2D) panelClickP.clone();
+        try {
+//            System.out.println("---------------");
+            Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
+//            this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
+//            System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
+//            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
+            this.displayTransform.inverseTransform(gscPoint, gscPoint);
+//            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
+            gscPoint.setLocation(gscPoint.getX()-pointOfGSCOrigin.getX(), pointOfGSCOrigin.getY()-gscPoint.getY());
+//            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
+            Point2D altGscPoint = (Point2D) gscPoint.clone();
+//            for (int i=1; i < this.gsc.getCurrentDeformationNumber(); i++) {
+            for (int i=this.gsc.getCurrentDeformationNumber()-1; i> 0; i--) {
+                this.gsc.deformations.get(i-1).transposed().asAffineTransform().transform(gscPoint, gscPoint);
+            }
+//            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
+            
+            //        Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
+    //        this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
+    //        System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
+    //            
+    //        Point2D.Double clickP = new Point2D.Double((panelClickP.getX()-pointOfGSCOrigin.getX())/this.displayTransform.getScaleX(),
+    //                                      (pointOfGSCOrigin.getY()-panelClickP.getY())/this.displayTransform.getScaleX());
+    //        
+    //        System.out.println("inGSCSystem: clickP pre-undeform point is : "+clickP.toString());
+    //        try {
+    ////            this.gsc.getCompositeTransform().transposed().asAffineTransform().createInverse().transform(clickP, clickP);
+    //            this.gsc.getCompositeTransform().asAffineTransform().createInverse().transform(clickP, clickP);
+    //        } catch (NoninvertibleTransformException ex) {
+    //            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+    //        }
+    //        System.out.println("inGSCSystem: clickP post-undeform point is : "+clickP.toString());
+    //        return clickP;
+    //        return clickP;
+        } catch (NoninvertibleTransformException ex) {
+            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gscPoint;
+    }
+    
     
     public void handleMousePressed(java.awt.event.MouseEvent evt) {
 //        System.out.println("handleMousePressed is : "+evt.toString());
         this.lastMouseDownX = evt.getPoint().x;
         this.lastMouseDownY = evt.getPoint().y;
         this.lastMouseDownPoint = (Point2D) evt.getPoint().clone();
-        this.lastMouseDownPointInGSCSystem = this.inGSCSystem(evt.getPoint());
+        this.lastMouseDownPointInGSCSystem = this.fromGSCOrigin(evt.getPoint());
         this.lastMouseDownAngleInGSCSystem = Math.atan(this.lastMouseDownPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getX());
         if (this.lastMouseDownPointInGSCSystem.getX() < 0) {
             if (this.lastMouseDownPointInGSCSystem.getY() > 0) {
@@ -287,7 +338,7 @@ class GSComplexUI extends JPanel {
     }
             
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
-        Point2D evtPointInGSCSystem = this.inGSCSystem(evt.getPoint()); 
+        Point2D evtPointInGSCSystem = this.fromGSCOrigin(evt.getPoint()); 
         double deltaX = evt.getX() - this.lastMouseDownX;
         double deltaY = this.lastMouseDownY - evt.getY();
 //        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
@@ -356,7 +407,7 @@ class GSComplexUI extends JPanel {
     }
 
     public void setDisplayZoom(double amt, boolean isExact, Point2D toPoint) {
-        Point2D toPointInGCSprescale = this.inGSCSystem(toPoint);
+        Point2D toPointInGCSprescale = this.fromGSCOrigin(toPoint);
 
         double initAmt = amt;
         if (! isExact) {
@@ -367,7 +418,7 @@ class GSComplexUI extends JPanel {
         double zoomFactor = amt/this.displayTransform.getScaleX();
         this.displayTransform.scale(zoomFactor,zoomFactor);
 
-        Point2D toPointInGCSpostscale = this.inGSCSystem(toPoint);
+        Point2D toPointInGCSpostscale = this.fromGSCOrigin(toPoint);
         this.shiftPan((toPointInGCSprescale.getX()-toPointInGCSpostscale.getX())*this.displayTransform.getScaleX(),
                       (toPointInGCSpostscale.getY()-toPointInGCSprescale.getY())*this.displayTransform.getScaleX());
 
@@ -544,14 +595,20 @@ class GSComplexUI extends JPanel {
 //        System.out.println("handleMouseClicked is : "+evt.toString());
         if (evt.getButton() == 3) { // right-click to center on the selected point
 //            System.out.println("right-click");
-            Point2D displayCenterInGCS = this.inGSCSystem(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
-            Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
+            Point2D displayCenterInGCS = this.fromGSCOrigin(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
+            Point2D clickPtInGCS = this.fromGSCOrigin(evt.getPoint());
 //            System.out.println("clickPtInGCS: "+clickPtInGCS.toString());
             double deltaX = clickPtInGCS.getX()-displayCenterInGCS.getX();
             double deltaY = displayCenterInGCS.getY()-clickPtInGCS.getY();
             deltaX = deltaX * this.displayTransform.getScaleX();
             deltaY = deltaY * this.displayTransform.getScaleX();
             this.shiftPan(deltaX, deltaY);
+        } else if (evt.getButton() == 1) {
+//            Point2D displayCenterInGCS = this.fromGSCOrigin(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
+//            System.out.println("displayCenterInGCS: "+displayCenterInGCS.toString());
+            Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
+            System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
+            
         }
     }
 
