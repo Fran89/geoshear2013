@@ -183,21 +183,26 @@ class GSComplexUI extends JPanel {
     public Point2D inGSCSystem(Point2D panelClickP) {
         Point2D gscPoint = (Point2D) panelClickP.clone();
         try {
-//            System.out.println("---------------");
+            System.out.println("---------------");
             Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
 //            this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
 //            System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
-//            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
+            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
             this.displayTransform.inverseTransform(gscPoint, gscPoint);
-//            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
+            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
             gscPoint.setLocation(gscPoint.getX()-pointOfGSCOrigin.getX(), pointOfGSCOrigin.getY()-gscPoint.getY());
-//            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
+            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
             Point2D altGscPoint = (Point2D) gscPoint.clone();
 //            for (int i=1; i < this.gsc.getCurrentDeformationNumber(); i++) {
             for (int i=this.gsc.getCurrentDeformationNumber()-1; i> 0; i--) {
-                this.gsc.deformations.get(i-1).transposed().asAffineTransform().transform(gscPoint, gscPoint);
+                Deformation d = this.gsc.deformations.get(i-1).clone();
+                if (d.isScaling()) {
+                    d.asAffineTransform().inverseTransform(gscPoint, gscPoint);
+                } else {
+                    d.transposed().asAffineTransform().transform(gscPoint, gscPoint);
+                }
             }
-//            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
+            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
             
             //        Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
     //        this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
