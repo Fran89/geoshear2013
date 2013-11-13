@@ -893,7 +893,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel8.setText("sel a pebble");
 
-        jLabel2.setText("strain nav to position 0 - identity");
+        jLabel2.setText("delete a pebble");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -1248,7 +1248,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void updateDeformNavControlsStates() {
-        this.jButtonStrainNavPrevious.setEnabled(this.gscUI.gsc.getCurrentDeformationNumber()-1 > 1);
+        this.jButtonStrainNavPrevious.setEnabled(this.gscUI.gsc.getCurrentDeformationNumber()-1 > 0);
         this.jButtonStrainNavNext.setEnabled(this.gscUI.gsc.getCurrentDeformationNumber()-1 < this.gscUI.gsc.deformations.size());
     }
     
@@ -1748,7 +1748,7 @@ public class MainWindow extends javax.swing.JFrame {
                 this.gscUI.setModeStrainNav();
             }
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_REMOVE);
-            this.jButtonDeformApplyRemove.setEnabled(this.gscUI.gsc.deformations.size() > 0);
+            this.jButtonDeformApplyRemove.setEnabled((this.gscUI.gsc.deformations.size() > 0) && (this.gscUI.gsc.getCurrentDeformationNumber() > 1));
         } else {
             this.jButtonDeformApplyRemove.setEnabled(true);
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_APPLY);

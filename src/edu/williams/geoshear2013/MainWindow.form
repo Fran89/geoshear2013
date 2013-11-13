@@ -1513,7 +1513,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="strain nav to position 0 - identity"/>
+                <Property name="text" type="java.lang.String" value="delete a pebble"/>
               </Properties>
             </Component>
           </SubComponents>

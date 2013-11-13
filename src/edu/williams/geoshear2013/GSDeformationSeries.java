@@ -83,7 +83,10 @@ public class GSDeformationSeries extends ArrayList {
     
     @Override
     public Deformation get(int index) {
-        return (Deformation)(super.get(index));
+        if (index >= 0) {
+            return (Deformation)(super.get(index));
+        }
+        return new Deformation();
     }
 
     /**
