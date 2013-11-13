@@ -891,7 +891,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("enter to apply a xform; sel a pebble");
+        jLabel8.setText("sel a pebble");
 
         jLabel2.setText("strain nav to position 0 - identity");
 
@@ -902,7 +902,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1619,8 +1619,19 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void processKeyReleaseOnControl(javax.swing.JTextField controlField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
+            if (evt.isShiftDown()) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER && ! this.gscUI.isTentativeDeformationCleared()) {
+                    this.handleDeformationApplyRemove();
+                } else 
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE  && ! this.gscUI.isTentativeDeformationCleared()) {
+                    this.handleDeformReset();
+                }
+            } else
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                 this.handleControlActivation(controlField);
+            } else
+            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE  && ! this.gscUI.isTentativeDeformationCleared()) {
+                this.handleDeformReset();
             }
         }
     }
