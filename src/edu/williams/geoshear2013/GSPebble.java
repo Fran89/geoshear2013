@@ -90,28 +90,31 @@ public class GSPebble extends GSEllipse {
 
     public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, boolean inEditMode) {
 //        System.err.println("---------");
-        g2d.setColor(this.color);
-        Color axisColor = this.color;
-
-        if (this.isSelected()) {
-            g2d.setColor(GSPebble.SELECTION_COLOR);
-            g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
-        }
-                
+        
         if (isFilled) {
+            g2d.setColor(this.color);
             g2d.fill(this.shape);
+            if (this.isSelected()) {
+                g2d.setColor(GSPebble.SELECTION_COLOR);
+                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
+            }
             if (showAxes) {
                 g2d.setColor(this.colorContrast);
                 this.drawAxes(g2d);
             }
         } else {
+            if (this.isSelected()) {
+                g2d.setColor(GSPebble.SELECTION_COLOR);
+                g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
+            }
+            g2d.setColor(this.color);
             g2d.draw(this.shape);
             if (showAxes) {
                 this.drawAxes(g2d);
             }
         }
 
-        if (inEditMode || true) {
+        if (inEditMode) {
 //            System.err.println("center point: "+this.x+","+this.y);
             g2d.setColor(GSPebble.CENTER_MARK_COLOR);
             g2d.fillOval((int) this.x-GSPebble.CENTER_MARK_RADIUS/2, (int) this.y-GSPebble.CENTER_MARK_RADIUS/2, GSPebble.CENTER_MARK_RADIUS, GSPebble.CENTER_MARK_RADIUS);

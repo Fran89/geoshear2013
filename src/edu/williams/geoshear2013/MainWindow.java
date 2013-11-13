@@ -111,27 +111,27 @@ public class MainWindow extends javax.swing.JFrame {
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,1));
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,-200,150,100,1.5));
        
-        GSPebble testPeb = new GSPebble(100,100,30,20,0, Color.CYAN);
+        GSPebble testPeb = new GSPebble("p11",100,100,30,20,0, Color.CYAN);
         testPeb.setSelected(true);
         this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,200,75,50,2, Color.MAGENTA));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
 
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-100,100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-200,100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-100,200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-200,200,75,50,2, Color.MAGENTA));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p21",-100,100,30,20,0, Color.CYAN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p22",-200,100,45,30,.5, Color.GREEN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p23",-100,200,60,40,-1, Color.BLUE));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p24",-200,200,75,50,2, Color.MAGENTA));
         
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,-100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,-100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,-200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,-200,75,50,2, Color.MAGENTA));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p31",100,-100,30,20,0, Color.CYAN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p32",200,-100,45,30,.5, Color.GREEN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p33",100,-200,60,40,-1, Color.BLUE));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p34",200,-200,75,50,2, Color.MAGENTA));
 
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-100,-100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-200,-100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-100,-200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-200,-200,75,50,2, Color.MAGENTA));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p41",-100,-100,30,20,0, Color.CYAN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p42",-200,-100,45,30,.5, Color.GREEN));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p43",-100,-200,60,40,-1, Color.BLUE));
+        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p44",-200,-200,75,50,2, Color.MAGENTA));
         
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(0,0,150,150,0));
 
