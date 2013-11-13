@@ -161,6 +161,11 @@ class GSComplexUI extends JPanel {
             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE  && ! this.isTentativeDeformationCleared()) {
                 this.mainWindow.handleDeformReset();
             }
+        } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
+            if ((evt.getKeyCode() == java.awt.event.KeyEvent.VK_DELETE) || (evt.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE)) {
+                this.gsc.deleteSelectedPebbles();
+                this.repaint();
+            }
         }
     }
 

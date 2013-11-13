@@ -896,7 +896,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("delete a pebble");
+        jLabel8.setText("color selected pebbles");
 
         jLabel2.setText("create a pebble");
 
@@ -1588,6 +1588,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         this.gscUI.toggleEditUIMode(this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnPebbleEditingControls(this.jToggleButtonEditPebbles.isSelected());
+        this.jPanelContainerDisplay.requestFocus();
         this.repaint();
     }//GEN-LAST:event_jToggleButtonEditPebblesActionPerformed
 

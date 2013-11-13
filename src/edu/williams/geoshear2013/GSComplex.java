@@ -278,4 +278,15 @@ public class GSComplex implements Watchable {
     public void setUsedUI(GSComplexUI usedUI) {
         this.usedUI = usedUI;
     }
+
+    void deleteSelectedPebbles() {
+        GSPebbleSet base = this.pebbleSets.get(0);
+        for (int i=0; i<base.size(); i++) {
+            if (base.get(i).isSelected()) {
+                base.remove(i);
+                i--;
+            }
+        }
+        this.rebuildPebbleSetsFromDeformationSeries();
+    }
 }
