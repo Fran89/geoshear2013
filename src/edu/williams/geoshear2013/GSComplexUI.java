@@ -63,7 +63,7 @@ class GSComplexUI extends JPanel {
     private static BasicStroke INFO_STROKE_TENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 2 }, 0);
     private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 6 }, 0);
     private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 4, 5 }, 0);
-    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 6 }, 0);
+    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 3 }, 0);
     
     private double lastMouseDownX;
     private double lastMouseDownY;
@@ -99,6 +99,7 @@ class GSComplexUI extends JPanel {
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
+        this.gsc.setUsedUI(this);
         this.mainWindow = mainWindow;
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
@@ -616,10 +617,15 @@ class GSComplexUI extends JPanel {
             deltaY = deltaY * this.displayTransform.getScaleX();
             this.shiftPan(deltaX, deltaY);
         } else if (evt.getButton() == 1) {
-//            Point2D displayCenterInGCS = this.fromGSCOrigin(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
-//            System.out.println("displayCenterInGCS: "+displayCenterInGCS.toString());
-            Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
-            System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
+            if (this.currentUIMode==GSComplexUI.UI_MODE_EDIT_PEBBLES) {
+                Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
+                System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
+                Util.todo("1. check the pebble set to see if that clicks on a pebble (i.e. within X of that pebble's center)");
+                Util.todo("2. if so, mark it as selected (in each pebble set)");
+                Util.todo("2.a if not, mark it as not selected (in each pebble set)");
+                Util.todo("TODO- special case handling of selecting/marking when shift-clicking");
+                Util.todo("TODO- alter pebble drawing to handle selection state display");
+            }            
             
         }
     }

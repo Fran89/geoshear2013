@@ -77,7 +77,7 @@ public class GSPebbleSet extends ArrayList {
         // need to do this in two stages to avoid a ConcurrentModification exception (i.e. modifing the list over which we are iterating, a big no-no)
         while (li.hasNext()) {
             GSPebble p = (GSPebble)(li.next());
-            if (p.selected) {
+            if (p.isSelected()) {
                 toRemove.add(p);
                 //this.remove(p);
             }
@@ -95,7 +95,7 @@ public class GSPebbleSet extends ArrayList {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
             GSPebble p = ((GSPebble)(li.next()));
-            if (p.selected) { p.setColor(newColor); }
+            if (p.isSelected()) { p.setColor(newColor); }
         }
     }
 

@@ -31,7 +31,10 @@ public class GSComplex implements Watchable {
     private GSPoint center;
 
     private BufferedImage bgImage;
-    private String bgImageFileName;        
+    private String bgImageFileName;
+    
+    private GSComplexUI usedUI;
+    
     /*------------------------------------------------------------------------*/
     public GSComplex() {
         this.pebbleSets = new GSPebbleSetSeries();
@@ -108,8 +111,9 @@ public class GSComplex implements Watchable {
             workingPebbleSet.applyDeformation(tenativeDeformation);
         }
         
+        boolean inEditMode = this.usedUI.getCurrentUIMode()==GSComplexUI.UI_MODE_EDIT_PEBBLES;
         for (int i=0; i<workingPebbleSet.size(); i++) {
-            workingPebbleSet.get(i).drawOnto(g2d, isFilled, showAxes);
+            workingPebbleSet.get(i).drawOnto(g2d, isFilled, showAxes, inEditMode);
             //tenativelyDeformedPebbles.get(i).errDump();
         }
     }
@@ -260,4 +264,18 @@ public class GSComplex implements Watchable {
     public BufferedImage getBgImage() {
         return bgImage;
     }    
+
+    /**
+     * @return the usedUI
+     */
+    public GSComplexUI getUsedUI() {
+        return usedUI;
+    }
+
+    /**
+     * @param usedUI the usedUI to set
+     */
+    public void setUsedUI(GSComplexUI usedUI) {
+        this.usedUI = usedUI;
+    }
 }

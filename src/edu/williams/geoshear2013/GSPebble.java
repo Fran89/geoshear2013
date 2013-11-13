@@ -36,10 +36,14 @@ public class GSPebble extends GSEllipse {
 
     private final static String SERIAL_TOKEN = ";";
 
+    public static int CENTER_MARK_RADIUS = 6;
+    public static Color CENTER_MARK_COLOR = Color.DARK_GRAY;
+    
     /*------------------------------------------------------------------------*/
     
     public GSPebbleSet ofSet=null; // the set that contains this pebble    
-    public boolean selected=false; // whether or not this pebble is selected
+    private boolean selected=false; // whether or not this pebble is selected
+    private String id="p";
     
     public Color color=Color.BLACK;
     public Color colorContrast=Color.LIGHT_GRAY;
@@ -66,20 +70,34 @@ public class GSPebble extends GSEllipse {
         this.setColor(color);
     }
     
+    public GSPebble(String id, double x, double y, double major, double minor, double theta, Color color) {
+        super(x, y, major, minor, theta);
+        this.setId(id);
+        this.setColor(color);
+    }
+    
     /*------------------------------------------------------------------------*/
     @Override
     public GSPebble clone() {
         GSPebble theClone = new GSPebble(this.x, this.y, this.majorRadius, this.minorRadius, this.theta);
         theClone.setColor(this.color);
+        theClone.setId(this.id);
+        theClone.setSelected(this.selected);
         return theClone;
     }
     
     /*------------------------------------------------------------------------*/
 
-    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes) {
+    public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, boolean inEditMode) {
+//        System.err.println("---------");
         g2d.setColor(this.color);
         Color axisColor = this.color;
 
+        if (this.isSelected()) {
+            g2d.setColor(GSPebble.SELECTION_COLOR);
+            g2d.fillOval((int) this.x-GSPebble.SELECTION_RADIUS/2, (int) this.y-GSPebble.SELECTION_RADIUS/2, GSPebble.SELECTION_RADIUS, GSPebble.SELECTION_RADIUS);
+        }
+                
         if (isFilled) {
             g2d.fill(this.shape);
             if (showAxes) {
@@ -92,16 +110,45 @@ public class GSPebble extends GSEllipse {
                 this.drawAxes(g2d);
             }
         }
+
+        if (inEditMode || true) {
+//            System.err.println("center point: "+this.x+","+this.y);
+            g2d.setColor(GSPebble.CENTER_MARK_COLOR);
+            g2d.fillOval((int) this.x-GSPebble.CENTER_MARK_RADIUS/2, (int) this.y-GSPebble.CENTER_MARK_RADIUS/2, GSPebble.CENTER_MARK_RADIUS, GSPebble.CENTER_MARK_RADIUS);
+        }
+
     }
     
     private void drawAxes(Graphics2D g2d) {
-        // long axis
-        g2d.drawLine((int)(this.x - Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius),
-                     (int)(this.x + Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y + Math.sin(this.theta)*this.majorRadius));
-
+//        System.err.println("center of axes: "+this.x+","+this.y);
+//        System.err.println("long A: "+(this.x - Math.cos(this.theta)*this.majorRadius)+","+(-1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius)));
+        
         // short axis
-        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
-                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
+        g2d.drawLine((int)(this.x - Math.sin(this.theta)*this.minorRadius), (int)(this.y - Math.cos(this.theta)*this.minorRadius),
+                     (int)(this.x + Math.sin(this.theta)*this.minorRadius), (int)(this.y + Math.cos(this.theta)*this.minorRadius));
+
+        // long axis
+        g2d.drawLine((int)(this.x - Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y - Math.cos(this.theta+Math.PI/2)*this.majorRadius),
+                     (int)(this.x + Math.sin(this.theta+Math.PI/2)*this.majorRadius), (int)(this.y + Math.cos(this.theta+Math.PI/2)*this.majorRadius));
+
+//        // long axis
+//        g2d.drawLine((int)(this.x - Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y - Math.sin(this.theta)*this.majorRadius),
+//                     (int)(this.x + Math.cos(this.theta)*this.majorRadius), -1 * (int)(this.y + Math.sin(this.theta)*this.majorRadius));
+//
+//        // short axis
+//        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
+//                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
+        
+        
+        //        // long axis
+//        g2d.drawLine((int)(this.x - 25),(int)(this.y - 25),
+//                     (int)(this.x + 25),(int)(this.y + 25));
+
+//        // short axis
+//        g2d.drawLine((int)(this.x - Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y - Math.sin(this.theta+Math.PI/2)*this.minorRadius),
+//                     (int)(this.x + Math.cos(this.theta+Math.PI/2)*this.minorRadius), -1 * (int)(this.y + Math.sin(this.theta+Math.PI/2)*this.minorRadius));
+
+
     }
 
     /*------------------------------------------------------------------------*/
@@ -116,5 +163,33 @@ public class GSPebble extends GSEllipse {
         if (((this.color.getRed() + this.color.getGreen() + this.color.getBlue()) / 3) > 128) {
             this.colorContrast = Color.DARK_GRAY;
         }
+    }
+
+    /**
+     * @return the selected
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }

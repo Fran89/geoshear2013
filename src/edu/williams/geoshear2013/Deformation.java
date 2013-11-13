@@ -187,7 +187,7 @@ public class Deformation extends Matrix2x2 {
             strain.setColor(c);
             strain.deform(this);
 //            System.err.println("** drawing strain: "+strain.keyDataAsString());
-            strain.drawOnto(g2d, false, true);
+            strain.drawOnto(g2d, false, true, false); // strain always show axis, not filled, not in edit mode
         }
     }
     

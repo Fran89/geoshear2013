@@ -111,7 +111,9 @@ public class MainWindow extends javax.swing.JFrame {
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,1));
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,-200,150,100,1.5));
        
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,100,30,20,0, Color.CYAN));
+        GSPebble testPeb = new GSPebble(100,100,30,20,0, Color.CYAN);
+        testPeb.setSelected(true);
+        this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,100,45,30,.5, Color.GREEN));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(100,200,60,40,-1, Color.BLUE));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(200,200,75,50,2, Color.MAGENTA));
@@ -1573,6 +1575,7 @@ public class MainWindow extends javax.swing.JFrame {
    
         this.gscUI.toggleEditUIMode(this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnPebbleEditingControls(this.jToggleButtonEditPebbles.isSelected());
+        this.repaint();
     }//GEN-LAST:event_jToggleButtonEditPebblesActionPerformed
 
     private void jButtonPebbleColorSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPebbleColorSetActionPerformed
