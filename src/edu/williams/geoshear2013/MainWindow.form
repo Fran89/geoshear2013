@@ -1508,12 +1508,12 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="disable strain nav on editing"/>
+                <Property name="text" type="java.lang.String" value="delete a pebble"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="delete a pebble"/>
+                <Property name="text" type="java.lang.String" value="create a pebble"/>
               </Properties>
             </Component>
           </SubComponents>

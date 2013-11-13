@@ -26,6 +26,9 @@ public class MainWindow extends javax.swing.JFrame {
     public static String LABEL_DEFORM_APPLY = "Apply";
     public static String LABEL_DEFORM_REMOVE = "Remove";
 
+    private boolean cachedStrainNavPrevEnableState = false;
+    private boolean cachedStrainNavNextEnableState = false;
+    
 /**
      * Creates new form MainWindow
      * 
@@ -893,9 +896,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("disable strain nav on editing");
+        jLabel8.setText("delete a pebble");
 
-        jLabel2.setText("delete a pebble");
+        jLabel2.setText("create a pebble");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -1563,7 +1566,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuItemShowStrainEllipsesActionPerformed
 
     private void jToggleButtonEditPebblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditPebblesActionPerformed
-        this.jToggleButtonEditPebbles.isSelected();
+//        this.jToggleButtonEditPebbles.isSelected();
         this.setEnableOnDeformControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnRfPhiControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnStrainMatrixControls(! this.jToggleButtonEditPebbles.isSelected());
@@ -1573,6 +1576,16 @@ public class MainWindow extends javax.swing.JFrame {
             this.jButtonDeformResetActionPerformed(null); // editing always removes the current deformation - identical to hitting the reset button
         }
    
+        if (this.jToggleButtonEditPebbles.isSelected()) {
+            this.cachedStrainNavPrevEnableState = this.jButtonStrainNavPrevious.isEnabled();
+            this.cachedStrainNavNextEnableState = this.jButtonStrainNavNext.isEnabled();
+            this.jButtonStrainNavPrevious.setEnabled(false);
+            this.jButtonStrainNavNext.setEnabled(false);
+        } else {
+            this.jButtonStrainNavPrevious.setEnabled(this.cachedStrainNavPrevEnableState);
+            this.jButtonStrainNavNext.setEnabled(this.cachedStrainNavNextEnableState);
+        }
+        
         this.gscUI.toggleEditUIMode(this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnPebbleEditingControls(this.jToggleButtonEditPebbles.isSelected());
         this.repaint();
