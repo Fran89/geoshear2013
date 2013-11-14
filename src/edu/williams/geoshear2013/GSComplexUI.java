@@ -88,7 +88,6 @@ class GSComplexUI extends JPanel {
     public static int PEBBLE_CREATION_STAGE_BEGIN = 0;
     public static int PEBBLE_CREATION_STAGE_SETTING_FIRST_AXIS = 1;
     public static int PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS = 2;
-    public static Color PEBBLE_CREATION_COLOR = Color.MAGENTA; 
     public static BasicStroke PEBBLE_CREATION_STROKE = new BasicStroke(2);
     public Point2D newPebbleAxis1Pt1;
     public Point2D newPebbleAxis1Pt2;
@@ -189,6 +188,58 @@ class GSComplexUI extends JPanel {
                         this.newPebbleAxis2ThetaRad -= Math.PI;
                     }
                 }
+            } else
+            if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS) {
+                double majorRadius = this.newPebbleAxis1Pt1.distance(this.newPebbleAxis1Pt2) / 2;
+                double minorRadius = this.newPebbleAxis2Pt1.distance(this.newPebbleAxis2Pt2) / 2;
+                double thetaRad = this.newPebbleAxis1ThetaRad;
+                if (minorRadius > majorRadius) {
+                    majorRadius = this.newPebbleAxis2Pt1.distance(this.newPebbleAxis2Pt2) / 2;
+                    minorRadius = this.newPebbleAxis1Pt1.distance(this.newPebbleAxis1Pt2) / 2;
+                    thetaRad = this.newPebbleAxis2ThetaRad;
+                }
+                majorRadius = majorRadius / this.displayTransform.getScaleX();
+                minorRadius = minorRadius / this.displayTransform.getScaleX();
+                System.err.println("major: "+majorRadius);
+                System.err.println("minor: "+minorRadius);
+                System.err.println("thetaRad: "+thetaRad);
+                Point2D centerInGSC = this.inGSCSystem(this.newPebbleCenter);
+                double centerX = centerInGSC.getX();
+                double centerY = centerInGSC.getY();
+//                double centerX = this.newPebbleCenter.getX();
+//                double centerY = this.newPebbleCenter.getY();
+                System.err.println("centerX: "+centerX);
+                System.err.println("centerY: "+centerY);
+                GSPebble newPebble = new GSPebble(0, 0, majorRadius, minorRadius, thetaRad, this.colorOfNewPebbles);
+                    System.err.println("initial new peb major: "+newPebble.getMajorRadius());
+                    System.err.println("initial new peb minor: "+newPebble.getMinorRadius());
+                    System.err.println("initial new peb thetaRad: "+newPebble.getTheta());
+                System.err.println("    this.gsc.deformations.size(): "+this.gsc.deformations.size());
+                System.err.println("    this.gsc.getCurrentDeformationNumber(): "+this.gsc.getCurrentDeformationNumber());
+                for (int i=this.gsc.getCurrentDeformationNumber()-1; i > 0; i--) {
+                    System.err.println("    doing undeform for "+(i-1));
+//                    AffineTransform dAff = this.gsc.deformations.get(i-1).asAffineTransform();
+//                    System.err.println("        dAff: "+dAff);
+//                    try {
+//                        dAff.invert();
+//                    } catch (NoninvertibleTransformException ex) {
+//                        Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    System.err.println("        dAff.inverted: "+dAff);
+//                    
+//                    newPebble.deform(new Deformation(dAff));
+                    Deformation d = this.gsc.deformations.get(i-1).inverted();
+                    newPebble.deform(d);
+                    System.err.println("        back-deformed new peb major: "+newPebble.getMajorRadius());
+                    System.err.println("        back-deformed new peb minor: "+newPebble.getMinorRadius());
+                    System.err.println("        back-deformed new peb thetaRad: "+newPebble.getTheta());
+                }
+                
+                newPebble.setX(centerX);
+                newPebble.setY(centerY);
+                this.gsc.pebbleSets.get(0).add(newPebble);
+                this.gsc.rebuildPebbleSetsFromDeformationSeries();
+//                this.gsc.pebbleSets.get(this.gsc.getCurrentDeformationNumber()-1).add(newPebble);
             } else
             if ((evt.getKeyCode() == java.awt.event.KeyEvent.VK_DELETE) || (evt.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE)) {
                 this.gsc.deleteSelectedPebbles();
@@ -692,7 +743,7 @@ class GSComplexUI extends JPanel {
         if (this.pebbleCreationStage != GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN) {
             g2d.setTransform(new AffineTransform());
             g2d.setStroke(GSComplexUI.PEBBLE_CREATION_STROKE);
-            g2d.setColor(GSComplexUI.PEBBLE_CREATION_COLOR);
+            g2d.setColor(this.colorOfNewPebbles);
             g2d.drawLine((int) this.newPebbleAxis1Pt1.getX(), (int) this.newPebbleAxis1Pt1.getY(),
                          (int) this.newPebbleAxis1Pt2.getX(), (int) this.newPebbleAxis1Pt2.getY()); // first axis
 
@@ -857,7 +908,7 @@ class GSComplexUI extends JPanel {
      * @return the colorOfNewPebbles
      */
     public Color getColorOfNewPebbles() {
-        return colorOfNewPebbles;
+        return this.colorOfNewPebbles;
     }
 
     /**

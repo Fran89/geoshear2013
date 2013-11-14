@@ -190,5 +190,13 @@ public class Deformation extends Matrix2x2 {
             strain.drawOnto(g2d, false, true, false); // strain always show axis, not filled, not in edit mode
         }
     }
+
+    public Deformation inverted() {
+        if (this.isIdentity()) { return this.clone(); }
+        if (this.isScaling()) { return new Deformation(1/this.m00, this.m01, this.m10, 1/this.m11); }
+        if (this.isShearing()) { return new Deformation(this.m00, this.m01*-1, this.m10*-1, this.m11); }
+        if (this.isRotational()) { return new Deformation(this.m00, this.m01*-1, this.m10*-1, this.m11); }
+        throw new UnsupportedOperationException("Not supporting inversions of non-basic deformations yet.");
+    }
     
 }

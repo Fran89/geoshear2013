@@ -202,10 +202,6 @@ public class GSEllipse {
         this.setMatrixFromKeyData();
     }
     
-    public void applyEllipseAsTransform(GSEllipse e) {
-        System.err.println("TODO: implement setKeyDataFromMatrix in GSEllipse");
-    }
-            
     /*------------------------------------------------------------------------*/
 
     /**
