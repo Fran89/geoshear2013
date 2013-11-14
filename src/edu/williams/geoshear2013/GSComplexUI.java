@@ -24,10 +24,6 @@ import javax.swing.JPanel;
  * @author cwarren
  */
 class GSComplexUI extends JPanel {
-//    private GSPoint center;
-
-//    public GSPebble p;
-    
     public GSComplex gsc;
     private MainWindow mainWindow;
 
@@ -68,7 +64,7 @@ class GSComplexUI extends JPanel {
     private double lastMouseDownX;
     private double lastMouseDownY;
     private Point2D lastMouseDownPoint;
-    private Point2D lastMouseDownPointInGSCSystem;
+    private Point2D lastMouseDownPointRelGSCOrigin;
     private double lastMouseDownAngleInGSCSystem;
 
     private double lastMouseDragX;
@@ -82,6 +78,14 @@ class GSComplexUI extends JPanel {
     private boolean altIsDown = false;
 
     private boolean isDragDeform = false;
+
+    private int pebbleCreationStage;
+    public static int PEBBLE_CREATION_STAGE_BEGIN = 0;
+    public static int PEBBLE_CREATION_STAGE_SETTING_LONG_AXIS = 1;
+    public static int PEBBLE_CREATION_STAGE_SETTING_SHORT_AXIS = 2;
+    public static Color PEBBLE_CREATION_COLOR = Color.MAGENTA; 
+    public static BasicStroke PEBBLE_CREATION_STROKE = new BasicStroke(2);
+    
     
     private boolean flagDisplayPebbleAxes = true;
     private boolean flagDisplayPebbleFill = false;
@@ -96,6 +100,8 @@ class GSComplexUI extends JPanel {
     private final FileFilterTab filterTab = new FileFilterTab();
     private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();    
     /*------------------------------------------------------------------------*/
+    private GSPebble newPebble;
+    private Point2D lastMouseDownPointInGSCSystem;
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
@@ -109,6 +115,7 @@ class GSComplexUI extends JPanel {
         this.setStrains();
         this.setModeDeforms();
 //        this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
+        this.newPebble = null;
     }
     
     private void setDeformations() {
@@ -162,6 +169,11 @@ class GSComplexUI extends JPanel {
                 this.mainWindow.handleDeformReset();
             }
         } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
+            if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_LONG_AXIS) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
+                    this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SHORT_AXIS;
+                }
+            } else
             if ((evt.getKeyCode() == java.awt.event.KeyEvent.VK_DELETE) || (evt.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE)) {
                 this.gsc.deleteSelectedPebbles();
                 this.repaint();
@@ -189,15 +201,15 @@ class GSComplexUI extends JPanel {
     public Point2D inGSCSystem(Point2D panelClickP) {
         Point2D gscPoint = (Point2D) panelClickP.clone();
         try {
-            System.out.println("---------------");
+//            System.out.println("---------------");
             Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
 //            this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
 //            System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
-            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
+//            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
             this.displayTransform.inverseTransform(gscPoint, gscPoint);
-            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
+//            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
             gscPoint.setLocation(gscPoint.getX()-pointOfGSCOrigin.getX(), pointOfGSCOrigin.getY()-gscPoint.getY());
-            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
+//            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
             Point2D altGscPoint = (Point2D) gscPoint.clone();
 //            for (int i=1; i < this.gsc.getCurrentDeformationNumber(); i++) {
             if (! this.isTentativeDeformationCleared()) {
@@ -215,7 +227,7 @@ class GSComplexUI extends JPanel {
                     d.transposed().asAffineTransform().transform(gscPoint, gscPoint);
                 }
             }
-            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
+//            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
             
             //        Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
     //        this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
@@ -246,10 +258,11 @@ class GSComplexUI extends JPanel {
         this.lastMouseDownX = evt.getPoint().x;
         this.lastMouseDownY = evt.getPoint().y;
         this.lastMouseDownPoint = (Point2D) evt.getPoint().clone();
-        this.lastMouseDownPointInGSCSystem = this.fromGSCOrigin(evt.getPoint());
-        this.lastMouseDownAngleInGSCSystem = Math.atan(this.lastMouseDownPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getX());
-        if (this.lastMouseDownPointInGSCSystem.getX() < 0) {
-            if (this.lastMouseDownPointInGSCSystem.getY() > 0) {
+        this.lastMouseDownPointRelGSCOrigin = this.fromGSCOrigin(evt.getPoint());
+        this.lastMouseDownPointInGSCSystem = this.inGSCSystem(evt.getPoint());
+        this.lastMouseDownAngleInGSCSystem = Math.atan(this.lastMouseDownPointRelGSCOrigin.getY()/this.lastMouseDownPointRelGSCOrigin.getX());
+        if (this.lastMouseDownPointRelGSCOrigin.getX() < 0) {
+            if (this.lastMouseDownPointRelGSCOrigin.getY() > 0) {
                 this.lastMouseDownAngleInGSCSystem += Math.PI;
             } else {
                 this.lastMouseDownAngleInGSCSystem -= Math.PI;
@@ -260,7 +273,7 @@ class GSComplexUI extends JPanel {
         this.lastMouseDragY = evt.getPoint().y;
         this.lastMouseDragPoint = (Point2D) evt.getPoint().clone();
         this.lastMouseDragAngleInGSCSystem = this.lastMouseDownAngleInGSCSystem;
-        this.lastMouseDragPointInGSCSystem = (Point2D) this.lastMouseDownPointInGSCSystem.clone();
+        this.lastMouseDragPointInGSCSystem = (Point2D) this.lastMouseDownPointRelGSCOrigin.clone();
     
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
@@ -271,6 +284,9 @@ class GSComplexUI extends JPanel {
 //            this.tentativeDeformation = new Deformation();
 //            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
             this.setStrains();
+
+            this.newPebble = null;
+            this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN;
         }
     }  
 
@@ -280,6 +296,8 @@ class GSComplexUI extends JPanel {
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
         this.isDragDeform = false;
+        this.newPebble = null;
+        this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN;
         this.repaint();
     } 
     
@@ -356,7 +374,8 @@ class GSComplexUI extends JPanel {
     }
             
     public void handleMouseDrag(java.awt.event.MouseEvent evt) {
-        Point2D evtPointInGSCSystem = this.fromGSCOrigin(evt.getPoint()); 
+        Point2D evtPtRelativeToGSCOrigin = this.fromGSCOrigin(evt.getPoint());
+        Point2D evtPtInGSCSystem = this.inGSCSystem(evt.getPoint());
         double deltaX = evt.getX() - this.lastMouseDownX;
         double deltaY = this.lastMouseDownY - evt.getY();
 //        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
@@ -368,8 +387,8 @@ class GSComplexUI extends JPanel {
                 }
             }  else if (evt.isControlDown()) {
                 if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
-                    this.tentativeDeformationSetToCompression(evtPointInGSCSystem.getX()/this.lastMouseDownPointInGSCSystem.getX(),
-                                                          evtPointInGSCSystem.getY()/this.lastMouseDownPointInGSCSystem.getY(),
+                    this.tentativeDeformationSetToCompression(evtPtRelativeToGSCOrigin.getX()/this.lastMouseDownPointRelGSCOrigin.getX(),
+                                                          evtPtRelativeToGSCOrigin.getY()/this.lastMouseDownPointRelGSCOrigin.getY(),
                                                           Math.abs(deltaX) > Math.abs(deltaY));
                     this.isDragDeform = true;
                 }
@@ -392,8 +411,31 @@ class GSComplexUI extends JPanel {
             this.repaint();
         } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
             if (evt.isShiftDown()) {
-                if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
-                    Util.todo("shift drag in edit pebble mode");
+                double dragDist = this.lastMouseDownPointInGSCSystem.distance(evtPtInGSCSystem);
+                if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN) {
+                    if (dragDist > GSPebble.MIN_LONG_AXIS) {
+                        this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_LONG_AXIS;
+                    }
+                }
+                if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_LONG_AXIS) {
+                    if (dragDist > GSPebble.MIN_LONG_AXIS) {
+                        double midX = (this.lastMouseDownPointInGSCSystem.getX()+evtPtInGSCSystem.getX()) / 2;
+                        double midY = (this.lastMouseDownPointInGSCSystem.getY()+evtPtInGSCSystem.getY()) / 2;
+                        double theta = 0;
+                        double deltaXGSC = evtPtInGSCSystem.getX() - this.lastMouseDownPointInGSCSystem.getX();
+                        double deltaYGSC = evtPtInGSCSystem.getY() - this.lastMouseDownPointInGSCSystem.getY();
+                        if (deltaXGSC != 0) {
+                            theta = Math.atan(deltaYGSC/deltaXGSC);
+                        }
+                        
+//                        this.newPebble = new GSPebble(midX, midY, dragDist, 1, Util.toDegrees(theta), GSComplexUI.PEBBLE_CREATION_COLOR);
+                        this.newPebble = new GSPebble(dragDist/2, 1);
+                        this.newPebble.setX(midX);
+                        this.newPebble.setY(midY);
+                        this.newPebble.setTheta(theta);
+                    }
+                } else if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SHORT_AXIS) {
+                    Util.todo("implement short axis setting on new pebble");
                 }
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
@@ -405,10 +447,10 @@ class GSComplexUI extends JPanel {
         this.lastMouseDragX = evt.getPoint().x;
         this.lastMouseDragY = evt.getPoint().y;
         this.lastMouseDragPoint = (Point2D) evt.getPoint().clone();
-        this.lastMouseDragPointInGSCSystem = (Point2D) evtPointInGSCSystem.clone();
-        this.lastMouseDragAngleInGSCSystem = Math.atan(evtPointInGSCSystem.getY()/evtPointInGSCSystem.getX());
-        if (evtPointInGSCSystem.getX() < 0) {
-            if (evtPointInGSCSystem.getY() > 0) {
+        this.lastMouseDragPointInGSCSystem = (Point2D) evtPtRelativeToGSCOrigin.clone();
+        this.lastMouseDragAngleInGSCSystem = Math.atan(evtPtRelativeToGSCOrigin.getY()/evtPtRelativeToGSCOrigin.getX());
+        if (evtPtRelativeToGSCOrigin.getX() < 0) {
+            if (evtPtRelativeToGSCOrigin.getY() > 0) {
                 this.lastMouseDragAngleInGSCSystem += Math.PI;
             } else {
                 this.lastMouseDragAngleInGSCSystem -= Math.PI;
@@ -578,7 +620,7 @@ class GSComplexUI extends JPanel {
                     g2d.translate(this.gsc.getCenter().x*-1, this.gsc.getCenter().y*-1);
                     g2d.setColor (Color.BLUE);
                     if (this.altIsDown) {
-                        double rad = this.lastMouseDownPointInGSCSystem.distance(0,0);
+                        double rad = this.lastMouseDownPointRelGSCOrigin.distance(0,0);
                         double angleDiff = this.lastMouseDragAngleInGSCSystem - this.lastMouseDownAngleInGSCSystem;
                         double angleDiffDeg = (angleDiff)*180/Math.PI;
                         if (angleDiffDeg > 180) {
@@ -606,7 +648,12 @@ class GSComplexUI extends JPanel {
             }
         }    // end if display strain ellipses
 
-        
+        if (this.newPebble != null) {
+            GSPebble defNewPebble = this.newPebble.clone();
+            this.gsc.deformations.runAllDeformationsOn(defNewPebble,this.gsc.getCurrentDeformationNumber());
+            g2d.setStroke(GSComplexUI.PEBBLE_CREATION_STROKE);
+            defNewPebble.drawOnto(g2d, false, true, true);
+        }
     }
 
     void handleMouseClicked(MouseEvent evt) {

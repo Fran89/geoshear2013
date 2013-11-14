@@ -1821,7 +1821,7 @@ public class MainWindow extends javax.swing.JFrame {
 //            GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
 //            strain.deform(ct);
 //            this.jTextFieldStrainCumuTentRF.setText(Util.truncForDisplay(strain.getRF()));
-//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.theta)));
+//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.thetaRad)));
         }
         this.setValuesForCumuTentRfPhi();
     }
@@ -1835,9 +1835,9 @@ public class MainWindow extends javax.swing.JFrame {
             GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
             strain.deform(ct);
 //            this.jTextFieldStrainCumuTentRF.setText(Util.truncForDisplay(strain.getRF()));
-//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.theta)));
+//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.thetaRad)));
             this.setValueForControl(this.jTextFieldStrainCumuTentRF, strain.getRF());
-            this.setValueForControl(this.jTextFieldStrainCumuTentPhi, Util.toDegrees(strain.theta));        
+            this.setValueForControl(this.jTextFieldStrainCumuTentPhi, Util.toDegrees(strain.thetaRad));        
         }
     }
     

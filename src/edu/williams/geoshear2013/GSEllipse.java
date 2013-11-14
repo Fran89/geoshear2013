@@ -19,7 +19,7 @@ import java.awt.geom.Point2D;
 public class GSEllipse {
     protected double x,y;
     protected double majorRadius,minorRadius;
-    protected double theta;
+    protected double thetaRad;
     
     protected Matrix2x2 matrix; // the affine tranform matrix that converts the unit circle into this ellipse;
     
@@ -40,7 +40,7 @@ public class GSEllipse {
         this.y = y;
         this.majorRadius = majorRadius;
         this.minorRadius = minorRadius;
-        this.theta = theta;
+        this.thetaRad = theta;
         
         this.setMatrixFromKeyData();
     }
@@ -51,7 +51,7 @@ public class GSEllipse {
 
     @Override
     public GSEllipse clone() {
-        return new GSEllipse(this.x,this.y,this.majorRadius,this.minorRadius,this.theta);
+        return new GSEllipse(this.x,this.y,this.majorRadius,this.minorRadius,this.thetaRad);
     }
     
     @Override
@@ -60,7 +60,7 @@ public class GSEllipse {
     }
 
     public String keyDataAsString() {
-        return "x: "+this.x+", y: "+this.y+", majorRadius: "+this.majorRadius+", minorRadius: "+this.minorRadius+", theta: "+this.theta;
+        return "x: "+this.x+", y: "+this.y+", majorRadius: "+this.majorRadius+", minorRadius: "+this.minorRadius+", theta: "+this.thetaRad;
     }
 
     public void errDump() {
@@ -120,11 +120,11 @@ public class GSEllipse {
 //            double minor = u_sig_vt[1].m11;
 //            AffineTransform scaleTrans = AffineTransform.getScaleInstance(major, minor);
 //
-//            double theta = Math.acos(u_sig_vt[2].m00);
+//            double thetaRad = Math.acos(u_sig_vt[2].m00);
 //            if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
-//                theta = theta * -1;
+//                thetaRad = thetaRad * -1;
 //            }
-//            AffineTransform rotTrans = AffineTransform.getRotateInstance(theta);
+//            AffineTransform rotTrans = AffineTransform.getRotateInstance(thetaRad);
 //
 //            scaleTrans.transform(curCenter, curCenter);
 //            rotTrans.transform(curCenter, curCenter);
@@ -145,22 +145,22 @@ public class GSEllipse {
     /*------------------------------------------------------------------------*/
 
     /**
-     * set the matrix that defines this ellipse from its center (x and y), axes (majorRadius and minorRadius) and rotation (theta)
+     * set the matrix that defines this ellipse from its center (x and y), axes (majorRadius and minorRadius) and rotation (thetaRad)
      */
     public final void setMatrixFromKeyData() {        
 //        this.matrix = new AffineTransform();
 ////        this.matrix = T*R*S
 //        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
-//        this.matrix.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
+//        this.matrix.concatenate(AffineTransform.getRotateInstance(this.thetaRad*-1));
 //        this.matrix.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
 
         //System.err.println(this.matrix);
         
 //        this.matrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
-//        this.matrix.timesInPlace(new Matrix2x2(Math.cos(this.theta), -1*Math.sin(this.theta), Math.sin(this.theta), Math.cos(this.theta)));
+//        this.matrix.timesInPlace(new Matrix2x2(Math.cos(this.thetaRad), -1*Math.sin(this.thetaRad), Math.sin(this.thetaRad), Math.cos(this.thetaRad)));
 //      
         Matrix2x2 scalingMatrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
-        Matrix2x2 rotationMatrix = new Matrix2x2(Math.cos(this.theta), -1*Math.sin(this.theta), Math.sin(this.theta), Math.cos(this.theta));
+        Matrix2x2 rotationMatrix = new Matrix2x2(Math.cos(this.thetaRad), -1*Math.sin(this.thetaRad), Math.sin(this.thetaRad), Math.cos(this.thetaRad));
         
         this.matrix = scalingMatrix.times(rotationMatrix);
 
@@ -175,14 +175,14 @@ public class GSEllipse {
 //        System.err.println("u: "+u_sig_vt[0].toString());
 //        System.err.println("sig: "+u_sig_vt[1].toString());
 //        System.err.println("vt: "+u_sig_vt[2].toString());
-//        this.theta = Math.acos(u_sig_vt[0].m00);
-        this.theta = Math.acos(u_sig_vt[2].m00); // 'REAL'
+//        this.thetaRad = Math.acos(u_sig_vt[0].m00);
+        this.thetaRad = Math.acos(u_sig_vt[2].m00); // 'REAL'
         
         if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
-            this.theta = this.theta * -1;
+            this.thetaRad = this.thetaRad * -1;
         }
         
-        this.setMatrixFromKeyData(); // resets the matrix based on the appropriately signed theta
+        this.setMatrixFromKeyData(); // resets the matrix based on the appropriately signed thetaRad
     }
 
     /**
@@ -280,19 +280,19 @@ public class GSEllipse {
     }
     
     /**
-     * NOTE: theta is internally inverted to implement counter-clockwise rotation
-     * @return the theta
+     * NOTE: thetaRad is internally inverted to implement counter-clockwise rotation
+     * @return the thetaRad
      */
     public double getTheta() {
-        return theta;
+        return thetaRad;
     }
 
     /**
-     * NOTE: theta is internally inverted to implement counter-clockwise rotation
-     * @param theta the theta to set
+     * NOTE: thetaRad is internally inverted to implement counter-clockwise rotation
+     * @param thetaRad the thetaRad to set
      */
     public void setTheta(double theta) {
-        this.theta = theta;
+        this.thetaRad = theta;
         this.setMatrixFromKeyData();
     }
     
@@ -309,7 +309,7 @@ public class GSEllipse {
     public AffineTransform getAffineTransform() {
 //        AffineTransform af = new AffineTransform();
 //        af.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
-//        af.concatenate(AffineTransform.getRotateInstance(this.theta*-1));
+//        af.concatenate(AffineTransform.getRotateInstance(this.thetaRad*-1));
 //        af.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
 //        AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
         AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
