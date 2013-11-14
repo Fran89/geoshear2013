@@ -1575,7 +1575,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.setEnableOnDeformControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnRfPhiControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnStrainMatrixControls(! this.jToggleButtonEditPebbles.isSelected());
-        this.jButtonDeformApplyRemove.setEnabled(! this.jToggleButtonEditPebbles.isSelected());
+        this.jButtonDeformApplyRemove.setEnabled((! this.jToggleButtonEditPebbles.isSelected()) && (this.gscUI.gsc.deformations.size() > 0) && (this.gscUI.gsc.getCurrentDeformationNumber() > 1));
         
         if (this.jButtonDeformReset.isEnabled()) {
             this.jButtonDeformResetActionPerformed(null); // editing always removes the current deformation - identical to hitting the reset button

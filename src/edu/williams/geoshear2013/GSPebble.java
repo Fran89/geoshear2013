@@ -30,11 +30,6 @@ public class GSPebble extends GSEllipse {
      */
     public static Color SELECTION_PLOT_COLOR = Color.DARK_GRAY;
 
-    /**
-     * minimum long axis when adding a new pebble
-     */
-    public static int MIN_LONG_AXIS = 10;
-
     private final static String SERIAL_TOKEN = ";";
 
     public static int CENTER_MARK_RADIUS = 6;
