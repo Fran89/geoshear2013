@@ -8,9 +8,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
@@ -90,11 +92,12 @@ class GSComplexUI extends JPanel {
     public static BasicStroke PEBBLE_CREATION_STROKE = new BasicStroke(2);
     public Point2D newPebbleAxis1Pt1;
     public Point2D newPebbleAxis1Pt2;
-    private double newPebbleAxis1ThetaRad;
+    public double newPebbleAxis1ThetaRad;
     public Point2D newPebbleCenter;
     public Point2D newPebbleAxis2Pt1;
     public Point2D newPebbleAxis2Pt2;
-    private double newPebbleAxis2ThetaRad;
+    public double newPebbleAxis2ThetaRad;
+//    public 
     
     
     private boolean flagDisplayPebbleAxes = true;
@@ -110,6 +113,7 @@ class GSComplexUI extends JPanel {
     private final FileFilterTab filterTab = new FileFilterTab();
     private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();    
     /*------------------------------------------------------------------------*/
+    private Shape newPebShape;
 
     public GSComplexUI(GSComplex gsc,MainWindow mainWindow) {
         this.gsc = gsc;//.setCenter = new GSPoint(0,0);
@@ -458,7 +462,6 @@ class GSComplexUI extends JPanel {
 //                        this.newPebble.setTheta(theta);
 //                    }
                 } else if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS) {
-                    Util.todo("implement second axis setting on new pebble");
                     double d = Line2D.ptLineDist(
                                       this.newPebbleAxis1Pt1.getX(), this.newPebbleAxis1Pt1.getY(), 
                                       this.newPebbleAxis1Pt2.getX(), this.newPebbleAxis1Pt2.getY(), 
@@ -467,6 +470,13 @@ class GSComplexUI extends JPanel {
                     double axis2DeltaY = d * Math.sin(this.newPebbleAxis2ThetaRad)*-1;
                     this.newPebbleAxis2Pt1 = new Point2D.Double(this.newPebbleCenter.getX()+axis2DeltaX,this.newPebbleCenter.getY()+axis2DeltaY);
                     this.newPebbleAxis2Pt2 = new Point2D.Double(this.newPebbleCenter.getX()-axis2DeltaX,this.newPebbleCenter.getY()-axis2DeltaY);
+                    
+                    AffineTransform pebAff = new AffineTransform();
+                    pebAff.translate(this.newPebbleCenter.getX(), this.newPebbleCenter.getY());
+                    pebAff.rotate(this.newPebbleAxis1ThetaRad*-1);
+                    pebAff.scale(this.newPebbleAxis1Pt1.distance(this.newPebbleAxis1Pt2)/2, d);
+//                    System.err.println("pebAdd: "+pebAff);
+                    this.newPebShape = pebAff.createTransformedShape(new Ellipse2D.Double(-1,-1,2,2));
                 }
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
@@ -698,6 +708,7 @@ class GSComplexUI extends JPanel {
                              (int) this.newPebbleAxis2Pt2.getX(), (int) this.newPebbleAxis2Pt2.getY());
         
                 //                create ellipse and draw it
+                g2d.draw(this.newPebShape);
             }
         }
         
