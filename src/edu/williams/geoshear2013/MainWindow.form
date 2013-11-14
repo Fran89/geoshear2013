@@ -1508,12 +1508,12 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="color selected pebbles"/>
+                <Property name="text" type="java.lang.String" value="???"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="create a pebble"/>
+                <Property name="text" type="java.lang.String" value="create a pebble; drag pebble?"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -1603,6 +1603,9 @@
                 <Property name="text" type="java.lang.String" value="Apply"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPebbleColorApplyActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonBackgroundImage">
               <Properties>

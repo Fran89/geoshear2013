@@ -4,6 +4,7 @@
  */
 package edu.williams.geoshear2013;
 
+import java.awt.Color;
 import java.util.List;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -42,6 +43,14 @@ public class GSPebbleSetSeries extends ArrayList {
             GSPebbleSet pebSet = (GSPebbleSet)(li.next());
             pebSet.selectPebblesByIds(ids, shiftIsDown);
         }
+    }
+    
+     public void colorSelectedPebbles(Color c) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebbleSet pebSet = (GSPebbleSet)(li.next());
+            pebSet.colorSelectedPebbles(c);
+        }    
     }
     
     /*---------------------------------------------------------------------*/

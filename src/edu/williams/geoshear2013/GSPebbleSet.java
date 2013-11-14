@@ -94,13 +94,18 @@ public class GSPebbleSet extends ArrayList {
     }
 
     public void colorSelected(Color newColor) {
+       this.colorSelectedPebbles(newColor);
+    }
+    
+    public void colorSelectedPebbles(Color c) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            GSPebble p = ((GSPebble)(li.next()));
-            if (p.isSelected()) { p.setColor(newColor); }
-        }
+            GSPebble peb = (GSPebble)(li.next());
+            if (peb.isSelected()) {
+                peb.setColor(c);
+            }
+        }    
     }
-
     public void applyDeformation(Deformation deformation) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
@@ -138,4 +143,5 @@ public class GSPebbleSet extends ArrayList {
             }
         }
     }
+
 }

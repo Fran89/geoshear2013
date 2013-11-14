@@ -767,4 +767,8 @@ class GSComplexUI extends JPanel {
            this.setFlagDisplayBackgroundImage(true);
         }
     }
+
+    void handleApplyColor(Color newColor) {
+        this.gsc.pebbleSets.colorSelectedPebbles(newColor);
+    }
 }

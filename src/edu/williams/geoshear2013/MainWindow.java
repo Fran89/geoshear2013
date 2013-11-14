@@ -896,9 +896,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("color selected pebbles");
+        jLabel8.setText("???");
 
-        jLabel2.setText("create a pebble");
+        jLabel2.setText("create a pebble; drag pebble?");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -950,6 +950,11 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonPebbleColorApply.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonPebbleColorApply.setText("Apply");
         jButtonPebbleColorApply.setEnabled(false);
+        jButtonPebbleColorApply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPebbleColorApplyActionPerformed(evt);
+            }
+        });
 
         jButtonBackgroundImage.setText("Background Image");
         jButtonBackgroundImage.setEnabled(false);
@@ -1608,6 +1613,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.jCheckBoxMenuItemShowBackgroundImage.setSelected(this.gscUI.isFlagDisplayBackgroundImage());
         this.repaint ();
     }//GEN-LAST:event_jButtonBackgroundImageActionPerformed
+
+    private void jButtonPebbleColorApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPebbleColorApplyActionPerformed
+        this.gscUI.handleApplyColor(this.jButtonPebbleColorSet.getBackground());
+        this.repaint();
+    }//GEN-LAST:event_jButtonPebbleColorApplyActionPerformed
 
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
