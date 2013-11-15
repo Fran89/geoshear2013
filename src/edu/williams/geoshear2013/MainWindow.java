@@ -1735,7 +1735,7 @@ public class MainWindow extends javax.swing.JFrame {
                     this.updateDeformNavControlsStates();
                     this.updateStateOfCurrentDeformControls();
                     this.updateStrainMatricesVisibilities();
-                    this.updateNavPositionInfo();
+                    this.handleStrainNavPostAction();
                     
                     // set all the various display flags
                     this.gscUI.setFlagDisplayPebbleFill(this.jCheckBoxMenuItemFillPebbles.isSelected());
