@@ -59,20 +59,11 @@ public class GSComplex implements Watchable {
      * NOTE: the value of currentDeformationNumber is unchanged unless it would be out of bounds, in which case it is set to the end of the series
      */
     public void removeCurrentDeformation() {
-//        Util.todo("implement removeCurrentDeformation");
-//        System.err.println("   pre-remove currentDeformationNumber: "+this.currentDeformationNumber);
-//        System.err.println("   pre-remove deformation series size: "+this.deformations.size());
-//        System.err.println("   pre-remove pebble set series size: "+this.pebbleSets.size());
         this.deformations.remove(this.currentDeformationNumber-2);
-//        Util.todo("handle pebble set rebuilding");
-//        this.pebbleSets.truncateFrom(currentDeformationNumber-1);
         this.rebuildPebbleSetsFromDeformationSeries();
         if (this.currentDeformationNumber > this.deformations.size()+1) {
             this.currentDeformationNumber = this.deformations.size()+1;
         }
-//        System.err.println("   post-remove currentDeformationNumber: "+this.currentDeformationNumber);
-//        System.err.println("   post-remove deformation series size: "+this.deformations.size());
-//        System.err.println("   post-remove pebble set series size: "+this.pebbleSets.size());
     }
     
     public void nextDeformation() {

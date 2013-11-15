@@ -121,7 +121,6 @@ class GSComplexUI extends JPanel {
         this.displayTransform = new AffineTransform();
         this.tentativeDeformation = new Deformation();
         this.cumuDeformation = this.gsc.getCompositeTransform();
-//        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
         this.setModeDeforms();
@@ -131,14 +130,12 @@ class GSComplexUI extends JPanel {
     private void setDeformations() {
         this.tentativeDeformation = new Deformation();
         this.cumuDeformation = this.gsc.getCompositeTransform();
-//        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
     }
     
     private void setDeformations(Deformation d) {
         this.tentativeDeformation = d.clone();
         this.cumuDeformation = this.gsc.getCompositeTransform();
-//        Util.todo("uses getCompositeTransform");
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
     }
 
@@ -149,15 +146,7 @@ class GSComplexUI extends JPanel {
         this.tentativeStrain.deform(this.tentativeDeformation);
 
         this.cumuStrain = new GSPebble(100,100);
-//        this.gsc.deformations.runAllDeformationsOn(cumuStrain);
         this.gsc.deformations.runAllDeformationsOn(cumuStrain,this.gsc.getCurrentDeformationNumber());
-//        Util.todo("uses runAllDeformationsOn");
-        
-//        this.cumuStrain.deform(this.cumuDeformation);
-//        this.cumuTentativeStrain = cumuStrain.clone();
-//        this.cumuTentativeStrain = new GSPebble(100,100);
-//        this.gsc.deformations.runAllDeformationsOn(cumuTentativeStrain);
-//        this.cumuTentativeStrain.deform(this.tentativeDeformation);
     }
 
     public void handleKeyPressed(java.awt.event.KeyEvent evt) {
@@ -220,6 +209,8 @@ class GSComplexUI extends JPanel {
                 }
                 newPebble.setX(centerX);
                 newPebble.setY(centerY);
+                newPebble.setId(this.gsc.pebbleSets.get(0).getNewId());
+                newPebble.setSelected(true);
                 this.gsc.pebbleSets.get(0).add(newPebble);
                 this.gsc.rebuildPebbleSetsFromDeformationSeries();
             } else
@@ -477,23 +468,6 @@ class GSComplexUI extends JPanel {
                                 (this.newPebbleAxis1Pt1.getX()-this.newPebbleAxis1Pt2.getX())
                                 );
                       }
-//                      System.err.println("this.newPebbleThetaRad: "+this.newPebbleThetaRad);
-//                    if (dragDist > GSPebble.MIN_LONG_AXIS) {
-//                        double midX = (this.lastMouseDownPointInGSCSystem.getX()+evtPtInGSCSystem.getX()) / 2;
-//                        double midY = (this.lastMouseDownPointInGSCSystem.getY()+evtPtInGSCSystem.getY()) / 2;
-//                        double theta = 0;
-//                        double deltaXGSC = evtPtInGSCSystem.getX() - this.lastMouseDownPointInGSCSystem.getX();
-//                        double deltaYGSC = evtPtInGSCSystem.getY() - this.lastMouseDownPointInGSCSystem.getY();
-//                        if (deltaXGSC != 0) {
-//                            theta = Math.atan(deltaYGSC/deltaXGSC);
-//                        }
-//                        
-////                        this.newPebble = new GSPebble(midX, midY, dragDist, 1, Util.toDegrees(theta), GSComplexUI.PEBBLE_CREATION_COLOR);
-//                        this.newPebble = new GSPebble(dragDist/2, 1);
-//                        this.newPebble.setX(midX);
-//                        this.newPebble.setY(midY);
-//                        this.newPebble.setTheta(theta);
-//                    }
                 } else if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS) {
                     double d = Line2D.ptLineDist(
                                       this.newPebbleAxis1Pt1.getX(), this.newPebbleAxis1Pt1.getY(), 
@@ -508,9 +482,16 @@ class GSComplexUI extends JPanel {
                     pebAff.translate(this.newPebbleCenter.getX(), this.newPebbleCenter.getY());
                     pebAff.rotate(this.newPebbleAxis1ThetaRad*-1);
                     pebAff.scale(this.newPebbleAxis1Pt1.distance(this.newPebbleAxis1Pt2)/2, d);
-//                    System.err.println("pebAdd: "+pebAff);
                     this.newPebShape = pebAff.createTransformedShape(new Ellipse2D.Double(-1,-1,2,2));
                 }
+            } else if (evt.isControlDown()) {
+                // pebble moving
+                // 1. get gcs coords of initial click pt
+                // 2. get gcs coords of current drag pt
+                // 3. calc the delta x and y
+                // 4. in the base pebble set, shift selected pebbles by that amt
+                // 5. rebuild the pebble sets
+                Util.todo("implement pebble dragging/moving");
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());

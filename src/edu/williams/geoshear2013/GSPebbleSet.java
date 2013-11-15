@@ -69,6 +69,8 @@ public class GSPebbleSet extends ArrayList {
         return res;
     }
     
+    /*---------------------------------------------------------------------*/
+    
     /**
      * remove from this all pebbles that are selected
      */
@@ -93,10 +95,17 @@ public class GSPebbleSet extends ArrayList {
         }
     }
 
+    /**
+     * change the color of all pebbles that are selected
+     * NOTE: alias for colorSelectedPebbles
+     */
     public void colorSelected(Color newColor) {
        this.colorSelectedPebbles(newColor);
     }
     
+    /**
+     * change the color of all pebbles that are selected
+     */
     public void colorSelectedPebbles(Color c) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
@@ -106,6 +115,11 @@ public class GSPebbleSet extends ArrayList {
             }
         }    
     }
+    
+    /**
+     * apply the given deformation to each pebble in this set
+     * @param deformation 
+     */
     public void applyDeformation(Deformation deformation) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
@@ -113,6 +127,11 @@ public class GSPebbleSet extends ArrayList {
         }
     }
 
+    /**
+     * gets a list of pebble ids for pebbles that are 'hit' (i.e. within the selection radius distance) of the given point
+     * @param p a point in the GSC coordinate system
+     * @return a List of strings that are the ids of all the pebbles whose centers are within the selection radius of the point
+     */
     public List getIdsOfPebblesHitByPoint(Point2D p) {
         List res = new ArrayList();
         ListIterator li = this.listIterator();
@@ -126,6 +145,11 @@ public class GSPebbleSet extends ArrayList {
         return res;
     }
     
+    /**
+     * sets the selected attribute on all relevant pebbles in this set
+     * @param ids a List of strings which are ids of pebble objects
+     * @param shiftIsDown the state of the shift key - this controls whether selection states are toggled or wiped
+     */
     public void selectPebblesByIds(List ids, boolean shiftIsDown) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
@@ -144,4 +168,28 @@ public class GSPebbleSet extends ArrayList {
         }
     }
 
+    /**
+     * @return a string that may be used as an id for a pebble to be added to this set - the id will be unique within this set
+     */
+    public String getNewId() {
+        int basis = (this.size()+1);
+        String newId = "pebble_"+Util.fillIntLeft(basis, 8);
+        while (this.containsId(newId)) {
+            basis++;
+            newId = newId = "pebble_"+Util.fillIntLeft(basis, 8);
+        }
+        return newId;
+    }
+    /**
+     * @param id the id to check
+     * @return true if this sets contains a pebble with the given id, false otherwise
+     */
+    public boolean containsId(String id) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (peb.getId().equals(id)) { return true; }
+        }
+        return false;
+    }
 }

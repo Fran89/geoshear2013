@@ -119,11 +119,27 @@ public class Util
         return signSymbol+numberAsString;
     }
     
+    /**
+     * convert an integer to a string of a given length
+     * NOTE: if the base is already longer than the target size then the base is returned unchanged - it is NOT truncated
+     * @param base the integer to use as a basis
+     * @param fullSize the length of the string to be returned
+     * @return a string that is the integer padded on the left with 0's until it is fullSize characters long
+     */
     public static String fillIntLeft(int base, int fullSize)
     {
         return Util.fillLeftWith(Integer.toString(base), fullSize, "0");
     }
 
+    /**
+     * convert a string to a new string of a given length, padded on the left with the given character to reach that length
+     * NOTE: if the base is already longer than the target size then the base is returned unchanged - it is NOT truncated
+     * NOTE: you may use a string of length > 1 as the fill, but the result may be > fullSize in length if you do so
+     * @param base the string to be padded
+     * @param fullSize the length of the results
+     * @param fill the character/string to use to do the filling
+     * @return a new string, which is the base padded on the left with the fill until it is at least fullSize long
+     */
     public static String fillLeftWith(String base, int fullSize, String fill)
     {
         for (int i=base.length(); i<fullSize; i++)

@@ -79,9 +79,7 @@ public class GSEllipse {
 //        System.err.println("deformation matrix: "+deformation.toString());
         Deformation dT = deformation.clone();
         if (dT.isShearing()) {
-//            TODO: fix this so it's not inverted
             AffineTransform shearTrans = AffineTransform.getShearInstance(deformation.m10*-1, deformation.m01*-1);
-//            AffineTransform shearTrans = AffineTransform.getShearInstance(deformation.m10, deformation.m01);
             Point2D curCenter = new Point2D.Double(this.x, this.y);
             shearTrans.transform(curCenter, curCenter);
             this.x = curCenter.getX();
@@ -93,11 +91,7 @@ public class GSEllipse {
             this.x = curCenter.getX();
             this.y = curCenter.getY();
         }  else if (dT.isRotational()) {
-//            TODO: fix this so it's not inverted
-//            double thetaDeg = Math.acos(deformation.m00) * (180/Math.PI) * ((deformation.m01 > 0) ? -1 : 1);
-//            System.err.println("backed out rot degr: "+thetaDeg);
             AffineTransform rotTrans = AffineTransform.getRotateInstance(Math.acos(deformation.m00) * ((deformation.m01 > 0) ? -1 : 1));
-//            AffineTransform rotTrans = AffineTransform.getRotateInstance(Math.acos(deformation.m00) * ((deformation.m01 < 0) ? -1 : 1));
             Point2D curCenter = new Point2D.Double(this.x, this.y);
             rotTrans.transform(curCenter, curCenter);
             this.x = curCenter.getX();
