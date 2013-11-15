@@ -1726,42 +1726,33 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                     fin.close();
 
-//                    boolean priorAdminMode = this.gsc.isAdminMode();
-
                     // actually make the new gsc the live one
-//                    this.gsc = GSComplex.unserialize(cumu_string_in);
-//                    this.gscUI.setGsc(this.gsc);
                     this.jPanelContainerDisplay.remove(this.gscUI);
-
                     this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
                     this.initializeGscUI();
-            //        int w = this.jPanelContainerDisplay.getWidth();
-            //        int h = this.jPanelContainerDisplay.getHeight();
-            //        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
-            //        this.gscUI.setBounds(0, 0, w, h);
-            //        this.gscUI.setDoubleBuffered (true);
-            //        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
                     this.jPanelContainerDisplay.add(this.gscUI);                    
+                    
                     this.updateDeformNavControlsStates();
                     this.updateStateOfCurrentDeformControls();
                     this.updateStrainMatricesVisibilities();
                     this.updateNavPositionInfo();
                     
                     // set all the various display flags
-//                    this.gsc.setAdminMode(priorAdminMode);
-//                    this.gsc.setFlagFillPebbles(this.jCheckBoxMenuItemFillPebbles.isSelected());
-//                    this.gsc.setFlagPebbleShowAxes(this.jCheckBoxMenuItemShowAxes.isSelected());
-//                    this.gsc.setFlagShowBackgroundAxes(this.jCheckBoxMenuItemBGAxes.isSelected());
-//                    this.gsc.setFlagShowBackgroundImage(this.jCheckBoxMenuItemShowBG.isSelected());
+                    this.gscUI.setFlagDisplayPebbleFill(this.jCheckBoxMenuItemFillPebbles.isSelected());
+                    this.gscUI.setFlagDisplayPebbleAxes(this.jCheckBoxMenuItemShowPebbleAxes.isSelected());
+                    this.gscUI.setFlagDisplayBackgroundAxis(this.jCheckBoxMenuItemShowBackgroundAxis.isSelected());
+                    this.gscUI.setFlagDisplayBackgroundImage(this.jCheckBoxMenuItemShowBackgroundImage.isSelected());
+                    this.gscUI.setFlagDisplayStrainEllipses(this.jCheckBoxMenuItemShowStrainEllipses.isSelected());
 
                     // reset the display transforms and other such things to their bases
-//                    this.clearNewPebbleCreation();
-//                    this.jButtonUnzoomActionPerformed(null);
-//                    this.jButtonRecenterActionPerformed(null);
+                    this.jButtonUnzoomActionPerformed(null);
+                    this.jButtonCenterActionPerformed(null);
 
-                    // set the deformation navigator appropriately
-//                    this.determineDeformationNavControls();
-
+                    if (this.jToggleButtonEditPebbles.isSelected()) {
+                        this.jToggleButtonEditPebbles.setSelected(false);
+                        this.jToggleButtonEditPebblesActionPerformed(null);
+                    }
+                    
                     //JOptionPane.showMessageDialog (this,"Loaded "+dataFile.getCanonicalPath ());
                 }
                 catch (IOException exc)
