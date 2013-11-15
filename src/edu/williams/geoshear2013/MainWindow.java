@@ -5,8 +5,10 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -1706,7 +1708,73 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSaveActionPerformed
 
     private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
-        Util.todo("implement load");
+        fileChooser.setFileFilter (this.filterGeoShear);
+        int returnVal = fileChooser.showOpenDialog (this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File dataFile = fileChooser.getSelectedFile ();
+            if (this.filterGeoShear.accept (dataFile))
+            {
+                try
+                {
+                    BufferedReader fin = new BufferedReader(new FileReader(dataFile.getCanonicalPath()));
+                    String string_in = "";
+                    String cumu_string_in = "";
+                    while ((string_in = fin.readLine()) != null)
+                    {
+                        cumu_string_in += string_in + "\n";
+                    }
+                    fin.close();
+
+//                    boolean priorAdminMode = this.gsc.isAdminMode();
+
+                    // actually make the new gsc the live one
+//                    this.gsc = GSComplex.unserialize(cumu_string_in);
+//                    this.gscUI.setGsc(this.gsc);
+                    this.jPanelContainerDisplay.remove(this.gscUI);
+
+                    this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
+                    this.initializeGscUI();
+            //        int w = this.jPanelContainerDisplay.getWidth();
+            //        int h = this.jPanelContainerDisplay.getHeight();
+            //        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
+            //        this.gscUI.setBounds(0, 0, w, h);
+            //        this.gscUI.setDoubleBuffered (true);
+            //        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
+                    this.jPanelContainerDisplay.add(this.gscUI);                    
+                    this.updateDeformNavControlsStates();
+                    this.updateStateOfCurrentDeformControls();
+                    this.updateStrainMatricesVisibilities();
+                    this.updateNavPositionInfo();
+                    
+                    // set all the various display flags
+//                    this.gsc.setAdminMode(priorAdminMode);
+//                    this.gsc.setFlagFillPebbles(this.jCheckBoxMenuItemFillPebbles.isSelected());
+//                    this.gsc.setFlagPebbleShowAxes(this.jCheckBoxMenuItemShowAxes.isSelected());
+//                    this.gsc.setFlagShowBackgroundAxes(this.jCheckBoxMenuItemBGAxes.isSelected());
+//                    this.gsc.setFlagShowBackgroundImage(this.jCheckBoxMenuItemShowBG.isSelected());
+
+                    // reset the display transforms and other such things to their bases
+//                    this.clearNewPebbleCreation();
+//                    this.jButtonUnzoomActionPerformed(null);
+//                    this.jButtonRecenterActionPerformed(null);
+
+                    // set the deformation navigator appropriately
+//                    this.determineDeformationNavControls();
+
+                    //JOptionPane.showMessageDialog (this,"Loaded "+dataFile.getCanonicalPath ());
+                }
+                catch (IOException exc)
+                {
+                    exc.printStackTrace ();
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog (this,"Unsupported format, only "+this.filterGeoShear.getDescription ()+". Load aborted.");
+            }
+
+        }
+        this.repaint ();        
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
     private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed

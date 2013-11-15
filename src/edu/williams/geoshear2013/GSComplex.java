@@ -41,6 +41,7 @@ public class GSComplex implements Watchable {
     private final static String KEY_PEBBLES = "pebbles";
     private final static String KEY_DEFORMATIONS = "deformations";
     private final static String KEY_BG_IMAGE = "bgimage";
+    private final static String KEY_CENTER = "center";
     
     /*------------------------------------------------------------------------*/
     public GSComplex() {
@@ -56,12 +57,17 @@ public class GSComplex implements Watchable {
 
     public String serialize() {
         String s = "";
-        s += "[background]\n";
-       if (! this.getBgImageFileName().isEmpty()) {
+        s += "\n["+GSComplex.KEY_CENTER+"]\n";
+        s += GSComplex.KEY_CENTER + "=" + this.center.serialize() +"\n";
+
+        s += "\n["+GSComplex.KEY_BG_IMAGE+"]\n";
+        if (! this.getBgImageFileName().isEmpty()) {
             s += GSComplex.KEY_BG_IMAGE+"="+this.getBgImageFileName()+"\n";
         }
+
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
         s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serialize() +"\n";
+        
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
         s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
         return s;
@@ -70,14 +76,19 @@ public class GSComplex implements Watchable {
     public String serializeToTabDelimited() {
         Util.todo("implement serializeToTabDelimited");
         String s = "";
-        s += "[background]\n";
+        s += "\n["+GSComplex.KEY_CENTER+"]\n";
+        s += GSComplex.KEY_CENTER + "=" + this.center.serialize() +"\n";
+
+        s += "\n["+GSComplex.KEY_BG_IMAGE+"]\n";
         if (! this.getBgImageFileName().isEmpty()) {
             s += GSComplex.KEY_BG_IMAGE+"="+this.getBgImageFileName()+"\n";
         }
+
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
-        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serializeToTabDelimited() +"\n";
+        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serialize() +"\n";
+        
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
-        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serializeToTabDelimited() +"\n";
+        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
         return s;
     }
 
@@ -123,12 +134,23 @@ public class GSComplex implements Watchable {
                         gsc.setBgImageFileName(keyVal[1]);
                         gsc.loadBgImage();
                     }
+                } else
+                if (gscData[i].startsWith(GSComplex.KEY_CENTER+"=")) {
+                    String[] keyVal = gscData[i].split(GSComplex.KV_TOKEN);
+                    keyVal[1] = keyVal[1].trim();
+                    if (! keyVal[1].isEmpty())
+                    {
+                        gsc.setCenter(GSPoint.deserialize(keyVal[1]));
+                    }
                 }
             }
         }
 
         gsc.rebuildPebbleSetsFromDeformationSeries();
-        Util.todo("advance strain nav to last deformation in the gsc");
+        // advance deform nav to last deformation in the gsc
+        for (int i=gsc.deformations.size(); i>0; i--) {
+            gsc.nextDeformation();
+        }
         return gsc;
     }
     

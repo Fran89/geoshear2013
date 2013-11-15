@@ -23,6 +23,22 @@ public class GSPoint {
         this.y = inity;
     }
 
+    public String serialize() {
+        return this.x+","+this.y;
+    }
+
+    public static GSPoint deserialize(String serializedPoint) {
+        serializedPoint = serializedPoint.trim();
+        String[] xy = serializedPoint.split(",");
+        xy[0] = xy[0].trim();
+        xy[1] = xy[1].trim();
+        try {
+            return new GSPoint(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]));
+        } catch(Exception exc) {
+            return new GSPoint();
+        }
+    }
+    
     void set(double sx, double sy) {
         this.x = sx;
         this.y = sy;
