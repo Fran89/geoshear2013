@@ -116,6 +116,17 @@ public class MainWindow extends javax.swing.JFrame {
        
         GSPebble testPeb = new GSPebble("p11",100,100,30,20,0, Color.CYAN);
         testPeb.setSelected(true);
+        
+//        System.err.println("test peb : "+testPeb.serialize());
+//        GSPebble tp2 = GSPebble.deserialize(testPeb.serialize());         
+//        System.err.println("test peb2: "+tp2.serialize());
+//        System.err.println("testPeb==tp2: "+testPeb.equals(tp2));
+//        
+//        
+//        System.err.println("(tab) test peb : "+testPeb.serializeToTabDelimited());
+//        tp2 = GSPebble.deserialize(testPeb.serializeToTabDelimited()); 
+//        System.err.println("(tab) test peb2: "+tp2.serializeToTabDelimited());
+        
         this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));

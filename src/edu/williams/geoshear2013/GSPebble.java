@@ -82,6 +82,75 @@ public class GSPebble extends GSEllipse {
         return theClone;
     }
     
+    public boolean equals(GSPebble otherPeb) {
+        System.err.println(this.toString());
+        System.err.println(otherPeb.toString());
+        return 
+                this.getId().equals(otherPeb.getId()) &&
+                this.getX() == otherPeb.getX() &&
+                this.getY() == otherPeb.getY() &&
+                this.getMajorRadius() == otherPeb.getMajorRadius() &&
+                this.getMinorRadius() == otherPeb.getMinorRadius() &&
+                this.getTheta() == otherPeb.getTheta() &&
+                this.color.equals(otherPeb.color);             
+    }
+    
+    /*------------------------------------------------------------------------*/
+    
+    /**
+     * returns a string representation of this pebble that is suitable for saving in a file and which the deserialize function of this class can use to create a new pebble
+     * @return 
+     */
+    public String serialize() {
+        String s = "id="+this.getId()+GSPebble.SERIAL_TOKEN+" x="+this.x+GSPebble.SERIAL_TOKEN+" y="+this.y+
+                GSPebble.SERIAL_TOKEN+" majorRadius="+this.getMajorRadius()+GSPebble.SERIAL_TOKEN+" minorRadius="+this.getMinorRadius()+
+                GSPebble.SERIAL_TOKEN+" thetaDeg="+Util.toDegrees(this.getTheta())+
+                GSPebble.SERIAL_TOKEN+" color="+Util.getColorHexString(this.color);
+        return s;
+    }
+    
+    public String serializeToTabDelimited() {
+        String s = this.getId()+"\t"+this.x+"\t"+this.y+
+                "\t"+this.getMajorRadius()+"\t"+this.getMinorRadius()+"\t"+Util.toDegrees(this.getTheta())+
+                "\t"+Util.getColorHexString(this.color);
+        return s;
+    }
+    
+    public static GSPebble deserialize(String serializedPebble) {
+        String newId = "p";
+        double newX = 0;
+        double newY = 0;
+        double newMajorRadius = 2;
+        double newMinorRadius = 1;
+        double newThetaDeg = 0;
+        Color newColor = Color.BLACK;
+        if (serializedPebble.indexOf("\t") > -1) {
+            String[] pebbleDataPieces = serializedPebble.split("\t");
+            newId = pebbleDataPieces[0];
+            newX = Double.parseDouble(pebbleDataPieces[1]);
+            newY = Double.parseDouble(pebbleDataPieces[2]);
+            newMajorRadius = Double.parseDouble(pebbleDataPieces[3]);
+            newMinorRadius = Double.parseDouble(pebbleDataPieces[4]);
+            newThetaDeg = Double.parseDouble(pebbleDataPieces[5]);
+            newColor = Util.getColorFromHexString(pebbleDataPieces[6]);
+        } else {
+            String pebbleData = serializedPebble.replaceAll("\\s+", "");
+            String[] pebbleDataPieces = pebbleData.split(GSPebble.SERIAL_TOKEN);
+            for (int i=0; i<pebbleDataPieces.length; i++) {
+                String[] keyValue = pebbleDataPieces[i].split("=");             
+                System.err.println("  "+keyValue[0]+"-"+keyValue[1]);
+                if ("id".equals(keyValue[0])) { newId = keyValue[1]; }
+                if ("x".equals(keyValue[0])) { newX = Double.parseDouble(keyValue[1]); }
+                if ("y".equals(keyValue[0])) { newY = Double.parseDouble(keyValue[1]); }
+                if ("majorRadius".equals(keyValue[0])) { newMajorRadius = Double.parseDouble(keyValue[1]); }
+                if ("minorRadius".equals(keyValue[0])) { newMinorRadius = Double.parseDouble(keyValue[1]); }
+                if ("thetaDeg".equals(keyValue[0])) { newThetaDeg = Double.parseDouble(keyValue[1]); }
+                if ("color".equals(keyValue[0])) { newColor = Util.getColorFromHexString(keyValue[1]); }
+            }
+        }
+        return new GSPebble(newId, newX, newY, newMajorRadius, newMinorRadius, Util.toRadians(newThetaDeg), newColor);
+    }
+
     /*------------------------------------------------------------------------*/
 
     public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, boolean inEditMode) {

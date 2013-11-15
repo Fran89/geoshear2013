@@ -315,6 +315,15 @@ public class Util
     }
 
     /**
+     * 
+     * @param s an HTML-style representation of a color in RGB space - e.g. #ff0000 is red
+     * @return a Color that the string represents
+     */
+    public static Color getColorFromHexString(String s) {
+        return Color.decode(s);
+    }
+    
+    /**
      * Gets a lighter version of a color, but never lighter than 245,245,245
      *
      * @param initColor
