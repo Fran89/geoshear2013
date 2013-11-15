@@ -147,6 +147,16 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p43",-100,-200,60,40,-1, Color.BLUE));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p44",-200,-200,75,50,2, Color.MAGENTA));
         
+//        Deformation testDef = new Deformation(1,.5,0,1);
+//        System.err.println("testDef :"+testDef.serialize());
+//        Deformation testDef2 = Deformation.deserialize(testDef.serialize());
+//        System.err.println("testDef2:"+testDef2.serialize());
+//        System.err.println("testDef==testDef2: "+testDef.equals(testDef2));
+//        
+//        System.err.println("(tab)testDef :"+testDef.serializeToTabDelimited());
+//        testDef2 = Deformation.deserialize(testDef.serializeToTabDelimited());
+//        System.err.println("(tab)testDef2:"+testDef2.serializeToTabDelimited());
+//        System.err.println("testDef==testDef2: "+testDef.equals(testDef2));        
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(0,0,150,150,0));
 
 //        this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);

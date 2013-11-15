@@ -138,7 +138,7 @@ public class GSPebble extends GSEllipse {
             String[] pebbleDataPieces = pebbleData.split(GSPebble.SERIAL_TOKEN);
             for (int i=0; i<pebbleDataPieces.length; i++) {
                 String[] keyValue = pebbleDataPieces[i].split("=");             
-                System.err.println("  "+keyValue[0]+"-"+keyValue[1]);
+//                System.err.println("  "+keyValue[0]+"-"+keyValue[1]);
                 if ("id".equals(keyValue[0])) { newId = keyValue[1]; }
                 if ("x".equals(keyValue[0])) { newX = Double.parseDouble(keyValue[1]); }
                 if ("y".equals(keyValue[0])) { newY = Double.parseDouble(keyValue[1]); }
