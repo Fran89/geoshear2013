@@ -30,7 +30,47 @@ public class GSDeformationSeries extends ArrayList {
 
 
     /*---------------------------------------------------------------------*/
+    public boolean equals(GSDeformationSeries other) {
+        if (this.size() != other.size()) { return false; }
+        for (int i=0; i<this.size(); i++) {
+            if (! this.get(i).equals(other.get(i))) { return false; }
+        }
+        return true;
+    }
     
+    /*---------------------------------------------------------------------*/
+    
+    public String serialize() {
+        String s = "";
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            s = s+((Deformation)(li.next())).serialize()+"\n";
+        }
+        return s;
+    }
+    
+    public String serializeToTabDelimited() {
+        String s = "";
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            s = s+((Deformation)(li.next())).serializeToTabDelimited()+"\n";
+        }
+        return s;
+    }
+
+    public static GSDeformationSeries deserialize(String serializedDeformationSeries) {
+        GSDeformationSeries newDS = new GSDeformationSeries();
+        
+        String[] defData = serializedDeformationSeries.split("\n");
+        
+        for(int i=0;i<defData.length;i++) {
+            newDS.add(Deformation.deserialize(defData[i]));
+        }
+        
+        return newDS;
+    }
+    /*---------------------------------------------------------------------*/
+
     /**
      * 
      * @return a deformation that is the composite of all deformations in the series as if each were a deformation applied to the next (sans translations)
@@ -112,5 +152,20 @@ public class GSDeformationSeries extends ArrayList {
         Deformation res = (Deformation) super.remove(i);
         this.rebuildCompositeTransform();
         return res;
+    }
+    
+    /**
+     * testing for this class
+     */
+    public static void main(String[] args) {
+        GSDeformationSeries ds1 = new GSDeformationSeries();
+        ds1.add(new Deformation(1, .5, 0, 1));
+        ds1.add(new Deformation(1, 0, .75, 1));
+        ds1.add(new Deformation(0.5253, 0.8509, -0.8509, 0.5253));
+        
+        System.out.println("ds1: "+ds1.serialize());
+        GSDeformationSeries ds2 = GSDeformationSeries.deserialize(ds1.serialize());
+        System.out.println("ds2: "+ds2.serialize());
+        System.out.println("ds1==ds2: "+ds1.equals(ds2));
     }
 }
