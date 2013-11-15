@@ -128,6 +128,7 @@ public class GSComplex implements Watchable {
         }
 
         gsc.rebuildPebbleSetsFromDeformationSeries();
+        Util.todo("advance strain nav to last deformation in the gsc");
         return gsc;
     }
     

@@ -88,6 +88,7 @@ class GSComplexUI extends JPanel {
     public static int PEBBLE_CREATION_STAGE_BEGIN = 0;
     public static int PEBBLE_CREATION_STAGE_SETTING_FIRST_AXIS = 1;
     public static int PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS = 2;
+    public static int PEBBLE_CREATION_STAGE_STOP = 3;
     public static BasicStroke PEBBLE_CREATION_STROKE = new BasicStroke(2);
     public Point2D newPebbleAxis1Pt1;
     public Point2D newPebbleAxis1Pt2;
@@ -213,6 +214,7 @@ class GSComplexUI extends JPanel {
                 newPebble.setSelected(true);
                 this.gsc.pebbleSets.get(0).add(newPebble);
                 this.gsc.rebuildPebbleSetsFromDeformationSeries();
+                this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_STOP;
             } else
             if ((evt.getKeyCode() == java.awt.event.KeyEvent.VK_DELETE) || (evt.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE)) {
                 this.gsc.deleteSelectedPebbles();

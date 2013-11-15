@@ -5,10 +5,15 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 /**
  *
@@ -28,7 +33,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private boolean cachedStrainNavPrevEnableState = false;
     private boolean cachedStrainNavNextEnableState = false;
-    
+
+    private final JFileChooser fileChooser = new JFileChooser ();
+    private final FileFilterImage filterImage = new FileFilterImage();
+    private final FileFilterTab filterTab = new FileFilterTab();
+    private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();    
 /**
      * Creates new form MainWindow
      * 
@@ -96,13 +105,13 @@ public class MainWindow extends javax.swing.JFrame {
         this.aboutWindow.setLocationByPlatform(true);
         
         this.gscUI = new GSComplexUI(new GSComplex(),this);
-
-        int w = this.jPanelContainerDisplay.getWidth();
-        int h = this.jPanelContainerDisplay.getHeight();
-        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
-        this.gscUI.setBounds(0, 0, w, h);
-        this.gscUI.setDoubleBuffered (true);
-        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
+        this.initializeGscUI();
+//        int w = this.jPanelContainerDisplay.getWidth();
+//        int h = this.jPanelContainerDisplay.getHeight();
+//        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
+//        this.gscUI.setBounds(0, 0, w, h);
+//        this.gscUI.setDoubleBuffered (true);
+//        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
         this.jPanelContainerDisplay.add(this.gscUI);
 
         // dev data
@@ -268,6 +277,9 @@ public class MainWindow extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         ExitMenuItem = new javax.swing.JMenuItem();
         FileMenu = new javax.swing.JMenu();
+        jMenuItemSave = new javax.swing.JMenuItem();
+        jMenuItemLoad = new javax.swing.JMenuItem();
+        jMenuItemExportAsTabbed = new javax.swing.JMenuItem();
         DisplayMenu = new javax.swing.JMenu();
         jCheckBoxMenuItemShowPebbleAxes = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemFillPebbles = new javax.swing.JCheckBoxMenuItem();
@@ -917,9 +929,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("use the bgcolor of the dsc");
+        jLabel8.setText("do gsc bg coloring? drag pebble?");
 
-        jLabel2.setText("de/serialze. drag pebble?");
+        jLabel2.setText("do save/load");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -1069,6 +1081,31 @@ public class MainWindow extends javax.swing.JFrame {
 
         FileMenu.setText("File");
         FileMenu.setToolTipText("Save, Open, Export");
+
+        jMenuItemSave.setText("Save");
+        jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSaveActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemSave);
+
+        jMenuItemLoad.setText("Load");
+        jMenuItemLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLoadActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemLoad);
+
+        jMenuItemExportAsTabbed.setText("Export to .tab");
+        jMenuItemExportAsTabbed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExportAsTabbedActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemExportAsTabbed);
+
         MainWindowMenuBar.add(FileMenu);
 
         DisplayMenu.setText("Display");
@@ -1640,6 +1677,42 @@ public class MainWindow extends javax.swing.JFrame {
         this.repaint();
     }//GEN-LAST:event_jButtonPebbleColorApplyActionPerformed
 
+    private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
+        fileChooser.setFileFilter (this.filterGeoShear);
+        int returnVal = fileChooser.showSaveDialog (this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File saveFile = fileChooser.getSelectedFile ();
+            if (this.filterGeoShear.accept (saveFile))
+            {
+                try
+                {
+                    FileWriter fstream = new FileWriter(saveFile.getCanonicalPath());
+                    BufferedWriter fout = new BufferedWriter(fstream);
+                    fout.write(this.gscUI.gsc.serialize());
+                    fout.close();
+                    JOptionPane.showMessageDialog (this,"Saved to "+saveFile.getCanonicalPath ());
+                }
+                catch (IOException exc)
+                {
+                    exc.printStackTrace ();
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog (this,"Unsupported format, only "+this.filterGeoShear.getDescription ()+". Save aborted.");
+            }
+        }
+        this.repaint ();
+    }//GEN-LAST:event_jMenuItemSaveActionPerformed
+
+    private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
+        Util.todo("implement load");
+    }//GEN-LAST:event_jMenuItemLoadActionPerformed
+
+    private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed
+        Util.todo("implement export");
+    }//GEN-LAST:event_jMenuItemExportAsTabbedActionPerformed
+
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
@@ -2140,6 +2213,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelStrainNavCount;
     private javax.swing.JLabel jLabelStrainNavPosition;
     private javax.swing.JLabel jLabelZoom;
+    private javax.swing.JMenuItem jMenuItemExportAsTabbed;
+    private javax.swing.JMenuItem jMenuItemLoad;
+    private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JPanel jPanelContainerControls;
     private javax.swing.JPanel jPanelContainerDisplay;
     private javax.swing.JPanel jPanelDeformCompressControls;
@@ -2179,4 +2255,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldStrainM11;
     private javax.swing.JToggleButton jToggleButtonEditPebbles;
     // End of variables declaration//GEN-END:variables
+
+    private void initializeGscUI() {
+        int w = this.jPanelContainerDisplay.getWidth();
+        int h = this.jPanelContainerDisplay.getHeight();
+        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
+        this.gscUI.setBounds(0, 0, w, h);
+        this.gscUI.setDoubleBuffered (true);
+        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
+    }
 }
