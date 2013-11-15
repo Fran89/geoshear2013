@@ -83,8 +83,8 @@ public class GSPebble extends GSEllipse {
     }
     
     public boolean equals(GSPebble otherPeb) {
-        System.err.println(this.toString());
-        System.err.println(otherPeb.toString());
+//        System.err.println(this.toString());
+//        System.err.println(otherPeb.toString());
         return 
                 this.getId().equals(otherPeb.getId()) &&
                 this.getX() == otherPeb.getX() &&

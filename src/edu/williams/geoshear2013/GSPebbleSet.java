@@ -21,10 +21,13 @@ public class GSPebbleSet extends ArrayList {
 
     public GSComplex ofComplex;
 
-    private final static String SERIAL_TOKEN = "\n%";
+    private final static String SERIAL_TOKEN = "\n";
 
     //private ArrayList boundSets;
-
+    public GSPebbleSet() {
+        super();
+    }
+    
     public GSPebbleSet(GSComplex gsc) {
         super();
        // this.boundSets = new ArrayList(4);
@@ -51,8 +54,48 @@ public class GSPebbleSet extends ArrayList {
         return theClone;
     }
     
+    public boolean equals(GSPebbleSet other) {
+        if (this.size() != other.size()) { return false; }
+        for (int i=0; i<this.size(); i++) {
+            if (! this.get(i).equals(other.get(i))) { return false; }
+        }
+        return true;
+    }
+    
     /*---------------------------------------------------------------------*/
     
+    public String serialize() {
+        String s = "";
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            s = s+((GSPebble)(li.next())).serialize()+GSPebbleSet.SERIAL_TOKEN;
+        }
+        return s;
+    }
+    
+    public String serializeToTabDelimited() {
+        String s = "";
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            s = s+((GSPebble)(li.next())).serializeToTabDelimited()+GSPebbleSet.SERIAL_TOKEN;
+        }
+        return s;
+    }
+
+    public static GSPebbleSet deserialize(String serializedPebbleSet) {
+        GSPebbleSet newPS = new GSPebbleSet();
+        
+        String[] pebData = serializedPebbleSet.split(GSPebbleSet.SERIAL_TOKEN);
+        
+        for(int i=0;i<pebData.length;i++) {
+            newPS.add(GSPebble.deserialize(pebData[i]));
+        }
+        
+        return newPS;
+    }
+    
+    /*---------------------------------------------------------------------*/
+
     @Override
     public GSPebble get(int index) {
         return (GSPebble)(super.get(index));
@@ -191,5 +234,24 @@ public class GSPebbleSet extends ArrayList {
             if (peb.getId().equals(id)) { return true; }
         }
         return false;
+    }
+
+    /**
+     * testing for this class
+     */
+    public static void main(String[] args) {
+        GSPebbleSet ps1 = new GSPebbleSet();
+        ps1.add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
+        ps1.add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
+        ps1.add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
+        
+        System.out.println("ps1: "+ps1.serialize());
+        GSPebbleSet ps2 = GSPebbleSet.deserialize(ps1.serialize());
+        System.out.println("ps2: "+ps2.serialize());
+        System.out.println("ps1==ps2: "+ps1.equals(ps2));
+        
+        System.out.println("ps1: "+ps1.serializeToTabDelimited());
+        ps2 = GSPebbleSet.deserialize(ps1.serializeToTabDelimited());
+        System.out.println("ps2: "+ps2.serializeToTabDelimited());
     }
 }

@@ -14,6 +14,8 @@ import java.util.ListIterator;
  */
 public class GSDeformationSeries extends ArrayList {
 
+    private final static String SERIAL_TOKEN = "\n";
+    
     private Deformation compositeDeformation;
     
     public GSDeformationSeries() {
@@ -44,7 +46,7 @@ public class GSDeformationSeries extends ArrayList {
         String s = "";
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            s = s+((Deformation)(li.next())).serialize()+"\n";
+            s = s+((Deformation)(li.next())).serialize()+GSDeformationSeries.SERIAL_TOKEN;
         }
         return s;
     }
@@ -53,7 +55,7 @@ public class GSDeformationSeries extends ArrayList {
         String s = "";
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-            s = s+((Deformation)(li.next())).serializeToTabDelimited()+"\n";
+            s = s+((Deformation)(li.next())).serializeToTabDelimited()+GSDeformationSeries.SERIAL_TOKEN;
         }
         return s;
     }
@@ -61,7 +63,7 @@ public class GSDeformationSeries extends ArrayList {
     public static GSDeformationSeries deserialize(String serializedDeformationSeries) {
         GSDeformationSeries newDS = new GSDeformationSeries();
         
-        String[] defData = serializedDeformationSeries.split("\n");
+        String[] defData = serializedDeformationSeries.split(GSDeformationSeries.SERIAL_TOKEN);
         
         for(int i=0;i<defData.length;i++) {
             newDS.add(Deformation.deserialize(defData[i]));
@@ -167,5 +169,9 @@ public class GSDeformationSeries extends ArrayList {
         GSDeformationSeries ds2 = GSDeformationSeries.deserialize(ds1.serialize());
         System.out.println("ds2: "+ds2.serialize());
         System.out.println("ds1==ds2: "+ds1.equals(ds2));
+        
+        System.out.println("(tab)ds1: "+ds1.serializeToTabDelimited());
+        ds2 = GSDeformationSeries.deserialize(ds1.serializeToTabDelimited());
+        System.out.println("(tab)ds2: "+ds2.serializeToTabDelimited());
     }
 }
