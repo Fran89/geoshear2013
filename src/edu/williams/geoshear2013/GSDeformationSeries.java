@@ -66,6 +66,8 @@ public class GSDeformationSeries extends ArrayList {
         String[] defData = serializedDeformationSeries.split(GSDeformationSeries.SERIAL_TOKEN);
         
         for(int i=0;i<defData.length;i++) {
+            defData[i] = defData[i].trim();
+            if (defData[i].isEmpty()) { continue; }
             newDS.add(Deformation.deserialize(defData[i]));
         }
         

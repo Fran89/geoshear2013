@@ -917,7 +917,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel8.setText("set pebble ids correctly when adding");
+        jLabel8.setText("use the bgcolor of the dsc");
 
         jLabel2.setText("de/serialze. drag pebble?");
 
@@ -928,7 +928,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );

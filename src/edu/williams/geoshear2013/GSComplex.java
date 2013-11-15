@@ -35,6 +35,13 @@ public class GSComplex implements Watchable {
     
     private GSComplexUI usedUI;
     
+    private final static String SERIAL_TOKEN = "\\[[^\\]]+\\]"; // anything of the form "[foo]"
+    private final static String KV_TOKEN = "=";
+
+    private final static String KEY_PEBBLES = "pebbles";
+    private final static String KEY_DEFORMATIONS = "deformations";
+    private final static String KEY_BG_IMAGE = "bgimage";
+    
     /*------------------------------------------------------------------------*/
     public GSComplex() {
         this.pebbleSets = new GSPebbleSetSeries();
@@ -47,7 +54,86 @@ public class GSComplex implements Watchable {
     
     /*------------------------------------------------------------------------*/
 
-        /**
+    public String serialize() {
+        String s = "";
+        s += "[background]\n";
+       if (! this.getBgImageFileName().isEmpty()) {
+            s += GSComplex.KEY_BG_IMAGE+"="+this.getBgImageFileName()+"\n";
+        }
+        s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
+        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serialize() +"\n";
+        s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
+        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
+        return s;
+    }
+    
+    public String serializeToTabDelimited() {
+        Util.todo("implement serializeToTabDelimited");
+        String s = "";
+        s += "[background]\n";
+        if (! this.getBgImageFileName().isEmpty()) {
+            s += GSComplex.KEY_BG_IMAGE+"="+this.getBgImageFileName()+"\n";
+        }
+        s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
+        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serializeToTabDelimited() +"\n";
+        s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
+        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serializeToTabDelimited() +"\n";
+        return s;
+    }
+
+    public static GSComplex deserialize(String serializedGSComplex) {
+        GSComplex gsc = new GSComplex();
+               
+        serializedGSComplex = serializedGSComplex.replaceAll("(?m)^\\s+#",""); // remove comments
+        serializedGSComplex = serializedGSComplex.replaceAll("(?m)^\\s*?\n",""); // remove blank lines
+        
+//        System.err.println(serializedGSComplex);
+
+        if (serializedGSComplex.indexOf("\t") > -1) {
+            Util.todo("implement deserialization of tabbed data");
+        } else {
+            String[] gscData = serializedGSComplex.split(GSComplex.SERIAL_TOKEN);
+            for(int i=0; i < gscData.length; i++) {
+                gscData[i] = gscData[i].trim(); // remove leading and trailing whitespace
+                
+//                System.err.println("processing gscData["+i+"]-\n"+gscData[i]);
+                
+                if (gscData[i].isEmpty()) {
+//                    System.err.println("empty section");
+                    continue;  // skip empty sections
+                }
+                
+                if (gscData[i].startsWith(GSComplex.KEY_PEBBLES+"=")) {
+//                    System.err.println("pebbles section");
+                    GSPebbleSet basePS = GSPebbleSet.deserialize(gscData[i].substring(GSComplex.KEY_PEBBLES.length()+1));
+                    basePS.ofComplex = gsc;
+                    gsc.pebbleSets.clear();
+                    gsc.pebbleSets.add(basePS);
+                } else 
+                if (gscData[i].startsWith(GSComplex.KEY_DEFORMATIONS+"=")) {
+//                    System.err.println("deformations section");
+                    GSDeformationSeries ds = GSDeformationSeries.deserialize(gscData[i].substring(GSComplex.KEY_DEFORMATIONS.length()+1));
+                    gsc.deformations = ds;
+                } else
+                if (gscData[i].startsWith(GSComplex.KEY_BG_IMAGE+"=")) {
+                    String[] keyVal = gscData[i].split(GSComplex.KV_TOKEN);
+                    keyVal[1] = keyVal[1].trim();
+                    if (! keyVal[1].isEmpty())
+                    {
+                        gsc.setBgImageFileName(keyVal[1]);
+                        gsc.loadBgImage();
+                    }
+                }
+            }
+        }
+
+        gsc.rebuildPebbleSetsFromDeformationSeries();
+        return gsc;
+    }
+    
+    /*------------------------------------------------------------------------*/
+
+    /**
      * @return the currentDeformationIndex
      */
     public int getCurrentDeformationNumber() {
@@ -279,5 +365,30 @@ public class GSComplex implements Watchable {
             }
         }
         this.rebuildPebbleSetsFromDeformationSeries();
+    }
+
+    /**
+     * testing for this class
+     */
+    public static void main(String[] args) {
+        GSComplex gsc1 = new GSComplex();
+
+        gsc1.pebbleSets.get(0).add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
+        gsc1.pebbleSets.get(0).add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
+        gsc1.pebbleSets.get(0).add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
+        
+        gsc1.deformations.add(new Deformation(1, .5, 0, 1));
+        gsc1.deformations.add(new Deformation(1, 0, .75, 1));
+        gsc1.deformations.add(new Deformation(0.5253, 0.8509, -0.8509, 0.5253));
+        
+//        System.out.println("deformations:\n"+gsc1.deformations.serialize());
+        
+        System.out.println("-------\ngsc1:\n"+gsc1.serialize());
+        GSComplex gsc2 = GSComplex.deserialize(gsc1.serialize());
+        System.out.println("-------\ngsc2:\n"+gsc2.serialize());
+//        
+//        System.out.println("(tab)ds1: "+ds1.serializeToTabDelimited());
+//        ds2 = GSDeformationSeries.deserialize(ds1.serializeToTabDelimited());
+//        System.out.println("(tab)ds2: "+ds2.serializeToTabDelimited());
     }
 }

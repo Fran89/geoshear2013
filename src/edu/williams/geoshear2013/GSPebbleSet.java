@@ -88,6 +88,8 @@ public class GSPebbleSet extends ArrayList {
         String[] pebData = serializedPebbleSet.split(GSPebbleSet.SERIAL_TOKEN);
         
         for(int i=0;i<pebData.length;i++) {
+            pebData[i] = pebData[i].trim();
+            if (pebData[i].isEmpty()) { continue; }
             newPS.add(GSPebble.deserialize(pebData[i]));
         }
         
