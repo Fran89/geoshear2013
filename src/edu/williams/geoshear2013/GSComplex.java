@@ -56,6 +56,14 @@ public class GSComplex implements Watchable {
     /*------------------------------------------------------------------------*/
 
     public String serialize() {
+        return this.serializeSpecificSet(0);
+    }
+    
+    public String serializeCurrent() {
+        return this.serializeSpecificSet(this.currentDeformationNumber-1);
+    }
+    
+    public String serializeSpecificSet(int setIndex) {
         String s = "";
         s += "\n["+GSComplex.KEY_CENTER+"]\n";
         s += GSComplex.KEY_CENTER + "=" + this.center.serialize() +"\n";
@@ -66,14 +74,25 @@ public class GSComplex implements Watchable {
         }
 
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
-        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serialize() +"\n";
+        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(setIndex).serialize() +"\n";
         
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
-        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
+        if (setIndex == 0) {
+            s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
+        }
         return s;
     }
     
+    
     public String serializeToTabDelimited() {
+        return this.serializeToTabDelimitedSpecificSet(0);
+    }
+
+    public String serializeCurrentToTabDelimited() {
+        return this.serializeToTabDelimitedSpecificSet(this.currentDeformationNumber-1);
+    }
+    
+    public String serializeToTabDelimitedSpecificSet(int setIndex) {
         String s = "";
         s += "\n["+GSComplex.KEY_CENTER+"]\n";
         s += GSPoint.serializeHeadersToTabDelimited()+"\n";
@@ -87,14 +106,16 @@ public class GSComplex implements Watchable {
 
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
         s += GSPebble.serializeHeadersToTabDelimited()+"\n";
-        s += this.pebbleSets.get(0).serializeToTabDelimited()+"\n";
+        s += this.pebbleSets.get(setIndex).serializeToTabDelimited()+"\n";
         
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
-        s += Deformation.serializeHeadersToTabDelimited()+"\n";
-        s += this.deformations.serializeToTabDelimited()+"\n";
+        if (setIndex == 0) {
+            s += Deformation.serializeHeadersToTabDelimited()+"\n";
+            s += this.deformations.serializeToTabDelimited()+"\n";
+        }
         return s;
     }
-
+    
     public static GSComplex deserialize(String serializedGSComplex) {
         GSComplex gsc = new GSComplex();
                

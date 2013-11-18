@@ -61,6 +61,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save everything to a .ges file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSaveActionPerformed"/>
@@ -69,6 +70,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLoad">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load"/>
+                <Property name="toolTipText" type="java.lang.String" value="Load new pebbles and deformations from a .ges file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemLoadActionPerformed"/>
@@ -77,9 +79,28 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemExportAsTabbed">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Export to .tab"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save everything in a tab-delimited format"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemExportAsTabbedActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSaveCurrentDeformed">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save current deformed"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save the currently deformed view as a new basis (with no deformations)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSaveCurrentDeformedActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemExportCurrentDeformed">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Export current deformed to .tab"/>
+                <Property name="toolTipText" type="java.lang.String" value="Export the currently deformed view in a tab-delimted format (with no deformations)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemExportCurrentDeformedActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

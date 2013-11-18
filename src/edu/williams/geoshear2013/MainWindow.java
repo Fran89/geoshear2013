@@ -287,6 +287,8 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItemSave = new javax.swing.JMenuItem();
         jMenuItemLoad = new javax.swing.JMenuItem();
         jMenuItemExportAsTabbed = new javax.swing.JMenuItem();
+        jMenuItemSaveCurrentDeformed = new javax.swing.JMenuItem();
+        jMenuItemExportCurrentDeformed = new javax.swing.JMenuItem();
         DisplayMenu = new javax.swing.JMenu();
         jCheckBoxMenuItemShowPebbleAxes = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemFillPebbles = new javax.swing.JCheckBoxMenuItem();
@@ -1090,6 +1092,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.setToolTipText("Save, Open, Export");
 
         jMenuItemSave.setText("Save");
+        jMenuItemSave.setToolTipText("Save everything to a .ges file");
         jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemSaveActionPerformed(evt);
@@ -1098,6 +1101,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.add(jMenuItemSave);
 
         jMenuItemLoad.setText("Load");
+        jMenuItemLoad.setToolTipText("Load new pebbles and deformations from a .ges file");
         jMenuItemLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemLoadActionPerformed(evt);
@@ -1106,12 +1110,31 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.add(jMenuItemLoad);
 
         jMenuItemExportAsTabbed.setText("Export to .tab");
+        jMenuItemExportAsTabbed.setToolTipText("Save everything in a tab-delimited format");
         jMenuItemExportAsTabbed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemExportAsTabbedActionPerformed(evt);
             }
         });
         FileMenu.add(jMenuItemExportAsTabbed);
+
+        jMenuItemSaveCurrentDeformed.setText("Save current deformed");
+        jMenuItemSaveCurrentDeformed.setToolTipText("Save the currently deformed view as a new basis (with no deformations)");
+        jMenuItemSaveCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSaveCurrentDeformedActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemSaveCurrentDeformed);
+
+        jMenuItemExportCurrentDeformed.setText("Export current deformed to .tab");
+        jMenuItemExportCurrentDeformed.setToolTipText("Export the currently deformed view in a tab-delimted format (with no deformations)");
+        jMenuItemExportCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExportCurrentDeformedActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemExportCurrentDeformed);
 
         MainWindowMenuBar.add(FileMenu);
 
@@ -1685,13 +1708,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPebbleColorApplyActionPerformed
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES);
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
         if (saveFile == null) { return; }
         this.handleDataToFile(saveFile,this.gscUI.gsc.serialize());
         this.repaint ();
     }//GEN-LAST:event_jMenuItemSaveActionPerformed
 
-    private File chooseFileForIO(int ioType) {
+    private File chooseFileForIO(int ioType,String buttonText) {
         FileFilter theFilter = this.filterGeoShear;
         if (ioType == MainWindow.FILE_IO_TYPE_GES) {
             theFilter = this.filterGeoShear;
@@ -1703,7 +1726,8 @@ public class MainWindow extends javax.swing.JFrame {
             theFilter = this.filterImage;
         }
         this.fileChooser.setFileFilter (theFilter);
-        int returnVal = fileChooser.showSaveDialog (this);
+//        int returnVal = fileChooser.showSaveDialog (this);
+        int returnVal = fileChooser.showDialog(this, buttonText);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
             File saveFile = fileChooser.getSelectedFile ();
@@ -1736,7 +1760,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
-        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES);
+        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Open");
         if (dataFile == null) { return; }
         try
         {
@@ -1790,11 +1814,25 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed
 //        Util.todo("implement export");
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB);
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
         if (saveFile == null) { return; }
         this.handleDataToFile(saveFile,this.gscUI.gsc.serializeToTabDelimited());
         this.repaint ();        
     }//GEN-LAST:event_jMenuItemExportAsTabbedActionPerformed
+
+    private void jMenuItemSaveCurrentDeformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveCurrentDeformedActionPerformed
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrent());
+        this.repaint ();
+    }//GEN-LAST:event_jMenuItemSaveCurrentDeformedActionPerformed
+
+    private void jMenuItemExportCurrentDeformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportCurrentDeformedActionPerformed
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrentToTabDelimited());
+        this.repaint ();
+    }//GEN-LAST:event_jMenuItemExportCurrentDeformedActionPerformed
 
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
@@ -2297,8 +2335,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelStrainNavPosition;
     private javax.swing.JLabel jLabelZoom;
     private javax.swing.JMenuItem jMenuItemExportAsTabbed;
+    private javax.swing.JMenuItem jMenuItemExportCurrentDeformed;
     private javax.swing.JMenuItem jMenuItemLoad;
     private javax.swing.JMenuItem jMenuItemSave;
+    private javax.swing.JMenuItem jMenuItemSaveCurrentDeformed;
     private javax.swing.JPanel jPanelContainerControls;
     private javax.swing.JPanel jPanelContainerDisplay;
     private javax.swing.JPanel jPanelDeformCompressControls;
