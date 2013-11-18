@@ -1539,7 +1539,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="do save/load"/>
+                <Property name="text" type="java.lang.String" value="do export to .tab"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -17,6 +17,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 /**
  *
  * @author cwarren
@@ -39,7 +40,11 @@ public class MainWindow extends javax.swing.JFrame {
     private final JFileChooser fileChooser = new JFileChooser ();
     private final FileFilterImage filterImage = new FileFilterImage();
     private final FileFilterTab filterTab = new FileFilterTab();
-    private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();    
+    private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();
+    public static int FILE_IO_TYPE_GES = 1;
+    public static int FILE_IO_TYPE_TAB = 2;
+    public static int FILE_IO_TYPE_IMG = 3;
+    
 /**
      * Creates new form MainWindow
      * 
@@ -933,7 +938,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel8.setText("do gsc bg coloring? drag pebble?");
 
-        jLabel2.setText("do save/load");
+        jLabel2.setText("do export to .tab");
 
         javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
         jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
@@ -1680,90 +1685,105 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPebbleColorApplyActionPerformed
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
-        fileChooser.setFileFilter (this.filterGeoShear);
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES);
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serialize());
+        this.repaint ();
+    }//GEN-LAST:event_jMenuItemSaveActionPerformed
+
+    private File chooseFileForIO(int ioType) {
+        FileFilter theFilter = this.filterGeoShear;
+        if (ioType == MainWindow.FILE_IO_TYPE_GES) {
+            theFilter = this.filterGeoShear;
+        } 
+        else if (ioType == MainWindow.FILE_IO_TYPE_TAB) {
+            theFilter = this.filterTab;
+        }
+        else if (ioType == MainWindow.FILE_IO_TYPE_IMG) {
+            theFilter = this.filterImage;
+        }
+        this.fileChooser.setFileFilter (theFilter);
         int returnVal = fileChooser.showSaveDialog (this);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
             File saveFile = fileChooser.getSelectedFile ();
-            if (this.filterGeoShear.accept (saveFile))
+            if (theFilter.accept (saveFile))
             {
-                try
-                {
-                    FileWriter fstream = new FileWriter(saveFile.getCanonicalPath());
-                    BufferedWriter fout = new BufferedWriter(fstream);
-                    fout.write(this.gscUI.gsc.serialize());
-                    fout.close();
-                    JOptionPane.showMessageDialog (this,"Saved to "+saveFile.getCanonicalPath ());
-                }
-                catch (IOException exc)
-                {
-                    exc.printStackTrace ();
-                }
-            } else
+                return saveFile;
+            }
+            else
             {
-                JOptionPane.showMessageDialog (this,"Unsupported format, only "+this.filterGeoShear.getDescription ()+". Save aborted.");
+                JOptionPane.showMessageDialog (this,"Unsupported format, only "+theFilter.getDescription ()+".");
             }
         }
-        this.repaint ();
-    }//GEN-LAST:event_jMenuItemSaveActionPerformed
-
-    private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
-        fileChooser.setFileFilter (this.filterGeoShear);
-        int returnVal = fileChooser.showOpenDialog (this);
-        if (returnVal == JFileChooser.APPROVE_OPTION)
+        return null;
+    }
+    
+    private void handleDataToFile(File f, String data) { 
+        try
         {
-            File dataFile = fileChooser.getSelectedFile ();
-            if (this.filterGeoShear.accept (dataFile))
+            FileWriter fstream = new FileWriter(f.getCanonicalPath());
+            BufferedWriter fout = new BufferedWriter(fstream);
+            fout.write(data);
+            fout.close();
+            JOptionPane.showMessageDialog (this,"Saved to "+f.getCanonicalPath ());
+        }
+        catch (IOException exc)
+        {
+            JOptionPane.showMessageDialog (this,"Problem saving - aborted:\n"+exc.toString());
+            exc.printStackTrace ();
+        }
+    }
+    
+    private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
+        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES);
+        if (dataFile == null) { return; }
+        try
+        {
+            BufferedReader fin = new BufferedReader(new FileReader(dataFile.getCanonicalPath()));
+            String string_in = "";
+            String cumu_string_in = "";
+            while ((string_in = fin.readLine()) != null)
             {
-                try
-                {
-                    BufferedReader fin = new BufferedReader(new FileReader(dataFile.getCanonicalPath()));
-                    String string_in = "";
-                    String cumu_string_in = "";
-                    while ((string_in = fin.readLine()) != null)
-                    {
-                        cumu_string_in += string_in + "\n";
-                    }
-                    fin.close();
-
-                    // actually make the new gsc the live one
-                    this.jPanelContainerDisplay.remove(this.gscUI);
-                    this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
-                    this.initializeGscUI();
-                    this.jPanelContainerDisplay.add(this.gscUI);                    
-                    
-                    this.updateDeformNavControlsStates();
-                    this.updateStateOfCurrentDeformControls();
-                    this.updateStrainMatricesVisibilities();
-                    this.handleStrainNavPostAction();
-                    
-                    // set all the various display flags
-                    this.gscUI.setFlagDisplayPebbleFill(this.jCheckBoxMenuItemFillPebbles.isSelected());
-                    this.gscUI.setFlagDisplayPebbleAxes(this.jCheckBoxMenuItemShowPebbleAxes.isSelected());
-                    this.gscUI.setFlagDisplayBackgroundAxis(this.jCheckBoxMenuItemShowBackgroundAxis.isSelected());
-                    this.gscUI.setFlagDisplayBackgroundImage(this.jCheckBoxMenuItemShowBackgroundImage.isSelected());
-                    this.gscUI.setFlagDisplayStrainEllipses(this.jCheckBoxMenuItemShowStrainEllipses.isSelected());
-
-                    // reset the display transforms and other such things to their bases
-                    this.jButtonUnzoomActionPerformed(null);
-                    this.jButtonCenterActionPerformed(null);
-
-                    if (this.jToggleButtonEditPebbles.isSelected()) {
-                        this.jToggleButtonEditPebbles.setSelected(false);
-                        this.jToggleButtonEditPebblesActionPerformed(null);
-                    }
-                    
-                    //JOptionPane.showMessageDialog (this,"Loaded "+dataFile.getCanonicalPath ());
-                }
-                catch (IOException exc)
-                {
-                    exc.printStackTrace ();
-                }
-            } else
-            {
-                JOptionPane.showMessageDialog (this,"Unsupported format, only "+this.filterGeoShear.getDescription ()+". Load aborted.");
+                cumu_string_in += string_in + "\n";
             }
+            fin.close();
 
+            // actually make the new gsc the live one.
+            // this is done by throwing away the entire existing gscUI and builing a new one
+            this.jPanelContainerDisplay.remove(this.gscUI);
+            this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
+            this.initializeGscUI();
+            this.jPanelContainerDisplay.add(this.gscUI);                    
+
+            // now update the main window from the new gscUI state
+            this.updateDeformNavControlsStates();
+            this.updateStateOfCurrentDeformControls();
+            this.updateStrainMatricesVisibilities();
+            this.handleStrainNavPostAction();
+
+            // now update the gscUI state from the main window
+            // set all the various display flags
+            this.gscUI.setFlagDisplayPebbleFill(this.jCheckBoxMenuItemFillPebbles.isSelected());
+            this.gscUI.setFlagDisplayPebbleAxes(this.jCheckBoxMenuItemShowPebbleAxes.isSelected());
+            this.gscUI.setFlagDisplayBackgroundAxis(this.jCheckBoxMenuItemShowBackgroundAxis.isSelected());
+            this.gscUI.setFlagDisplayBackgroundImage(this.jCheckBoxMenuItemShowBackgroundImage.isSelected());
+            this.gscUI.setFlagDisplayStrainEllipses(this.jCheckBoxMenuItemShowStrainEllipses.isSelected());
+
+            // reset the display transforms and other such things to their bases
+            this.jButtonUnzoomActionPerformed(null);
+            this.jButtonCenterActionPerformed(null);
+
+            // drop out of edit mode if we're in it
+            if (this.jToggleButtonEditPebbles.isSelected()) {
+                this.jToggleButtonEditPebbles.setSelected(false);
+                this.jToggleButtonEditPebblesActionPerformed(null);
+            }
+        }
+        catch (IOException exc)
+        {
+            JOptionPane.showMessageDialog (this,"Problem loading - aborted:\n"+exc.toString());
+            exc.printStackTrace ();
         }
         this.repaint ();        
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
