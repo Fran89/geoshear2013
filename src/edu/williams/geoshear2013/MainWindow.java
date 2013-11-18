@@ -5,6 +5,10 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -310,6 +315,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonPebbleColorApply = new javax.swing.JButton();
         jButtonBackgroundImage = new javax.swing.JButton();
         jPanelSnapshotControls = new javax.swing.JPanel();
+        jButtonSnapshotter = new javax.swing.JButton();
         MainWindowMenuBar = new javax.swing.JMenuBar();
         GeoshearMenu = new javax.swing.JMenu();
         HelpMenuItem = new javax.swing.JMenuItem();
@@ -1076,15 +1082,34 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelSnapshotControls.setMinimumSize(new java.awt.Dimension(220, 100));
         jPanelSnapshotControls.setPreferredSize(new java.awt.Dimension(220, 100));
 
+        jButtonSnapshotter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/icon_camera_large_40x30.gif"))); // NOI18N
+        jButtonSnapshotter.setText("Take Snapshot");
+        jButtonSnapshotter.setToolTipText("Take a snapshot");
+        jButtonSnapshotter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSnapshotterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelSnapshotControlsLayout = new javax.swing.GroupLayout(jPanelSnapshotControls);
         jPanelSnapshotControls.setLayout(jPanelSnapshotControlsLayout);
         jPanelSnapshotControlsLayout.setHorizontalGroup(
             jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSnapshotControlsLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButtonSnapshotter, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanelSnapshotControlsLayout.setVerticalGroup(
             jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanelSnapshotControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSnapshotControlsLayout.createSequentialGroup()
+                    .addContainerGap(30, Short.MAX_VALUE)
+                    .addComponent(jButtonSnapshotter, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(31, Short.MAX_VALUE)))
         );
 
         jPanelContainerControls.add(jPanelSnapshotControls);
@@ -1867,6 +1892,25 @@ public class MainWindow extends javax.swing.JFrame {
         this.repaint ();
     }//GEN-LAST:event_jMenuItemExportCurrentDeformedActionPerformed
 
+    private void jButtonSnapshotterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSnapshotterActionPerformed
+        try
+        {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Robot robot = new Robot();
+            BufferedImage image = robot.createScreenCapture (new Rectangle(this.jPanelContainerDisplay.getLocationOnScreen (), this.jPanelContainerDisplay.getSize ()));
+
+            //this.imageFormatWin.setVisible (true);
+            File saveFile = this.chooseFileForIO(MainWindow.FILE_IO_TYPE_IMG, "Save");
+            if (saveFile == null) { return; }
+            ImageIO.write (image,Util.getExtension (saveFile),saveFile);
+            JOptionPane.showMessageDialog (this,"Saved to "+saveFile.getCanonicalPath ());
+        }
+        catch (Exception exc)
+        {
+            JOptionPane.showMessageDialog (this,"Error taking snapshot: "+exc.getMessage());
+        }
+    }//GEN-LAST:event_jButtonSnapshotterActionPerformed
+
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
@@ -2321,6 +2365,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLinkCompressionDeform;
     private javax.swing.JButton jButtonPebbleColorApply;
     private javax.swing.JButton jButtonPebbleColorSet;
+    private javax.swing.JButton jButtonSnapshotter;
     private javax.swing.JButton jButtonStrainNavNext;
     private javax.swing.JButton jButtonStrainNavPrevious;
     private javax.swing.JButton jButtonUnzoom;
