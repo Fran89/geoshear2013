@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /**
  * TODO (12-13 working days):
- *  - (.25) export snapshot of gscUI panel (create snapshot button, implement snapshot taking)
  *  - (1) implement a basic cartesian RF-phi chart that shows a given pebbleset (by set, not index or deformation number)
  *    NOTE: fixed, linear scales to start with
  *    + (.25) implement click-inspections of the chart
@@ -1485,7 +1484,7 @@ public class MainWindow extends javax.swing.JFrame {
             GSPebble s = new GSPebble(10,10);
             s.deform(d);
             this.setValueForControl(this.jTextFieldRFPhiCurrentRF, s.getMajorRadius()/s.getMinorRadius());
-            this.setValueForControl(this.jTextFieldRFPhiCurrentPhi, Util.toDegrees(s.getTheta()*-1));
+            this.setValueForControl(this.jTextFieldRFPhiCurrentPhi, Util.toDegrees(s.getThetaRad()*-1));
         } else {
             this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
             this.setValueForControl(this.jTextFieldRFPhiCurrentRF, 1);
@@ -2090,7 +2089,7 @@ public class MainWindow extends javax.swing.JFrame {
         s.deform(this.gscUI.gsc.getCompositeTransform());
 //        System.err.println("cumu rf-phi peb is "+s.keyDataAsString());
         this.setValueForControl(this.jTextFieldStrainCumuRF, s.getMajorRadius()/s.getMinorRadius());
-        this.setValueForControl(this.jTextFieldStrainCumuPhi, Util.toDegrees(s.getTheta()));        
+        this.setValueForControl(this.jTextFieldStrainCumuPhi, Util.toDegrees(s.getThetaRad()));        
     }
     private void setValuesForCumuTentStrain() {
         if (this.gscUI.isTentativeDeformationCleared()) {

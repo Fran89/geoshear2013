@@ -273,7 +273,7 @@ public class GSEllipse {
      * NOTE: thetaRad is internally inverted to implement counter-clockwise rotation
      * @return the thetaRad
      */
-    public double getTheta() {
+    public double getThetaRad() {
         return thetaRad;
     }
 
@@ -281,8 +281,8 @@ public class GSEllipse {
      * NOTE: thetaRad is internally inverted to implement counter-clockwise rotation
      * @param thetaRad the thetaRad to set
      */
-    public void setTheta(double theta) {
-        this.thetaRad = theta;
+    public void setThetaRad(double thetaRad) {
+        this.thetaRad = thetaRad;
         this.setMatrixFromKeyData();
     }
     

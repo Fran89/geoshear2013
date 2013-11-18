@@ -91,7 +91,7 @@ public class GSPebble extends GSEllipse {
                 this.getY() == otherPeb.getY() &&
                 this.getMajorRadius() == otherPeb.getMajorRadius() &&
                 this.getMinorRadius() == otherPeb.getMinorRadius() &&
-                this.getTheta() == otherPeb.getTheta() &&
+                this.getThetaRad() == otherPeb.getThetaRad() &&
                 this.color.equals(otherPeb.color);             
     }
     
@@ -104,7 +104,7 @@ public class GSPebble extends GSEllipse {
     public String serialize() {
         String s = "id="+this.getId()+GSPebble.SERIAL_TOKEN+" x="+this.x+GSPebble.SERIAL_TOKEN+" y="+this.y+
                 GSPebble.SERIAL_TOKEN+" majorRadius="+this.getMajorRadius()+GSPebble.SERIAL_TOKEN+" minorRadius="+this.getMinorRadius()+
-                GSPebble.SERIAL_TOKEN+" thetaDeg="+Util.toDegrees(this.getTheta())+
+                GSPebble.SERIAL_TOKEN+" thetaDeg="+Util.toDegrees(this.getThetaRad())+
                 GSPebble.SERIAL_TOKEN+" color="+Util.getColorHexString(this.color);
         return s;
     }
@@ -115,7 +115,7 @@ public class GSPebble extends GSEllipse {
     
     public String serializeToTabDelimited() {
         String s = this.getId()+"\t"+this.x+"\t"+this.y+
-                "\t"+this.getMajorRadius()+"\t"+this.getMinorRadius()+"\t"+Util.toDegrees(this.getTheta())+
+                "\t"+this.getMajorRadius()+"\t"+this.getMinorRadius()+"\t"+Util.toDegrees(this.getThetaRad())+
                 "\t"+Util.getColorHexString(this.color);
         return s;
     }
@@ -256,5 +256,26 @@ public class GSPebble extends GSEllipse {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * @return the color
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * @return the colorContrast
+     */
+    public Color getColorContrast() {
+        return colorContrast;
+    }
+
+    /**
+     * @param colorContrast the colorContrast to set
+     */
+    public void setColorContrast(Color colorContrast) {
+        this.colorContrast = colorContrast;
     }
 }
