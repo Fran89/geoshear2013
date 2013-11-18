@@ -191,7 +191,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
         jMenuBar1.add(jMenuView);
 
-        jMenuTakeSnapshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2/img/icon_camera_small_20x15.gif"))); // NOI18N
+        jMenuTakeSnapshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/icon_camera_small_20x15.gif"))); // NOI18N
         jMenuTakeSnapshot.setToolTipText("take a snapshot");
         jMenuTakeSnapshot.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

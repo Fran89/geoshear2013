@@ -177,6 +177,21 @@
             <Property name="text" type="java.lang.String" value="Charts"/>
             <Property name="toolTipText" type="java.lang.String" value="Open new windows to display charts"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRfPhiCart">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="RF-Phi cartesian"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartRfPhiCartActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRf2PhiPolar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="RF-2*Phi polar"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

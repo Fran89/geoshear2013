@@ -123,7 +123,7 @@
         <Menu class="javax.swing.JMenu" name="jMenuTakeSnapshot">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/edu/williams/geoshear2/img/icon_camera_small_20x15.gif"/>
+              <Image iconType="3" name="/edu/williams/geoshear2013/img/icon_camera_small_20x15.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="take a snapshot"/>
           </Properties>

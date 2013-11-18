@@ -50,19 +50,18 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
             valX = Math.log(valX);
         }
         double valY = valueP.y;
+//        System.err.println("valX: "+valX);
+//        System.err.println("valY: "+valY);
+//        System.err.println("this.getMaxValY(): "+this.getMaxValY());
+//        System.err.println("this.getMinValY(): "+this.getMinValY());
         return new Point2D.Double(this.frameLeft + this.generalInset + this.textAllowance + (((double)(this.frameWidth - this.frameLeft))*((valX-this.getMinValX())/(this.getMaxValX()-this.getMinValX()))),
-                                     this.frameTop + this.frameHeight - (((double)(this.frameHeight - this.frameTop)) * (valY/this.getMaxValY()) ));
+                                     this.frameTop + this.frameHeight/2 - (((double)(this.frameHeight - this.frameTop)) * (valY/(this.getMaxValY()-this.getMinValY())) ));
     }
 
     @Override
     protected void paintPebbles(Graphics2D g2d) {
-        //throw new UnsupportedOperationException("Not supported yet.");
         g2d.setStroke(STROKE_MEDIUM);
-        Util.todo("implement paint pebbles");
-        // todo note: (GSComplex)(this.watchedComplex)).getPebbles() --> (GSComplex)(this.watchedComplex)).pebbleSets.get(0)
-//        this.paintPebbleSet(g2d,
-//                ((GSComplex)(this.watchedComplex)).getPebbles()
-//                );
+        this.paintPebbleSet(g2d,((GSComplex)(this.watchedComplex)).getCurrentlyDeformedPebbleSet());
     }
 
     protected void handleInfoFor(int x, int y)

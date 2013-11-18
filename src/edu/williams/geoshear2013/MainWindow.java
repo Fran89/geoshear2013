@@ -82,6 +82,8 @@ public class MainWindow extends javax.swing.JFrame {
     public static int FILE_IO_TYPE_TAB = 2;
     public static int FILE_IO_TYPE_IMG = 3;
     
+    private GSComplexChartFrameCartRfPhi chartCartRfPhi;
+    
 /**
      * Creates new form MainWindow
      * 
@@ -107,6 +109,8 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        
+        Util.todo("refresh chart windows/frames on gsc actions (such as pebble selection)");
         
         this.displayNumberConstraints = new HashMap();
 
@@ -217,6 +221,12 @@ public class MainWindow extends javax.swing.JFrame {
         this.updateDeformNavControlsStates();
         this.updateStateOfCurrentDeformControls();
         this.updateStrainMatricesVisibilities();
+        
+        this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
+//        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
+        this.gscUI.gsc.addWatcher(chartCartRfPhi);
+//        this.gscUI.addWatcher(chartCartRfPhi);
+
     }
 
     /**
@@ -334,6 +344,8 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBoxMenuItemShowBackgroundImage = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemShowStrainEllipses = new javax.swing.JCheckBoxMenuItem();
         ChartsMenu = new javax.swing.JMenu();
+        jMenuItemChartRfPhiCart = new javax.swing.JMenuItem();
+        jMenuItemChartRf2PhiPolar = new javax.swing.JMenuItem();
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel14.setText("[");
@@ -1251,6 +1263,18 @@ public class MainWindow extends javax.swing.JFrame {
 
         ChartsMenu.setText("Charts");
         ChartsMenu.setToolTipText("Open new windows to display charts");
+
+        jMenuItemChartRfPhiCart.setText("RF-Phi cartesian");
+        jMenuItemChartRfPhiCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemChartRfPhiCartActionPerformed(evt);
+            }
+        });
+        ChartsMenu.add(jMenuItemChartRfPhiCart);
+
+        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi polar");
+        ChartsMenu.add(jMenuItemChartRf2PhiPolar);
+
         MainWindowMenuBar.add(ChartsMenu);
 
         setJMenuBar(MainWindowMenuBar);
@@ -1910,6 +1934,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSnapshotterActionPerformed
 
+    private void jMenuItemChartRfPhiCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartRfPhiCartActionPerformed
+        this.chartCartRfPhi.setVisible(true);
+    }//GEN-LAST:event_jMenuItemChartRfPhiCartActionPerformed
+
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
@@ -2411,6 +2439,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelStrainNavCount;
     private javax.swing.JLabel jLabelStrainNavPosition;
     private javax.swing.JLabel jLabelZoom;
+    private javax.swing.JMenuItem jMenuItemChartRf2PhiPolar;
+    private javax.swing.JMenuItem jMenuItemChartRfPhiCart;
     private javax.swing.JMenuItem jMenuItemExportAsTabbed;
     private javax.swing.JMenuItem jMenuItemExportCurrentDeformed;
     private javax.swing.JMenuItem jMenuItemLoad;

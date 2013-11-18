@@ -187,6 +187,10 @@ public class GSComplex implements Watchable {
         return this.currentDeformationNumber;
     }
     
+    public GSPebbleSet getCurrentlyDeformedPebbleSet() {
+        return this.pebbleSets.get(this.currentDeformationNumber-1);
+    }
+    
     /**
      * remove the deformation associated with currentDeformationNumber (lowering the index of subsequent ones) and rebuild the pebblesets to match the modified deformation series
      * NOTE: the value of currentDeformationNumber is unchanged unless it would be out of bounds, in which case it is set to the end of the series

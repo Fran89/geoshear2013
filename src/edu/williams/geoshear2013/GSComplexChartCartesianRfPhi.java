@@ -70,7 +70,14 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
 
     protected Point2D.Double getPebbleBasePaintPoint(GSPebble p)
     {
-        return this.getPaintPoint(new Point2D.Double(p.getRF(),Util.toDegrees(p.getThetaRad())));
+        double deg = Util.toDegrees(p.getThetaRad());
+        while (deg > 90) {
+            deg -= 180;
+        }
+        while (deg < -90) {
+            deg += 180;
+        }
+        return this.getPaintPoint(new Point2D.Double(p.getRF(), deg));
     }
 
 
