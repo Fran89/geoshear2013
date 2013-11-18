@@ -19,7 +19,40 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /**
+ * TODO (12-13 working days):
+ *  - (.25) export snapshot of gscUI panel (create snapshot button, implement snapshot taking)
+ *  - (1) implement a basic cartesian RF-phi chart that shows a given pebbleset (by set, not index or deformation number)
+ *    NOTE: fixed, linear scales to start with
+ *    + (.25) implement click-inspections of the chart
+ *    + (1) implement various basic options for the chart
+ *    + (.5) then human adjustable scales
+ *    + (.25) toggle to scales to log-based
+ *  - (.5) tie the current chart view to the strain nav system, so the chart view matches the gscUI panel
+ *  - (1) have the chart change as a tentative deformation is made
+ *    + calc means for pebble sets
+ *    + option to display pebble set means on the chart
+ *  - (1) implement option for adaptive scale
+ *  - (1.25) implement basic polar chart
+ *  - (2) support same options/processes in polar chart as in cartesian one
+ *  - (1) implement change tracks in cartesian chart
+ *  - (.5) implement change track in polar chart
+ *  - (1) in main window gscUI, implement pebble dragging when in edit mode (control down)
+ *  - (.5) in main window gscUI, implement pebble rotation when in edit mode (alt down)
+ * 
+ *  - (1) final code clean up
+ *    + find and resolve remaining to-do items
+ *    + find and remove dev/debug output / comments
+ *    + find and remove large commented out sections (wipe in-code versioning)
+ * 
+ *  - (1) write basic help text/file
+ *    + note places that need additional work
  *
+ * EXPLECTED COMPLETION DATE: December 10
+ * 
+ *  - turn over to Paul
+ *    + arrange time for a tour / demo
+ *    + deliver code
+ * 
  * @author cwarren
  */
 public class MainWindow extends javax.swing.JFrame {
