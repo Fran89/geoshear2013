@@ -1789,7 +1789,11 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
     private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed
-        Util.todo("implement export");
+//        Util.todo("implement export");
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB);
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeToTabDelimited());
+        this.repaint ();        
     }//GEN-LAST:event_jMenuItemExportAsTabbedActionPerformed
 
     private void handleStrainNavPostAction() {

@@ -74,21 +74,24 @@ public class GSComplex implements Watchable {
     }
     
     public String serializeToTabDelimited() {
-        Util.todo("implement serializeToTabDelimited");
         String s = "";
         s += "\n["+GSComplex.KEY_CENTER+"]\n";
-        s += GSComplex.KEY_CENTER + "=" + this.center.serialize() +"\n";
+        s += GSPoint.serializeHeadersToTabDelimited()+"\n";
+        s += this.center.serializeToTabDelimited()+"\n";
 
         s += "\n["+GSComplex.KEY_BG_IMAGE+"]\n";
         if (! this.getBgImageFileName().isEmpty()) {
-            s += GSComplex.KEY_BG_IMAGE+"="+this.getBgImageFileName()+"\n";
+            s += "File\n";
+            s += this.getBgImageFileName()+"\n";
         }
 
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
-        s += GSComplex.KEY_PEBBLES + "=\n" + this.pebbleSets.get(0).serialize() +"\n";
+        s += GSPebble.serializeHeadersToTabDelimited()+"\n";
+        s += this.pebbleSets.get(0).serializeToTabDelimited()+"\n";
         
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
-        s += GSComplex.KEY_DEFORMATIONS + "=\n" + this.deformations.serialize() +"\n";
+        s += Deformation.serializeHeadersToTabDelimited()+"\n";
+        s += this.deformations.serializeToTabDelimited()+"\n";
         return s;
     }
 

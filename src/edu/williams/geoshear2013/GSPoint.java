@@ -26,6 +26,12 @@ public class GSPoint {
     public String serialize() {
         return this.x+","+this.y;
     }
+    public static String serializeHeadersToTabDelimited() {
+        return "X\tY";
+    }
+    public String serializeToTabDelimited() {
+        return this.x+"\t"+this.y;
+    }
 
     public static GSPoint deserialize(String serializedPoint) {
         serializedPoint = serializedPoint.trim();

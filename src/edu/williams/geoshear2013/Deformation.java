@@ -18,6 +18,7 @@ public class Deformation extends Matrix2x2 {
     
     public static Color DEFORMATION_COLOR = Color.RED;
     public static int DISPLAY_RADIUS = 100;    
+
     /**
      * create a 2x2 identity matrix
      */
@@ -71,6 +72,10 @@ public class Deformation extends Matrix2x2 {
                 " m11="+this.m11;
     }
     
+    static String serializeHeadersToTabDelimited() {
+        return "m00\tm01\tm10\tm11";
+    }
+
     public String serializeToTabDelimited() {
         return this.m00+"\t"+
                this.m01+"\t"+

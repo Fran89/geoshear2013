@@ -108,6 +108,10 @@ public class GSPebble extends GSEllipse {
                 GSPebble.SERIAL_TOKEN+" color="+Util.getColorHexString(this.color);
         return s;
     }
+
+    static String serializeHeadersToTabDelimited() {
+        return "id\tx\ty\tmajorRadius\tminorRadius\tthetaDeg\tcolor";
+    }
     
     public String serializeToTabDelimited() {
         String s = this.getId()+"\t"+this.x+"\t"+this.y+
