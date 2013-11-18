@@ -225,7 +225,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
 //        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
         this.gscUI.gsc.addWatcher(chartCartRfPhi);
-//        this.gscUI.addWatcher(chartCartRfPhi);
+        this.gscUI.addWatcher(chartCartRfPhi);
 
     }
 

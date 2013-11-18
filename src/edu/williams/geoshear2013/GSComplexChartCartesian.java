@@ -61,7 +61,9 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
     @Override
     protected void paintPebbles(Graphics2D g2d) {
         g2d.setStroke(STROKE_MEDIUM);
-        this.paintPebbleSet(g2d,((GSComplex)(this.watchedComplex)).getCurrentlyDeformedPebbleSet());
+        GSPebbleSet curPebs = this.watchedComplex.getCurrentlyDeformedPebbleSet().clone();
+        curPebs.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
+        this.paintPebbleSet(g2d,curPebs);
     }
 
     protected void handleInfoFor(int x, int y)

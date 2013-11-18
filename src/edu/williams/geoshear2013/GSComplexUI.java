@@ -17,6 +17,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -26,7 +28,7 @@ import javax.swing.JPanel;
  *
  * @author cwarren
  */
-class GSComplexUI extends JPanel {
+class GSComplexUI extends JPanel implements Watchable {
     public GSComplex gsc;
     private MainWindow mainWindow;
 
@@ -132,12 +134,14 @@ class GSComplexUI extends JPanel {
         this.tentativeDeformation = new Deformation();
         this.cumuDeformation = this.gsc.getCompositeTransform();
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.notifyWatchers();
     }
     
     private void setDeformations(Deformation d) {
         this.tentativeDeformation = d.clone();
         this.cumuDeformation = this.gsc.getCompositeTransform();
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+        this.notifyWatchers();
     }
 
 
@@ -148,6 +152,7 @@ class GSComplexUI extends JPanel {
 
         this.cumuStrain = new GSPebble(100,100);
         this.gsc.deformations.runAllDeformationsOn(cumuStrain,this.gsc.getCurrentDeformationNumber());
+        this.notifyWatchers();
     }
 
     public void handleKeyPressed(java.awt.event.KeyEvent evt) {
@@ -221,6 +226,7 @@ class GSComplexUI extends JPanel {
                 this.repaint();
             }
         }
+        this.notifyWatchers();
     }
 
     /**
@@ -516,6 +522,7 @@ class GSComplexUI extends JPanel {
                 this.lastMouseDragAngleInGSCSystem -= Math.PI;
             }
         }
+        this.notifyWatchers();
     }
     
     public void handleMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -550,10 +557,11 @@ class GSComplexUI extends JPanel {
     public void setCenter(double x, double y) {
         this.gsc.setCenter(x,y);
         this.repaint();
+        this.notifyWatchers();
     }
     public void centerDisplay() {
         this.setPan(this.getWidth()/2 - this.gsc.getCenter().x*this.displayTransform.getScaleX(),
-                    this.getHeight()/2 - this.gsc.getCenter().y*this.displayTransform.getScaleX());    
+                    this.getHeight()/2 - this.gsc.getCenter().y*this.displayTransform.getScaleX());
     }   
     public void setPan(double x, double y) {
         // REFACTOR? a way to just update the translate vals of the display transform
@@ -756,6 +764,7 @@ class GSComplexUI extends JPanel {
                 Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
 //                System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
                 this.gsc.pebbleSets.selectPebblesByUndeformedPoint(clickPtInGCS, evt.isShiftDown());
+                this.notifyWatchers();
             }            
             
         }
@@ -767,6 +776,7 @@ class GSComplexUI extends JPanel {
 //        this.gsc.deformations.add(this.tentativeDeformation.clone());
 //        this.tentativeDeformation = new Deformation();
 //        this.tentativeDeformation = new Deformation();
+        this.notifyWatchers();
     }
 
     public void setModeDeforms() {
@@ -900,5 +910,41 @@ class GSComplexUI extends JPanel {
 
     void handleApplyColor(Color newColor) {
         this.gsc.pebbleSets.colorSelectedPebbles(newColor);
+        this.notifyWatchers();
     }
+    
+    /*
+     * -------------------------------------------------------------------------
+     * -------------------------------------------------------------------------
+     * implementing the Watchable interface
+     */
+    private ArrayList watchedBy = new ArrayList();
+
+    public void addWatcher(Watcher w) {
+        watchedBy.add(w);
+        //w.setWatched(this);
+        w.reactTo(this, null);
+    }
+
+    public void removeWatcher(Watcher w) {
+        watchedBy.remove(w);
+    }
+
+    public void removeAllWatchers() {
+        watchedBy.clear();
+    }
+
+    public void notifyWatchers() {
+        this.notifyWatchers(null);
+    }
+
+    public void notifyWatchers(Object arg) {
+        ListIterator li = watchedBy.listIterator();
+        while (li.hasNext())
+        {
+            Watcher wr = (Watcher)(li.next());
+            wr.reactTo(this,arg);
+        }
+    }    
+    
 }

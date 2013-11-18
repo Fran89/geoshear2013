@@ -201,6 +201,7 @@ public class GSComplex implements Watchable {
         if (this.currentDeformationNumber > this.deformations.size()+1) {
             this.currentDeformationNumber = this.deformations.size()+1;
         }
+        this.notifyWatchers();        
     }
     
     public void nextDeformation() {
@@ -208,6 +209,7 @@ public class GSComplex implements Watchable {
             this.currentDeformationNumber++;
         }
 //        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.nextDeformation");
+        this.notifyWatchers();
     }
     
     public void prevDeformation() {
@@ -215,11 +217,13 @@ public class GSComplex implements Watchable {
             this.currentDeformationNumber--;
         }
 //        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.prevDeformation");
+        this.notifyWatchers();
     }
     
     public void lastDeformation() {
         this.currentDeformationNumber = this.deformations.size() + 1;
 //        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.lastDeformation");
+        this.notifyWatchers();
     }
 
     public Deformation getCompositeTransform() {
@@ -301,6 +305,7 @@ public class GSComplex implements Watchable {
         this.resetPositionOfPebblesRelativeToNewOrigin(this.center.x, this.center.y, center.x, center.y);
         this.center.x = center.x;
         this.center.y = center.y;
+        this.notifyWatchers();
     }
     
     /**
@@ -310,6 +315,7 @@ public class GSComplex implements Watchable {
         this.resetPositionOfPebblesRelativeToNewOrigin(this.center.x, this.center.y, x, y);
         this.center.x = x;
         this.center.y = y;
+        this.notifyWatchers();
     }
     
     private void resetPositionOfPebblesRelativeToNewOrigin(double initial_origin_x, double initial_origin_y, double new_origin_x, double new_origin_y) {
@@ -324,6 +330,7 @@ public class GSComplex implements Watchable {
                 pebbles.get(i_pebbles).shiftPosition(origin_shift_x,origin_shift_y);
             }
         }
+        this.notifyWatchers();
     }
 
     void applyDeformation(Deformation d) {
@@ -336,6 +343,7 @@ public class GSComplex implements Watchable {
         }
         this.pebbleSets.add(newPebbleSet);
         this.lastDeformation();
+        this.notifyWatchers();
     }
     
     /**
@@ -352,6 +360,7 @@ public class GSComplex implements Watchable {
             }
             this.pebbleSets.add(newPebbleSet);
         }
+        this.notifyWatchers();
     }
 
     public String getBgImageFileName() {
@@ -416,6 +425,7 @@ public class GSComplex implements Watchable {
             }
         }
         this.rebuildPebbleSetsFromDeformationSeries();
+        this.notifyWatchers();
     }
 
     /**
