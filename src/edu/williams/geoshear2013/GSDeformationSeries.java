@@ -123,6 +123,17 @@ public class GSDeformationSeries extends ArrayList {
             counter++;
         }
     }
+    
+    public void runAllDeformationsOn(GSPebbleSet ps, int nth) {
+        ListIterator li = this.listIterator();
+        int counter = 0;
+        while (li.hasNext() && counter < nth) {
+//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
+            ps.applyDeformation((Deformation)(li.next()));
+            counter++;
+        }
+    }
+    
     /*---------------------------------------------------------------------*/
     
     @Override

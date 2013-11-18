@@ -274,11 +274,13 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         if (this.isShowReferenceData())
         {
             Util.todo("implement reference pebble painting");
-//            GSPebbleSet rp = this.referencePebbles.clone();
+            GSPebbleSet rp = this.referencePebbles.clone();
+            this.watchedComplex.deformations.runAllDeformationsOn(rp, this.watchedComplex.getCurrentDeformationNumber());
 //            rp.deform(((GSComplex)(this.watchedComplex)).getDeformations().getCurCumuDeformation());
 //            rp.deform(((GSComplexUI)(this.watchedComplexUI)).getCurrentDeformation());
-//            g2d.setStroke(STROKE_MEDIUM);
-//            this.paintPebbleSet(g2d, rp,4,GSComplexChart.MARK_CIRCLE);
+            rp.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
+            g2d.setStroke(STROKE_MEDIUM);
+            this.paintPebbleSet(g2d, rp,4,GSComplexChart.MARK_CIRCLE);
         }
     }
     
