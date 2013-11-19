@@ -21,8 +21,8 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
     protected double minValRadius = 1;
     private double maxValRadius = 5;
-    protected double minValAngle = 0;
-    protected double maxValAngle = 360;
+    protected double minValAngle = -180;
+    protected double maxValAngle = 180;
 
     protected double majorCountourStepRadius;
     protected double minorCountourStepRadius;
@@ -94,7 +94,8 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
         g2d.drawString(label, ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset, labelY+this.textAllowance);
 
         // angle min/max
-        label = Util.truncForDisplay(this.minValAngle, 0) + " / " + Util.truncForDisplay(this.maxValAngle, 0);
+//        label = Util.truncForDisplay(this.minValAngle, 0) + " / " + Util.truncForDisplay(this.maxValAngle, 0);
+        label = "0";
         //g2d.drawString(label, ringsR+this.generalInset, cy);
         this.drawTurnedString(g2d, label, ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
 
@@ -207,8 +208,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         double contourValAngle = this.minValAngle;
         showContour = true;
-        for (int i=1; i<totContoursAngle; i++)
-        {
+        for (int i=1; i<totContoursAngle; i++) {
             showContour = this.isShowContoursMinor();
 
             contourValAngle += contourStepAngleVal;
@@ -225,19 +225,27 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
             }
             if (showContour)
             {
+                double effectiveContourValAngle = contourValAngle;
+                if (contourValAngle == 0) { effectiveContourValAngle = 180; }
+                double contourThetaRad = Math.toRadians(effectiveContourValAngle);
 
-                double contourThetaRad = Math.toRadians(contourValAngle);
-                paintRay(g2d, contourThetaRad,0,0);
+                this.paintRay(g2d, contourThetaRad,0,0);
 
-                contourLabel = Util.truncForDisplay(contourValAngle,0);
-                double labelAngle = (-1.0 * contourThetaRad) - (Math.PI/2.0);
-                double labelRadius = this.frameRadius;
-                if (contourThetaRad < Math.PI)
-                {
-                    labelAngle += Math.PI;
-                    labelRadius += this.textAllowance + this.generalInset;
+                if (contourValAngle == 0) {
+                    contourLabel = "-180/180";
+                } else {
+                    contourLabel = Util.truncForDisplay(effectiveContourValAngle,0);
                 }
-                if (contourValAngle == 270)
+                double labelAngle = contourThetaRad;
+                double labelRadius = this.frameRadius;
+
+                if (labelAngle > 0) {
+                    labelAngle = labelAngle*-1 + Math.PI/2;
+                    labelRadius += this.textAllowance + this.generalInset;
+                } else {
+                    labelAngle = labelAngle*-1 - Math.PI/2;
+                }
+                if (contourValAngle == -90) // additional label offset on the bottom to avoid collision with other drawing of the frame
                 {
                     contourLabel = " "+contourLabel;
                 }
@@ -255,7 +263,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
      */
     protected Double getPaintPoint(Double valueP) {
 
-        double angle = Math.toRadians(valueP.y);
+        double angle = Math.toRadians(valueP.y*-1);
 
         double valRadius = valueP.x;
         if (this.isUseLogScale())

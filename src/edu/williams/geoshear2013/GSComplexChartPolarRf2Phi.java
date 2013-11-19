@@ -81,7 +81,8 @@ public class GSComplexChartPolarRf2Phi extends GSComplexChartPolar {
     
     @Override
     protected String getPebbleInfoString(GSPebble p) {
-        return "Rf: "+Util.truncForDisplay(p.getRF())+"  2*phi: "+Util.truncForDisplay(360.0 - (this.constrainDegrees(Util.toDegrees(p.getThetaRad()))*2.0));
+//        return "Rf: "+Util.truncForDisplay(p.getRF())+"  2*phi: "+Util.truncForDisplay(360.0 - (this.constrainDegrees(Util.toDegrees(p.getThetaRad()))*2.0));
+        return "Rf: "+Util.truncForDisplay(p.getRF())+"  2*phi: "+Util.truncForDisplay((this.constrainDegrees(Util.toDegrees(p.getThetaRad()))*2.0),1);
     }
 
 }

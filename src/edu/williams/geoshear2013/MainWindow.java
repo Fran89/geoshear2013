@@ -83,6 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
     public static int FILE_IO_TYPE_IMG = 3;
     
     private GSComplexChartFrameCartRfPhi chartCartRfPhi;
+    private GSComplexChartFramePolarRfPhi chartPolarRfPhi;
     
 /**
      * Creates new form MainWindow
@@ -226,7 +227,11 @@ public class MainWindow extends javax.swing.JFrame {
 //        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
         this.gscUI.gsc.addWatcher(chartCartRfPhi);
         this.gscUI.addWatcher(chartCartRfPhi);
-
+        
+        this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
+//        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
+        this.gscUI.gsc.addWatcher(chartPolarRfPhi);
+        this.gscUI.addWatcher(chartPolarRfPhi);
     }
 
     /**
@@ -1273,6 +1278,11 @@ public class MainWindow extends javax.swing.JFrame {
         ChartsMenu.add(jMenuItemChartRfPhiCart);
 
         jMenuItemChartRf2PhiPolar.setText("RF-2*Phi polar");
+        jMenuItemChartRf2PhiPolar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemChartRf2PhiPolarActionPerformed(evt);
+            }
+        });
         ChartsMenu.add(jMenuItemChartRf2PhiPolar);
 
         MainWindowMenuBar.add(ChartsMenu);
@@ -1937,6 +1947,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void jMenuItemChartRfPhiCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartRfPhiCartActionPerformed
         this.chartCartRfPhi.setVisible(true);
     }//GEN-LAST:event_jMenuItemChartRfPhiCartActionPerformed
+
+    private void jMenuItemChartRf2PhiPolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartRf2PhiPolarActionPerformed
+        this.chartPolarRfPhi.setVisible(true);
+    }//GEN-LAST:event_jMenuItemChartRf2PhiPolarActionPerformed
 
     private void handleStrainNavPostAction() {
 //        this.clearTentativeDeform();
