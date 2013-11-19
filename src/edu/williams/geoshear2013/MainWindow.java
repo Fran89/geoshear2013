@@ -36,8 +36,10 @@ import javax.swing.filechooser.FileFilter;
  *  X- (.25) calc means for pebble sets
  *    X+ implement/support option to display pebble set means on the chart
  *  X- (.5) implement option for adaptive scale
- *  - (1.25) implement basic polar chart
- *  - (2) support same options/processes in polar chart as in cartesian one
+ *  X- (1.25) implement basic polar chart
+ *  X- (2) support same options/processes in polar chart as in cartesian one
+ *    X+ correct info-click in polar charts to use -180/180 scale instead of 0/360 scale
+ *    + correct mean-painting in polar charts
  *  - (2) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (1) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
@@ -111,7 +113,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
-//        Util.todo("offer denser reference point/pebble set in charts");
+        Util.todo("fix means on polar chart");
         
         this.displayNumberConstraints = new HashMap();
 

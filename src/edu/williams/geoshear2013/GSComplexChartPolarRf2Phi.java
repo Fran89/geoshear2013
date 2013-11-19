@@ -52,8 +52,10 @@ public class GSComplexChartPolarRf2Phi extends GSComplexChartPolar {
                 {
                     radDisp = Util.truncForDisplay(Math.pow(Math.E,Double.parseDouble(radDisp)),2); // -1 is for 0-base of log chart as opposed to 1 base of linear chart
                 }
-                double eftAngle = Double.parseDouble(this.infoAngleVal)/2.0;
-                if (eftAngle < 0) { eftAngle = 180 + eftAngle; }
+                double eftAngle = Double.parseDouble(this.infoAngleVal)/-2.0;
+                if (eftAngle < -90) {eftAngle+=180;}
+//                double eftAngle = Double.parseDouble(this.infoAngleVal)/2.0;
+//                if (eftAngle < 0) { eftAngle = 180 + eftAngle; }
                 this.infoString = "Rf: "+radDisp+"  2*phi: "+Util.truncForDisplay(eftAngle*2,0);
                 g2d.setColor(Color.BLACK);
                 g2d.setStroke(STROKE_MEDIUM);
