@@ -238,6 +238,16 @@ public class GSPebbleSet extends ArrayList {
         return false;
     }
 
+    public double getMaxRf() {
+        double maxRf = 0;
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (peb.getRF() > maxRf) { maxRf = peb.getRF(); }
+        }
+        return maxRf;
+    }
+    
     /**
      * testing for this class
      */

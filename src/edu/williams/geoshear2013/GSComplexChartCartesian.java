@@ -232,19 +232,18 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
     public double getMaxValX() {
         if (this.isUseAdaptiveScale())
         {
-            Util.todo("implement adaptive getMaxValX");
-            return 0; // NOTE: placeholder to validate compile - remove when implementing this section
-            // todo note: consider (GSComplex)(this.watchedComplex)).getPebbles() --> (GSComplex)(this.watchedComplex)).pebbleSets.get(0)
-            // as per paintPebbles
-//            double rfMax = this.watchedComplex.getPebbles().getMaxRf();  !! NOTE: generalize this away from using getMaxRf - pass in the potential max instead?
-//            if (this.isUseLogScale())
-//            {
-//                rfMax = Math.log(rfMax);
-//            }
-//            double maxStep = this.numMajorContoursX + 1;
-//            double maxX = 0;
-//            while (maxX < rfMax) {maxX += maxStep; }
-//            return maxX + this.getMinValX();
+            GSPebbleSet curPebs = this.watchedComplex.getCurrentlyDeformedPebbleSet().clone();
+            curPebs.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
+            // NOTE: the 1.1 factor is to keep the pebbles a bit further from the right edge of the chart
+            double rfMax = curPebs.getMaxRf() * 1.1; // !! NOTE: ideally generalize this away from using getMaxRf - pass in the potential max instead?
+            if (this.isUseLogScale())
+            {
+                rfMax = Math.log(rfMax);
+            }
+            double maxStep = this.numMajorContoursX + 1;
+            double maxX = 0;
+            while (maxX < rfMax) {maxX += maxStep; }
+            return maxX + this.getMinValX();
         } else {
             return maxValX;
         }

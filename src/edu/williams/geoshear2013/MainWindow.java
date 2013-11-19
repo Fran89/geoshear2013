@@ -35,7 +35,7 @@ import javax.swing.filechooser.FileFilter;
  *  X- (1) have the chart change as a tentative deformation is made
  *  X- (.25) calc means for pebble sets
  *    X+ implement/support option to display pebble set means on the chart
- *  - (.5) implement option for adaptive scale
+ *  X- (.5) implement option for adaptive scale
  *  - (1.25) implement basic polar chart
  *  - (2) support same options/processes in polar chart as in cartesian one
  *  - (2) implement change tracks in cartesian chart
