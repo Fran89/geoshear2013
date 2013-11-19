@@ -25,17 +25,17 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /**
  * TODO (12-13 working days):
- *  - (1) implement a basic cartesian RF-phi chart that shows a given pebbleset (by set, not index or deformation number)
+ *  X- (1) implement a basic cartesian RF-phi chart that shows a given pebbleset (by set, not index or deformation number)
  *    NOTE: fixed, linear scales to start with
- *    + (.25) implement click-inspections of the chart
- *    + (1) implement various basic options for the chart
- *    + (.5) then human adjustable scales
- *    + (.25) toggle to scales to log-based
- *  - (.5) tie the current chart view to the strain nav system, so the chart view matches the gscUI panel
- *  - (1) have the chart change as a tentative deformation is made
- *    + calc means for pebble sets
- *    + option to display pebble set means on the chart
- *  - (1) implement option for adaptive scale
+ *    X+ (.25) implement click-inspections of the chart
+ *    X+ (1) implement various basic options for the chart
+ *    X+ (.5) then human adjustable scales
+ *    X+ (.25) toggle to scales to log-based
+ *  X- (.5) tie the current chart view to the strain nav system, so the chart view matches the gscUI panel
+ *  X- (1) have the chart change as a tentative deformation is made
+ *   - (.25) calc means for pebble sets
+ *    + implement/support option to display pebble set means on the chart
+ *  - (.5) implement option for adaptive scale
  *  - (1.25) implement basic polar chart
  *  - (2) support same options/processes in polar chart as in cartesian one
  *  - (1) implement change tracks in cartesian chart
@@ -110,7 +110,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
-        Util.todo("refresh chart windows/frames on gsc actions (such as pebble selection)");
+        Util.todo("offer denser reference point/pebble set in charts");
         
         this.displayNumberConstraints = new HashMap();
 

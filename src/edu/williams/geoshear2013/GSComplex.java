@@ -42,6 +42,9 @@ public class GSComplex implements Watchable {
     private final static String KEY_DEFORMATIONS = "deformations";
     private final static String KEY_BG_IMAGE = "bgimage";
     private final static String KEY_CENTER = "center";
+
+    public double harmonicMean;
+    public double vectorMean;
     
     /*------------------------------------------------------------------------*/
     public GSComplex() {
@@ -427,6 +430,32 @@ public class GSComplex implements Watchable {
         this.rebuildPebbleSetsFromDeformationSeries();
         this.notifyWatchers();
     }
+    
+    public void setMeans()
+    {
+        double sumRFinvert = 0;
+        double sumSin2Phi = 0;
+        double sumCos2Phi = 0;
+
+        GSPebbleSet currentPebbleSet = this.getCurrentlyDeformedPebbleSet().clone();
+        currentPebbleSet.applyDeformation(this.usedUI.getTentativeDeformationCopy());
+        
+        ListIterator pli = currentPebbleSet.listIterator ();
+        while (pli.hasNext ())
+        {
+            GSPebble peb = (GSPebble)(pli.next ());
+            sumRFinvert += (1/peb.getRF());
+            //sumSin2Phi += Math.sin(2.0*peb.getThetaRad());
+            //sumCos2Phi += Math.cos(2.0*peb.getThetaRad());
+            sumSin2Phi += Math.sin(peb.getThetaRad());
+            sumCos2Phi += Math.cos(peb.getThetaRad());
+        }
+
+        this.harmonicMean = ((double)(currentPebbleSet.size())) / sumRFinvert;
+        //this.vectorMean = .5 * Math.atan(sumSin2Phi/sumCos2Phi);
+        this.vectorMean = Math.atan(sumSin2Phi/sumCos2Phi);
+        this.notifyWatchers();
+    }
 
     /**
      * testing for this class
@@ -451,5 +480,33 @@ public class GSComplex implements Watchable {
 //        System.out.println("(tab)ds1: "+ds1.serializeToTabDelimited());
 //        ds2 = GSDeformationSeries.deserialize(ds1.serializeToTabDelimited());
 //        System.out.println("(tab)ds2: "+ds2.serializeToTabDelimited());
+    }
+
+    /**
+     * @return the harmonicMean
+     */
+    public double getHarmonicMean() {
+        return harmonicMean;
+    }
+
+    /**
+     * @param harmonicMean the harmonicMean to set
+     */
+    public void setHarmonicMean(double harmonicMean) {
+        this.harmonicMean = harmonicMean;
+    }
+
+    /**
+     * @return the vectorMean
+     */
+    public double getVectorMean() {
+        return vectorMean;
+    }
+
+    /**
+     * @param vectorMean the vectorMean to set
+     */
+    public void setVectorMean(double vectorMean) {
+        this.vectorMean = vectorMean;
     }
 }

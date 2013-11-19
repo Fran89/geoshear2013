@@ -273,7 +273,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         //throw new UnsupportedOperationException("Not supported yet.");
         if (this.isShowReferenceData())
         {
-            Util.todo("implement reference pebble painting");
             GSPebbleSet rp = this.referencePebbles.clone();
             this.watchedComplex.deformations.runAllDeformationsOn(rp, this.watchedComplex.getCurrentDeformationNumber()-1);
 //            rp.deform(((GSComplex)(this.watchedComplex)).getDeformations().getCurCumuDeformation());

@@ -31,17 +31,17 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
 
     @Override
     protected void paintMeans(Graphics2D g2d) {
-        Util.todo("implement paintMeans");
-//        if (this.isShowMeans() && this.watchedComplex.getPebbles().size() > 0)
-//        {
-//             Point2D.Double mp = this.getPaintPoint(
-//                     new Point2D.Double(this.watchedComplex.getHarmonicMean(),
-//                                        Util.toDegrees(this.watchedComplex.getVectorMean())));
-//             g2d.setColor(Color.yellow);
-//             g2d.setStroke(STROKE_HEAVY_DOTTED);
-//             g2d.drawLine((int)(mp.x), (int)(this.frameTop+this.generalInset), (int)(mp.x), (int)(this.frameTop + this.frameHeight));
-//             g2d.drawLine((int)(this.frameLeft + this.generalInset + this.textAllowance+1), (int)(mp.y), (int)(this.frameLeft+this.frameWidth),(int)(mp.y));
-//        }
+        if (this.isShowMeans() && this.watchedComplex.pebbleSets.get(0).size() > 0)
+        {
+            this.watchedComplex.setMeans();
+             Point2D.Double mp = this.getPaintPoint(
+                     new Point2D.Double(this.watchedComplex.getHarmonicMean(),
+                                        Util.toDegrees(this.watchedComplex.getVectorMean())));
+             g2d.setColor(Color.yellow);
+             g2d.setStroke(STROKE_HEAVY_DOTTED);
+             g2d.drawLine((int)(mp.x), (int)(this.frameTop+this.generalInset), (int)(mp.x), (int)(this.frameTop + this.frameHeight));
+             g2d.drawLine((int)(this.frameLeft + this.generalInset + this.textAllowance+1), (int)(mp.y), (int)(this.frameLeft+this.frameWidth),(int)(mp.y));
+        }
     }
 
     @Override
