@@ -33,12 +33,12 @@ import javax.swing.filechooser.FileFilter;
  *    X+ (.25) toggle to scales to log-based
  *  X- (.5) tie the current chart view to the strain nav system, so the chart view matches the gscUI panel
  *  X- (1) have the chart change as a tentative deformation is made
- *   - (.25) calc means for pebble sets
- *    + implement/support option to display pebble set means on the chart
+ *  X- (.25) calc means for pebble sets
+ *    X+ implement/support option to display pebble set means on the chart
  *  - (.5) implement option for adaptive scale
  *  - (1.25) implement basic polar chart
  *  - (2) support same options/processes in polar chart as in cartesian one
- *  - (1) implement change tracks in cartesian chart
+ *  - (2) implement change tracks in cartesian chart
  *  - (.5) implement change track in polar chart
  *  - (1) in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (.5) in main window gscUI, implement pebble rotation when in edit mode (alt down)
@@ -110,7 +110,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
-        Util.todo("offer denser reference point/pebble set in charts");
+//        Util.todo("offer denser reference point/pebble set in charts");
         
         this.displayNumberConstraints = new HashMap();
 

@@ -42,10 +42,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuItemRefPointsActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemRefPointsDense">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reference Points, Dense"/>
+                <Property name="toolTipText" type="java.lang.String" value="show a denser grid of reference points"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuItemRefPointsDenseActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemSelPebInfo">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Selected Pebble Info"/>
+                <Property name="toolTipText" type="java.lang.String" value="show info for pebbles that are selected"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuItemSelPebInfoActionPerformed"/>
@@ -55,6 +65,7 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Harmonic &amp; Vector Means"/>
+                <Property name="toolTipText" type="java.lang.String" value="show lines for the harmonic and vector means"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuItemMeansActionPerformed"/>

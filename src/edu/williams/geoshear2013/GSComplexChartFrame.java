@@ -78,6 +78,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         jCheckBoxMenuItemMajorCountours = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemMinorCountours = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemRefPoints = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemRefPointsDense = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemSelPebInfo = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemMeans = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemDefPath = new javax.swing.JCheckBoxMenuItem();
@@ -123,8 +124,18 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         });
         jMenuView.add(jCheckBoxMenuItemRefPoints);
 
+        jCheckBoxMenuItemRefPointsDense.setText("Reference Points, Dense");
+        jCheckBoxMenuItemRefPointsDense.setToolTipText("show a denser grid of reference points");
+        jCheckBoxMenuItemRefPointsDense.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemRefPointsDenseActionPerformed(evt);
+            }
+        });
+        jMenuView.add(jCheckBoxMenuItemRefPointsDense);
+
         jCheckBoxMenuItemSelPebInfo.setSelected(true);
         jCheckBoxMenuItemSelPebInfo.setText("Selected Pebble Info");
+        jCheckBoxMenuItemSelPebInfo.setToolTipText("show info for pebbles that are selected");
         jCheckBoxMenuItemSelPebInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItemSelPebInfoActionPerformed(evt);
@@ -134,6 +145,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
         jCheckBoxMenuItemMeans.setSelected(true);
         jCheckBoxMenuItemMeans.setText("Harmonic & Vector Means");
+        jCheckBoxMenuItemMeans.setToolTipText("show lines for the harmonic and vector means");
         jCheckBoxMenuItemMeans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItemMeansActionPerformed(evt);
@@ -226,7 +238,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     }//GEN-LAST:event_jCheckBoxMenuItemMinorCountoursActionPerformed
 
     private void jCheckBoxMenuItemRefPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemRefPointsActionPerformed
-        chart.setShowReferenceData(jCheckBoxMenuItemRefPoints.isSelected());
+        chart.setShowReferenceDataSparse(jCheckBoxMenuItemRefPoints.isSelected());
         this.repaint();
     }//GEN-LAST:event_jCheckBoxMenuItemRefPointsActionPerformed
 
@@ -308,6 +320,11 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         }
     }//GEN-LAST:event_jMenuTakeSnapshotMouseClicked
 
+    private void jCheckBoxMenuItemRefPointsDenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemRefPointsDenseActionPerformed
+        chart.setShowReferenceDataDense(jCheckBoxMenuItemRefPointsDense.isSelected());
+        this.repaint();
+    }//GEN-LAST:event_jCheckBoxMenuItemRefPointsDenseActionPerformed
+
     protected void formattedTextFieldMenuItemScaleFixedActionPerformed(java.awt.event.ActionEvent evt) {
         jRadioButtonMenuItemScaleFixed.setSelected(true);
         chart.setUseAdaptiveScale(jRadioButtonMenuItemScaleAdapt.isSelected());
@@ -354,6 +371,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemMeans;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemMinorCountours;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemRefPoints;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemRefPointsDense;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemSelPebInfo;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuTakeSnapshot;

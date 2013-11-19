@@ -59,7 +59,8 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     protected Font plotTitleFont = Font.decode ("Arial-BOLD-11");
 
     protected boolean showTrace = false;
-    protected boolean showReferenceData = true;
+    protected boolean showReferenceDataSparse = true;
+    public boolean showReferenceDataDense = false;
     protected boolean showMeans = true;
     protected boolean showContoursMajor = true; // i.e. major and minor tick lines
     protected boolean showContoursMinor = false; // i.e. major and minor tick lines
@@ -83,7 +84,8 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
 
     protected Point chartOrigin;
 
-    protected GSPebbleSet referencePebbles;
+    protected GSPebbleSet referencePebblesSparse;
+    public GSPebbleSet referencePebblesDense;
 
     protected String infoString = "";
     protected int infoX=0;
@@ -100,8 +102,9 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         this.setBackground(Color.WHITE);
         this.setForeground(Color.BLACK);
 
-        this.referencePebbles = new GSPebbleSet();
+        this.referencePebblesSparse = new GSPebbleSet();
         int refPebCounter = 0;
+        referencePebblesDense = new GSPebbleSet();
        /* Pebble np = new Pebble("rp"+refPebCounter,
                                                      0.0,
                                                      0.0,
@@ -109,16 +112,16 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
                                                      1.0,
                                                      45.0,
                                                      Color.RED);
-        this.referencePebbles.add(np);
+        this.referencePebblesSparse.add(np);
          *
          */
-        for (int phiVal = -75; phiVal < 90; phiVal += 15)
+        for (int phiVal = -90; phiVal < 90; phiVal += 15)
         {
             for (double rfVal = 1.5; rfVal < 30; rfVal += .5)
             {
                 refPebCounter++;
                 // String id, int x, int y, int major, int minor, int thetaDeg, Color color
-                this.referencePebbles.add(new GSPebble("rp"+refPebCounter, // id
+                this.referencePebblesSparse.add(new GSPebble("rp"+refPebCounter, // id
                                                      0, // x
                                                      0, // y
                                                      rfVal, // major
@@ -127,7 +130,22 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
                                                      Color.DARK_GRAY));
             }
         }
-
+        for (int phiVal = -90; phiVal < 90; phiVal += 5)
+        {
+            for (double rfVal = 1.2; rfVal < 30; rfVal += .25)
+            {
+                refPebCounter++;
+                // String id, int x, int y, int major, int minor, int thetaDeg, Color color
+                this.referencePebblesDense.add(new GSPebble("rp"+refPebCounter, // id
+                                                     0, // x
+                                                     0, // y
+                                                     rfVal, // major
+                                                     1, // minor
+                                                     Util.toRadians(phiVal), // phi
+                                                     Color.DARK_GRAY));
+            }
+        }
+        
         this.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -271,9 +289,14 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
      */
     protected void paintReferencePebbles(Graphics2D g2d) {
         //throw new UnsupportedOperationException("Not supported yet.");
-        if (this.isShowReferenceData())
+        if (this.isShowReferenceDataSparse() || this.isShowReferenceDataDense())
         {
-            GSPebbleSet rp = this.referencePebbles.clone();
+            GSPebbleSet rp = null;
+            if (this.isShowReferenceDataDense()) {
+                rp = this.referencePebblesDense.clone();
+            } else {
+                rp = this.referencePebblesSparse.clone();
+            }
             this.watchedComplex.deformations.runAllDeformationsOn(rp, this.watchedComplex.getCurrentDeformationNumber()-1);
 //            rp.deform(((GSComplex)(this.watchedComplex)).getDeformations().getCurCumuDeformation());
 //            rp.deform(((GSComplexUI)(this.watchedComplexUI)).getCurrentDeformation());
@@ -462,14 +485,29 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         this.showMeans = showMeans;
     }
 
-    public boolean isShowReferenceData() {
-        return showReferenceData;
+    public boolean isShowReferenceDataSparse() {
+        return showReferenceDataSparse;
     }
 
-    public void setShowReferenceData(boolean showReferenceData) {
-        this.showReferenceData = showReferenceData;
+    public void setShowReferenceDataSparse(boolean showReferenceData) {
+        this.showReferenceDataSparse = showReferenceData;
     }
 
+
+    /**
+     * @return the showReferenceDataDense
+     */
+    public boolean isShowReferenceDataDense() {
+        return showReferenceDataDense;
+    }
+
+    /**
+     * @param showReferenceDataDense the showReferenceDataDense to set
+     */
+    public void setShowReferenceDataDense(boolean showReferenceDataDense) {
+        this.showReferenceDataDense = showReferenceDataDense;
+    }
+    
     public boolean isShowTrace() {
         return showTrace;
     }
