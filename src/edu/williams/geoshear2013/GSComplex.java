@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -274,6 +275,12 @@ public class GSComplex implements Watchable {
 
     @Override
     public void removeAllWatchers() {
+        ListIterator li = watchedBy.listIterator();
+        while (li.hasNext())
+        {
+            Watcher wr = (Watcher)(li.next());
+            wr.clearWatched(this);
+        }
         watchedBy.clear();
     }
 
@@ -434,8 +441,9 @@ public class GSComplex implements Watchable {
     public void setMeans()
     {
         double sumRFinvert = 0;
-        double sumSin2Phi = 0;
-        double sumCos2Phi = 0;
+        double sumSinPhi = 0;
+        double sumCosPhi = 0;
+        double cumuAngle = 0;
 
         GSPebbleSet currentPebbleSet = this.getCurrentlyDeformedPebbleSet().clone();
         currentPebbleSet.applyDeformation(this.usedUI.getTentativeDeformationCopy());
@@ -445,16 +453,37 @@ public class GSComplex implements Watchable {
         {
             GSPebble peb = (GSPebble)(pli.next ());
             sumRFinvert += (1/peb.getRF());
+
+            double pebbleTheta = peb.getThetaRad();
+//            return this.getPaintPoint(new Point2D.Double(p.getRF(),-2.0*this.constrainDegrees(Util.toDegrees(p.getThetaRad()))));
+            
+//            System.err.println("  peb "+peb.getId()+" theta rad: "+pebbleTheta);
+//            while (pebbleTheta > Math.PI/2) { pebbleTheta -= Math.PI; }
+//            while (pebbleTheta < Math.PI/-2) { pebbleTheta += Math.PI; }
+//            pebbleTheta += Math.PI/2;
+//            System.err.println("   peb "+peb.getId()+" constrained theta rad: "+pebbleTheta);
             //sumSin2Phi += Math.sin(2.0*peb.getThetaRad());
             //sumCos2Phi += Math.cos(2.0*peb.getThetaRad());
-            sumSin2Phi += Math.sin(peb.getThetaRad());
-            sumCos2Phi += Math.cos(peb.getThetaRad());
+//            sumSinPhi += Math.sin(pebbleTheta)*peb.getRF();
+//            sumCosPhi += Math.cos(pebbleTheta)*peb.getRF();
+            sumSinPhi += Math.sin(pebbleTheta);
+            sumCosPhi += Math.cos(pebbleTheta);
+//            while (pebbleTheta > Math.PI) { pebbleTheta -= Math.PI; }
+//            while (pebbleTheta < 0) { pebbleTheta += Math.PI; }
+            cumuAngle += pebbleTheta;
         }
 
         this.harmonicMean = ((double)(currentPebbleSet.size())) / sumRFinvert;
-        //this.vectorMean = .5 * Math.atan(sumSin2Phi/sumCos2Phi);
-        this.vectorMean = Math.atan(sumSin2Phi/sumCos2Phi);
-        this.notifyWatchers();
+//        this.vectorMean = .5 * Math.atan(sumSinPhi/sumCosPhi); // NOTE: this one should be the correct one... but it doesn't seem to work :(
+        this.vectorMean = Math.atan(sumSinPhi/sumCosPhi); 
+//        this.vectorMean -= Math.PI/2;
+//            while (this.vectorMean > Math.PI/2) { this.vectorMean -= Math.PI; }
+//            while (this.vectorMean < Math.PI/-2) { this.vectorMean += Math.PI; }
+            
+        //        this.vectorMean = cumuAngle / currentPebbleSet.size() - Math.PI/2;
+//        this.vectorMean = Math.atan(sumCosPhi/sumSinPhi);
+//        this.vectorMean = Math.atan2(sumSinPhi,sumCosPhi);
+//        this.notifyWatchers();
     }
 
     /**

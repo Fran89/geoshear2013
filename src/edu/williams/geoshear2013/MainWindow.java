@@ -39,7 +39,7 @@ import javax.swing.filechooser.FileFilter;
  *  X- (1.25) implement basic polar chart
  *  X- (2) support same options/processes in polar chart as in cartesian one
  *    X+ correct info-click in polar charts to use -180/180 scale instead of 0/360 scale
- *    + correct mean-painting in polar charts
+ *    X+ correct mean-painting in polar charts
  *  - (2) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (1) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
@@ -113,7 +113,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
-        Util.todo("fix means on polar chart");
+//        Util.todo("fix charts not linked/active after data load");
         
         this.displayNumberConstraints = new HashMap();
 
@@ -186,27 +186,200 @@ public class MainWindow extends javax.swing.JFrame {
 //        System.err.println("(tab) test peb : "+testPeb.serializeToTabDelimited());
 //        tp2 = GSPebble.deserialize(testPeb.serializeToTabDelimited()); 
 //        System.err.println("(tab) test peb2: "+tp2.serializeToTabDelimited());
-        
+
         this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
         this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
 
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p21",-100,100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p22",-200,100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p23",-100,200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p24",-200,200,75,50,2, Color.MAGENTA));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p21",-100,100,30,20,0, Color.CYAN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p22",-200,100,45,30,.5, Color.GREEN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p23",-100,200,60,40,-1, Color.BLUE));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p24",-200,200,75,50,2, Color.MAGENTA));
         
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p31",100,-100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p32",200,-100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p33",100,-200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p34",200,-200,75,50,2, Color.MAGENTA));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p31",100,-100,30,20,0, Color.CYAN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p32",200,-100,45,30,.5, Color.GREEN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p33",100,-200,60,40,-1, Color.BLUE));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p34",200,-200,75,50,2, Color.MAGENTA));
 
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p41",-100,-100,30,20,0, Color.CYAN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p42",-200,-100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p43",-100,-200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p44",-200,-200,75,50,2, Color.MAGENTA));
-        
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p41",-100,-100,30,20,0, Color.CYAN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p42",-200,-100,45,30,.5, Color.GREEN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p43",-100,-200,60,40,-1, Color.BLUE));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p44",-200,-200,75,50,2, Color.MAGENTA));
+
+/*        
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p001",-300,300,25,7.5,0, new Color(185,138,116)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p002",-250,300,25,7.5,0.0371786112850863, new Color(142,243,164)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p003",-200,300,25,7.5,0.0743572225701726, new Color(223,38,106)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p004",-150,300,25,7.5,0.111535833855259, new Color(36,82,240)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p005",-100,300,25,7.5,0.148714445140345, new Color(104,74,243)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p006",-50,300,25,7.5,0.185893056425432, new Color(184,114,242)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p007",0,300,25,7.5,0.223071667710518, new Color(10,162,38)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p008",50,300,25,7.5,0.260250278995604, new Color(161,183,1)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p009",100,300,25,7.5,0.29742889028069, new Color(194,249,81)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p010",150,300,25,7.5,0.334607501565777, new Color(223,76,180)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p011",200,300,25,7.5,0.371786112850863, new Color(135,111,95)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p012",250,300,25,7.5,0.408964724135949, new Color(143,153,125)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p013",300,300,25,7.5,0.446143335421036, new Color(50,110,35)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p014",-300,250,25,10,0.483321946706122, new Color(73,170,219)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p015",-250,250,25,10,0.520500557991208, new Color(110,59,231)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p016",-200,250,25,10,0.557679169276295, new Color(214,100,153)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p017",-150,250,25,10,0.594857780561381, new Color(232,119,38)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p018",-100,250,25,10,0.632036391846467, new Color(39,160,90)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p019",-50,250,25,10,0.669215003131553, new Color(67,190,46)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p020",0,250,25,10,0.70639361441664, new Color(210,48,233)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p021",50,250,25,10,0.743572225701726, new Color(213,118,196)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p022",100,250,25,10,0.780750836986812, new Color(43,126,217)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p023",150,250,25,10,0.817929448271898, new Color(163,95,175)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p024",200,250,25,10,0.855108059556985, new Color(67,213,25)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p025",250,250,25,10,0.892286670842071, new Color(73,96,86)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p026",300,250,25,10,0.929465282127157, new Color(67,30,192)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p027",-300,200,25,12.5,0.966643893412243, new Color(44,160,83)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p028",-250,200,25,12.5,1.00382250469733, new Color(215,185,159)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p029",-200,200,25,12.5,1.04100111598242, new Color(124,184,227)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p030",-150,200,25,12.5,1.0781797272675, new Color(248,182,60)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p031",-100,200,25,12.5,1.11535833855259, new Color(11,118,111)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p032",-50,200,25,12.5,1.15253694983767, new Color(98,170,70)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p033",0,200,25,12.5,1.18971556112276, new Color(39,151,54)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p034",50,200,25,12.5,1.22689417240785, new Color(226,36,184)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p035",100,200,25,12.5,1.26407278369293, new Color(30,137,147)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p036",150,200,25,12.5,1.30125139497802, new Color(143,205,166)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p037",200,200,25,12.5,1.33843000626311, new Color(11,20,87)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p038",250,200,25,12.5,1.37560861754819, new Color(70,253,100)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p039",300,200,25,12.5,1.41278722883328, new Color(21,13,19)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p040",-300,150,25,15,1.44996584011836, new Color(250,153,175)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p041",-250,150,25,15,1.48714445140345, new Color(194,87,7)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p042",-200,150,25,15,1.52432306268854, new Color(210,64,165)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p043",-150,150,25,15,1.56150167397362, new Color(153,34,86)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p044",-100,150,25,15,1.59868028525871, new Color(249,119,177)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p045",-50,150,25,15,1.6358588965438, new Color(120,51,175)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p046",0,150,25,15,1.67303750782888, new Color(31,139,244)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p047",50,150,25,15,1.71021611911397, new Color(115,76,82)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p048",100,150,25,15,1.74739473039905, new Color(109,171,145)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p049",150,150,25,15,1.78457334168414, new Color(231,83,157)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p050",200,150,25,15,1.82175195296923, new Color(171,163,195)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p051",250,150,25,15,1.85893056425431, new Color(152,64,137)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p052",300,150,25,15,1.8961091755394, new Color(68,243,172)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p053",-300,100,25,17.5,1.93328778682449, new Color(252,252,13)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p054",-250,100,25,17.5,1.97046639810957, new Color(192,46,196)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p055",-200,100,25,17.5,2.00764500939466, new Color(195,29,249)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p056",-150,100,25,17.5,2.04482362067975, new Color(72,32,173)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p057",-100,100,25,17.5,2.08200223196483, new Color(26,165,83)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p058",-50,100,25,17.5,2.11918084324992, new Color(242,29,105)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p059",0,100,25,17.5,2.156359454535, new Color(254,198,199)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p060",50,100,25,17.5,2.19353806582009, new Color(227,195,234)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p061",100,100,25,17.5,2.23071667710518, new Color(67,34,125)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p062",150,100,25,17.5,2.26789528839026, new Color(132,132,61)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p063",200,100,25,17.5,2.30507389967535, new Color(30,208,66)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p064",250,100,25,17.5,2.34225251096044, new Color(6,28,115)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p065",300,100,25,17.5,2.37943112224552, new Color(214,12,23)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p066",-300,50,25,20,2.41660973353061, new Color(36,56,227)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p067",-250,50,25,20,2.4537883448157, new Color(56,148,179)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p068",-200,50,25,20,2.49096695610078, new Color(201,88,20)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p069",-150,50,25,20,2.52814556738587, new Color(191,125,8)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p070",-100,50,25,20,2.56532417867096, new Color(106,78,56)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p071",-50,50,25,20,2.60250278995604, new Color(209,202,181)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p072",0,50,25,20,2.63968140124113, new Color(113,132,197)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p073",50,50,25,20,2.67686001252622, new Color(152,164,177)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p074",100,50,25,20,2.7140386238113, new Color(172,218,142)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p075",150,50,25,20,2.75121723509639, new Color(205,117,49)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p076",200,50,25,20,2.78839584638148, new Color(199,237,140)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p077",250,50,25,20,2.82557445766656, new Color(194,40,70)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p078",300,50,25,20,2.86275306895165, new Color(91,91,123)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p079",-300,0,25,22.5,2.89993168023673, new Color(95,55,189)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p080",-250,0,25,22.5,2.93711029152182, new Color(17,14,142)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p081",-200,0,25,22.5,2.97428890280691, new Color(167,115,61)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p082",-150,0,25,22.5,3.01146751409199, new Color(197,221,26)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p083",-100,0,25,22.5,3.04864612537708, new Color(120,199,167)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p084",-50,0,25,22.5,3.08582473666217, new Color(82,85,101)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p085",0,0,25,22.5,3.12300334794725, new Color(227,123,171)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p086",50,0,25,22.5,3.16018195923234, new Color(90,5,154)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p087",100,0,25,22.5,3.19736057051743, new Color(175,133,77)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p088",150,0,25,22.5,3.23453918180251, new Color(146,75,181)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p089",200,0,25,22.5,3.2717177930876, new Color(150,109,210)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p090",250,0,25,22.5,3.30889640437269, new Color(190,197,251)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p091",300,0,25,22.5,3.34607501565777, new Color(23,67,194)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p092",-300,-50,25,25,3.38325362694286, new Color(111,28,14)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p093",-250,-50,25,25,3.42043223822795, new Color(15,6,180)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p094",-200,-50,25,25,3.45761084951303, new Color(228,136,249)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p095",-150,-50,25,25,3.49478946079812, new Color(92,83,124)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p096",-100,-50,25,25,3.5319680720832, new Color(210,130,176)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p097",-50,-50,25,25,3.56914668336829, new Color(237,191,48)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p098",0,-50,25,25,3.60632529465338, new Color(197,105,19)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p099",50,-50,25,25,3.64350390593846, new Color(246,44,180)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p100",100,-50,25,25,3.68068251722355, new Color(28,28,223)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p101",150,-50,25,25,3.71786112850864, new Color(89,37,142)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p102",200,-50,25,25,3.75503973979372, new Color(87,239,248)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p103",250,-50,25,25,3.79221835107881, new Color(48,19,155)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p104",300,-50,25,25,3.8293969623639, new Color(215,211,239)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p105",-300,-100,25,11.5,3.86657557364898, new Color(208,96,108)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p106",-250,-100,25,11.5,3.90375418493407, new Color(183,221,225)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p107",-200,-100,25,11.5,3.94093279621916, new Color(116,204,222)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p108",-150,-100,25,11.5,3.97811140750424, new Color(204,65,114)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p109",-100,-100,25,11.5,4.01529001878933, new Color(54,69,77)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p110",-50,-100,25,11.5,4.05246863007442, new Color(210,169,7)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p111",0,-100,25,11.5,4.0896472413595, new Color(91,192,139)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p112",50,-100,25,11.5,4.12682585264459, new Color(38,145,122)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p113",100,-100,25,11.5,4.16400446392967, new Color(140,42,135)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p114",150,-100,25,11.5,4.20118307521476, new Color(102,48,106)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p115",200,-100,25,11.5,4.23836168649985, new Color(137,219,77)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p116",250,-100,25,11.5,4.27554029778493, new Color(240,216,94)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p117",300,-100,25,11.5,4.31271890907002, new Color(120,184,89)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p118",-300,-150,25,14,4.34989752035511, new Color(79,166,124)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p119",-250,-150,25,14,4.38707613164019, new Color(66,165,180)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p120",-200,-150,25,14,4.42425474292528, new Color(88,15,30)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p121",-150,-150,25,14,4.46143335421037, new Color(140,72,148)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p122",-100,-150,25,14,4.49861196549545, new Color(86,91,24)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p123",-50,-150,25,14,4.53579057678054, new Color(225,250,62)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p124",0,-150,25,14,4.57296918806563, new Color(6,10,140)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p125",50,-150,25,14,4.61014779935071, new Color(175,252,4)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p126",100,-150,25,14,4.6473264106358, new Color(107,234,75)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p127",150,-150,25,14,4.68450502192089, new Color(79,217,193)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p128",200,-150,25,14,4.72168363320597, new Color(8,104,28)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p129",250,-150,25,14,4.75886224449106, new Color(237,26,141)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p130",300,-150,25,14,4.79604085577614, new Color(47,118,95)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p131",-300,-200,25,16.5,4.83321946706123, new Color(30,221,5)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p132",-250,-200,25,16.5,4.87039807834632, new Color(200,24,93)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p133",-200,-200,25,16.5,4.9075766896314, new Color(211,226,164)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p134",-150,-200,25,16.5,4.94475530091649, new Color(217,179,93)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p135",-100,-200,25,16.5,4.98193391220158, new Color(171,253,2)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p136",-50,-200,25,16.5,5.01911252348666, new Color(157,185,64)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p137",0,-200,25,16.5,5.05629113477175, new Color(222,85,187)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p138",50,-200,25,16.5,5.09346974605684, new Color(31,90,171)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p139",100,-200,25,16.5,5.13064835734192, new Color(107,71,31)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p140",150,-200,25,16.5,5.16782696862701, new Color(60,42,52)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p141",200,-200,25,16.5,5.2050055799121, new Color(70,21,154)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p142",250,-200,25,16.5,5.24218419119718, new Color(143,195,202)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p143",300,-200,25,16.5,5.27936280248227, new Color(80,213,91)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p144",-300,-250,25,19,5.31654141376736, new Color(100,212,22)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p145",-250,-250,25,19,5.35372002505244, new Color(129,51,233)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p146",-200,-250,25,19,5.39089863633753, new Color(33,251,16)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p147",-150,-250,25,19,5.42807724762261, new Color(74,114,92)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p148",-100,-250,25,19,5.4652558589077, new Color(201,49,139)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p149",-50,-250,25,19,5.50243447019279, new Color(49,94,170)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p150",0,-250,25,19,5.53961308147787, new Color(245,96,120)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p151",50,-250,25,19,5.57679169276296, new Color(128,139,144)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p152",100,-250,25,19,5.61397030404805, new Color(245,19,215)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p153",150,-250,25,19,5.65114891533313, new Color(126,185,236)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p154",200,-250,25,19,5.68832752661822, new Color(30,127,18)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p155",250,-250,25,19,5.72550613790331, new Color(245,130,5)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p156",300,-250,25,19,5.76268474918839, new Color(227,81,156)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p157",-300,-300,25,21.5,5.79986336047348, new Color(100,93,87)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p158",-250,-300,25,21.5,5.83704197175857, new Color(157,240,222)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p159",-200,-300,25,21.5,5.87422058304365, new Color(117,68,166)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p160",-150,-300,25,21.5,5.91139919432874, new Color(105,236,81)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p161",-100,-300,25,21.5,5.94857780561383, new Color(31,137,70)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p162",-50,-300,25,21.5,5.98575641689891, new Color(33,246,98)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p163",0,-300,25,21.5,6.022935028184, new Color(51,3,147)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p164",50,-300,25,21.5,6.06011363946909, new Color(69,213,240)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p165",100,-300,25,21.5,6.09729225075417, new Color(208,194,117)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p166",150,-300,25,21.5,6.13447086203926, new Color(243,195,69)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p167",200,-300,25,21.5,6.17164947332434, new Color(85,31,202)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p168",250,-300,25,21.5,6.20882808460943, new Color(170,78,99)));
+this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.24600669589452, new Color(125,114,51)));
+*/
+
+        //        
 //        Deformation testDef = new Deformation(1,.5,0,1);
 //        System.err.println("testDef :"+testDef.serialize());
 //        Deformation testDef2 = Deformation.deserialize(testDef.serialize());
@@ -227,13 +400,13 @@ public class MainWindow extends javax.swing.JFrame {
         
         this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
 //        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
-        this.gscUI.gsc.addWatcher(chartCartRfPhi);
-        this.gscUI.addWatcher(chartCartRfPhi);
+        this.gscUI.gsc.addWatcher(this.chartCartRfPhi);
+        this.gscUI.addWatcher(this.chartCartRfPhi);
         
         this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
 //        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
-        this.gscUI.gsc.addWatcher(chartPolarRfPhi);
-        this.gscUI.addWatcher(chartPolarRfPhi);
+        this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
+        this.gscUI.addWatcher(this.chartPolarRfPhi);
     }
 
     /**
@@ -1868,11 +2041,44 @@ public class MainWindow extends javax.swing.JFrame {
 
             // actually make the new gsc the live one.
             // this is done by throwing away the entire existing gscUI and builing a new one
+            
             this.jPanelContainerDisplay.remove(this.gscUI);
             this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
             this.initializeGscUI();
             this.jPanelContainerDisplay.add(this.gscUI);                    
 
+            // then un-link the old charts
+            GSComplexChartFrameCartRfPhi priorChartCart = this.chartCartRfPhi;
+            GSComplexChartFramePolarRfPhi priorChartPolar = this.chartPolarRfPhi;
+            boolean initialCartChartVis = this.chartCartRfPhi.isVisible();
+            boolean initialPolarChartVis = this.chartPolarRfPhi.isVisible();
+            this.chartCartRfPhi.setVisible(false);
+            this.chartPolarRfPhi.setVisible(false);
+            this.gscUI.gsc.removeAllWatchers();
+            this.gscUI.removeAllWatchers();
+            
+            // now add new charts
+            this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
+            this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
+            this.gscUI.gsc.addWatcher(this.chartCartRfPhi);
+            this.gscUI.addWatcher(this.chartCartRfPhi);
+            this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
+            this.gscUI.addWatcher(this.chartPolarRfPhi);
+        
+            // and do the approp notifications to ensure painting is correct
+            this.gscUI.notifyWatchers();
+            this.gscUI.gsc.notifyWatchers();
+            
+            // set all the chart attributes
+            this.chartCartRfPhi.setBounds(priorChartCart.getBounds());
+            this.chartPolarRfPhi.setBounds(priorChartPolar.getBounds());
+                    
+            // set visibility as appropriate
+            this.chartCartRfPhi.setVisible(initialCartChartVis);
+            this.chartPolarRfPhi.setVisible(initialPolarChartVis);
+            this.chartCartRfPhi.repaint();
+            this.chartPolarRfPhi.repaint();
+        
             // now update the main window from the new gscUI state
             this.updateDeformNavControlsStates();
             this.updateStateOfCurrentDeformControls();
@@ -1902,7 +2108,7 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog (this,"Problem loading - aborted:\n"+exc.toString());
             exc.printStackTrace ();
         }
-        this.repaint ();        
+        this.repaint ();
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
     private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed

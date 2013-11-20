@@ -931,6 +931,12 @@ class GSComplexUI extends JPanel implements Watchable {
     }
 
     public void removeAllWatchers() {
+        ListIterator li = watchedBy.listIterator();
+        while (li.hasNext())
+        {
+            Watcher wr = (Watcher)(li.next());
+            wr.clearWatched(this);
+        }
         watchedBy.clear();
     }
 

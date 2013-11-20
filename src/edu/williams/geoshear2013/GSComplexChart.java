@@ -623,4 +623,17 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     {
         return this.watchedComplex;
     }
+    public void clearWatched()
+    {
+        this.watchedDeforms = null;
+        this.watchedComplexUI = null;
+        this.watchedComplex = null;
+    }
+    // NOTE: in this implemetation there is no partial watcher clearing - clearing any clears all
+    public void clearWatched(Watchable w)
+    {
+        this.watchedDeforms = null;
+        this.watchedComplexUI = null;
+        this.watchedComplex = null;
+    }
 }

@@ -29,13 +29,21 @@ public class GSComplexChartPolarRf2Phi extends GSComplexChartPolar {
     protected void paintMeans(Graphics2D g2d) {
         if (this.isShowMeans() && this.watchedComplex.pebbleSets.get(0).size() > 0)
         {
+//             System.err.println("-----------------");
              g2d.setColor(Color.YELLOW);
              g2d.setStroke(STROKE_HEAVY_DOTTED);
+             this.watchedComplex.setMeans();
+                     
              // log scale stuff handled in paintValueRing
-             double paintRad = this.watchedComplex.getHarmonicMean() ;
-
+             double paintRad = this.watchedComplex.getHarmonicMean();
+//             double paintVec = 2.0 * this.watchedComplex.getVectorMean() - Math.PI/2;
+             double paintVec = 2.0 * this.watchedComplex.getVectorMean();
+             
+//             System.err.println("paintRad: "+paintRad);
+//             System.err.println("paintVec: "+paintVec);
+             
              this.paintValueRing(g2d, paintRad, this.frameLeft,this.frameTop);
-             this.paintRay(g2d, -2.0 * this.watchedComplex.getVectorMean(),this.frameLeft,this.frameTop);
+             this.paintRay(g2d, paintVec,this.frameLeft,this.frameTop);
         }
     }
 

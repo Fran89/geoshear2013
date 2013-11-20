@@ -11,5 +11,7 @@ package edu.williams.geoshear2013;
 public interface Watcher {
     public void reactTo(Watchable w, Object arg);
     public void setWatched(Watchable w);
+    public void clearWatched();
+    public void clearWatched(Watchable w);
     public Watchable getWatched();    
 }

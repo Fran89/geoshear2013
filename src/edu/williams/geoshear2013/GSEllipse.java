@@ -175,7 +175,11 @@ public class GSEllipse {
         if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
             this.thetaRad = this.thetaRad * -1;
         }
-        
+
+        // constrain angles between pi/2(90) and pi/-2(-90)
+        while (this.thetaRad > Math.PI/2) { this.thetaRad -= Math.PI; }
+        while (this.thetaRad < Math.PI/-2) { this.thetaRad += Math.PI; }
+            
         this.setMatrixFromKeyData(); // resets the matrix based on the appropriately signed thetaRad
     }
 

@@ -409,4 +409,14 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     {
         return chart.getWatched();
     }
+    public void clearWatched()
+    {
+        chart.clearWatched();
+    }
+
+    // NOTE: in this implemetation there is no partial watcher clearing - clearing any clears all
+    public void clearWatched(Watchable w)
+    {
+        chart.clearWatched(w);
+    }
 }
