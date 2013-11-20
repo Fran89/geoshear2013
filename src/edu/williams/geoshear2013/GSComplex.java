@@ -99,20 +99,24 @@ public class GSComplex implements Watchable {
     public String serializeToTabDelimitedSpecificSet(int setIndex) {
         String s = "";
         s += "\n["+GSComplex.KEY_CENTER+"]\n";
+        s += GSComplex.KEY_CENTER+"\n";
         s += GSPoint.serializeHeadersToTabDelimited()+"\n";
         s += this.center.serializeToTabDelimited()+"\n";
 
         s += "\n["+GSComplex.KEY_BG_IMAGE+"]\n";
+        s += GSComplex.KEY_BG_IMAGE+"\n";
         if (! this.getBgImageFileName().isEmpty()) {
             s += "File\n";
             s += this.getBgImageFileName()+"\n";
         }
 
         s += "\n["+GSComplex.KEY_PEBBLES+"]\n";
+        s += GSComplex.KEY_PEBBLES+"\n";
         s += GSPebble.serializeHeadersToTabDelimited()+"\n";
         s += this.pebbleSets.get(setIndex).serializeToTabDelimited()+"\n";
         
         s += "\n["+GSComplex.KEY_DEFORMATIONS+"]\n";
+        s += GSComplex.KEY_DEFORMATIONS+"\n";
         if (setIndex == 0) {
             s += Deformation.serializeHeadersToTabDelimited()+"\n";
             s += this.deformations.serializeToTabDelimited()+"\n";
@@ -123,13 +127,42 @@ public class GSComplex implements Watchable {
     public static GSComplex deserialize(String serializedGSComplex) {
         GSComplex gsc = new GSComplex();
                
-        serializedGSComplex = serializedGSComplex.replaceAll("(?m)^\\s+#",""); // remove comments
+        serializedGSComplex = serializedGSComplex.replaceAll("(?m)^\\s*#",""); // remove comments
         serializedGSComplex = serializedGSComplex.replaceAll("(?m)^\\s*?\n",""); // remove blank lines
         
-//        System.err.println(serializedGSComplex);
+        //System.err.println(serializedGSComplex);
 
         if (serializedGSComplex.indexOf("\t") > -1) {
-            Util.todo("implement deserialization of tabbed data");
+            String[] gscData = serializedGSComplex.split(GSComplex.SERIAL_TOKEN);
+            for(int i=0; i < gscData.length; i++) {
+                gscData[i] = gscData[i].trim();
+                if (gscData[i].isEmpty()) {
+                    continue;  // skip empty sections
+                }
+                String data = gscData[i];
+                data = data.substring(data.indexOf('\n')+1); // strip the first line - the identifier for the section
+                data = data.substring(data.indexOf('\n')+1); // strip the second line of the section, the headers for the columns
+                if (gscData[i].startsWith(GSComplex.KEY_PEBBLES)) {
+                    GSPebbleSet basePS = GSPebbleSet.deserialize(data);
+                    basePS.ofComplex = gsc;
+                    gsc.pebbleSets.clear();
+                    gsc.pebbleSets.add(basePS);
+                }
+                if (gscData[i].startsWith(GSComplex.KEY_DEFORMATIONS)) {
+                    GSDeformationSeries ds = GSDeformationSeries.deserialize(data);
+                    gsc.deformations = ds;
+                }
+                if (gscData[i].startsWith(GSComplex.KEY_BG_IMAGE)) {
+                    if (! data.isEmpty())
+                    {
+                        gsc.setBgImageFileName(data);
+                        gsc.loadBgImage();
+                    }
+                }
+                if (gscData[i].startsWith(GSComplex.KEY_CENTER)) {
+                    gsc.setCenter(GSPoint.deserialize(data));
+                }
+            }
         } else {
             String[] gscData = serializedGSComplex.split(GSComplex.SERIAL_TOKEN);
             for(int i=0; i < gscData.length; i++) {

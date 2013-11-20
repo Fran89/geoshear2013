@@ -21,11 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /*
  * TODO:
- *  - (2) OPTIONAL implement change tracks in cartesian chart
+ *  - implement load/import tab-delimited data
+ *  - (1) OPTIONAL implement deformation history/series chart
+ *  - (3) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (1) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (.5) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
- *  - (1) OPTIONAL implement deformation history/series chart
  *  - (1) final code clean up
  *    + find and resolve remaining to-do items
  *    + find and remove dev/debug output / comments
@@ -458,6 +459,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         jMenuItemSave = new javax.swing.JMenuItem();
         jMenuItemLoad = new javax.swing.JMenuItem();
         jMenuItemExportAsTabbed = new javax.swing.JMenuItem();
+        jMenuItemImportFromTabbed = new javax.swing.JMenuItem();
         jMenuItemSaveCurrentDeformed = new javax.swing.JMenuItem();
         jMenuItemExportCurrentDeformed = new javax.swing.JMenuItem();
         DisplayMenu = new javax.swing.JMenu();
@@ -1253,6 +1255,14 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         });
         FileMenu.add(jMenuItemExportAsTabbed);
 
+        jMenuItemImportFromTabbed.setText("Import from .tab");
+        jMenuItemImportFromTabbed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemImportFromTabbedActionPerformed(evt);
+            }
+        });
+        FileMenu.add(jMenuItemImportFromTabbed);
+
         jMenuItemSaveCurrentDeformed.setText("Save current deformed");
         jMenuItemSaveCurrentDeformed.setToolTipText("Save the currently deformed view as a new basis (with no deformations)");
         jMenuItemSaveCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
@@ -1872,6 +1882,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
         File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Open");
         if (dataFile == null) { return; }
+        this.handleLoadFromFile(dataFile);
+    }
+    
+    private void handleLoadFromFile(File dataFile) {
         try
         {
             BufferedReader fin = new BufferedReader(new FileReader(dataFile.getCanonicalPath()));
@@ -2001,6 +2015,13 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private void jMenuItemChartRf2PhiPolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartRf2PhiPolarActionPerformed
         this.chartPolarRfPhi.setVisible(true);
     }//GEN-LAST:event_jMenuItemChartRf2PhiPolarActionPerformed
+
+    private void jMenuItemImportFromTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportFromTabbedActionPerformed
+//        xyz
+        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Import");
+        if (dataFile == null) { return; }
+        this.handleLoadFromFile(dataFile);
+    }//GEN-LAST:event_jMenuItemImportFromTabbedActionPerformed
 
     private void handleStrainNavPostAction() {
         this.gscUI.tentativeDeformationClear();
@@ -2472,6 +2493,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private javax.swing.JMenuItem jMenuItemChartRfPhiCart;
     private javax.swing.JMenuItem jMenuItemExportAsTabbed;
     private javax.swing.JMenuItem jMenuItemExportCurrentDeformed;
+    private javax.swing.JMenuItem jMenuItemImportFromTabbed;
     private javax.swing.JMenuItem jMenuItemLoad;
     private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JMenuItem jMenuItemSaveCurrentDeformed;

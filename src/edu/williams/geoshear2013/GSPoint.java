@@ -36,6 +36,9 @@ public class GSPoint {
     public static GSPoint deserialize(String serializedPoint) {
         serializedPoint = serializedPoint.trim();
         String[] xy = serializedPoint.split(",");
+        if (serializedPoint.indexOf("\t")>1) {
+            xy = serializedPoint.split("\t");
+        }
         xy[0] = xy[0].trim();
         xy[1] = xy[1].trim();
         try {
