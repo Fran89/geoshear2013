@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
@@ -23,28 +19,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
-/**
- * TODO (12-13 working days):
- *  X- (1) implement a basic cartesian RF-phi chart that shows a given pebbleset (by set, not index or deformation number)
- *    NOTE: fixed, linear scales to start with
- *    X+ (.25) implement click-inspections of the chart
- *    X+ (1) implement various basic options for the chart
- *    X+ (.5) then human adjustable scales
- *    X+ (.25) toggle to scales to log-based
- *  X- (.5) tie the current chart view to the strain nav system, so the chart view matches the gscUI panel
- *  X- (1) have the chart change as a tentative deformation is made
- *  X- (.25) calc means for pebble sets
- *    X+ implement/support option to display pebble set means on the chart
- *  X- (.5) implement option for adaptive scale
- *  X- (1.25) implement basic polar chart
- *  X- (2) support same options/processes in polar chart as in cartesian one
- *    X+ correct info-click in polar charts to use -180/180 scale instead of 0/360 scale
- *    X+ correct mean-painting in polar charts
+/*
+ * TODO:
  *  - (2) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (1) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (.5) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
- * 
+ *  - (1) OPTIONAL implement deformation history/series chart
  *  - (1) final code clean up
  *    + find and resolve remaining to-do items
  *    + find and remove dev/debug output / comments
@@ -52,18 +33,14 @@ import javax.swing.filechooser.FileFilter;
  * 
  *  - (1) write basic help text/file
  *    + note places that need additional work
- *
- * EXPLECTED COMPLETION DATE: December 10
- * 
- *  - turn over to Paul
- *    + arrange time for a tour / demo
- *    + deliver code
+ */
+
+/**
+ * GeoShear is a structural geology tool to explore and analyze shear, compression, and rotation deformations of sets of ellipses, which represent outlines of cross-sections of pebbles in conglomerate rocks.
  * 
  * @author cwarren
  */
 public class MainWindow extends javax.swing.JFrame {
-//    private double cx;
-//    private double cy;
     private GSComplexUI gscUI;
     private HelpWindow helpWindow;
     private AboutWindow aboutWindow;
@@ -157,25 +134,11 @@ public class MainWindow extends javax.swing.JFrame {
         
         this.gscUI = new GSComplexUI(new GSComplex(),this);
         this.initializeGscUI();
-//        int w = this.jPanelContainerDisplay.getWidth();
-//        int h = this.jPanelContainerDisplay.getHeight();
-//        this.gscUI.setPreferredSize (new java.awt.Dimension (w,h));
-//        this.gscUI.setBounds(0, 0, w, h);
-//        this.gscUI.setDoubleBuffered (true);
-//        this.gscUI.setCenter(this.jPanelContainerDisplay.getWidth()/2, this.jPanelContainerDisplay.getHeight()/2);
         this.jPanelContainerDisplay.add(this.gscUI);
 
-        // dev data
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,Math.PI/2 + Math.PI / 5));
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,200,100,100,Math.PI/2 + Math.PI / 5));
-        
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,200,150,100,0));
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,200,150,100,.5));
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(-150,-200,150,100,1));
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(150,-200,150,100,1.5));
-       
-        GSPebble testPeb = new GSPebble("p11",100,100,30,20,0, Color.CYAN);
-        testPeb.setSelected(true);
+        // DEV DATA
+//        GSPebble testPeb = new GSPebble("p11",100,100,30,20,0, Color.CYAN);
+//        testPeb.setSelected(true);
         
 //        System.err.println("test peb : "+testPeb.serialize());
 //        GSPebble tp2 = GSPebble.deserialize(testPeb.serialize());         
@@ -186,11 +149,11 @@ public class MainWindow extends javax.swing.JFrame {
 //        System.err.println("(tab) test peb : "+testPeb.serializeToTabDelimited());
 //        tp2 = GSPebble.deserialize(testPeb.serializeToTabDelimited()); 
 //        System.err.println("(tab) test peb2: "+tp2.serializeToTabDelimited());
-
-        this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
-        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
+//
+//        this.gscUI.gsc.pebbleSets.getLast().add(testPeb);
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p12",200,100,45,30,.5, Color.GREEN));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p13",100,200,60,40,-1, Color.BLUE));
+//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p14",200,200,75,50,2, Color.MAGENTA));
 
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p21",-100,100,30,20,0, Color.CYAN));
 //        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p22",-200,100,45,30,.5, Color.GREEN));
@@ -379,32 +342,15 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p168",250,-300,25,21.5,6.2
 this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.24600669589452, new Color(125,114,51)));
 */
 
-        //        
-//        Deformation testDef = new Deformation(1,.5,0,1);
-//        System.err.println("testDef :"+testDef.serialize());
-//        Deformation testDef2 = Deformation.deserialize(testDef.serialize());
-//        System.err.println("testDef2:"+testDef2.serialize());
-//        System.err.println("testDef==testDef2: "+testDef.equals(testDef2));
-//        
-//        System.err.println("(tab)testDef :"+testDef.serializeToTabDelimited());
-//        testDef2 = Deformation.deserialize(testDef.serializeToTabDelimited());
-//        System.err.println("(tab)testDef2:"+testDef2.serializeToTabDelimited());
-//        System.err.println("testDef==testDef2: "+testDef.equals(testDef2));        
-//        this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble(0,0,150,150,0));
-
-//        this.gscUI.setCenter(this.displayPanel.getWidth()/2, this.displayPanel.getHeight()/2);
-//        this.gscUI.repaint();
         this.updateDeformNavControlsStates();
         this.updateStateOfCurrentDeformControls();
         this.updateStrainMatricesVisibilities();
         
         this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
-//        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
         this.gscUI.gsc.addWatcher(this.chartCartRfPhi);
         this.gscUI.addWatcher(this.chartCartRfPhi);
         
         this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
-//        this.gscUI.gsc.deformations.addWatcher(chartCartRfPhi);
         this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
         this.gscUI.addWatcher(this.chartPolarRfPhi);
     }
@@ -495,9 +441,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         jTextFieldNavStrainM01 = new javax.swing.JTextField();
         jLabelNavStrainRightBracket = new javax.swing.JLabel();
         jTextFieldNavStrainM11 = new javax.swing.JTextField();
-        jPanelStrainControls = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jToggleButtonEditPebbles = new javax.swing.JToggleButton();
         jButtonPebbleColorSet = new javax.swing.JButton();
@@ -637,9 +580,11 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
 
         jPanelContainerControls.add(jPanelDisplayControls);
 
+        jPanelDeformControls.setAutoscrolls(true);
         jPanelDeformControls.setMaximumSize(new java.awt.Dimension(5000, 5000));
         jPanelDeformControls.setMinimumSize(new java.awt.Dimension(1, 1));
-        jPanelDeformControls.setPreferredSize(new java.awt.Dimension(220, 425));
+        jPanelDeformControls.setOpaque(false);
+        jPanelDeformControls.setPreferredSize(new java.awt.Dimension(220, 375));
         jPanelDeformControls.setRequestFocusEnabled(false);
         jPanelDeformControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -887,19 +832,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         jTextFieldRFPhiCurrentRF.setText("1.000");
         jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
         jTextFieldRFPhiCurrentRF.setForeground(GSComplexUI.INFO_COLOR_TENT);
-        jTextFieldRFPhiCurrentRF.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldRFPhiCurrentRFFocusLost(evt);
-            }
-        });
-        jTextFieldRFPhiCurrentRF.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldRFPhiCurrentRFKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldRFPhiCurrentRFKeyReleased(evt);
-            }
-        });
         jPanelDeformMatrixLeft.add(jTextFieldRFPhiCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 6, 60, 20));
 
         jLabelRf.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -1043,19 +975,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         jTextFieldRFPhiCurrentPhi.setText("0.000");
         jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
         jTextFieldRFPhiCurrentPhi.setForeground(GSComplexUI.INFO_COLOR_TENT);
-        jTextFieldRFPhiCurrentPhi.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldRFPhiCurrentPhiFocusLost(evt);
-            }
-        });
-        jTextFieldRFPhiCurrentPhi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldRFPhiCurrentPhiKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldRFPhiCurrentPhiKeyReleased(evt);
-            }
-        });
         jPanelDeformMatrixRight.add(jTextFieldRFPhiCurrentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 60, 20));
 
         jLabelPhi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1161,39 +1080,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         jPanelDeformControls.add(jPanelDeformMatrixRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 110, 230));
 
         jPanelContainerControls.add(jPanelDeformControls);
-
-        jPanelStrainControls.setAlignmentX(0.0F);
-        jPanelStrainControls.setAlignmentY(0.0F);
-        jPanelStrainControls.setMaximumSize(new java.awt.Dimension(220, 100));
-        jPanelStrainControls.setMinimumSize(new java.awt.Dimension(220, 100));
-        jPanelStrainControls.setPreferredSize(new java.awt.Dimension(220, 100));
-
-        jLabel8.setText("do gsc bg coloring? drag pebble?");
-
-        jLabel2.setText("do export to .tab");
-
-        javax.swing.GroupLayout jPanelStrainControlsLayout = new javax.swing.GroupLayout(jPanelStrainControls);
-        jPanelStrainControls.setLayout(jPanelStrainControlsLayout);
-        jPanelStrainControlsLayout.setHorizontalGroup(
-            jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanelStrainControlsLayout.setVerticalGroup(
-            jPanelStrainControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStrainControlsLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-
-        jPanelContainerControls.add(jPanelStrainControls);
 
         jPanelEditPebbleControls.setAlignmentX(0.0F);
         jPanelEditPebbleControls.setAlignmentY(0.0F);
@@ -1476,8 +1362,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
-            .addComponent(jPanelContainerControls, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelContainerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelContainerControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1498,7 +1386,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }//GEN-LAST:event_jPanelContainerDisplayMouseDragged
 
     private void jPanelContainerDisplayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayMousePressed
-//        System.err.println("in jPanelContainerDisplayMousePressed");
         this.gscUI.handleMousePressed(evt);
         this.jPanelContainerDisplay.requestFocus();
     }//GEN-LAST:event_jPanelContainerDisplayMousePressed
@@ -1516,7 +1403,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }//GEN-LAST:event_jPanelContainerDisplayKeyPressed
 
     private void jPanelContainerDisplayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayKeyReleased
-//        System.err.println("in jPanelContainerDisplayKeyReleased");
         this.gscUI.handleKeyReleased(evt);
     }//GEN-LAST:event_jPanelContainerDisplayKeyReleased
 
@@ -1589,15 +1475,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         if (this.jButtonDeformApplyRemove.getText().equals(MainWindow.LABEL_DEFORM_APPLY)) {
             this.gscUI.handleApplyTentativeTransform();
             this.handleDeformationReset();
-//            this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
         }
         else if (this.jButtonDeformApplyRemove.getText().equals(MainWindow.LABEL_DEFORM_REMOVE)) {
-//            Util.todo("implement deform removal");
-//            this.gscUI.gsc.deformations.remove(this.gscUI.gsc.getCurrentDeformationNumber()-2);
             this.gscUI.gsc.removeCurrentDeformation();
             this.gscUI.resetDeformations();
-//            this.updateNavPositionInfo();
-//            this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
         }
         this.updateNavPositionInfo();
         this.setValuesForCumuStrain();
@@ -1625,8 +1506,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.setValuesForCumuTentStrain();
             this.handleDeformationReset();
             this.updateStateOfCurrentDeformControls();
-//            this.jButtonDeformApplyRemove.setText("Remove");
-//            this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
             this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
         } else
         if (d.isShearing()) {
@@ -1647,9 +1526,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.setValueForControl(this.jTextFieldRotRad,d.getRotAngleRad());
         }
         this.updateStateOfCurrentDeformControls();
-//        this.jButtonDeformApplyRemove.setEnabled(! d.isIdentity());
         if (! d.isIdentity()) {
-//            this.jButtonDeformApplyRemove.setText("Apply");
             this.jLabelStrainNavPosition.setText("* /");
         }
         this.setValuesForCumuTentStrain();
@@ -1669,7 +1546,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }
 
     public void updateNavStrainInfo() {
-//        System.err.println("called updateNavStrainInfo");
         if (this.gscUI.gsc.getCurrentDeformationNumber() >= 2) {
             Deformation d = this.gscUI.gsc.deformations.get(this.gscUI.gsc.getCurrentDeformationNumber()-2);
             this.setValueForControl(this.jTextFieldNavStrainM00, d.m00);
@@ -1711,18 +1587,13 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.setVisibilityOnNavDeformStrainInfo(this.gscUI.tentativeDeformation.isIdentity() && this.gscUI.gsc.getCurrentDeformationNumber() > 1);
     }
 
+    
     public void updateOtherControlsFromRFPhiControls() {
-// TODO this is on hold until the base field updating is worked out - no cross-linking until basics are working
-//        Deformation dRF = Deformation.createFromRF(Double.parseDouble(this.jTextFieldRFPhiCurrentRF.getText()));
-//        Deformation dPhi = Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRFPhiCurrentPhi.getText()));
-//        GSPebble s = new GSPebble(10,10);
-//        s.deform(dRF);
-//        s.deform(dPhi);
-//        this.updateStrainControlsFromDeformation(s.getMatrix());
+        Util.todo("this is unsupported due to ambiguities in decomposing RF-phi data into deformation data");
     }
     
     public void updateOtherControlsFromStrainControls() {
-// TODO this is on hold until the base field updating is worked out - no cross-linking until basics are working
+        Util.todo("this is unsupported due to ambiguities in decomposing strain data into deformation data");
     }
     
     private boolean controlFieldHasDefaultValue(javax.swing.JTextField controlField) {
@@ -1837,7 +1708,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     public void handleDeformReset() {
         this.gscUI.tentativeDeformationClear();
         this.handleDeformationReset();
-//        this.setValuesForCumuTentStrain();
         this.gscUI.repaint();
     }
     
@@ -1864,30 +1734,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private void jTextFieldRotRadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRotRadFocusLost
         this.processLostFocusOnControl(this.jTextFieldRotRad);
     }//GEN-LAST:event_jTextFieldRotRadFocusLost
-
-    private void jTextFieldRFPhiCurrentRFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFKeyPressed
-//        this.alterValueByKeyPressInControl(this.jTextFieldRFPhiCurrentRF, evt.getKeyCode());
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFKeyPressed
-
-    private void jTextFieldRFPhiCurrentRFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFKeyReleased
-//        this.processKeyReleaseOnControl(this.jTextFieldRFPhiCurrentRF,evt);
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFKeyReleased
-
-    private void jTextFieldRFPhiCurrentPhiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiKeyPressed
-//        this.alterValueByKeyPressInControl(this.jTextFieldRFPhiCurrentPhi, evt.getKeyCode());
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiKeyPressed
-
-    private void jTextFieldRFPhiCurrentPhiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiKeyReleased
-//        this.processKeyReleaseOnControl(this.jTextFieldRFPhiCurrentPhi,evt);
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiKeyReleased
-
-    private void jTextFieldRFPhiCurrentRFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentRFFocusLost
-//        this.processLostFocusOnControl(this.jTextFieldRFPhiCurrentRF);
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentRFFocusLost
-
-    private void jTextFieldRFPhiCurrentPhiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRFPhiCurrentPhiFocusLost
-//        this.processLostFocusOnControl(this.jTextFieldRFPhiCurrentPhi);
-    }//GEN-LAST:event_jTextFieldRFPhiCurrentPhiFocusLost
 
     private void jButtonStrainNavNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStrainNavNextActionPerformed
         this.gscUI.gsc.nextDeformation();
@@ -1925,7 +1771,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }//GEN-LAST:event_jCheckBoxMenuItemShowStrainEllipsesActionPerformed
 
     private void jToggleButtonEditPebblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditPebblesActionPerformed
-//        this.jToggleButtonEditPebbles.isSelected();
         this.setEnableOnDeformControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnRfPhiControls(! this.jToggleButtonEditPebbles.isSelected());
         this.setEnableOnStrainMatrixControls(! this.jToggleButtonEditPebbles.isSelected());
@@ -1992,7 +1837,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             theFilter = this.filterImage;
         }
         this.fileChooser.setFileFilter (theFilter);
-//        int returnVal = fileChooser.showSaveDialog (this);
         int returnVal = fileChooser.showDialog(this, buttonText);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
@@ -2112,7 +1956,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
     private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed
-//        Util.todo("implement export");
         File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
         if (saveFile == null) { return; }
         this.handleDataToFile(saveFile,this.gscUI.gsc.serializeToTabDelimited());
@@ -2140,7 +1983,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             Robot robot = new Robot();
             BufferedImage image = robot.createScreenCapture (new Rectangle(this.jPanelContainerDisplay.getLocationOnScreen (), this.jPanelContainerDisplay.getSize ()));
 
-            //this.imageFormatWin.setVisible (true);
             File saveFile = this.chooseFileForIO(MainWindow.FILE_IO_TYPE_IMG, "Save");
             if (saveFile == null) { return; }
             ImageIO.write (image,Util.getExtension (saveFile),saveFile);
@@ -2161,14 +2003,12 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }//GEN-LAST:event_jMenuItemChartRf2PhiPolarActionPerformed
 
     private void handleStrainNavPostAction() {
-//        this.clearTentativeDeform();
         this.gscUI.tentativeDeformationClear();
         this.handleDeformationReset();
         this.updateDeformNavControlsStates();
         this.setValuesForCumuRfPhi();
         this.setValuesForCumuTentRfPhi();
         this.setValuesForCumuStrain();
-//        this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
         this.updateNavPositionInfo();
         this.updateStateOfCurrentDeformControls();
         this.updateNavStrainInfo();
@@ -2180,10 +2020,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
         this.jLabelStrainNavCount.setText(Integer.toString(this.gscUI.gsc.deformations.size()));
     }
-    
-//    private void clearTentativeDeform() {
-//        this.gscUI.tentativeDeformationClear();
-//    }
     
     private void processKeyReleaseOnControl(javax.swing.JTextField controlField, java.awt.event.KeyEvent evt) {
         if (! this.keyCodeIgnoredOnRelease(evt.getKeyCode())) {
@@ -2224,7 +2060,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }
     
     private boolean keyCodeIgnoredOnRelease(int kc) {
-//        System.err.println("checking ignore on keycode "+kc);
         return 
             (kc == java.awt.event.KeyEvent.VK_UP) ||
             (kc == java.awt.event.KeyEvent.VK_DOWN) ||
@@ -2238,16 +2073,12 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }
     
     private void alterValueByKeyPressInControl(javax.swing.JTextField controlField,int keyCode) {
-//        System.out.println("alterDefVal using key code: "+keyCode);
         String initialFieldText = controlField.getText();
-//        System.out.println("initial text: "+initialFieldText);
         ValueConstrainer vc = (ValueConstrainer) this.displayNumberConstraints.get(controlField);
         if (keyCode == java.awt.event.KeyEvent.VK_UP) {
-//            System.out.println("up key");
             Util.fieldValueUp(controlField, vc);
             this.handleControlChange(controlField);
         } else if (keyCode == java.awt.event.KeyEvent.VK_DOWN) {
-//            System.out.println("down key");
             Util.fieldValueDown(controlField, vc);
             this.handleControlChange(controlField);
         }
@@ -2259,10 +2090,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.enableStrainMatrixControls();
         this.enableRfPhiControls();
         this.updateStateOfCurrentDeformControls();
-//        this.jButtonDeformApplyRemove.setText("Remove");
-//        this.jButtonDeformApplyRemove.setEnabled(false);
         this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1) + " /");
-//        this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
         this.setValuesForCumuStrain();
         this.setValuesForCumuRfPhi();
         this.setValuesForCumuTentStrain();
@@ -2277,17 +2105,12 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.setOtherFieldsLinkedToThisField(controlField);
         this.updateGSCUITentativeDeformBasedOn(controlField);
         if (this.gscUI.isTentativeDeformationCleared()) {
-//            this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_REMOVE);
-//            this.jButtonDeformApplyRemove.setEnabled(false);
             this.updateStateOfCurrentDeformControls();
-//            this.jLabelStrainNavPosition.setText(this.gscUI.gsc.deformations.size()+" /");
             this.jLabelStrainNavPosition.setText((this.gscUI.gsc.getCurrentDeformationNumber()-1)+" /");
             this.enableDeformControls();
             this.enableStrainMatrixControls();
             this.enableRfPhiControls();
         } else {
-//            this.jButtonDeformApplyRemove.setEnabled(true);
-//            this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_APPLY);
             this.updateStateOfCurrentDeformControls();
             this.jLabelStrainNavPosition.setText("* /");
             if (this.isControlDeform(controlField)) {
@@ -2325,19 +2148,15 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     }
     
     private void setValuesForCumuStrain() {
-//        Deformation d = this.gscUI.gsc.deformations.getCompositeTransform();
         Deformation d = this.gscUI.gsc.getCompositeTransform();
         this.jLabelCumuStrainM00.setText(Util.truncForDisplay(d.m00));
         this.jLabelCumuStrainM10.setText(Util.truncForDisplay(d.m10*-1));
         this.jLabelCumuStrainM01.setText(Util.truncForDisplay(d.m01*-1));
         this.jLabelCumuStrainM11.setText(Util.truncForDisplay(d.m11));
-//        this.setValuesForCumuRfPhi();
     }
     private void setValuesForCumuRfPhi() {
         GSPebble s = new GSPebble(10,10);
-//        s.deform(this.gscUI.gsc.deformations.getCompositeTransform());
         s.deform(this.gscUI.gsc.getCompositeTransform());
-//        System.err.println("cumu rf-phi peb is "+s.keyDataAsString());
         this.setValueForControl(this.jTextFieldStrainCumuRF, s.getMajorRadius()/s.getMinorRadius());
         this.setValueForControl(this.jTextFieldStrainCumuPhi, Util.toDegrees(s.getThetaRad()));        
     }
@@ -2347,22 +2166,13 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.jLabelCumuTentStrainM10.setText(this.jLabelCumuStrainM10.getText());
             this.jLabelCumuTentStrainM01.setText(this.jLabelCumuStrainM01.getText());
             this.jLabelCumuTentStrainM11.setText(this.jLabelCumuStrainM11.getText());
-//            this.jTextFieldStrainCumuTentRF.setText(this.jTextFieldStrainCumuRF.getText());
-//            this.jTextFieldStrainCumuTentPhi.setText(this.jTextFieldStrainCumuPhi.getText());
         } else {
             Deformation dT = this.gscUI.getTentativeDeformationCopy();
-//            Matrix2x2 d =  dT.times(this.gscUI.gsc.deformations.getCompositeTransform());
             Matrix2x2 d =  dT.times(this.gscUI.gsc.getCompositeTransform());
             this.jLabelCumuTentStrainM00.setText(Util.truncForDisplay(d.m00));
             this.jLabelCumuTentStrainM10.setText(Util.truncForDisplay(d.m10*-1));
             this.jLabelCumuTentStrainM01.setText(Util.truncForDisplay(d.m01*-1));
             this.jLabelCumuTentStrainM11.setText(Util.truncForDisplay(d.m11));
-//            Deformation ct = this.gscUI.cumuDeformation.clone();
-//            ct.timesInPlace(this.gscUI.tentativeDeformation);
-//            GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
-//            strain.deform(ct);
-//            this.jTextFieldStrainCumuTentRF.setText(Util.truncForDisplay(strain.getRF()));
-//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.thetaRad)));
         }
         this.setValuesForCumuTentRfPhi();
     }
@@ -2375,8 +2185,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             ct.timesInPlace(this.gscUI.tentativeDeformation);
             GSPebble strain = new GSPebble(Deformation.DISPLAY_RADIUS, Deformation.DISPLAY_RADIUS);
             strain.deform(ct);
-//            this.jTextFieldStrainCumuTentRF.setText(Util.truncForDisplay(strain.getRF()));
-//            this.jTextFieldStrainCumuTentPhi.setText(Util.truncForDisplay(Util.toDegrees(strain.thetaRad)));
             this.setValueForControl(this.jTextFieldStrainCumuTentRF, strain.getRF());
             this.setValueForControl(this.jTextFieldStrainCumuTentPhi, Util.toDegrees(strain.thetaRad));        
         }
@@ -2419,7 +2227,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         }
     }
     
-    // TODO generalize for all controls
     private void updateGSCUITentativeDeformBasedOn(javax.swing.JTextField controlField) {
         if ((this.jTextFieldShearX.equals(controlField)) || (this.jTextFieldShearY.equals(controlField))) {
             this.gscUI.tentativeDeformationSetToShear(Double.parseDouble(this.jTextFieldShearX.getText()), 
@@ -2469,6 +2276,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.jTextFieldRotRad.equals(controlField);
     }
     
+    
     // NOTE: as of 2013/11/01 strain matrix controls are not active (until various pplication of deformation issues can be resolved)    
     private void disableStrainMatrixControls() {
 //        this.setEnableOnStrainMatrixControls(false);
@@ -2476,6 +2284,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private void enableStrainMatrixControls() {
 //        this.setEnableOnStrainMatrixControls(true);
     }
+    
     private void setEnableOnStrainMatrixControls(boolean state) {
         this.jTextFieldStrainM00.setEnabled(state);
         this.jTextFieldStrainM01.setEnabled(state);
@@ -2625,8 +2434,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowStrainEllipses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;
     private javax.swing.JLabel jLabelCompressrY;
@@ -2681,7 +2488,6 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private javax.swing.JPanel jPanelEditPebbleControls;
     private javax.swing.JPanel jPanelResetButtons;
     private javax.swing.JPanel jPanelSnapshotControls;
-    private javax.swing.JPanel jPanelStrainControls;
     private javax.swing.JPanel jPanelZoomControl;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSlider jSliderZoom;
