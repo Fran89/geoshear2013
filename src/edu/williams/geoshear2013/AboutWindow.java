@@ -93,7 +93,7 @@ public class AboutWindow extends javax.swing.JFrame {
         jLabelAboutTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabelAboutTitle.setText("GeoShear 2.0");
 
-        jLabelCopyright.setText("Copyright 2010 by Chris Warren and Paul Karabinos, Williams College OIT and Geology Department");
+        jLabelCopyright.setText("Copyright 2010 by Chris Warren, Williams College Office for Information Technology");
 
         jLabelAboutTagline.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelAboutTagline.setText("A program to explore and analyze shear and other deformation effects");

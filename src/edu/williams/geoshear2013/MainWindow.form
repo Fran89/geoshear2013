@@ -182,13 +182,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="ChartsMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Charts"/>
+            <Property name="text" type="java.lang.String" value="Windows"/>
             <Property name="toolTipText" type="java.lang.String" value="Open new windows to display charts"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRfPhiCart">
               <Properties>
-                <Property name="text" type="java.lang.String" value="RF-Phi cartesian"/>
+                <Property name="text" type="java.lang.String" value="RF-Phi cartesian chart"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartRfPhiCartActionPerformed"/>
@@ -196,10 +196,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRf2PhiPolar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="RF-2*Phi polar"/>
+                <Property name="text" type="java.lang.String" value="RF-2*Phi polar chart"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartRf2PhiPolarActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartDeformationSeries">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Deformations series"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartDeformationSeriesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

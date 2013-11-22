@@ -103,7 +103,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelCopyright">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Copyright 2010 by Chris Warren and Paul Karabinos, Williams College OIT and Geology Department"/>
+        <Property name="text" type="java.lang.String" value="Copyright 2010 by Chris Warren, Williams College Office for Information Technology"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelAboutTagline">

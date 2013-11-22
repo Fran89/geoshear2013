@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /*
  * TODO:
- *  - implement load/import tab-delimited data
  *  - (1) OPTIONAL implement deformation history/series chart
  *  - (3) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
@@ -64,6 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     private GSComplexChartFrameCartRfPhi chartCartRfPhi;
     private GSComplexChartFramePolarRfPhi chartPolarRfPhi;
+    private GSComplexInfoFrameDeformationSeries windowDeformationsSeries;
     
 /**
      * Creates new form MainWindow
@@ -354,6 +354,8 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
         this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
         this.gscUI.addWatcher(this.chartPolarRfPhi);
+        
+        this.windowDeformationsSeries = new GSComplexInfoFrameDeformationSeries(this);
     }
 
     /**
@@ -471,6 +473,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         ChartsMenu = new javax.swing.JMenu();
         jMenuItemChartRfPhiCart = new javax.swing.JMenuItem();
         jMenuItemChartRf2PhiPolar = new javax.swing.JMenuItem();
+        jMenuItemChartDeformationSeries = new javax.swing.JMenuItem();
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel14.setText("[");
@@ -1337,10 +1340,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
 
         MainWindowMenuBar.add(DisplayMenu);
 
-        ChartsMenu.setText("Charts");
+        ChartsMenu.setText("Windows");
         ChartsMenu.setToolTipText("Open new windows to display charts");
 
-        jMenuItemChartRfPhiCart.setText("RF-Phi cartesian");
+        jMenuItemChartRfPhiCart.setText("RF-Phi cartesian chart");
         jMenuItemChartRfPhiCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRfPhiCartActionPerformed(evt);
@@ -1348,13 +1351,21 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         });
         ChartsMenu.add(jMenuItemChartRfPhiCart);
 
-        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi polar");
+        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi polar chart");
         jMenuItemChartRf2PhiPolar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRf2PhiPolarActionPerformed(evt);
             }
         });
         ChartsMenu.add(jMenuItemChartRf2PhiPolar);
+
+        jMenuItemChartDeformationSeries.setText("Deformations series");
+        jMenuItemChartDeformationSeries.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemChartDeformationSeriesActionPerformed(evt);
+            }
+        });
+        ChartsMenu.add(jMenuItemChartDeformationSeries);
 
         MainWindowMenuBar.add(ChartsMenu);
 
@@ -1499,7 +1510,12 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.updateStrainMatricesVisibilities();
         this.updateNavStrainInfo();
         this.updateStateOfCurrentDeformControls();
-        this.gscUI.repaint();        
+        this.windowDeformationsSeries.setFromDeformationSeries(this.gscUI.gsc.deformations);
+        this.gscUI.repaint();
+//        if (this.windowDeformationsSeries.isVisible()) { // quick hack to fix issue with interior panes not actually updating on repaint - no time for full understanding/debugging
+//            this.windowDeformationsSeries.setVisible(false);
+//            this.windowDeformationsSeries.setVisible(true);
+//        }
     }
     
     public void updateDeformNavControlsStates() {
@@ -2023,6 +2039,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.handleLoadFromFile(dataFile);
     }//GEN-LAST:event_jMenuItemImportFromTabbedActionPerformed
 
+    private void jMenuItemChartDeformationSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartDeformationSeriesActionPerformed
+        this.windowDeformationsSeries.setVisible(true);
+    }//GEN-LAST:event_jMenuItemChartDeformationSeriesActionPerformed
+
     private void handleStrainNavPostAction() {
         this.gscUI.tentativeDeformationClear();
         this.handleDeformationReset();
@@ -2489,6 +2509,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
     private javax.swing.JLabel jLabelStrainNavCount;
     private javax.swing.JLabel jLabelStrainNavPosition;
     private javax.swing.JLabel jLabelZoom;
+    private javax.swing.JMenuItem jMenuItemChartDeformationSeries;
     private javax.swing.JMenuItem jMenuItemChartRf2PhiPolar;
     private javax.swing.JMenuItem jMenuItemChartRfPhiCart;
     private javax.swing.JMenuItem jMenuItemExportAsTabbed;
