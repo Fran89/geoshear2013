@@ -26,9 +26,12 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
     public GSComplexInfoFrameDeformationSeries(MainWindow launchedFrom) {
         this.launchedFromWindow = launchedFrom;
         initComponents();
+        
+        // set this at the bottom center of the main window
         Point startingLoc = launchedFromWindow.getLocation();
         startingLoc.translate(launchedFromWindow.getWidth()/2, launchedFromWindow.getHeight()-10);
         this.setLocation(startingLoc);
+
         this.setTitle("Deformations");
         this.currentDeformationComponentIndex = 0;
     }

@@ -48,23 +48,20 @@ class GSComplexUI extends JPanel implements Watchable {
     public static int UI_MODE_EDIT_PEBBLES = 2;
     public static int UI_MODE_STRAIN_NAV = 3;
 
-    public static double ZOOM_MIN = .1;
-    public static double ZOOM_MAX = 10;
+    public static double ZOOM_MIN = .025;
+    public static double ZOOM_MAX = 40;
     
     private static double zoomPerScrollFactor = .025;
 
-//    public static Color INFO_COLOR_TENT = Color.RED;
-//    public static Color INFO_COLOR_CUMUTENT = Color.PINK;
-//    public static Color INFO_COLOR_CUMU = Color.MAGENTA;
-    public static Color INFO_COLOR_TENT = new Color(180,0,0);
-    public static Color INFO_COLOR_CUMUTENT = new Color(140,0,0);
-    public static Color INFO_COLOR_CUMU = new Color(90,0,0);
+    public static Color INFO_COLOR_TENT = new Color(240,0,0);
+    public static Color INFO_COLOR_CUMUTENT = new Color(150,0,40);
+    public static Color INFO_COLOR_CUMU = new Color(60,0,0);
     public static Color INFO_COLOR_NAV_DEF = new Color(150,150,150);
     
-    private static BasicStroke INFO_STROKE_TENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 2 }, 0);
-    private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 6 }, 0);
-    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 4, 5 }, 0);
-    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(2,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 3 }, 0);
+    private static BasicStroke INFO_STROKE_TENT = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 3 }, 0);
+    private static BasicStroke INFO_STROKE_CUMUTENT = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 3, 6 }, 0);
+    private static BasicStroke INFO_STROKE_CUMU = new BasicStroke(4,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 4, 5 }, 0);
+    private static BasicStroke INFO_STROKE_NAV_DEF = new BasicStroke(3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,new float[] { 1, 4 }, 0);
     
     private double lastMouseDownX;
     private double lastMouseDownY;
@@ -99,8 +96,6 @@ class GSComplexUI extends JPanel implements Watchable {
     public Point2D newPebbleAxis2Pt1;
     public Point2D newPebbleAxis2Pt2;
     public double newPebbleAxis2ThetaRad;
-//    public 
-    
     
     private boolean flagDisplayPebbleAxes = true;
     private boolean flagDisplayPebbleFill = false;
@@ -127,7 +122,6 @@ class GSComplexUI extends JPanel implements Watchable {
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
         this.setModeDeforms();
-//        this.currentUIMode = GSComplexUI.UI_MODE_DEFORMS;
     }
     
     private void setDeformations() {
@@ -149,7 +143,6 @@ class GSComplexUI extends JPanel implements Watchable {
     private void setStrains() {
         this.tentativeStrain = new GSPebble(100,100);
         this.tentativeStrain.deform(this.tentativeDeformation);
-
         this.cumuStrain = new GSPebble(100,100);
         this.gsc.deformations.runAllDeformationsOn(cumuStrain,this.gsc.getCurrentDeformationNumber());
         this.notifyWatchers();
@@ -162,8 +155,6 @@ class GSComplexUI extends JPanel implements Watchable {
     }
 
     public void handleKeyReleased(java.awt.event.KeyEvent evt) {
-//        System.err.println("gscui handleKeyReleased");
-//        System.err.println(" evt: "+evt.toString());
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
@@ -178,7 +169,6 @@ class GSComplexUI extends JPanel implements Watchable {
             if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_FIRST_AXIS) {
                 if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
                     this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS;
-//                    this.newPebbleAxis1Pt2 =  (Point2D) this.lastMouseDragPoint.clone();
                     this.newPebbleAxis2ThetaRad = this.newPebbleAxis1ThetaRad + Math.PI/2;
                     if (this.newPebbleAxis2ThetaRad > Math.PI/2) {
                         this.newPebbleAxis2ThetaRad -= Math.PI;
@@ -236,8 +226,6 @@ class GSComplexUI extends JPanel implements Watchable {
     public Point2D fromGSCOrigin(Point2D panelClickP) {
         Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
         this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
-//        System.out.println("fromGSCOrigin: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
-            
         return new Point2D.Double((panelClickP.getX()-pointOfGSCOrigin.getX())/this.displayTransform.getScaleX(),
                                   (pointOfGSCOrigin.getY()-panelClickP.getY())/this.displayTransform.getScaleX());
     }
@@ -249,17 +237,10 @@ class GSComplexUI extends JPanel implements Watchable {
     public Point2D inGSCSystem(Point2D panelClickP) {
         Point2D gscPoint = (Point2D) panelClickP.clone();
         try {
-//            System.out.println("---------------");
             Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
-//            this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
-//            System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
-//            System.out.println("inGSCSystem: base gscPoint point is : "+gscPoint.toString());
             this.displayTransform.inverseTransform(gscPoint, gscPoint);
-//            System.out.println("inGSCSystem: invert display xfm gscPoint point is : "+gscPoint.toString());
             gscPoint.setLocation(gscPoint.getX()-pointOfGSCOrigin.getX(), pointOfGSCOrigin.getY()-gscPoint.getY());
-//            System.out.println("inGSCSystem: rel gsc center gscPoint point is : "+gscPoint.toString());
             Point2D altGscPoint = (Point2D) gscPoint.clone();
-//            for (int i=1; i < this.gsc.getCurrentDeformationNumber(); i++) {
             if (! this.isTentativeDeformationCleared()) {
                 if (this.tentativeDeformation.isScaling()) {
                     this.tentativeDeformation.asAffineTransform().inverseTransform(gscPoint, gscPoint);
@@ -275,25 +256,6 @@ class GSComplexUI extends JPanel implements Watchable {
                     d.transposed().asAffineTransform().transform(gscPoint, gscPoint);
                 }
             }
-//            System.out.println("inGSCSystem: composite xfm gscPoint point is : "+gscPoint.toString());
-            
-            //        Point2D pointOfGSCOrigin = this.gsc.getCenter().asPoint2D();
-    //        this.displayTransform.transform(pointOfGSCOrigin, pointOfGSCOrigin);
-    //        System.out.println("inGSCSystem: pointOfGSCOrigin point is : "+pointOfGSCOrigin.toString());
-    //            
-    //        Point2D.Double clickP = new Point2D.Double((panelClickP.getX()-pointOfGSCOrigin.getX())/this.displayTransform.getScaleX(),
-    //                                      (pointOfGSCOrigin.getY()-panelClickP.getY())/this.displayTransform.getScaleX());
-    //        
-    //        System.out.println("inGSCSystem: clickP pre-undeform point is : "+clickP.toString());
-    //        try {
-    ////            this.gsc.getCompositeTransform().transposed().asAffineTransform().createInverse().transform(clickP, clickP);
-    //            this.gsc.getCompositeTransform().asAffineTransform().createInverse().transform(clickP, clickP);
-    //        } catch (NoninvertibleTransformException ex) {
-    //            Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
-    //        }
-    //        System.out.println("inGSCSystem: clickP post-undeform point is : "+clickP.toString());
-    //        return clickP;
-    //        return clickP;
         } catch (NoninvertibleTransformException ex) {
             Logger.getLogger(GSComplexUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -302,7 +264,6 @@ class GSComplexUI extends JPanel implements Watchable {
     
     
     public void handleMousePressed(java.awt.event.MouseEvent evt) {
-//        System.out.println("handleMousePressed is : "+evt.toString());
         this.lastMouseDownX = evt.getPoint().x;
         this.lastMouseDownY = evt.getPoint().y;
         this.lastMouseDownPoint = (Point2D) evt.getPoint().clone();
@@ -329,17 +290,13 @@ class GSComplexUI extends JPanel implements Watchable {
 
         if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
             this.setDeformations();
-//            this.tentativeDeformation = new Deformation();
-//            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
             this.setStrains();
-
             this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN;
             this.newPebbleAxis1Pt1 = (Point2D) evt.getPoint().clone();
         }
     }  
 
     public void handleMouseReleased(java.awt.event.MouseEvent evt) {
-//        System.out.println("handleMouseReleased is : "+evt.toString());
         this.altIsDown = evt.isAltDown();
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
@@ -350,18 +307,11 @@ class GSComplexUI extends JPanel implements Watchable {
     
     public void tentativeDeformationSetFromRfPhi(double rf, double phiDeg) {
         this.setDeformations(Deformation.createFromRfPhi(rf,phiDeg));
-
-//        this.tentativeDeformation = ;
-//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
-//        System.err.println("td on set from rf phi: "+this.tentativeDeformation.toString());
         this.setStrains();
     }
     
     public void tentativeDeformationSetToRotate(double angleRad) {
-//        this.tentativeDeformation = new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
         this.setDeformations(Deformation.createFromAngle(angleRad));
-//        this.tentativeDeformation = Deformation.createFromAngle(angleRad);
-//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
     }
     
@@ -370,12 +320,9 @@ class GSComplexUI extends JPanel implements Watchable {
         if (compressionFactorY < .01) { compressionFactorY = .01; }
         if (isInXDirection) {
             this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX));
-//            this.tentativeDeformation = new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX);
         } else {
             this.setDeformations(new Deformation(1/compressionFactorY, 0, 0, compressionFactorY));
-//            this.tentativeDeformation = new Deformation(1/compressionFactorY, 0, 0, compressionFactorY);
         }
-//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
     }
     
@@ -386,21 +333,14 @@ class GSComplexUI extends JPanel implements Watchable {
         if (shearFactorY < -100) { shearFactorY = -100; }
         if (isInXDirection) {
             this.setDeformations(new Deformation(1, 0, shearFactorX*-1, 1));
-//            this.tentativeDeformation = new Deformation(1, 0, shearFactorX*-1, 1);;
         } else {
             this.setDeformations(new Deformation(1, shearFactorY*-1, 0, 1));
-//            this.tentativeDeformation = new Deformation(1, shearFactorY*-1, 0, 1);
         }
-//        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
         this.setStrains();
     }
     
     public void tentativeDeformationClear() {
         this.resetDeformations();
-//        this.setDeformations();
-////        this.tentativeDeformation = new Deformation();
-////        this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
-//        this.setStrains();
     }
     
     public void resetDeformations() {
@@ -425,7 +365,6 @@ class GSComplexUI extends JPanel implements Watchable {
         Point2D evtPtInGSCSystem = this.inGSCSystem(evt.getPoint());
         double deltaX = evt.getX() - this.lastMouseDownX;
         double deltaY = this.lastMouseDownY - evt.getY();
-//        if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
         if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
             if (evt.isAltDown()) {
                 if (this.currentUIMode == GSComplexUI.UI_MODE_DEFORMS) {
@@ -452,7 +391,6 @@ class GSComplexUI extends JPanel implements Watchable {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
             }
-//            this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
 
             this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
             this.repaint();
@@ -500,6 +438,10 @@ class GSComplexUI extends JPanel implements Watchable {
                 // 4. in the base pebble set, shift selected pebbles by that amt
                 // 5. rebuild the pebble sets
                 Util.todo("implement pebble dragging/moving");
+            } else if (evt.isAltDown()) {
+                // pebble rotating
+                // 1. magic
+                Util.todo("implement pebble rotating");
             } else {
                 this.displayTransform.translate((evt.getPoint().x - this.lastMouseDragX) * 1/this.displayTransform.getScaleX(),
                                                 (evt.getPoint().y - this.lastMouseDragY) * 1/this.displayTransform.getScaleX());
@@ -564,8 +506,6 @@ class GSComplexUI extends JPanel implements Watchable {
                     this.getHeight()/2 - this.gsc.getCenter().y*this.displayTransform.getScaleX());
     }   
     public void setPan(double x, double y) {
-        // REFACTOR? a way to just update the translate vals of the display transform
-        //System.err.println("setting pan to: "+x+","+y);
         double[] matrixVals = new double[6];
         this.displayTransform.getMatrix(matrixVals);
         matrixVals[4] = x;
@@ -575,8 +515,6 @@ class GSComplexUI extends JPanel implements Watchable {
     }
 
     public void shiftPan(double deltaX, double deltaY) {
-        // REFACTOR? a way to just update the translate vals of the display transform
-        //System.err.println("setting pan to: "+x+","+y);
         double[] matrixVals = new double[6];
         this.displayTransform.getMatrix(matrixVals);
         matrixVals[4] -= deltaX;
@@ -584,15 +522,7 @@ class GSComplexUI extends JPanel implements Watchable {
         this.displayTransform = new AffineTransform(matrixVals);
         this.repaint();
     }    
-    //    public void setZoom(double scale) {
-//        // REFACTOR? a way to just update the translate vals of the display transform
-//        double[] matrixVals = new double[6];
-//        this.displayTransform.getMatrix(matrixVals);
-//        matrixVals[0] = scale;
-//        matrixVals[3] = scale;
-//        this.displayTransform = new AffineTransform(matrixVals);
-//        this.repaint();
-//    }
+
     public void resetDisplayTransform() {
         this.displayTransform = new AffineTransform();
         this.repaint ();
@@ -626,7 +556,6 @@ class GSComplexUI extends JPanel implements Watchable {
         g2d.transform(bgTransform);
         
         if (this.flagDisplayBackgroundImage) {
-//            g2d.drawString("show background image is TRUE", 0,0);
             if (this.gsc.getBgImage() != null)
             {
                 int imgPosX = (int) this.gsc.getCenter().x;       
@@ -638,16 +567,10 @@ class GSComplexUI extends JPanel implements Watchable {
         }
          
         if (this.flagDisplayBackgroundAxis) {
-            //        g2d.drawLine(0,(int)this.gsc.getCenter().y,this.getWidth(),(int)this.gsc.getCenter().y); // horizontal axis
-            //        g2d.drawLine((int)this.gsc.getCenter().x,0,(int)this.gsc.getCenter().x,this.getHeight()); // vertical axis
+            // NOTE: the numbers here are extreme as a quick hack to get the axes to draw to the panel edge always(ish)
             g2d.drawLine(-10000,(int)this.gsc.getCenter().y,10000,(int)this.gsc.getCenter().y); // horizontal axis
             g2d.drawLine((int)this.gsc.getCenter().x,-10000,(int)this.gsc.getCenter().x,10000); // vertical axis
-//            System.err.println("drew axis at "+this.gsc.getCenter().x+","+this.gsc.getCenter().y);
-
-//            g2d.drawLine(-10000,0,10000,0); // horizontal axis
-//            g2d.drawLine(0,-10000,0,10000); // vertical axis
             // TODO: figure out how to get 1px wide axes (e.g. apply translation and scaling transforms separately, manually calc the additional scaling offset needed for the axes?
-            // TODO: figure out how to draw the axes to the edge of the widow regarless of other factors (quick and dirty would be to set limits to extreme values - e.g. +/- 32000
         }
 
         // undo the BG stuff
@@ -724,13 +647,8 @@ class GSComplexUI extends JPanel implements Watchable {
                          (int) this.newPebbleAxis1Pt2.getX(), (int) this.newPebbleAxis1Pt2.getY()); // first axis
 
             g2d.drawOval((int) this.newPebbleCenter.getX()-2, (int) this.newPebbleCenter.getY()-2,4,4);
-//            this.newPebbleAxis1Pt1.getX();
-//            this.newPebbleAxis1Pt1.getY();
-//            this.newPebbleAxis1Pt2.getX();
-//            this.newPebbleAxis1Pt2.getY();
             
             if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_SETTING_SECOND_AXIS) {
-//                g2d.drawLine(x1, y1, x2, y2); // second axis
                 g2d.drawLine((int) this.newPebbleAxis2Pt1.getX(), (int) this.newPebbleAxis2Pt1.getY(),
                              (int) this.newPebbleAxis2Pt2.getX(), (int) this.newPebbleAxis2Pt2.getY());
         
@@ -738,22 +656,12 @@ class GSComplexUI extends JPanel implements Watchable {
                 g2d.draw(this.newPebShape);
             }
         }
-        
-//        if (this.newPebble != null) {
-//            GSPebble defNewPebble = this.newPebble.clone();
-//            this.gsc.deformations.runAllDeformationsOn(defNewPebble,this.gsc.getCurrentDeformationNumber());
-//            g2d.setStroke(GSComplexUI.PEBBLE_CREATION_STROKE);
-//            defNewPebble.drawOnto(g2d, false, true, true);
-//        }
     }
 
     void handleMouseClicked(MouseEvent evt) {
-//        System.out.println("handleMouseClicked is : "+evt.toString());
         if (evt.getButton() == 3) { // right-click to center on the selected point
-//            System.out.println("right-click");
             Point2D displayCenterInGCS = this.fromGSCOrigin(new Point2D.Double(this.getWidth()/2,this.getHeight()/2));
             Point2D clickPtInGCS = this.fromGSCOrigin(evt.getPoint());
-//            System.out.println("clickPtInGCS: "+clickPtInGCS.toString());
             double deltaX = clickPtInGCS.getX()-displayCenterInGCS.getX();
             double deltaY = displayCenterInGCS.getY()-clickPtInGCS.getY();
             deltaX = deltaX * this.displayTransform.getScaleX();
@@ -762,7 +670,6 @@ class GSComplexUI extends JPanel implements Watchable {
         } else if (evt.getButton() == 1) {
             if (this.currentUIMode==GSComplexUI.UI_MODE_EDIT_PEBBLES) {
                 Point2D clickPtInGCS = this.inGSCSystem(evt.getPoint());
-//                System.out.println("click Pt In GC System: "+clickPtInGCS.toString());
                 this.gsc.pebbleSets.selectPebblesByUndeformedPoint(clickPtInGCS, evt.isShiftDown());
                 this.notifyWatchers();
             }            
@@ -773,9 +680,6 @@ class GSComplexUI extends JPanel implements Watchable {
     void handleApplyTentativeTransform() {
         this.gsc.applyDeformation(this.tentativeDeformation.clone());
         this.tentativeDeformationClear();
-//        this.gsc.deformations.add(this.tentativeDeformation.clone());
-//        this.tentativeDeformation = new Deformation();
-//        this.tentativeDeformation = new Deformation();
         this.notifyWatchers();
     }
 
@@ -922,7 +826,6 @@ class GSComplexUI extends JPanel implements Watchable {
 
     public void addWatcher(Watcher w) {
         watchedBy.add(w);
-        //w.setWatched(this);
         w.reactTo(this, null);
     }
 
