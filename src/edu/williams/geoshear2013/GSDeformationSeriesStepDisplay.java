@@ -4,16 +4,18 @@
  */
 package edu.williams.geoshear2013;
 
+import java.awt.Color;
+
 /**
  *
  * @author cwarren
  */
-public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel {
+public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implements HighlightableComponent {
 
     /**
      * Creates new form GSDeformationSeriesStepDisplay
      */
-    public GSDeformationSeriesStepDisplay(Deformation stepDef, Deformation cumuDef) {
+    public GSDeformationSeriesStepDisplay(Deformation stepDef, Deformation cumuDef, int defNumber) {
         initComponents();
         if (stepDef != null) {
             this.jTextFieldMatrixM00Step.setText(Util.truncForDisplay(stepDef.m00,3));
@@ -35,8 +37,16 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel {
             this.jTextFieldRfCumu.setText(Util.truncForDisplay(s.getMajorRadius()/s.getMinorRadius(),3));
             this.jTextFieldPhiCumu.setText(Util.truncForDisplay(Util.toDegrees(s.getThetaRad()),2));
         }
+        this.jLabelDeformationNumber.setText("#"+defNumber);
     }
 
+    public void highlight() {
+        this.jLabelDeformationNumber.setForeground(Color.BLACK);
+    }
+    public void unhighlight() {
+        this.jLabelDeformationNumber.setForeground(Color.GRAY);
+    }
+    
     /**
      * This method is called from within the constructor to
      * initialize the form.
@@ -69,6 +79,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel {
         jLabelMatrixBracketRight1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabelDeformationNumber = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(220, 198));
         setMinimumSize(new java.awt.Dimension(220, 198));
@@ -212,10 +223,17 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("=");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 40, 40));
+
+        jLabelDeformationNumber.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelDeformationNumber.setForeground(Color.GRAY);
+        jLabelDeformationNumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDeformationNumber.setText("#1");
+        add(jLabelDeformationNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelDeformationNumber;
     private javax.swing.JLabel jLabelMatrixBracketLeft;
     private javax.swing.JLabel jLabelMatrixBracketLeft1;
     private javax.swing.JLabel jLabelMatrixBracketRight;

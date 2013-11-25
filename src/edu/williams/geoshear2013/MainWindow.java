@@ -356,6 +356,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.gscUI.addWatcher(this.chartPolarRfPhi);
         
         this.windowDeformationsSeries = new GSComplexInfoFrameDeformationSeries(this);
+        this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
     }
 
     /**
@@ -1511,6 +1512,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.updateNavStrainInfo();
         this.updateStateOfCurrentDeformControls();
         this.windowDeformationsSeries.setFromDeformationSeries(this.gscUI.gsc.deformations);
+        this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
         this.gscUI.repaint();
 //        if (this.windowDeformationsSeries.isVisible()) { // quick hack to fix issue with interior panes not actually updating on repaint - no time for full understanding/debugging
 //            this.windowDeformationsSeries.setVisible(false);
@@ -2054,6 +2056,7 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
         this.updateStateOfCurrentDeformControls();
         this.updateNavStrainInfo();
         this.updateStrainMatricesVisibilities();
+        this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
         this.repaint();
     }
 
@@ -2186,6 +2189,9 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_APPLY);
             this.jButtonDeformReset.setEnabled(true);
         }
+//        if (this.windowDeformationsSeries != null) {
+//            this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
+//        }
     }
     
     private void setValuesForCumuStrain() {

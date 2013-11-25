@@ -4,6 +4,7 @@
  */
 package edu.williams.geoshear2013;
 
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -15,6 +16,8 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
     private GSComplex watchedComplex;
     private MainWindow launchedFromWindow;
     
+    private int currentDeformationComponentIndex;
+    
     /**
      * Creates new form GSComplexInfoFrameDeformationSeries
      */
@@ -25,6 +28,7 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
         startingLoc.translate(launchedFromWindow.getWidth()/2, launchedFromWindow.getHeight()-10);
         this.setLocation(startingLoc);
         this.setTitle("Deformations");
+        this.currentDeformationComponentIndex = 0;
     }
 
     /**
@@ -92,12 +96,23 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
         this.jPanelDefSeriesMatrixDisplay.removeAll();
         this.jPanelDefSeriesMatrixDisplay.add(this.gSDeformationSeriesBasisDisplay1, 0);
         for (int i=0; i<defs.size(); i++) {
-            this.jPanelDefSeriesMatrixDisplay.add(new GSDeformationSeriesStepDisplay(defs.get(i),defs.getCompositeTransform(i+1))
+            this.jPanelDefSeriesMatrixDisplay.add(new GSDeformationSeriesStepDisplay(defs.get(i),defs.getCompositeTransform(i+1),i+1)
                                                   ,0);
         }
         this.jPanelDefSeriesMatrixDisplay.setPreferredSize(null);
+//        this.markCurrentDeformation(1);
         this.validate();
         this.repaint();
+    }
+    
+    
+    public void markCurrentDeformation(int deformationNumber) {
+        int numComps = this.jPanelDefSeriesMatrixDisplay.getComponentCount();
+        for (int i=0; i<numComps; i++) {
+            ((HighlightableComponent)(this.jPanelDefSeriesMatrixDisplay.getComponent(i))).unhighlight();
+        }        
+        this.currentDeformationComponentIndex = numComps - deformationNumber;
+        ((HighlightableComponent)(this.jPanelDefSeriesMatrixDisplay.getComponent(this.currentDeformationComponentIndex))).highlight();
     }
     
     

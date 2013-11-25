@@ -4,11 +4,13 @@
  */
 package edu.williams.geoshear2013;
 
+import java.awt.Color;
+
 /**
  *
  * @author cwarren
  */
-public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel {
+public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel implements HighlightableComponent {
 
     /**
      * Creates new form GSDeformationSeriesStepDisplay
@@ -17,6 +19,13 @@ public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void highlight() {
+        this.jLabelNumberZero.setForeground(Color.BLACK);
+    }
+    public void unhighlight() {
+        this.jLabelNumberZero.setForeground(Color.GRAY);
+    }
+    
     /**
      * This method is called from within the constructor to
      * initialize the form.
@@ -37,6 +46,7 @@ public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel {
         jTextFieldMatrixM01Cumu = new javax.swing.JTextField();
         jTextFieldMatrixM11Cumu = new javax.swing.JTextField();
         jLabelMatrixBracketRight1 = new javax.swing.JLabel();
+        jLabelNumberZero = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(120, 198));
         setMinimumSize(new java.awt.Dimension(120, 198));
@@ -105,10 +115,17 @@ public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel {
         jLabelMatrixBracketRight1.setText("]");
         jLabelMatrixBracketRight1.setRequestFocusEnabled(false);
         add(jLabelMatrixBracketRight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, 70));
+
+        jLabelNumberZero.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelNumberZero.setForeground(Color.GRAY);
+        jLabelNumberZero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNumberZero.setText("#0");
+        add(jLabelNumberZero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 100, 50));
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelMatrixBracketLeft1;
     private javax.swing.JLabel jLabelMatrixBracketRight1;
+    private javax.swing.JLabel jLabelNumberZero;
     private javax.swing.JLabel jLabelPhi1;
     private javax.swing.JLabel jLabelRf1;
     private javax.swing.JTextField jTextFieldMatrixM00Cumu;
