@@ -55,7 +55,6 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
     @Override
     public void determineChartFrame() {
-        //this.setBackground(Color.CYAN);
         this.frameWidth = Math.min(this.getWidth(), this.getHeight());//-this.textAllowance-this.generalInset;
         this.frameHeight = frameWidth;
         this.frameCenter = new Point2D.Double(this.frameWidth/2.0, this.frameHeight/2.0 - (this.textAllowance) + this.generalInset );
@@ -94,9 +93,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
         g2d.drawString(label, ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset, labelY+this.textAllowance);
 
         // angle min/max
-//        label = Util.truncForDisplay(this.minValAngle, 0) + " / " + Util.truncForDisplay(this.maxValAngle, 0);
         label = "0";
-        //g2d.drawString(label, ringsR+this.generalInset, cy);
         this.drawTurnedString(g2d, label, ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
 
         g2d.setStroke(STROKE_HEAVY);
@@ -125,6 +122,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
             val = Math.log(val);
         }
         double radiusCoeff = (val-this.minValRadius)/(this.getMaxValRadius()-this.minValRadius);
+
         // implement log scale stuff
         paintScreenRing(g2d,radiusCoeff*(double)(this.frameRadius), xoffset, yoffset);
     }
@@ -137,7 +135,6 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
     }
     protected void paintRay(Graphics2D g2d, double angleRadians, int xoffset, int yoffset)
     {
-        //double contourThetaRad = Math.toRadians(angleDegrees);
         Point2D.Double edgePoint = new Point2D.Double(this.frameRadius * Math.cos(angleRadians),
                                                       this.frameRadius * Math.sin(angleRadians));
         int cx = (int)(this.frameCenter.x+xoffset);
@@ -210,11 +207,8 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
         showContour = true;
         for (int i=1; i<totContoursAngle; i++) {
             showContour = this.isShowContoursMinor();
-
             contourValAngle += contourStepAngleVal;
-
-            //System.out.println("contourValAngle = "+contourValAngle);
-
+            
             g2d.setColor(Util.getLighterColorByStep(Color.LIGHT_GRAY,20));
             g2d.setStroke(STROKE_LIGHT);
             if (i % (this.numMinorContoursAngle+1) == 0)
@@ -273,18 +267,8 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         double radiusCoeff = (valRadius-this.minValRadius)/(this.getMaxValRadius()-this.minValRadius);
 
-
-        /*
-         System.out.println("  valueP="+valueP);
-        System.out.println("  radiusCoeff="+radiusCoeff);
-        System.out.println("  angle="+angle);
-         *
-         */
-
         double xOffset = (radiusCoeff*this.frameRadius*Math.cos(angle));
         double yOffset = (radiusCoeff*this.frameRadius*Math.sin(angle));
-        //System.out.println("  xOffset="+xOffset);
-        //System.out.println("  yOffset="+yOffset);
 
         return new Point2D.Double(this.frameCenter.x + xOffset + this.frameLeft,
                                   this.frameCenter.y - yOffset + this.frameTop);
@@ -311,20 +295,11 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
     @Override
     protected void handleInfoFor(int screen_x, int screen_y) {
-
-//        Graphics2D g2d = this.chartFrame.createGraphics();
-        //Graphics2D g2d = (Graphics2D)(this.getGraphics());
-        //screenIt(g2d,Color.GREEN,"screen: "+screen_x+","+screen_y,screen_x,screen_y);
-
         double mx = screen_x - this.frameLeft;
         double my = screen_y - this.frameTop;
 
-        //screenIt(g2d,Color.BLUE,"m: "+mx+","+my,mx,my);
-
         double clickRadius = this.frameCenter.distance(mx, my);
 
-        //System.out.println(" > clickRadius="+clickRadius);
-        //System.out.println(" > this.frameRadius="+this.frameRadius);
         double radiusCoeff = Math.min(clickRadius/(double)(this.frameRadius),1);
         double radiusVal =  (radiusCoeff * (this.getMaxValRadius()-this.minValRadius)) + this.minValRadius;
         if ((mx < this.frameCenter.x) && (my < this.frameCenter.y))
@@ -332,30 +307,13 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
             radiusVal *= .996; // adjustment for screen wackiness re: distance calculation
         }
         double angleVal = Math.toDegrees(Math.atan2(this.frameCenter.x - mx, this.frameCenter.y - my)) + 90;
-        
-        /*
-        System.out.println(" > this.frameCenter="+this.frameCenter);
-        System.out.println(" > screen_x="+screen_x);
-        System.out.println(" > screen_y="+screen_y);
-        System.out.println(" > mx="+mx);
-        System.out.println(" > my="+my);
-        System.out.println(" > radiusCoeff="+radiusCoeff);
-        System.out.println(" > radiusVal="+radiusVal);
-        System.out.println(" > angleVal="+angleVal);
-        
-
-         *
-         */
 
         this.infoRadiusVal = Util.truncForDisplay(radiusVal);
         this.infoAngleVal  = Util.truncForDisplay(angleVal);
 
-
-        //System.out.println("center: "+this.frameCenter.toString());
         this.infoString = this.infoRadiusVal+", "+this.infoAngleVal;
 
-        // this ensures the info isn't outside the chart frame
-        
+        // this ensures the info isn't outside the chart frame        
         Point2D.Double locPt =
                 getPaintPoint(
                     new Point2D.Double(this.isUseLogScale()?Math.pow(Math.E, radiusVal):radiusVal,

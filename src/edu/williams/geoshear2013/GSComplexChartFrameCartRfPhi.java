@@ -48,8 +48,6 @@ public class GSComplexChartFrameCartRfPhi extends GSComplexChartFrame {
 
     @Override
     protected void formattedTextFieldMenuItemScaleFixedActionPerformed(java.awt.event.ActionEvent evt) {
-        //jRadioButtonMenuItemScaleFixed.setSelected(true);
-        //jRadioButtonMenuItemScaleFixedActionPerformed(evt);
         try
         {
             ((GSComplexChartCartesian)chart).setMaxValX(Double.parseDouble(this.scaleTextItem.getText()));

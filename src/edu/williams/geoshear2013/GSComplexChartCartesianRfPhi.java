@@ -55,8 +55,6 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
                 String xDisp = this.infoXVal;
                 if (this.isUseLogScale())
                 {
-                    //this.rescaleInfo();
-                    //xDisp = Util.truncForDisplay(Math.pow(Double.parseDouble(xDisp)-1,Math.E),2); // -1 is for 0-base of log chart as opposed to 1 base of linear chart
                     xDisp = Util.truncForDisplay(Math.pow(Math.E,Double.parseDouble(xDisp)),2); // -1 is for 0-base of log chart as opposed to 1 base of linear chart
                 }
                 this.infoString = "Rf: "+xDisp+"  phi: "+Util.truncForDisplay(this.infoYVal,0);
@@ -71,12 +69,6 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
     protected Point2D.Double getPebbleBasePaintPoint(GSPebble p)
     {
         double deg = constrainDegrees(Util.toDegrees(p.getThetaRad()));
-//        while (deg > 90) {
-//            deg -= 180;
-//        }
-//        while (deg < -90) {
-//            deg += 180;
-//        }
         return this.getPaintPoint(new Point2D.Double(p.getRF(), deg));
     }
 

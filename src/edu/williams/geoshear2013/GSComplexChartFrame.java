@@ -48,7 +48,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         this.launchedFromWindow = launchedFrom;
 
         scaleTextItem.setText("10.0");
-        //scaleTextItem.setEnabled(this.jRadioButtonMenuItemScaleFixed.isSelected());
         jMenuView.add(scaleTextItem);
         scaleTextItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,14 +276,12 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
     private void jRadioButtonMenuItemScaleAdaptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemScaleAdaptActionPerformed
         chart.setUseAdaptiveScale(jRadioButtonMenuItemScaleAdapt.isSelected());
-        //scaleTextItem.setEnabled(this.jRadioButtonMenuItemScaleFixed.isSelected());
         chart.rescaleInfo();
         this.repaint();
     }//GEN-LAST:event_jRadioButtonMenuItemScaleAdaptActionPerformed
 
     private void jRadioButtonMenuItemScaleFixedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemScaleFixedActionPerformed
         chart.setUseAdaptiveScale(jRadioButtonMenuItemScaleAdapt.isSelected());
-        //scaleTextItem.setEnabled(this.jRadioButtonMenuItemScaleFixed.isSelected());
         chart.rescaleInfo();
         this.repaint();
     }//GEN-LAST:event_jRadioButtonMenuItemScaleFixedActionPerformed
@@ -295,8 +292,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Robot robot = new Robot();
             BufferedImage image = robot.createScreenCapture (new Rectangle(this.chart.getLocationOnScreen (), this.chart.getSize ()));
-
-            //this.imageFormatWin.setVisible (true);
 
             fileChooser.setFileFilter(filterImage);
 
@@ -330,7 +325,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         jRadioButtonMenuItemScaleFixed.setSelected(true);
         chart.setUseAdaptiveScale(jRadioButtonMenuItemScaleAdapt.isSelected());
         chart.rescaleInfo();
-        //jRadioButtonMenuItemScaleFixedActionPerformed(evt);
         this.repaint();
     }
 

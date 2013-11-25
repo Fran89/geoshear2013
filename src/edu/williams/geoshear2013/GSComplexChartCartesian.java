@@ -50,10 +50,6 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
             valX = Math.log(valX);
         }
         double valY = valueP.y;
-//        System.err.println("valX: "+valX);
-//        System.err.println("valY: "+valY);
-//        System.err.println("this.getMaxValY(): "+this.getMaxValY());
-//        System.err.println("this.getMinValY(): "+this.getMinValY());
         return new Point2D.Double(this.frameLeft + this.generalInset + this.textAllowance + (((double)(this.frameWidth - this.frameLeft))*((valX-this.getMinValX())/(this.getMaxValX()-this.getMinValX()))),
                                      this.frameTop + this.frameHeight/2 - (((double)(this.frameHeight - this.frameTop)) * (valY/(this.getMaxValY()-this.getMinValY())) ));
     }
@@ -71,14 +67,11 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
         int mx = x;
         int my = y;
         mx = mx - this.frameLeft - this.textAllowance - this.generalInset;
-        //mx = mx - this.frameLeft - this.generalInset;
         my = my - this.frameTop - this.generalInset;
         if (mx < 0) { mx = 0; }
         if (my < 0) { my = 0; }
         if (mx > this.frameWidth) { mx = this.frameWidth; }
         if (my > this.frameHeight) { my = this.frameHeight; }
-        //System.out.println("mx: "+mx+"     my: "+my);
-        //double xCoef = (double)mx/(double)(this.frameWidth-this.textAllowance-this.generalInset);
         double xCoef = (double)mx/(double)(this.frameWidth-this.frameLeft);
         double yCoef = 1 - (double)my/(double)(this.frameHeight);
         double vxmax = this.getMaxValX();
@@ -173,7 +166,6 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
                 minorPosX += minorSizeX;
                 minorValX += this.minorCountourStepX;
                 g2d.drawLine((int)minorPosX, 2, (int)minorPosX, this.frameHeight);
-                //System.out.println("x val is "+minorValX);
                 contourLabel = this.logifyContourLabel(Util.truncForDisplay(minorValX,2));
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
                 g2d.drawString(contourLabel, (int)(minorPosX-labelOffset),this.frameHeight+this.textAllowance);

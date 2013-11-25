@@ -48,8 +48,6 @@ public class GSComplexChartFramePolarRfPhi extends GSComplexChartFrame {
 
     @Override
     protected void formattedTextFieldMenuItemScaleFixedActionPerformed(java.awt.event.ActionEvent evt) {
-        //jRadioButtonMenuItemScaleFixed.setSelected(true);
-        //jRadioButtonMenuItemScaleFixedActionPerformed(evt);
         try
         {
             ((GSComplexChartPolarRf2Phi)chart).setMaxValRadius(Double.parseDouble(this.scaleTextItem.getText()));
