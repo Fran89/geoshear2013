@@ -5,7 +5,9 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  *
@@ -112,7 +114,7 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
         }        
         this.currentDeformationComponentIndex = numComps - deformationNumber;
         ((HighlightableComponent)(this.jPanelDefSeriesMatrixDisplay.getComponent(this.currentDeformationComponentIndex))).highlight();
-        Util.todo("change scroll view so that currently highlighted step is visible");
+        this.jPanelDefSeriesMatrixDisplay.scrollRectToVisible(this.jPanelDefSeriesMatrixDisplay.getComponent(this.currentDeformationComponentIndex).getBounds());
     }
     
     
