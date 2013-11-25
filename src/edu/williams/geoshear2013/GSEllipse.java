@@ -8,9 +8,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-//import java.awt.geom.NoninvertibleTransformException;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
+
 
 /**
  *

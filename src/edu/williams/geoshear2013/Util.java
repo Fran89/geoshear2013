@@ -29,7 +29,6 @@ Technology, 22 Lab Campus Drive, Williamstown, MA 01267 USA
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 import java.io.File;
 import javax.swing.JTextField;
 

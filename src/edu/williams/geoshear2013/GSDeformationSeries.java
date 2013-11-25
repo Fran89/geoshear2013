@@ -4,7 +4,6 @@
  */
 package edu.williams.geoshear2013;
 
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.ListIterator;
 

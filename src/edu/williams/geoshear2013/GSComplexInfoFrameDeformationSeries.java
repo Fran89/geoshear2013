@@ -4,10 +4,7 @@
  */
 package edu.williams.geoshear2013;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 /**
  *

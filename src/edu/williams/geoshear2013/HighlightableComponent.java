@@ -4,8 +4,6 @@
  */
 package edu.williams.geoshear2013;
 
-import java.awt.Color;
-
 /**
  *
  * @author cwarren
