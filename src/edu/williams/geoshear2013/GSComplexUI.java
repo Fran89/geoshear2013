@@ -206,6 +206,7 @@ class GSComplexUI extends JPanel implements Watchable {
                 newPebble.setX(centerX);
                 newPebble.setY(centerY);
                 newPebble.setId(this.gsc.pebbleSets.get(0).getNewId());
+                this.gsc.pebbleSets.get(0).unselectAll();
                 newPebble.setSelected(true);
                 this.gsc.pebbleSets.get(0).add(newPebble);
                 this.gsc.rebuildPebbleSetsFromDeformationSeries();

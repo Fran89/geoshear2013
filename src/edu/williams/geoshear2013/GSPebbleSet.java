@@ -116,6 +116,22 @@ public class GSPebbleSet extends ArrayList {
     
     /*---------------------------------------------------------------------*/
     
+    public void selectAll() {
+        this.selectSelectStateForAll(true);
+    }
+    
+    public void unselectAll() {
+        this.selectSelectStateForAll(false);
+    }
+
+    public void selectSelectStateForAll(boolean state) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble p = (GSPebble)(li.next());
+            p.setSelected(state);
+        }
+    }
+    
     /**
      * remove from this all pebbles that are selected
      */
