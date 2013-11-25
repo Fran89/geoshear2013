@@ -30,13 +30,11 @@ public class GSPebbleSet extends ArrayList {
     
     public GSPebbleSet(GSComplex gsc) {
         super();
-       // this.boundSets = new ArrayList(4);
         this.ofComplex = gsc;
     }
 
     public GSPebbleSet(int initialCapacity) {
         super(initialCapacity);
-       // this.boundSets = new ArrayList(4);
     }
 
     /*---------------------------------------------------------------------*/
@@ -144,7 +142,6 @@ public class GSPebbleSet extends ArrayList {
             GSPebble p = (GSPebble)(li.next());
             if (p.isSelected()) {
                 toRemove.add(p);
-                //this.remove(p);
             }
         }
 

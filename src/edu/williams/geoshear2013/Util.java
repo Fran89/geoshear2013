@@ -395,11 +395,6 @@ public class Util
      */
     public static double toRadians(double deg)
     {
-        //System.out.println("init deg:"+deg);
-//        while (deg >= 180) {deg -= 180.0; }
-//        while (deg < 0) {deg += 180.0; }
-        //System.out.println("bound deg:"+deg);
-        //System.out.println("converted:"+((deg/180.0) * Math.PI));
         return (deg/180.0) * Math.PI;
     }
 
@@ -410,8 +405,6 @@ public class Util
      */
     public static double toDegrees(double rad)
     {
-//        while (rad >= Math.PI) {rad -= Math.PI; }
-//        while (rad < 0) {rad += Math.PI; }
         return (rad/Math.PI)*180.0;
     }
 
@@ -483,8 +476,8 @@ public class Util
     /**
      * 
      * @param origValue
-     * @param evt
      * @param increment
+     * @param precision
      * @return
      */
     public static String adjustedFieldValue(String origString, double increment, int precision)
@@ -494,16 +487,33 @@ public class Util
         double newValue = origValue + increment;
         return String.valueOf(Util.truncForDisplay(newValue,precision));
     }
+
+    /**
+     * 
+     * @param origString
+     * @param increment
+     * @return 
+     */
     public static String adjustedFieldValue(String origString, double increment)
     {
         return Util.adjustedFieldValue(origString, increment, Util.DISPLAY_PRECISION);
     }
+    /**
+     * 
+     * @param tf
+     * @param vc 
+     */
     public static void fieldValueUp(JTextField tf, ValueConstrainer vc)
     {
         String stringValue = sanitizeForDoubleNumberFormat(tf.getText(), vc.getDisplayPrecision());
         double newValue = vc.up(Double.parseDouble(stringValue));
         tf.setText(Util.truncForDisplay(newValue, vc.getDisplayPrecision()));
     }
+    /**
+     * 
+     * @param tf
+     * @param vc 
+     */
     public static void fieldValueDown(JTextField tf, ValueConstrainer vc)
     {
         String stringValue = sanitizeForDoubleNumberFormat(tf.getText(), vc.getDisplayPrecision());
@@ -511,6 +521,10 @@ public class Util
         tf.setText(Util.truncForDisplay(newValue, vc.getDisplayPrecision()));
     }
 
+    /**
+     * dump a to-do messate to stdout, with a note of where the to do call is
+     * @param s 
+     */
     public static void todo(String s) {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         String callerInfo = stackTraceElements[2].getFileName() + " " + stackTraceElements[2].getMethodName() + " - line "+ stackTraceElements[2].getLineNumber();

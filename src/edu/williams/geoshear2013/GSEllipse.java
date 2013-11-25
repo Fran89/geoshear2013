@@ -66,17 +66,10 @@ public class GSEllipse {
     public void errDump() {
         System.err.println(this.toString());
     }
+    
     /*------------------------------------------------------------------------*/
 
-//    public GSEllipse getDeformedGSEllipse(AffineTransform deformation) {
-//        GSEllipse deformedEllipse = this.clone();
-//        deformedEllipse.deform(deformation);
-//        return deformedEllipse;
-//    }
-
     public void deform(Deformation deformation) {
-//        System.err.println("predeform key data: "+this.keyDataAsString());
-//        System.err.println("deformation matrix: "+deformation.toString());
         Deformation dT = deformation.clone();
         if (dT.isShearing()) {
             AffineTransform shearTrans = AffineTransform.getShearInstance(deformation.m10*-1, deformation.m01*-1);
@@ -97,43 +90,16 @@ public class GSEllipse {
             this.x = curCenter.getX();
             this.y = curCenter.getY();
         } else {
-//            System.err.println("potentially some problems in GSEllipse.deform with non-basic (i.e. basic shear, scale, or rotate) deformation");
-
             Point2D curCenter = new Point2D.Double(this.x, this.y);
 
             AffineTransform otherTrans = dT.asAffineTransform();
             otherTrans.transform(curCenter, curCenter);
-
-//            Matrix2x2[] u_sig_vt = dT.svd();
-//        System.err.println("u: "+u_sig_vt[0].toString());
-//        System.err.println("sig: "+u_sig_vt[1].toString());
-//        System.err.println("vt: "+u_sig_vt[2].toString());
-//
-//            
-//            double major = u_sig_vt[1].m00;
-//            double minor = u_sig_vt[1].m11;
-//            AffineTransform scaleTrans = AffineTransform.getScaleInstance(major, minor);
-//
-//            double thetaRad = Math.acos(u_sig_vt[2].m00);
-//            if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
-//                thetaRad = thetaRad * -1;
-//            }
-//            AffineTransform rotTrans = AffineTransform.getRotateInstance(thetaRad);
-//
-//            scaleTrans.transform(curCenter, curCenter);
-//            rotTrans.transform(curCenter, curCenter);
-            
-
             this.x = curCenter.getX();
             this.y = curCenter.getY();
         }
 
         this.matrix = this.matrix.times(deformation);
-//        this.matrix = deformation.times(this.matrix);
-        //        System.err.println("postdeform matrix: "+this.getMatrix().toString());
         this.setKeyDataFromMatrix();
-//        System.err.println("postset key data: "+this.keyDataAsString());
-//        System.err.println("");
     }
     
     /*------------------------------------------------------------------------*/
@@ -142,17 +108,6 @@ public class GSEllipse {
      * set the matrix that defines this ellipse from its center (x and y), axes (majorRadius and minorRadius) and rotation (thetaRad)
      */
     public final void setMatrixFromKeyData() {        
-//        this.matrix = new AffineTransform();
-////        this.matrix = T*R*S
-//        this.matrix.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
-//        this.matrix.concatenate(AffineTransform.getRotateInstance(this.thetaRad*-1));
-//        this.matrix.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
-
-        //System.err.println(this.matrix);
-        
-//        this.matrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
-//        this.matrix.timesInPlace(new Matrix2x2(Math.cos(this.thetaRad), -1*Math.sin(this.thetaRad), Math.sin(this.thetaRad), Math.cos(this.thetaRad)));
-//      
         Matrix2x2 scalingMatrix = new Matrix2x2(this.majorRadius, 0, 0, this.minorRadius);
         Matrix2x2 rotationMatrix = new Matrix2x2(Math.cos(this.thetaRad), -1*Math.sin(this.thetaRad), Math.sin(this.thetaRad), Math.cos(this.thetaRad));
         
@@ -166,10 +121,6 @@ public class GSEllipse {
         
         this.majorRadius = u_sig_vt[1].m00;
         this.minorRadius = u_sig_vt[1].m11;
-//        System.err.println("u: "+u_sig_vt[0].toString());
-//        System.err.println("sig: "+u_sig_vt[1].toString());
-//        System.err.println("vt: "+u_sig_vt[2].toString());
-//        this.thetaRad = Math.acos(u_sig_vt[0].m00);
         this.thetaRad = Math.acos(u_sig_vt[2].m00); // 'REAL'
         
         if (u_sig_vt[2].m01 > 0) {  // the correct sign of the angle is determined by the 01 or 10 element of the vT matrix (they're inverted, so flip the text is using m10)
@@ -188,7 +139,6 @@ public class GSEllipse {
      */
     public void setShape() {
         this.shape = this.getAffineTransform().createTransformedShape(new Ellipse2D.Double(-1,-1,2,2)); // transform the unit circle
-//        this.shape = this.getAffineTransform().
     }
     
     /**
@@ -301,11 +251,6 @@ public class GSEllipse {
      * @return the affine transform that converts the unit circle to this ellipse
      */
     public AffineTransform getAffineTransform() {
-//        AffineTransform af = new AffineTransform();
-//        af.concatenate(AffineTransform.getTranslateInstance(this.x, this.y*-1));
-//        af.concatenate(AffineTransform.getRotateInstance(this.thetaRad*-1));
-//        af.concatenate(AffineTransform.getScaleInstance(this.majorRadius, this.minorRadius));
-//        AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
         AffineTransform af = new AffineTransform(this.matrix.m00, this.matrix.m01, this.matrix.m10, this.matrix.m11,this.x, this.y*-1);
         return af;
     }    

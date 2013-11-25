@@ -33,7 +33,6 @@ public class GSPebbleSetSeries extends ArrayList {
     public void selectPebblesByUndeformedPoint(Point2D p, boolean shiftIsDown) {
         GSPebbleSet baseSet = this.get(0);
         List hitPebbleIds = baseSet.getIdsOfPebblesHitByPoint(p);
-//        System.out.println("hit pebble ids length: "+hitPebbleIds.toArray().length);
         this.selectPebblesByIds(hitPebbleIds, shiftIsDown);
     }
     

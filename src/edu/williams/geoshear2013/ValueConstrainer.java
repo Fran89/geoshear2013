@@ -21,7 +21,6 @@ public class ValueConstrainer {
 
    private int constraintType;
    private double span;
-//   private double span = this.upperBound-this.lowerBound;
 
    public static int CONSTRAINT_STOP = 1;
    public static int CONSTRAINT_WRAP = 2;

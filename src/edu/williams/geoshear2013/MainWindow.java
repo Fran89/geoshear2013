@@ -25,6 +25,8 @@ import javax.swing.filechooser.FileFilter;
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
+ *  - (.5) OPTIONAL in main window gscUI, bind ctrl-a to select all and esc to unselect all when in edit mode
+ *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
  * 
  *  - (1) final code clean up
  *    + find and resolve remaining to-do items

@@ -127,7 +127,6 @@ public class Matrix2x2 {
      */
     public Matrix2x2[] svd() {
         Matrix2x2[] u_sig_vt = new Matrix2x2[3];
-
 /* from http://www.ualberta.ca/~mlipsett/ENGM541/Readings/svd_ellis.pdf
  * 
 % [U,SIG,V] = svd2x2(A) finds the SVD of 2x2 matrix A

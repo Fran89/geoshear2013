@@ -20,13 +20,11 @@ public class GSDeformationSeries extends ArrayList {
     
     public GSDeformationSeries() {
         super();
-       // this.boundSets = new ArrayList(4);
         this.compositeDeformation = new Deformation();
     }
 
     public GSDeformationSeries(int initialCapacity) {
         super(initialCapacity);
-       // this.boundSets = new ArrayList(4);
         this.compositeDeformation = new Deformation();
     }
 
@@ -110,7 +108,6 @@ public class GSDeformationSeries extends ArrayList {
     public void runAllDeformationsOn(GSPebble p) {
         ListIterator li = this.listIterator();
         while (li.hasNext()) {
-//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
             p.deform((Deformation)(li.next()));
         }
     }
@@ -118,7 +115,6 @@ public class GSDeformationSeries extends ArrayList {
         ListIterator li = this.listIterator();
         int counter = 0;
         while (li.hasNext() && counter < nth) {
-//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
             p.deform((Deformation)(li.next()));
             counter++;
         }
@@ -128,7 +124,6 @@ public class GSDeformationSeries extends ArrayList {
         ListIterator li = this.listIterator();
         int counter = 0;
         while (li.hasNext() && counter < nth) {
-//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
             ps.applyDeformation((Deformation)(li.next()));
             counter++;
         }
