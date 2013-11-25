@@ -4,6 +4,8 @@
  */
 package edu.williams.geoshear2013;
 
+import java.awt.Point;
+
 /**
  *
  * @author cwarren
@@ -19,6 +21,10 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
     public GSComplexInfoFrameDeformationSeries(MainWindow launchedFrom) {
         this.launchedFromWindow = launchedFrom;
         initComponents();
+        Point startingLoc = launchedFromWindow.getLocation();
+        startingLoc.translate(launchedFromWindow.getWidth()/2, launchedFromWindow.getHeight()-10);
+        this.setLocation(startingLoc);
+        this.setTitle("Deformations");
     }
 
     /**
@@ -59,19 +65,18 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
 
         getContentPane().add(jPanelLabelsContainer);
 
-        jScrollPaneDeformSeriesDisplay.setBorder(null);
+        jScrollPaneDeformSeriesDisplay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPaneDeformSeriesDisplay.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPaneDeformSeriesDisplay.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPaneDeformSeriesDisplay.setAlignmentX(0.0F);
         jScrollPaneDeformSeriesDisplay.setAlignmentY(0.0F);
         jScrollPaneDeformSeriesDisplay.setMaximumSize(new java.awt.Dimension(32767, 215));
-        jScrollPaneDeformSeriesDisplay.setMinimumSize(null);
-        jScrollPaneDeformSeriesDisplay.setPreferredSize(null);
+        jScrollPaneDeformSeriesDisplay.setPreferredSize(new java.awt.Dimension(10000, 219));
 
         jPanelDefSeriesMatrixDisplay.setMaximumSize(new java.awt.Dimension(32767, 200));
         jPanelDefSeriesMatrixDisplay.setMinimumSize(new java.awt.Dimension(200, 200));
         jPanelDefSeriesMatrixDisplay.setName(""); // NOI18N
-        jPanelDefSeriesMatrixDisplay.setPreferredSize(new java.awt.Dimension(500, 200));
+        jPanelDefSeriesMatrixDisplay.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanelDefSeriesMatrixDisplay.setLayout(new javax.swing.BoxLayout(jPanelDefSeriesMatrixDisplay, javax.swing.BoxLayout.LINE_AXIS));
         jPanelDefSeriesMatrixDisplay.add(gSDeformationSeriesBasisDisplay1);
 
@@ -85,15 +90,13 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
     
     public void setFromDeformationSeries(GSDeformationSeries defs) {
         this.jPanelDefSeriesMatrixDisplay.removeAll();
-        this.jPanelDefSeriesMatrixDisplay.setSize(this.gSDeformationSeriesBasisDisplay1.getWidth()+defs.size()*200, this.jPanelDefSeriesMatrixDisplay.getHeight());
         this.jPanelDefSeriesMatrixDisplay.add(this.gSDeformationSeriesBasisDisplay1, 0);
         for (int i=0; i<defs.size(); i++) {
             this.jPanelDefSeriesMatrixDisplay.add(new GSDeformationSeriesStepDisplay(defs.get(i),defs.getCompositeTransform(i+1))
                                                   ,0);
         }
-        this.jPanelDefSeriesMatrixDisplay.repaint();
-//        this.jScrollPaneDeformSeriesDisplay.setSize(this.gSDeformationSeriesBasisDisplay1.getWidth()+defs.size()*200, this.jScrollPaneDeformSeriesDisplay.getHeight());
-//        this.jScrollPaneDeformSeriesDisplay.invalidate();
+        this.jPanelDefSeriesMatrixDisplay.setPreferredSize(null);
+        this.validate();
         this.repaint();
     }
     
