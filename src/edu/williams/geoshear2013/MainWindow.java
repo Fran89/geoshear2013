@@ -1923,19 +1923,28 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             this.initializeGscUI();
             this.jPanelContainerDisplay.add(this.gscUI);                    
 
-            // then un-link the old charts
+            // then un-link the old charts / windows
             GSComplexChartFrameCartRfPhi priorChartCart = this.chartCartRfPhi;
             GSComplexChartFramePolarRfPhi priorChartPolar = this.chartPolarRfPhi;
+            GSComplexInfoFrameDeformationSeries priorWinDefSeries = this.windowDeformationsSeries;
+//                = new GSComplexInfoFrameDeformationSeries(this);
+//        this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
+                    
             boolean initialCartChartVis = this.chartCartRfPhi.isVisible();
             boolean initialPolarChartVis = this.chartPolarRfPhi.isVisible();
+            boolean initialWinDefSeriesVis = this.windowDeformationsSeries.isVisible();
             this.chartCartRfPhi.setVisible(false);
             this.chartPolarRfPhi.setVisible(false);
+            this.windowDeformationsSeries.setVisible(false);
             this.gscUI.gsc.removeAllWatchers();
             this.gscUI.removeAllWatchers();
             
             // now add new charts
             this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
             this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
+            this.windowDeformationsSeries = new GSComplexInfoFrameDeformationSeries(this);
+            this.windowDeformationsSeries.setFromDeformationSeries(this.gscUI.gsc.deformations);
+            this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
             this.gscUI.gsc.addWatcher(this.chartCartRfPhi);
             this.gscUI.addWatcher(this.chartCartRfPhi);
             this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
@@ -1952,8 +1961,10 @@ this.gscUI.gsc.pebbleSets.getLast().add(new GSPebble("p169",300,-300,25,21.5,6.2
             // set visibility as appropriate
             this.chartCartRfPhi.setVisible(initialCartChartVis);
             this.chartPolarRfPhi.setVisible(initialPolarChartVis);
+            this.windowDeformationsSeries.setVisible(initialWinDefSeriesVis);
             this.chartCartRfPhi.repaint();
             this.chartPolarRfPhi.repaint();
+            this.windowDeformationsSeries.repaint();
         
             // now update the main window from the new gscUI state
             this.updateDeformNavControlsStates();

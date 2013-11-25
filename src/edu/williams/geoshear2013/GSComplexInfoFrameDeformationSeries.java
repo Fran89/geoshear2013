@@ -100,7 +100,6 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
                                                   ,0);
         }
         this.jPanelDefSeriesMatrixDisplay.setPreferredSize(null);
-//        this.markCurrentDeformation(1);
         this.validate();
         this.repaint();
     }
@@ -113,6 +112,7 @@ public class GSComplexInfoFrameDeformationSeries extends javax.swing.JFrame {
         }        
         this.currentDeformationComponentIndex = numComps - deformationNumber;
         ((HighlightableComponent)(this.jPanelDefSeriesMatrixDisplay.getComponent(this.currentDeformationComponentIndex))).highlight();
+        Util.todo("change scroll view so that currently highlighted step is visible");
     }
     
     
