@@ -23,8 +23,8 @@ import javax.swing.filechooser.FileFilter;
  * TODO:
  *  - (3) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
- *  - (1) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
- *  - (.5) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
+ *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
+ *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
  * 
  *  - (1) final code clean up
  *    + find and resolve remaining to-do items

@@ -153,7 +153,8 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         });
         jMenuView.add(jCheckBoxMenuItemMeans);
 
-        jCheckBoxMenuItemDefPath.setText("Deformation Path");
+        jCheckBoxMenuItemDefPath.setText("Deformation Path (tbd)");
+        jCheckBoxMenuItemDefPath.setEnabled(false);
         jCheckBoxMenuItemDefPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItemDefPathActionPerformed(evt);

@@ -45,11 +45,7 @@ public class AboutWindow extends javax.swing.JFrame {
         });
         
         String licenseText = "See WilliamsCollegeSoftwareLicenseVersion1.txt";
-        //WilliamsCollegeSoftwareLicenseVersion1.txt
         this.jTextAreaAboutLicense.setMargin(new Insets(10,10,10,10));
-        //this.jTextAreaAboutLicense.setText(licenseText);
-        //InputStream input = getClass().getResourceAsStream("/edu/williams/geoshear2/WilliamsCollegeSoftwareLicenseVersion1.txt");
-//        InputStreamReader in = new InputStreamReader(getClass().getResourceAsStream("/edu/williams/geoshear2/WilliamsCollegeSoftwareLicenseVersion1.txt"), "UTF-8");
         BufferedInputStream bis = new BufferedInputStream(getClass().getResourceAsStream("/edu/williams/geoshear2013/WilliamsCollegeSoftwareLicenseVersion1.txt"));
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try {
@@ -62,7 +58,6 @@ public class AboutWindow extends javax.swing.JFrame {
         } catch (IOException exc) {
             System.out.println("Could not read from WilliamsCollegeSoftwareLicenseVersion1.txt: "+ exc.toString());
         }
-        //InputStreamReader in = new InputStreamReader(getClass().getR ("/edu/williams/geoshear2/WilliamsCollegeSoftwareLicenseVersion1.txt"), "UTF-8");
         this.jTextAreaAboutLicense.setText(buf.toString());
     }
 

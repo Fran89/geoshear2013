@@ -100,7 +100,6 @@ public class Deformation extends Matrix2x2 {
             String[] deformationDataPieces = deformationData.split(Deformation.SERIALIZE_TOKEN);
             for (int i=0; i<deformationDataPieces.length; i++) {
                 String[] keyValue = deformationDataPieces[i].split("=");             
-//                System.err.println("  "+keyValue[0]+"-"+keyValue[1]);
                 if ("m00".equals(keyValue[0])) { newM00 = Double.parseDouble(keyValue[1]); }
                 if ("m01".equals(keyValue[0])) { newM01 = Double.parseDouble(keyValue[1]); }
                 if ("m10".equals(keyValue[0])) { newM10 = Double.parseDouble(keyValue[1]); }

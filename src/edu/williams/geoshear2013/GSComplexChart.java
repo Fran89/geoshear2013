@@ -105,16 +105,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         this.referencePebblesSparse = new GSPebbleSet();
         int refPebCounter = 0;
         referencePebblesDense = new GSPebbleSet();
-       /* Pebble np = new Pebble("rp"+refPebCounter,
-                                                     0.0,
-                                                     0.0,
-                                                     2.0,
-                                                     1.0,
-                                                     45.0,
-                                                     Color.RED);
-        this.referencePebblesSparse.add(np);
-         *
-         */
         for (int phiVal = -90; phiVal < 90; phiVal += 15)
         {
             for (double rfVal = 1.5; rfVal < 30; rfVal += .5)
@@ -163,7 +153,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         Graphics2D g2d = (Graphics2D)g;
 
         this.determineChartFrame();
-        //System.out.println("left: "+this.frameLeft+"    top: "+this.frameTop);
         g2d.drawImage(this.chartFrame, null, this.frameLeft, this.frameTop);
 
         this.paintMeans(g2d);
@@ -215,6 +204,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         if (this.isShowTrace())
         {
             Util.todo("implement show trace for pebbles");
+            // NOTE: how to handle trace lines that wrap across opposite edges? (e.g. phi from -85 to + 85 during a rotation)
 //            int pIndex = this.watchedComplex.getPebbles().indexOf(p);
 //            //System.out.println("peb index is "+pIndex);
 //            if (pIndex >= 0)
@@ -253,9 +243,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
             {
                 // for some unknown reason the call to paintString makes nothing appear, while re-creating the code here works just fine
                 // hack-y, but it works
-                String pInfo = getPebbleInfoString(p); //"Rf: "+Util.truncForDisplay(p.getRf())+"  2*phi: "+Util.truncForDisplay(p.getThetaDeg()*2.0);
-                //paintString(g2d,pInfo,(int)pebx,(int)peby);
-                //g2d.setColor(Color.BLACK);
+                String pInfo = getPebbleInfoString(p);
                 g2d.setColor(p.getColor().darker().darker());
                 int paintX = (int)pebx + markSize;
                 int infoSize = (int)(g2d.getFontMetrics().getStringBounds(pInfo, g2d).getWidth() + 1);
@@ -263,7 +251,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
                 int paintY = (int)peby - 2;
                 infoSize = (int)(g2d.getFontMetrics().getStringBounds(pInfo, g2d).getHeight() + 1);
                 if (paintY < infoSize) {paintY += infoSize + 4; }
-                //g2d.drawString(pInfo,paintX,(int)peby);
                 g2d.drawString(pInfo,paintX,paintY);
             }
         }
@@ -288,7 +275,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
      * @param g2d
      */
     protected void paintReferencePebbles(Graphics2D g2d) {
-        //throw new UnsupportedOperationException("Not supported yet.");
         if (this.isShowReferenceDataSparse() || this.isShowReferenceDataDense())
         {
             GSPebbleSet rp = null;
@@ -298,8 +284,6 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
                 rp = this.referencePebblesSparse.clone();
             }
             this.watchedComplex.deformations.runAllDeformationsOn(rp, this.watchedComplex.getCurrentDeformationNumber()-1);
-//            rp.deform(((GSComplex)(this.watchedComplex)).getDeformations().getCurCumuDeformation());
-//            rp.deform(((GSComplexUI)(this.watchedComplexUI)).getCurrentDeformation());
             rp.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
             g2d.setStroke(STROKE_MEDIUM);
             this.paintPebbleSet(g2d, rp,4,GSComplexChart.MARK_CIRCLE);
@@ -329,9 +313,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     protected abstract void handleInfoFor(int screen_x, int screen_y);
 
     protected void GSComplexChartMouseClicked(java.awt.event.MouseEvent evt) {
-        //this.showClickInfo = true;
         this.checkShowClick(evt);
-        //System.out.println("mouse click event is "+evt.toString());
         this.handleInfoFor(evt.getX(), evt.getY());
         this.repaint();
     }
@@ -376,12 +358,9 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         textG2D.setColor (Color.WHITE);
         textG2D.fillRect (0,0,(int)bounds.getWidth (),(int)bounds.getHeight ()+3);
         textG2D.setColor (g2d.getColor());
-        //textG2D.setFont (this.getPlotFont ());
         textG2D.drawString (s,0,(int)bounds.getHeight ());
 
         g2d.drawImage (textImage,op,x,y);
-        //g2d.drawImage (textImage,op,10,100);
-        //g2d.drawString("called drawTurnedString(g2d,"+",'"+s+"',"+x+","+y+","+op.toString()+")", 100, 100);
     }
 
     // adds appropriate text if we're using a log scale, otherwise leaves it alone

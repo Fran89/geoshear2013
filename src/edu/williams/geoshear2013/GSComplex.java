@@ -133,6 +133,7 @@ public class GSComplex implements Watchable {
         //System.err.println(serializedGSComplex);
 
         if (serializedGSComplex.indexOf("\t") > -1) {
+            // HANDLE TABBED IMPORT
             String[] gscData = serializedGSComplex.split(GSComplex.SERIAL_TOKEN);
             for(int i=0; i < gscData.length; i++) {
                 gscData[i] = gscData[i].trim();
@@ -164,26 +165,21 @@ public class GSComplex implements Watchable {
                 }
             }
         } else {
+            // HANDLE .GES
             String[] gscData = serializedGSComplex.split(GSComplex.SERIAL_TOKEN);
             for(int i=0; i < gscData.length; i++) {
                 gscData[i] = gscData[i].trim(); // remove leading and trailing whitespace
-                
-//                System.err.println("processing gscData["+i+"]-\n"+gscData[i]);
-                
                 if (gscData[i].isEmpty()) {
-//                    System.err.println("empty section");
                     continue;  // skip empty sections
                 }
                 
                 if (gscData[i].startsWith(GSComplex.KEY_PEBBLES+"=")) {
-//                    System.err.println("pebbles section");
                     GSPebbleSet basePS = GSPebbleSet.deserialize(gscData[i].substring(GSComplex.KEY_PEBBLES.length()+1));
                     basePS.ofComplex = gsc;
                     gsc.pebbleSets.clear();
                     gsc.pebbleSets.add(basePS);
                 } else 
                 if (gscData[i].startsWith(GSComplex.KEY_DEFORMATIONS+"=")) {
-//                    System.err.println("deformations section");
                     GSDeformationSeries ds = GSDeformationSeries.deserialize(gscData[i].substring(GSComplex.KEY_DEFORMATIONS.length()+1));
                     gsc.deformations = ds;
                 } else
@@ -208,6 +204,7 @@ public class GSComplex implements Watchable {
         }
 
         gsc.rebuildPebbleSetsFromDeformationSeries();
+        
         // advance deform nav to last deformation in the gsc
         for (int i=gsc.deformations.size(); i>0; i--) {
             gsc.nextDeformation();
@@ -245,7 +242,6 @@ public class GSComplex implements Watchable {
         if (this.currentDeformationNumber <= this.deformations.size()) {
             this.currentDeformationNumber++;
         }
-//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.nextDeformation");
         this.notifyWatchers();
     }
     
@@ -253,13 +249,11 @@ public class GSComplex implements Watchable {
         if (this.currentDeformationNumber > 1) {
             this.currentDeformationNumber--;
         }
-//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.prevDeformation");
         this.notifyWatchers();
     }
     
     public void lastDeformation() {
         this.currentDeformationNumber = this.deformations.size() + 1;
-//        System.out.println("TO BE FINISHED/IMPLEMENTED: gsc.lastDeformation");
         this.notifyWatchers();
     }
 
@@ -270,10 +264,6 @@ public class GSComplex implements Watchable {
     /*------------------------------------------------------------------------*/
     
     public void drawOnto(Graphics2D g2d, boolean isFilled, boolean showAxes, Deformation tenativeDeformation) {
-//        GSPebbleSet workingPebbleSet = this.pebbleSets.getLast();
-//        if (this.currentDeformationNumber < this.deformations.size()) {
-//            workingPebbleSet = this.pebbleSets.get(this.currentDeformationNumber-1);
-//        }       
         GSPebbleSet workingPebbleSet = this.pebbleSets.get(this.currentDeformationNumber-1);
         if (! tenativeDeformation.isIdentity()) {
             workingPebbleSet = this.pebbleSets.getLast().clone();
@@ -283,7 +273,6 @@ public class GSComplex implements Watchable {
         boolean inEditMode = this.usedUI.getCurrentUIMode()==GSComplexUI.UI_MODE_EDIT_PEBBLES;
         for (int i=0; i<workingPebbleSet.size(); i++) {
             workingPebbleSet.get(i).drawOnto(g2d, isFilled, showAxes, inEditMode);
-            //tenativelyDeformedPebbles.get(i).errDump();
         }
     }
     
@@ -297,7 +286,6 @@ public class GSComplex implements Watchable {
     @Override
     public void addWatcher(Watcher w) {
         watchedBy.add(w);
-        //w.setWatched(this);
         w.reactTo(this, null);
     }
 
@@ -362,11 +350,8 @@ public class GSComplex implements Watchable {
     }
     
     private void resetPositionOfPebblesRelativeToNewOrigin(double initial_origin_x, double initial_origin_y, double new_origin_x, double new_origin_y) {
-//        System.err.println("orig origin: "+initial_origin_x+","+initial_origin_y);
-//        System.err.println("new origin: "+new_origin_x+","+new_origin_y);
         double origin_shift_x = new_origin_x - initial_origin_x;
         double origin_shift_y = initial_origin_y - new_origin_y;
-//        System.err.println("re-centering shift: "+origin_shift_x+","+origin_shift_y);
         for (int i_sets=0; i_sets<this.pebbleSets.size(); i_sets++) {
             GSPebbleSet pebbles = this.pebbleSets.get(i_sets);
             for (int i_pebbles=0; i_pebbles<pebbles.size(); i_pebbles++) {
@@ -381,7 +366,6 @@ public class GSComplex implements Watchable {
         GSPebbleSet newPebbleSet = this.pebbleSets.get(0).clone();
         ListIterator li = this.deformations.listIterator();
         while (li.hasNext()) {
-//            this.compositeDeformation.timesInPlace(((Deformation)(li.next())));
             newPebbleSet.applyDeformation((Deformation)(li.next()));
         }
         this.pebbleSets.add(newPebbleSet);
@@ -425,7 +409,6 @@ public class GSComplex implements Watchable {
             try
             {
                 MediaTracker m = new MediaTracker (new JPanel ());
-                //System.out.println("bg file name is "+this.getBgImageFileName()); // debugging
                 img = tk.getImage (this.getBgImageFileName());
                 m.addImage (img, 0);
                 m.waitForAll ();
@@ -435,7 +418,7 @@ public class GSComplex implements Watchable {
             catch (Exception e)
             {
                 // ideally would have a more graceful failure here...
-                // TODO - pop up alert when BG image load fails
+                Util.todo("pop up alert when BG image load fails");
                 e.printStackTrace ();
             }
         }
@@ -488,35 +471,14 @@ public class GSComplex implements Watchable {
             sumRFinvert += (1/peb.getRF());
 
             double pebbleTheta = peb.getThetaRad();
-//            return this.getPaintPoint(new Point2D.Double(p.getRF(),-2.0*this.constrainDegrees(Util.toDegrees(p.getThetaRad()))));
-            
-//            System.err.println("  peb "+peb.getId()+" theta rad: "+pebbleTheta);
-//            while (pebbleTheta > Math.PI/2) { pebbleTheta -= Math.PI; }
-//            while (pebbleTheta < Math.PI/-2) { pebbleTheta += Math.PI; }
-//            pebbleTheta += Math.PI/2;
-//            System.err.println("   peb "+peb.getId()+" constrained theta rad: "+pebbleTheta);
-            //sumSin2Phi += Math.sin(2.0*peb.getThetaRad());
-            //sumCos2Phi += Math.cos(2.0*peb.getThetaRad());
-//            sumSinPhi += Math.sin(pebbleTheta)*peb.getRF();
-//            sumCosPhi += Math.cos(pebbleTheta)*peb.getRF();
+
             sumSinPhi += Math.sin(pebbleTheta);
             sumCosPhi += Math.cos(pebbleTheta);
-//            while (pebbleTheta > Math.PI) { pebbleTheta -= Math.PI; }
-//            while (pebbleTheta < 0) { pebbleTheta += Math.PI; }
             cumuAngle += pebbleTheta;
         }
 
         this.harmonicMean = ((double)(currentPebbleSet.size())) / sumRFinvert;
-//        this.vectorMean = .5 * Math.atan(sumSinPhi/sumCosPhi); // NOTE: this one should be the correct one... but it doesn't seem to work :(
         this.vectorMean = Math.atan(sumSinPhi/sumCosPhi); 
-//        this.vectorMean -= Math.PI/2;
-//            while (this.vectorMean > Math.PI/2) { this.vectorMean -= Math.PI; }
-//            while (this.vectorMean < Math.PI/-2) { this.vectorMean += Math.PI; }
-            
-        //        this.vectorMean = cumuAngle / currentPebbleSet.size() - Math.PI/2;
-//        this.vectorMean = Math.atan(sumCosPhi/sumSinPhi);
-//        this.vectorMean = Math.atan2(sumSinPhi,sumCosPhi);
-//        this.notifyWatchers();
     }
 
     /**
