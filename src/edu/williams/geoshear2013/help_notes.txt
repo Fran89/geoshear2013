@@ -1,0 +1,21 @@
+GeoShear Help Outline
+
+I. Quick Ref
+    A. Pieces
+    B. Controls
+        1. deformation
+            i. controls
+            ii. display options
+        2. editing
+        3. charts
+        4. files
+II. Basic Parts
+    A. Theory/goals/uses
+    B. General components / aspects
+III. Main Window
+IV. Charts
+    A. What they show
+    B. 
+V. Deformation Series
+VI. Further Help
+    A. Online

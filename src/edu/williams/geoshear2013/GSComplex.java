@@ -341,13 +341,13 @@ public class GSComplex implements Watchable {
      * @param x, y the coordinates to which the center should be set
      */
     public void setCenter(double x, double y) {
-        this.resetPositionOfPebblesRelativeToNewOrigin(this.center.x, this.center.y, x, y);
+        //this.resetPositionOfPebblesRelativeToNewOrigin(this.center.x, this.center.y, x, y);
         this.center.x = x;
         this.center.y = y;
         this.notifyWatchers();
     }
     
-    private void resetPositionOfPebblesRelativeToNewOrigin(double initial_origin_x, double initial_origin_y, double new_origin_x, double new_origin_y) {
+    public void resetPositionOfPebblesRelativeToNewOrigin(double initial_origin_x, double initial_origin_y, double new_origin_x, double new_origin_y) {
         double origin_shift_x = new_origin_x - initial_origin_x;
         double origin_shift_y = initial_origin_y - new_origin_y;
         for (int i_sets=0; i_sets<this.pebbleSets.size(); i_sets++) {

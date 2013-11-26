@@ -29,9 +29,7 @@ import javax.swing.filechooser.FileFilter;
  *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
  * 
  *  - (1) final code clean up
- *    + find and resolve remaining to-do items
- *    + find and remove dev/debug output / comments
- *    + find and remove large commented out sections (wipe in-code versioning)
+ *    + find and resolve remaining non-optional to-do items
  * 
  *  - (1) write basic help text/file
  *    + note places that need additional work
@@ -1710,6 +1708,7 @@ public class MainWindow extends javax.swing.JFrame {
             
             this.jPanelContainerDisplay.remove(this.gscUI);
             this.gscUI = new GSComplexUI(GSComplex.deserialize(cumu_string_in),this);
+            this.gscUI.gsc.setCenter(this.jPanelContainerDisplay.getHeight()/2, this.jPanelContainerDisplay.getWidth()/2);
             this.initializeGscUI();
             this.jPanelContainerDisplay.add(this.gscUI);                    
 
