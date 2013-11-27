@@ -56,4 +56,8 @@ public class GSComplexChartFrameCartRfPhi extends GSComplexChartFrame {
         }
         super.formattedTextFieldMenuItemScaleFixedActionPerformed(evt);
     }
+
+    double getScaleMax() {
+        return ((GSComplexChartCartesianRfPhi)chart).getMaxValX();
+    }
 }

@@ -58,7 +58,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         initChart();
 
     }
-
+    
     public abstract void initChart();
 
     /** This method is called from within the constructor to

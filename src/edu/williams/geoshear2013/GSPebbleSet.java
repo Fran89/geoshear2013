@@ -249,6 +249,20 @@ public class GSPebbleSet extends ArrayList {
         }
         return false;
     }
+    
+    /**
+     * 
+     * @param id the id of the pebble to find
+     * @return the first pebble that has that id (id's should be unique, but the code does not guarantee that so we just return the first), or null if no match is found
+     */
+    public GSPebble getPebbleById(String id) {
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (peb.getId().equals(id)) { return peb; }
+        }
+        return null;
+    }
 
     public double getMaxRf() {
         double maxRf = 0;
@@ -259,7 +273,16 @@ public class GSPebbleSet extends ArrayList {
         }
         return maxRf;
     }
-    
+
+    public double getMinRf() {
+        double minRf = 100000;
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            if (peb.getRF() < minRf) { minRf = peb.getRF(); }
+        }
+        return minRf;
+    }    
     /**
      * testing for this class
      */
@@ -278,4 +301,5 @@ public class GSPebbleSet extends ArrayList {
         ps2 = GSPebbleSet.deserialize(ps1.serializeToTabDelimited());
         System.out.println("ps2: "+ps2.serializeToTabDelimited());
     }
+
 }
