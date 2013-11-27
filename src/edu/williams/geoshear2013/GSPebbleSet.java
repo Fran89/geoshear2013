@@ -283,6 +283,33 @@ public class GSPebbleSet extends ArrayList {
         }
         return minRf;
     }    
+    
+    double getMinPhi() {
+        double minPhi = Math.PI/2;
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            double pebPhi = peb.getThetaRad();
+            if (pebPhi > Math.PI/2) {pebPhi = pebPhi - Math.PI;}
+            if (pebPhi < -1* Math.PI/2) {pebPhi = pebPhi + Math.PI;}
+            if (pebPhi < minPhi) { minPhi = pebPhi; }
+        }
+        return minPhi;
+    }
+
+    double getMaxPhi() {
+        double maxPhi = -1 * Math.PI/2;
+        ListIterator li = this.listIterator();
+        while (li.hasNext()) {
+            GSPebble peb = (GSPebble)(li.next());
+            double pebPhi = peb.getThetaRad();
+            if (pebPhi > Math.PI/2) {pebPhi = pebPhi - Math.PI;}
+            if (pebPhi < -1* Math.PI/2) {pebPhi = pebPhi + Math.PI;}
+            if (pebPhi > maxPhi) { maxPhi = pebPhi; }
+        }
+        return maxPhi;
+    }
+    
     /**
      * testing for this class
      */

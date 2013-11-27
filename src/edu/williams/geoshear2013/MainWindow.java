@@ -1848,13 +1848,12 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemChartDeformationSeriesActionPerformed
 
     private void jButtonAutoColorOnRfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutoColorOnRfActionPerformed
-        Util.todo("auto-color pebbles by rf");
         this.autoColorOptions.setDoAction(false);
+        this.autoColorOptions.setAutoColorFor(AutoColorOptionsDialog.COLOR_ON_RF);
         this.autoColorOptions.setVisible(true);
     }//GEN-LAST:event_jButtonAutoColorOnRfActionPerformed
 
     public void handleDoAutoColorOnRF() {
-//        System.err.println("do action is "+this.autoColorOptions.isDoAction());
         if (! this.autoColorOptions.isDoAction()) { return; }
         GSPebbleSet canonicalPebbles = this.gscUI.gsc.pebbleSets.get(0);
         GSPebbleSet setToUseAsBasis = this.gscUI.gsc.pebbleSets.get(0);
@@ -1867,44 +1866,40 @@ public class MainWindow extends javax.swing.JFrame {
             double min = 1.0;
             double max = this.chartCartRfPhi.getScaleMax();
             double rangeStep = (max-min)/numGroups;
-//            System.err.println("rangeStep is "+rangeStep);
             for (int i=0; i<setToUseAsBasis.size(); i++) {
                 int pebbleGroupNumber = (int) ((setToUseAsBasis.get(i).getRF() - min)/rangeStep)+1;
                 if (pebbleGroupNumber > numGroups) { pebbleGroupNumber = numGroups; }
                 if (pebbleGroupNumber < 1) { pebbleGroupNumber = 1; }
-//                System.err.println("pebble rf is "+setToUseAsBasis.get(i).getRF());
-//                System.err.println("pebbleGroupNumber is "+pebbleGroupNumber);
                 canonicalPebbles.get(i).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
             }
         } else if (this.autoColorOptions.isRangeDynamic()) {
             double min = setToUseAsBasis.getMinRf();
             double max = setToUseAsBasis.getMaxRf();
             double rangeStep = (max-min)/numGroups;
-//            System.err.println("rangeStep is "+rangeStep);
             for (int i=0; i<setToUseAsBasis.size(); i++) {
                 int pebbleGroupNumber = (int) ((setToUseAsBasis.get(i).getRF() - min)/rangeStep)+1;
                 if (pebbleGroupNumber > numGroups) { pebbleGroupNumber = numGroups; }
                 if (pebbleGroupNumber < 1) { pebbleGroupNumber = 1; }
-//                System.err.println("pebble rf is "+setToUseAsBasis.get(i).getRF());
-//                System.err.println("pebbleGroupNumber is "+pebbleGroupNumber);
                 canonicalPebbles.get(i).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
             }
         } else if (this.autoColorOptions.isRangeCount()) {
             int pebblesPerGroup = (int) (setToUseAsBasis.size()/numGroups);
             int pebblesInCurrentGroup = 0;
             int pebbleGroupNumber = 1;
-            // this is certainly a hack - the ideal approach would be to sort the pebbles then divide them out then divide that set by count
+
+            // sort the pebbles, then color them by (roughly) evenly sized group in their sorted order
+            
             GSPebbleSet usingClone = setToUseAsBasis.clone();
             Collections.sort(usingClone,
                              new Comparator<GSPebble>() {
                                 public int compare(GSPebble p1, GSPebble p2) {
-                                   //return if b1 is greater return +1, if b2 is smaller return -1 otherwise 0
                                    if (p1.getRF() > p2.getRF()) { return 1; }
                                    if (p1.getRF() < p2.getRF()) { return -1; }
                                    return 0;
                                 }
                              }
                             );
+            
             for (int i=0; i<usingClone.size(); i++) {
                 canonicalPebbles.getPebbleById(usingClone.get(i).getId()).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
                 pebblesInCurrentGroup++;
@@ -1919,12 +1914,74 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void jButtonAutoColorOnPhiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutoColorOnPhiActionPerformed
-        Util.todo("auto-color pebbles by phi");
         this.autoColorOptions.setDoAction(false);
+        this.autoColorOptions.setAutoColorFor(AutoColorOptionsDialog.COLOR_ON_PHI);
         this.autoColorOptions.setVisible(true);
-        if (! this.autoColorOptions.isDoAction()) { return; }
     }//GEN-LAST:event_jButtonAutoColorOnPhiActionPerformed
 
+    public void handleDoAutoColorOnPhi() {
+        if (! this.autoColorOptions.isDoAction()) { return; }
+        GSPebbleSet canonicalPebbles = this.gscUI.gsc.pebbleSets.get(0);
+        GSPebbleSet setToUseAsBasis = this.gscUI.gsc.pebbleSets.get(0);
+        if (this.autoColorOptions.isUseCurrentDeformation()) {
+            setToUseAsBasis = this.gscUI.gsc.getCurrentlyDeformedPebbleSet();
+        }
+        int numGroups = this.autoColorOptions.getNumberOfColorGroups();
+        
+        if (this.autoColorOptions.isRangeFull()) {
+            double rangeStep = (180)/numGroups;
+            for (int i=0; i<setToUseAsBasis.size(); i++) {
+                int pebbleGroupNumber = (int) ((Util.toDegrees(setToUseAsBasis.get(i).getThetaRad()) + 90)/rangeStep)+1;
+                if (pebbleGroupNumber > numGroups) { pebbleGroupNumber = numGroups; }
+                if (pebbleGroupNumber < 1) { pebbleGroupNumber = 1; }
+                canonicalPebbles.get(i).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
+            }
+        }
+        else if (this.autoColorOptions.isRangeDynamic()) {
+            double min = setToUseAsBasis.getMinPhi();
+            double max = setToUseAsBasis.getMaxPhi();
+            double rangeStep = (max-min)/numGroups;
+            for (int i=0; i<setToUseAsBasis.size(); i++) {
+                double relevantTheta = setToUseAsBasis.get(i).getThetaRad();
+                if (relevantTheta > Math.PI/2) {relevantTheta = relevantTheta - Math.PI;}
+                if (relevantTheta < -1* Math.PI/2) {relevantTheta = relevantTheta + Math.PI;}
+                int pebbleGroupNumber = (int) ((relevantTheta - min)/rangeStep)+1;
+                if (pebbleGroupNumber > numGroups) { pebbleGroupNumber = numGroups; }
+                if (pebbleGroupNumber < 1) { pebbleGroupNumber = 1; }
+                canonicalPebbles.get(i).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
+            }
+        }
+        else if (this.autoColorOptions.isRangeCount()) {
+            int pebblesPerGroup = (int) (setToUseAsBasis.size()/numGroups);
+            int pebblesInCurrentGroup = 0;
+            int pebbleGroupNumber = 1;
+
+            // sort the pebbles, then color them by (roughly) evenly sized group in their sorted order
+            
+            GSPebbleSet usingClone = setToUseAsBasis.clone();
+            Collections.sort(usingClone,
+                             new Comparator<GSPebble>() {
+                                public int compare(GSPebble p1, GSPebble p2) {
+                                   if (p1.getThetaRad() > p2.getThetaRad()) { return 1; }
+                                   if (p1.getThetaRad() < p2.getThetaRad()) { return -1; }
+                                   return 0;
+                                }
+                             }
+                            );
+            
+            for (int i=0; i<usingClone.size(); i++) {
+                canonicalPebbles.getPebbleById(usingClone.get(i).getId()).setColor(this.autoColorOptions.getColorForGroupNumber(pebbleGroupNumber));
+                pebblesInCurrentGroup++;
+                if (pebblesInCurrentGroup >= pebblesPerGroup) {
+                    pebbleGroupNumber++;
+                    pebblesInCurrentGroup = 0;
+                }
+            }
+        }
+        this.gscUI.gsc.rebuildPebbleSetsFromDeformationSeries();
+        this.repaint();
+    }
+    
     private void handleStrainNavPostAction() {
         this.gscUI.tentativeDeformationClear();
         this.handleDeformationReset();

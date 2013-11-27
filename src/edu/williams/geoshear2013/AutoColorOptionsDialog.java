@@ -16,6 +16,10 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
     private MainWindow launchedFromWindow;
 
     private boolean doAction = false;
+    public int autoColorFor;
+    
+    public static int COLOR_ON_RF = 1;
+    public static int COLOR_ON_PHI = 2;
     
     /**
      * Creates new form AutoColorOptionsDialog
@@ -259,7 +263,12 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
     private void jButtonDoAutocolorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDoAutocolorActionPerformed
         this.doAction = true;
         this.setVisible(false);
-        this.launchedFromWindow.handleDoAutoColorOnRF();
+        if (this.autoColorFor == AutoColorOptionsDialog.COLOR_ON_RF) {
+            this.launchedFromWindow.handleDoAutoColorOnRF();
+        } else
+        if (this.autoColorFor == AutoColorOptionsDialog.COLOR_ON_PHI) {
+            this.launchedFromWindow.handleDoAutoColorOnPhi();
+        }
     }//GEN-LAST:event_jButtonDoAutocolorActionPerformed
 
     private void jButtonColor8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColor8ActionPerformed
@@ -448,6 +457,20 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
 
     boolean isRangeCount() {
         return this.jRadioButtonColorRangeByCount.isSelected();
+    }
+
+    /**
+     * @return the autoColorFor
+     */
+    public int getAutoColorFor() {
+        return autoColorFor;
+    }
+
+    /**
+     * @param autoColorFor the autoColorFor to set
+     */
+    public void setAutoColorFor(int autoColorFor) {
+        this.autoColorFor = autoColorFor;
     }
 
 }
