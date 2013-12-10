@@ -93,8 +93,8 @@ public class HelpWindow extends javax.swing.JFrame {
         jLabel1.setText(" ");
         getContentPane().add(jLabel1);
 
-        jTextAreaHelpText.setColumns(20);
         jTextAreaHelpText.setEditable(false);
+        jTextAreaHelpText.setColumns(20);
         jTextAreaHelpText.setFont(new java.awt.Font("Lucida Sans", 0, 13)); // NOI18N
         jTextAreaHelpText.setLineWrap(true);
         jTextAreaHelpText.setRows(5);

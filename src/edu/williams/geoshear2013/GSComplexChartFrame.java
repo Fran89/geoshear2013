@@ -48,7 +48,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         this.launchedFromWindow = launchedFrom;
 
         scaleTextItem.setText("10.0");
-        jMenuView.add(scaleTextItem);
+        jMenuView.add(scaleTextItem,13);
         scaleTextItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formattedTextFieldMenuItemScaleFixedActionPerformed(evt);
@@ -87,12 +87,14 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jRadioButtonMenuItemScaleAdapt = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItemScaleFixed = new javax.swing.JRadioButtonMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemHideWindow = new javax.swing.JMenuItem();
         jMenuTakeSnapshot = new javax.swing.JMenu();
 
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jMenuView.setText("View");
+        jMenuView.setText("Control");
 
         jCheckBoxMenuItemMajorCountours.setSelected(true);
         jCheckBoxMenuItemMajorCountours.setText("Major Contours");
@@ -183,7 +185,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         jMenuView.add(jSeparator2);
 
         buttonGroupScaleAdaption.add(jRadioButtonMenuItemScaleAdapt);
-        jRadioButtonMenuItemScaleAdapt.setText("Adaptive X Scale");
+        jRadioButtonMenuItemScaleAdapt.setText("Adaptive RF Scale");
         jRadioButtonMenuItemScaleAdapt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonMenuItemScaleAdaptActionPerformed(evt);
@@ -193,13 +195,23 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
         buttonGroupScaleAdaption.add(jRadioButtonMenuItemScaleFixed);
         jRadioButtonMenuItemScaleFixed.setSelected(true);
-        jRadioButtonMenuItemScaleFixed.setText("Fixed X Scale");
+        jRadioButtonMenuItemScaleFixed.setText("Fixed RF Scale");
         jRadioButtonMenuItemScaleFixed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonMenuItemScaleFixedActionPerformed(evt);
             }
         });
         jMenuView.add(jRadioButtonMenuItemScaleFixed);
+        jMenuView.add(jSeparator3);
+
+        jMenuItemHideWindow.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemHideWindow.setText("Close/Hide");
+        jMenuItemHideWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHideWindowActionPerformed(evt);
+            }
+        });
+        jMenuView.add(jMenuItemHideWindow);
 
         jMenuBar1.add(jMenuView);
 
@@ -321,6 +333,10 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         this.repaint();
     }//GEN-LAST:event_jCheckBoxMenuItemRefPointsDenseActionPerformed
 
+    private void jMenuItemHideWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHideWindowActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItemHideWindowActionPerformed
+
     protected void formattedTextFieldMenuItemScaleFixedActionPerformed(java.awt.event.ActionEvent evt) {
         jRadioButtonMenuItemScaleFixed.setSelected(true);
         chart.setUseAdaptiveScale(jRadioButtonMenuItemScaleAdapt.isSelected());
@@ -369,6 +385,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemRefPointsDense;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemSelPebInfo;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemHideWindow;
     private javax.swing.JMenu jMenuTakeSnapshot;
     private javax.swing.JMenu jMenuView;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemLinearScale;
@@ -377,6 +394,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemScaleFixed;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     // End of variables declaration//GEN-END:variables
 
     //--------------------------------------------------------------------------

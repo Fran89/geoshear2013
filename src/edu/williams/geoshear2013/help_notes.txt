@@ -2,20 +2,168 @@ GeoShear Help Outline
 
 I. Quick Ref
     A. Pieces
+        1. Main window
+        2. Charts & series
+
+There are two main parts to this application: the main window where sets of pebbles are created and manipulated (deformed), and additional windows that show richer information about the pebbles and/or deformations. The main window has a menu system (where you can save and load files, change the way the pebbles are displayed, and open additional windows), a set of controls on the left, and a large pebble UI panel on the right.
+
+To use the this tool you either create or load a set of pebbles, then deform them using the mouse and/or on-screen controls. A given deformation is tentative until the Apply button is clicked (or Enter is pressed), at which point it is appended to the series of deformations for that set of pebbles (you can step through the series and remove deformations as well). You cna open new windows with more detailed display of pebble information (in the form of cartesian or polar RF-phi charts, or a list of the deformation steps), and the charts themselves have various display and interaction options.
+
+
     B. Controls
-        1. deformation
-            i. controls
-            ii. display options
-        2. editing
+        1. view
+        2. deformation
+            i. display options
+            ii. controls
         3. charts
-        4. files
-II. Basic Parts
-    A. Theory/goals/uses
-    B. General components / aspects
-III. Main Window
-IV. Charts
+        4. editing
+
+The controls are grouped into 5 sections. From top to bottom these are: 
+- display controls : zoom slider, plus buttons to reset the zoom (i.e. to 1x) and re-center (i.e. remove any pan / shift)
+- deform controls : create simple shear, pure shear / compression, and rotation deformations, and apply them (i.e. add the given deformation to the series of deformations). Values in these fields may either be typed in (hit enter when done putting in the number) or else the up or down arrow keys may be used to adjust the values by small increments. NOTE: the apply button here does double duty as a remove button when there's no tentative deformation in place
+- strain / deform controls : navigate through the deformations that have been applied, and show information about the cumulative strain, the tentative strain, and the potential next cumulative strain
+- edit controls : go into edit mode, then change the background image, pebble colors, and use the Pebbles UI panel to create, select, and remove pebbles
+- snapshot button : save an image of the pebbles UI panel
+
+When you open one or more of the chart windows you will see an RF-phi chart of the current pebbles, marked in the appropriate colors and with points for selected pebbles highlighted and showing the numbers for that pebble. The charts also have many display options in their view menu (including changing the scale), and a snapshot button next to the view menu that saves an image of the chart. Clicking anywhere in the chart will show the numbers associated with that point, and shift-clicking will remove that inspection info. The charts also show reference points, which can be considered as a set of pebbles with a wide and regular range of values and which respond to all the deformations but which are not shown in the pebbles UI panel.
+
+The deformtion series window shows the individual and cumulative matrices of the deformations. The current deformation is highlighted with a dark number label, while the others have gray labels.
+
+    C. Pebbles UI
+    
+The pebbles UI not only shows the pebbles (i.e. ellipses) and various other info, it also allows you to deform the pebbles and change the display using the mouse and keyboard.
+
+Always:
+- mouse drag : pan / shift the view, but don't alter the underlying pebbles
+- right-click : pan / shift the view so the clicked point is in the center of the panel
+- mouse wheel : zoom the view in on or out from the point, but don't alter the underlying pebbles
+
+When NOT in Edit mode (i.e. when in Deform mode):
+- shift & mouse drag : create a simple shear deformation
+- control & mouse drag : create a pure shear or compression deformation
+- alt & mouse drag : creeate a rotation deformation
+- enter : apply the tentative deformation
+- escape : cancel / reset the tentative deformation
+
+When in Edit mode:
+- click anywhere : de-select all pebbles
+- click on the center of a pebble : select that pebble
+- shift-click : toggle selection for the pebble that is clicked
+- ctrl-a : select all pebbles
+- escape : de-select all pebbles
+- delete or backspace : delete all selected pebbles
+- Pebble creation is done by a series of mouse drags and space bar presses.
+    1. mouse button down (left button) : set the end point for the first axis
+    2. first drag : define one axis of the pebble
+    3. first space bar press (while keeping the mouse button pressed): lock in the first axis
+    4. second drag (don't release the mouse button between these steps) : define the second axis of the pebble
+    5. second space bar press (while keeping the mouse button pressed): lock in the second axis; NOTE: at this point the pebble is created! NOTE: if you release the mouse button at any point before this then the pebble will be cancelled
+    6. release the mouse button : the new pebble is selected and other pebbles are de-selected (if you don't want it at this point, just hit delete and it will be removed)
+NOTE: newly created pebbles are of the color shown on the Pick Color button in the editing controls section. Pebble color may be changed later by selecting the pebble then clicking the Apply button that's next to the Pick Color button.
+
+
+II. Main Window
+    A. Menu
+
+The menu system for GeoShear is:
+    menu- GeoShear - information about and control of the application as a whole
+        item- Help - display this help information
+        item- About - show a the title, version, license, etc.
+        item- Quit - exit GeoShear
+            NOTE: this does NOT ask for confirmation nor does it save on exit!
+    menu- File - save and load pebbles and deformations
+        item- Save - save the pebble set, deformation series, and a reference to any background image in a .ges file
+        item- Load - load a set of pebbles and a deformation series from a .ges file; also loads the background image if possible
+            NOTE: if the background image is not loading properly it may be due to the image file changing location
+            NOTE: when the save file is loaded any previously loaded/created work in the application is discarded
+        item- Export to .tab - save the same information as in a .ges file, but in a tab-delimited format that's suitable to load into a spreadsheet
+        item- Import from .tab - same as Load, but from a compatible .tab file
+        item- Save current deformed - create a .ges file, but instead of saving the base pebble set and deformation series save the data for the currently deformed pebble state as a new base set
+        item- Export currently deformed to .tab - save as Save above, but puts the data in a .tab file instead of a .ges file
+    menu- Display - control what information / elements are shown in the pebbles UI panel
+        item- Show pebble axes - show the major and minor axes of each pebble (as opposed to just the ellipse / outline)
+        item- Fill pebbles - show pebbles as solid regions of color as opposed to outlines
+        item- Show background axes - show/hide a set of axes centered at 0,0 and drawn before any deformations are applied; i.e. deformations affect the axes
+        item- Show background image - show/hide the background image (if one has been loaded) 
+        item- Show strain ellipses - show/hide the ellipses that are centered at 0,0 which represent the current cumulative deformation, tentative next deformation step, and tentative cumulative deformation
+    menu- Windows - open additional windows that display more detailed and/or different information about the pebble set and deformations
+        item- RF-Phi cartesian chart - open the cartesian RF-Phi chart, more details below
+        item- RF-2*Phi polar chart - open the polar RF-2*Phi chart, more details below
+        item- Deformation series - open a window that shows all the deformation steps and the incremental cumulative strains
+
+    B. Controls
+
+These controls affect the values used in the 2x2 matrix that represents a given deformation. The deformation controls have four subsections - one for each type of deformation supported (simple shear, pure shear / compression, and rotation), plus a pair of buttons in the lower right of this section. These controls can be used to create a deformation by entering values directly (press Enter or Tab after putting a number in one of these control to make that number take effect). Also, when a deformation is created by dragging in the pebble UI panel these controls show the corresponding values for that deformation. Once you're satisfied with a given deformation clicking the Apply button will add it to the series. Clicking the Reset button clears / cancels the current, tentative deformation.
+
+
+Below the deformation controls is an area where deformation-related matrices are shown, along with the RF and phi of the ellipses associated with those matrices.
+
+First is a large matrix in red that shows the values for the tentative deformation as it's being made. Below that and to the left is a smaller matrix (in a dark red-brown color) that shows the information for the composite deformation. To the right of that (in a slightly lighter red-purple color) is another small matrix that shows the combination of the composite and tentative deformations - i.e. what the new composite deformation will be when the current tentative deformation is applied.
+
+Below these matrices are two arrow buttons which let you navigate through the deformation series. Once there is at least one deformation in the series the larger matrix does double duty - when it's light gray instead of red it is showing the current / last deformation. Also, when not working on setting up a tentative deformation the Apply button does double-duty as a Remove button - clicking it will remove the current deformation in the series (i.e. the show shown by the light gray, larger matrix).
+
+
+Below the matrix display and deformation navigation controls are the editing controls. The main button here is the Edit Mode button. This toggles edit mode on and off, which affects both which controls are active / usable and the behavior of the pebble UI panel. When in edit mode new deformations cannot be created so the deformation controls are disabled, and navigating through the deformation series is also disabled.
+
+In addition to allowing you to create or delete pebbles in the pebble UI, edit mode enble additional buttons in the control area. The Pick Color button lets you choose a color that's used for new pebbles as they're created. Next to it is a button labeled Apply, which changes the color of all selected pebbles to the color you've chosen for Pick Color. Below that is a button that lets you load a background image - once the background is loaded you can control whether or not it's shown using the Show Background Image item in the Display menu. 
+
+Finally, below that are two buttons which let you set the colors of pebbles based on their properties. These let you divide the pebbles into some number of groups based on either the full range of available values, the range of values of the pebbles, or by number of pebbles. The full-range option starts with the range covered (e.g. -90 to 90 degrees) and divides that into some number of buckets (e.g. with 4 buckets it would use -90 to -45, -45 to 0, 0 to 45, and 45 to 90) and then sets the color of each pebble depending on which bucket it's in. The pebble values option is similar to the full range one, but the lower and upper bonds are set by the extremes of the values in the pebble set. E.g. if the lowest phi is -20 and the largest is 60 then 4 buckets would cover -20 to 0, 0 to 20, 20 to 40, and 40 to 60. The number of pebbles option sets the bounds of the buckets dynamically so that there are (as much as possible) the same number of pebbles in each bucket. E.g. if you have 12 pebbles and 4 buckets there will be three pebbles in each, regardless of the range of possible values and any clustering. The color of each group can be chosen by clicking on the color block / button for that group number.
+
+
+Lastly, at the bottom of the controls section is a snapshot button. This lets you save a copy of the view in the pebble UI panel as a png, jpg, or bmp.
+
+
+    C. Pebble Display
+        1. mouse & key controls
+    D. Editing
+III. Charts
     A. What they show
-    B. 
-V. Deformation Series
-VI. Further Help
+    B. Menu/Options
+    
+GeoShear offers two types of charts to represent a pebble set. Both of these show a relationship between RF (the ratio of the length of the major radius to the minor radius) and phi (the angle of the major radius). The latter is constrained to a -90 to 90 degree range. One chart shows this as a standard Cartesian plot. The other as a polar plot, and for this one the angle shown in the chart is 2*phi (to spread the information across the full area of the chart). Both charts dynamically display changes to the pebble information as deformations are being used in the main window.
+
+
+Both kinds of chart support the same kinds of options / actions. The Control menu has for each chart:
+    Major Contours - show/hide large section divisions in the chart
+    Minor Contours - show/hide small section divisions in the chart
+    Reference Points - show/hide a sparse set of background points that correspond to an even spread of potential values
+    Reference Points, Dense - show/hide a dense set of background points that correspond to an even spread of potential values
+    Selected Pebble Info - show/hide text display of the point values for pebbles that are selected in the main window
+    Harmonic & Vector Means - show/hide lines representing the harmonic (RF-based) and vector (phi-based) means
+
+    Use Log Scale - toggle back and forth between linear and log scale for the RF representation
+    Use Linear Scale
+
+    Adaptive RF Scale - toggle back and forth between a fixed upper bound on the RF scale and one the automatically adapts to make sure every pebble is shown on the chart; you can also set the value used for the fixed scale when that mode is being used
+    Fixed RF Scale
+
+Additionally, there's a snapshot button on the menu bar just to the right of the Control menu - clicking it will let you save an image of the chart to a png, jpg, or bmp file.
+
+Finally, clicking anywhere in the main display of the chart will show the values of that point, and shift-clicking anywhere will hide that information.
+
+    
+IV. Deformation Series
+V. Further Help
     A. Online
+VI. Technical Details / The Math
+    A. Ellipses / Pebbles
+    B. Deformations
+    C. Applying deformation
+    
+GeoShear has two main data sets that it cares about - pebbles and deformations. Pebbles are grouped in a set. Deformations are arranged in a series.
+
+Pebbles are represented as ellipses and the system tracks the major and minor axes, the angle of the major axis (in a range of -90 to 90 degrees), the location of the center point, and the color. Internally they are also stored as a 2x2 matrices. The 2x2 matrix represents the deformation / transformation necessary to convert the unit circle into the desired ellipse. The matrix representing a pebble is created by composing a scaling matrix (stretch the unit circle to the right proportions) and a rotation matrix (rotate it to the proper angle).
+
+Deformations are essentially the same as pebbles, but without a center point. Additionally, deformations are limited to simple transformations - simple shear, pure shear / compression, and rotation. All the deformations in a series are multiplied out to generate a composite deformation (a.k.a. strain). The pebble set is transformed in order by each deformation in the series to generate the various steps/stages of deformation.
+
+When a deformation is applied to a pebble there are three steps that happen. First, the deformation is used as an affine transform to translate/shift the center point of the pebble. Second, the deformation matrix is multiplied by the pebble matrix to get the matrix for the deformed pebble. Third, the matrix of the deformed pebble is split apart using single-value-decomposition to determine the lengths and angles of its axes (see http://en.wikipedia.org/wiki/Singular_value_decomposition and http://www.ams.org/samplings/feature-column/fcarc-svd).
+
+
+
+    D. Save files
+    
+GeoShear supports two file formats. The main one is called .ges, but really it's just a text file in a particular format - you can open and edit .ges files in any standard text editor. The second it .tab, which can be opened directly in Excel or any other spreadsheet program. The latter format is especially useful if you want to do further analysis of pebbles. For each pebble it has a unique identifier, coordinates of the center point, lengths of major and minor radius, angle of major radius (in degrees), and color. For each deformation is stores the four elements of the matrix. Any background image is stored as a reference to a specific file - i.e. the image file itself is NOT a part of the GeoShear save files. By default it uses an absolute path name for the image, but if you manually edit the file you can change that to a relative path name. NOTE: this means that if you want to share some geoshear work that's based on a given background image you should put the save file and the image file in a folder than edit the save file to use a relative path for the image.
+
+Normally GeoShear saves the base pebble set plus the series of deformations. However, that can make it hard to do analysis on the different stages of deformation. To get the data for a given deformation step use the Save Current Deformed or Export Current Deformed actions in the File menu. They treat the current view of the pebbles as a new base set - i.e. the .ges or .tab file for that will have the deformed centers and axes and such and will have no deformations.
+
+

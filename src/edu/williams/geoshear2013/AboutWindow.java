@@ -110,7 +110,7 @@ public class AboutWindow extends javax.swing.JFrame {
         jTextAreaAboutDescr.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextAreaAboutDescr.setLineWrap(true);
         jTextAreaAboutDescr.setRows(5);
-        jTextAreaAboutDescr.setText("This application was developed jointly, with Chris providing the programming expertise, Paul providing the subject matter expertise, and both working on the mathematics, interface, testing, and other aspects of creating a computer application.\n");
+        jTextAreaAboutDescr.setText("This application was developed jointly, with Chris Warren providing the programming expertise, and Dr. Paul Karabinos of the Williams College Geology Department providing the subject matter expertise and development feedback.\n");
         jTextAreaAboutDescr.setWrapStyleWord(true);
         jTextAreaAboutDescr.setAlignmentX(0.0F);
         jTextAreaAboutDescr.setAutoscrolls(false);

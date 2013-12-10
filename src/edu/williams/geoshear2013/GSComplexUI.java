@@ -214,7 +214,17 @@ class GSComplexUI extends JPanel implements Watchable {
             if ((evt.getKeyCode() == java.awt.event.KeyEvent.VK_DELETE) || (evt.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE)) {
                 this.gsc.deleteSelectedPebbles();
                 this.repaint();
-            }
+            } else
+            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_A && this.ctrlIsDown) {
+                this.gsc.pebbleSets.get(0).selectAll();
+                this.gsc.rebuildPebbleSetsFromDeformationSeries();
+                this.repaint();
+            } else
+           if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE) {
+               this.gsc.pebbleSets.get(0).selectSelectStateForAll(false);
+                this.gsc.rebuildPebbleSetsFromDeformationSeries();
+                this.repaint();
+           }
         }
         this.notifyWatchers();
     }

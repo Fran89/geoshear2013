@@ -156,7 +156,7 @@
             </Property>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="This application was developed jointly, with Chris providing the programming expertise, Paul providing the subject matter expertise, and both working on the mathematics, interface, testing, and other aspects of creating a computer application.&#xa;"/>
+            <Property name="text" type="java.lang.String" value="This application was developed jointly, with Chris Warren providing the programming expertise, and Dr. Paul Karabinos of the Williams College Geology Department providing the subject matter expertise and development feedback.&#xa;"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="alignmentX" type="float" value="0.0"/>
             <Property name="autoscrolls" type="boolean" value="false"/>
