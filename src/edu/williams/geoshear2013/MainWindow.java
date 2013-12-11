@@ -28,12 +28,6 @@ import javax.swing.filechooser.FileFilter;
  *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
  *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
- * 
- *  - (.5) polishing dev work
-    -     put tool-tip text everywhere
- * 
- *  - (1) write basic help text/file
- *    + note places that need additional work
  */
 
 /**
@@ -369,6 +363,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelResetButtons.setLayout(new javax.swing.BoxLayout(jPanelResetButtons, javax.swing.BoxLayout.X_AXIS));
 
         jButtonUnzoom.setText("Unzoom");
+        jButtonUnzoom.setToolTipText("reset zoom level to 1x");
         jButtonUnzoom.setMargin(new java.awt.Insets(2, 8, 2, 8));
         jButtonUnzoom.setNextFocusableComponent(jButtonCenter);
         jButtonUnzoom.addActionListener(new java.awt.event.ActionListener() {
@@ -379,6 +374,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelResetButtons.add(jButtonUnzoom);
 
         jButtonCenter.setText("Center in view");
+        jButtonCenter.setToolTipText("remove all view panning/shifting");
         jButtonCenter.setMargin(new java.awt.Insets(2, 8, 2, 8));
         jButtonCenter.setNextFocusableComponent(jTextFieldShearX);
         jButtonCenter.addActionListener(new java.awt.event.ActionListener() {
@@ -413,6 +409,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldShearX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearX.setText("0.000");
+        jTextFieldShearX.setToolTipText("set the x shear value in the deformation matrix");
         jTextFieldShearX.setBorder(null);
         jTextFieldShearX.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldShearX.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -445,6 +442,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldShearY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearY.setText("0.000");
+        jTextFieldShearY.setToolTipText("set the y shear value in the deformation matrix");
         jTextFieldShearY.setBorder(null);
         jTextFieldShearY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldShearY.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -480,6 +478,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldCompressX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressX.setText("1");
+        jTextFieldCompressX.setToolTipText("set the x and y compression values in the deformation matrix");
         jTextFieldCompressX.setBorder(null);
         jTextFieldCompressX.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressX.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -512,6 +511,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldCompressY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressY.setText("1");
+        jTextFieldCompressY.setToolTipText("set the x and y compression values in the deformation matrix");
         jTextFieldCompressY.setBorder(null);
         jTextFieldCompressY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -559,6 +559,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldRotDeg.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRotDeg.setText("0.0");
+        jTextFieldRotDeg.setToolTipText("set the rotation angle in degrees");
         jTextFieldRotDeg.setBorder(null);
         jTextFieldRotDeg.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldRotDeg.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -580,6 +581,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jTextFieldRotRad.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRotRad.setText("0.000");
+        jTextFieldRotRad.setToolTipText("set the rotation angle in radians");
         jTextFieldRotRad.setBorder(null);
         jTextFieldRotRad.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldRotRad.setMinimumSize(new java.awt.Dimension(42, 14));
@@ -626,6 +628,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformNavControls.add(jButtonDeformApplyRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 40));
 
         jButtonDeformReset.setText("Reset");
+        jButtonDeformReset.setToolTipText("remove/cancel the tentative deformation");
         jButtonDeformReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeformResetActionPerformed(evt);
@@ -641,6 +644,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM00.setEditable(false);
         jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM00.setText("1.000");
+        jTextFieldStrainM00.setToolTipText("matrix for the current deformation");
         jTextFieldStrainM00.setBorder(null);
         jTextFieldStrainM00.setFocusable(false);
         jTextFieldStrainM00.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -649,6 +653,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM10.setEditable(false);
         jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM10.setText("0.000");
+        jTextFieldStrainM10.setToolTipText("matrix for the current deformation");
         jTextFieldStrainM10.setBorder(null);
         jTextFieldStrainM10.setFocusable(false);
         jTextFieldStrainM10.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -657,6 +662,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldRFPhiCurrentRF.setEditable(false);
         jTextFieldRFPhiCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentRF.setText("1.000");
+        jTextFieldRFPhiCurrentRF.setToolTipText("the RF value of the ellipse for the current deformation");
         jTextFieldRFPhiCurrentRF.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
         jTextFieldRFPhiCurrentRF.setFocusable(false);
         jTextFieldRFPhiCurrentRF.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -671,6 +677,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCurStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabelCurStrainLeftBracket.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelCurStrainLeftBracket.setText("[");
+        jLabelCurStrainLeftBracket.setToolTipText("matrix for the current deformation");
         jLabelCurStrainLeftBracket.setFocusable(false);
         jLabelCurStrainLeftBracket.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jLabelCurStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 90));
@@ -679,6 +686,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextFieldStrainCumuRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuRF.setText("1.000");
+        jTextFieldStrainCumuRF.setToolTipText("the RF value of the ellipse for the cumulative deformation");
         jTextFieldStrainCumuRF.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMU));
         jTextFieldStrainCumuRF.setFocusable(false);
         jTextFieldStrainCumuRF.setForeground(GSComplexUI.INFO_COLOR_CUMU);
@@ -693,6 +701,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelStrainNavPosition.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelStrainNavPosition.setText("0 /");
+        jLabelStrainNavPosition.setToolTipText("number of the current deformation");
         jLabelStrainNavPosition.setFocusable(false);
         jPanelDeformMatrixLeft.add(jLabelStrainNavPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 30, 20));
 
@@ -700,6 +709,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM00.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuStrainM00.setText("1");
         jLabelCumuStrainM00.setForeground(GSComplexUI.INFO_COLOR_CUMU);
+        jLabelCumuStrainM00.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM00.setFocusable(false);
         jLabelCumuStrainM00.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 33, -1));
@@ -708,6 +718,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuStrainM01.setText("0");
         jLabelCumuStrainM01.setForeground(GSComplexUI.INFO_COLOR_CUMU);
+        jLabelCumuStrainM01.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM01.setFocusable(false);
         jLabelCumuStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 110, 33, -1));
@@ -716,6 +727,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuStrainM10.setText("0");
         jLabelCumuStrainM10.setForeground(GSComplexUI.INFO_COLOR_CUMU);
+        jLabelCumuStrainM10.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM10.setFocusable(false);
         jLabelCumuStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 33, -1));
@@ -724,18 +736,21 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuStrainM11.setText("1");
         jLabelCumuStrainM11.setForeground(GSComplexUI.INFO_COLOR_CUMU);
+        jLabelCumuStrainM11.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM11.setFocusable(false);
         jLabelCumuStrainM11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 130, 33, -1));
 
         jLabelCumuStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuStrainRightBracket.setText("]");
+        jLabelCumuStrainRightBracket.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainRightBracket.setFocusable(false);
         jLabelCumuStrainRightBracket.setForeground(GSComplexUI.INFO_COLOR_CUMU);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 98, 14, 50));
 
         jLabelCumuStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuStrainLeftBracket.setText("[");
+        jLabelCumuStrainLeftBracket.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainLeftBracket.setFocusable(false);
         jLabelCumuStrainLeftBracket.setForeground(GSComplexUI.INFO_COLOR_CUMU);
         jPanelDeformMatrixLeft.add(jLabelCumuStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 98, 14, 50));
@@ -744,6 +759,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextFieldStrainCumuPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuPhi.setText("0.000");
+        jTextFieldStrainCumuPhi.setToolTipText("the phi value of the ellipse for the cumulative deformation");
         jTextFieldStrainCumuPhi.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMU));
         jTextFieldStrainCumuPhi.setFocusable(false);
         jTextFieldStrainCumuPhi.setForeground(GSComplexUI.INFO_COLOR_CUMU);
@@ -757,6 +773,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.add(jLabelCumuPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 20, 20));
 
         jButtonStrainNavPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_left_light.gif"))); // NOI18N
+        jButtonStrainNavPrevious.setToolTipText("go to the previous deformation in the series");
         jButtonStrainNavPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonStrainNavPreviousActionPerformed(evt);
@@ -790,6 +807,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixRight.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonStrainNavNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/arrow_right_light.gif"))); // NOI18N
+        jButtonStrainNavNext.setToolTipText("go to the next deformation in the series");
         jButtonStrainNavNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonStrainNavNextActionPerformed(evt);
@@ -800,6 +818,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM01.setEditable(false);
         jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM01.setText("0.000");
+        jTextFieldStrainM01.setToolTipText("matrix for the current deformation");
         jTextFieldStrainM01.setBorder(null);
         jTextFieldStrainM01.setFocusable(false);
         jTextFieldStrainM01.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -808,6 +827,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM11.setEditable(false);
         jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM11.setText("1.000");
+        jTextFieldStrainM11.setToolTipText("matrix for the current deformation");
         jTextFieldStrainM11.setBorder(null);
         jTextFieldStrainM11.setFocusable(false);
         jTextFieldStrainM11.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -816,6 +836,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldRFPhiCurrentPhi.setEditable(false);
         jTextFieldRFPhiCurrentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldRFPhiCurrentPhi.setText("0.000");
+        jTextFieldRFPhiCurrentPhi.setToolTipText("the phi value of the ellipse for the current deformation");
         jTextFieldRFPhiCurrentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT));
         jTextFieldRFPhiCurrentPhi.setFocusable(false);
         jTextFieldRFPhiCurrentPhi.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -830,16 +851,19 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCurStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabelCurStrainRightBracket.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelCurStrainRightBracket.setText("]");
+        jLabelCurStrainRightBracket.setToolTipText("matrix for the current deformation");
         jLabelCurStrainRightBracket.setFocusable(false);
         jLabelCurStrainRightBracket.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jLabelCurStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 90));
 
         jLabelStrainNavCount.setText("0");
+        jLabelStrainNavCount.setToolTipText("number of deformations in the series");
         jLabelStrainNavCount.setFocusable(false);
         jPanelDeformMatrixRight.add(jLabelStrainNavCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 200, 26, 20));
 
         jLabelCumuTentStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuTentStrainLeftBracket.setText("[");
+        jLabelCumuTentStrainLeftBracket.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainLeftBracket.setFocusable(false);
         jLabelCumuTentStrainLeftBracket.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 98, 14, 50));
@@ -848,6 +872,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM00.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuTentStrainM00.setText("1");
         jLabelCumuTentStrainM00.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
+        jLabelCumuTentStrainM00.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM00.setFocusable(false);
         jLabelCumuTentStrainM00.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 110, 33, -1));
@@ -856,6 +881,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuTentStrainM10.setText("0");
         jLabelCumuTentStrainM10.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
+        jLabelCumuTentStrainM10.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM10.setFocusable(false);
         jLabelCumuTentStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, 33, -1));
@@ -864,6 +890,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuTentStrainM11.setText("1");
         jLabelCumuTentStrainM11.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
+        jLabelCumuTentStrainM11.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM11.setFocusable(false);
         jLabelCumuTentStrainM11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 130, 33, -1));
@@ -872,12 +899,14 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCumuTentStrainM01.setText("0");
         jLabelCumuTentStrainM01.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
+        jLabelCumuTentStrainM01.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM01.setFocusable(false);
         jLabelCumuTentStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 110, 33, -1));
 
         jLabelCumuTentStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuTentStrainRightBracket.setText("]");
+        jLabelCumuTentStrainRightBracket.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainRightBracket.setFocusable(false);
         jLabelCumuTentStrainRightBracket.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 98, 14, 50));
@@ -893,6 +922,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuTentRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextFieldStrainCumuTentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuTentRF.setText("1.000");
+        jTextFieldStrainCumuTentRF.setToolTipText("the RF value of the ellipse for the next cumulative deformation");
         jTextFieldStrainCumuTentRF.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMUTENT));
         jTextFieldStrainCumuTentRF.setFocusable(false);
         jTextFieldStrainCumuTentRF.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
@@ -902,6 +932,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuTentPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextFieldStrainCumuTentPhi.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextFieldStrainCumuTentPhi.setText("0.000");
+        jTextFieldStrainCumuTentPhi.setToolTipText("the phi value of the ellipse for the next cumulative deformation");
         jTextFieldStrainCumuTentPhi.setBorder(javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMUTENT));
         jTextFieldStrainCumuTentPhi.setFocusable(false);
         jTextFieldStrainCumuTentPhi.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
@@ -946,6 +977,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelEditPebbleControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jToggleButtonEditPebbles.setText("Edit Mode");
+        jToggleButtonEditPebbles.setToolTipText("toggle edit mode on and off");
         jToggleButtonEditPebbles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonEditPebblesActionPerformed(evt);
@@ -957,6 +989,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonPebbleColorSet.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonPebbleColorSet.setForeground(new java.awt.Color(255, 255, 255));
         jButtonPebbleColorSet.setText("Pick Color");
+        jButtonPebbleColorSet.setToolTipText("choose a color for new pebbles and/or to be applied to existing pebbles");
         jButtonPebbleColorSet.setEnabled(false);
         jButtonPebbleColorSet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -967,6 +1000,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButtonPebbleColorApply.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonPebbleColorApply.setText("Apply");
+        jButtonPebbleColorApply.setToolTipText("change the color of selected pebbles to the chosen color");
         jButtonPebbleColorApply.setEnabled(false);
         jButtonPebbleColorApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -977,6 +1011,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButtonBackgroundImage.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonBackgroundImage.setText("Background Image");
+        jButtonBackgroundImage.setToolTipText("load a backgorund image");
         jButtonBackgroundImage.setEnabled(false);
         jButtonBackgroundImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -987,6 +1022,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButtonAutoColorOnPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonAutoColorOnPhi.setText("Color by phi");
+        jButtonAutoColorOnPhi.setToolTipText("automatically color pebbles based on their phi values");
         jButtonAutoColorOnPhi.setEnabled(false);
         jButtonAutoColorOnPhi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -997,6 +1033,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButtonAutoColorOnRf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonAutoColorOnRf.setText("Color By RF");
+        jButtonAutoColorOnRf.setToolTipText("automatically color pebbles based on their RF values");
         jButtonAutoColorOnRf.setEnabled(false);
         jButtonAutoColorOnRf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1015,7 +1052,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButtonSnapshotter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/icon_camera_large_40x30.gif"))); // NOI18N
         jButtonSnapshotter.setText("Take Snapshot");
-        jButtonSnapshotter.setToolTipText("Take a snapshot");
+        jButtonSnapshotter.setToolTipText("save a copy of the pebble UI panel and a .png, .jpg, or .bmp image");
         jButtonSnapshotter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSnapshotterActionPerformed(evt);
@@ -2172,9 +2209,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_REMOVE);
             this.jButtonDeformApplyRemove.setEnabled((this.gscUI.gsc.deformations.size() > 0) && (this.gscUI.gsc.getCurrentDeformationNumber() > 1));
+            this.jButtonDeformApplyRemove.setToolTipText("delete the current deformation from the series");
         } else {
             this.jButtonDeformApplyRemove.setEnabled(true);
             this.jButtonDeformApplyRemove.setText(MainWindow.LABEL_DEFORM_APPLY);
+            this.jButtonDeformApplyRemove.setToolTipText("add the current, tentative deformation to the series");
             this.jButtonDeformReset.setEnabled(true);
         }
 //        if (this.windowDeformationsSeries != null) {

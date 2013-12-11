@@ -376,6 +376,7 @@
                 <Component class="javax.swing.JButton" name="jButtonUnzoom">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Unzoom"/>
+                    <Property name="toolTipText" type="java.lang.String" value="reset zoom level to 1x"/>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[2, 8, 2, 8]"/>
                     </Property>
@@ -390,6 +391,7 @@
                 <Component class="javax.swing.JButton" name="jButtonCenter">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Center in view"/>
+                    <Property name="toolTipText" type="java.lang.String" value="remove all view panning/shifting"/>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[2, 8, 2, 8]"/>
                     </Property>
@@ -464,6 +466,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the x shear value in the deformation matrix"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -519,6 +522,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the y shear value in the deformation matrix"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -587,6 +591,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="1"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the x and y compression values in the deformation matrix"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -642,6 +647,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="1"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the x and y compression values in the deformation matrix"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -743,6 +749,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="0.0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the rotation angle in degrees"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -771,6 +778,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="set the rotation angle in radians"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -857,6 +865,7 @@
                 <Component class="javax.swing.JButton" name="jButtonDeformReset">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reset"/>
+                    <Property name="toolTipText" type="java.lang.String" value="remove/cancel the tentative deformation"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeformResetActionPerformed"/>
@@ -890,6 +899,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -909,6 +919,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -928,6 +939,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the RF value of the ellipse for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT)" type="code"/>
                     </Property>
@@ -964,6 +976,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="["/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -983,6 +996,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the RF value of the ellipse for the cumulative deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMU)" type="code"/>
                     </Property>
@@ -1019,6 +1033,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0 /"/>
+                    <Property name="toolTipText" type="java.lang.String" value="number of the current deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
@@ -1034,6 +1049,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1" postCode="jLabelCumuStrainM00.setForeground(GSComplexUI.INFO_COLOR_CUMU);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1050,6 +1066,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0" postCode="jLabelCumuStrainM01.setForeground(GSComplexUI.INFO_COLOR_CUMU);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1066,6 +1083,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0" postCode="jLabelCumuStrainM10.setForeground(GSComplexUI.INFO_COLOR_CUMU);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1082,6 +1100,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1" postCode="jLabelCumuStrainM11.setForeground(GSComplexUI.INFO_COLOR_CUMU);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1097,6 +1116,7 @@
                       <Font name="Tahoma" size="36" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="]"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1114,6 +1134,7 @@
                       <Font name="Tahoma" size="36" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="["/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1133,6 +1154,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the phi value of the ellipse for the cumulative deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMU)" type="code"/>
                     </Property>
@@ -1170,6 +1192,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/edu/williams/geoshear2013/img/arrow_left_light.gif"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="go to the previous deformation in the series"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStrainNavPreviousActionPerformed"/>
@@ -1256,6 +1279,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/edu/williams/geoshear2013/img/arrow_right_light.gif"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="go to the next deformation in the series"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStrainNavNextActionPerformed"/>
@@ -1271,6 +1295,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -1290,6 +1315,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -1309,6 +1335,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the phi value of the ellipse for the current deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_TENT)" type="code"/>
                     </Property>
@@ -1345,6 +1372,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="]"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the current deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1359,6 +1387,7 @@
                 <Component class="javax.swing.JLabel" name="jLabelStrainNavCount">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="number of deformations in the series"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
@@ -1373,6 +1402,7 @@
                       <Font name="Tahoma" size="36" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="["/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1391,6 +1421,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1" postCode="jLabelCumuTentStrainM00.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1407,6 +1438,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0" postCode="jLabelCumuTentStrainM10.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1423,6 +1455,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="1" postCode="jLabelCumuTentStrainM11.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1439,6 +1472,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="0" postCode="jLabelCumuTentStrainM01.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
@@ -1454,6 +1488,7 @@
                       <Font name="Tahoma" size="36" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="]"/>
+                    <Property name="toolTipText" type="java.lang.String" value="matrix for the next cumulative deformation"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1491,6 +1526,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the RF value of the ellipse for the next cumulative deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMUTENT)" type="code"/>
                     </Property>
@@ -1513,6 +1549,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.000"/>
+                    <Property name="toolTipText" type="java.lang.String" value="the phi value of the ellipse for the next cumulative deformation"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="javax.swing.BorderFactory.createLineBorder(GSComplexUI.INFO_COLOR_CUMUTENT)" type="code"/>
                     </Property>
@@ -1624,6 +1661,7 @@
             <Component class="javax.swing.JToggleButton" name="jToggleButtonEditPebbles">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit Mode"/>
+                <Property name="toolTipText" type="java.lang.String" value="toggle edit mode on and off"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonEditPebblesActionPerformed"/>
@@ -1646,6 +1684,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Pick Color"/>
+                <Property name="toolTipText" type="java.lang.String" value="choose a color for new pebbles and/or to be applied to existing pebbles"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1663,6 +1702,7 @@
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Apply"/>
+                <Property name="toolTipText" type="java.lang.String" value="change the color of selected pebbles to the chosen color"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1680,6 +1720,7 @@
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Background Image"/>
+                <Property name="toolTipText" type="java.lang.String" value="load a backgorund image"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1697,6 +1738,7 @@
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Color by phi"/>
+                <Property name="toolTipText" type="java.lang.String" value="automatically color pebbles based on their phi values"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1714,6 +1756,7 @@
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Color By RF"/>
+                <Property name="toolTipText" type="java.lang.String" value="automatically color pebbles based on their RF values"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1775,7 +1818,7 @@
                   <Image iconType="3" name="/edu/williams/geoshear2013/img/icon_camera_large_40x30.gif"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Take Snapshot"/>
-                <Property name="toolTipText" type="java.lang.String" value="Take a snapshot"/>
+                <Property name="toolTipText" type="java.lang.String" value="save a copy of the pebble UI panel and a .png, .jpg, or .bmp image"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSnapshotterActionPerformed"/>
