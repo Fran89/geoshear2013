@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -61,6 +62,10 @@ public class MainWindow extends javax.swing.JFrame {
     private GSComplexChartFramePolarRfPhi chartPolarRfPhi;
     private GSComplexInfoFrameDeformationSeries windowDeformationsSeries;
     
+    private ImageIcon linkedIcon = new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"));
+    private ImageIcon unlinkedIcon = new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/unlinked.gif"));
+
+    
 /**
      * Creates new form MainWindow
      * 
@@ -87,7 +92,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
 
-        this.jButtonLinkCompressionDeform.setVisible(false);
+//        this.jButtonLinkCompressionDeform.setVisible(false);
 
         
         this.displayNumberConstraints = new HashMap();
@@ -402,10 +407,11 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformShearControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelShearControl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelShearControl.setText("shear");
+        jLabelShearControl.setText("simple shear");
+        jLabelShearControl.setToolTipText("hold SHIFT to do this using the mouse");
         jLabelShearControl.setFocusable(false);
         jLabelShearControl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanelDeformShearControls.add(jLabelShearControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 64, -1));
+        jPanelDeformShearControls.add(jLabelShearControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, -1));
 
         jTextFieldShearX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearX.setText("0.000");
@@ -471,7 +477,8 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformCompressControls.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelCompressControl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelCompressControl.setText("compress");
+        jLabelCompressControl.setText("pure shear");
+        jLabelCompressControl.setToolTipText("hold CONTROL to do this using the mouse");
         jLabelCompressControl.setFocusable(false);
         jLabelCompressControl.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jPanelDeformCompressControls.add(jLabelCompressControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 66, -1));
@@ -515,6 +522,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldCompressY.setBorder(null);
         jTextFieldCompressY.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldCompressY.setNextFocusableComponent(jButtonLinkCompressionDeform);
         jTextFieldCompressY.setPreferredSize(new java.awt.Dimension(42, 14));
         jTextFieldCompressY.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -532,6 +540,12 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformCompressControls.add(jTextFieldCompressY, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 50, -1, -1));
 
         jButtonLinkCompressionDeform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jButtonLinkCompressionDeform.setNextFocusableComponent(jTextFieldRotDeg);
+        jButtonLinkCompressionDeform.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLinkCompressionDeformActionPerformed(evt);
+            }
+        });
         jPanelDeformCompressControls.add(jButtonLinkCompressionDeform, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 22, 23, -1));
 
         jPanelDeformControls.add(jPanelDeformCompressControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 1, 110, 79));
@@ -543,6 +557,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelShearControl1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearControl1.setText("rotation");
+        jLabelShearControl1.setToolTipText("hold ALT to do this using the mouse");
         jLabelShearControl1.setFocusable(false);
         jLabelShearControl1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jPanelDeformRotateControls.add(jLabelShearControl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 11, 68, -1));
@@ -563,6 +578,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldRotDeg.setBorder(null);
         jTextFieldRotDeg.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldRotDeg.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotDeg.setNextFocusableComponent(jTextFieldRotRad);
         jTextFieldRotDeg.setPreferredSize(new java.awt.Dimension(42, 14));
         jTextFieldRotDeg.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -585,6 +601,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldRotRad.setBorder(null);
         jTextFieldRotRad.setMaximumSize(new java.awt.Dimension(42, 14));
         jTextFieldRotRad.setMinimumSize(new java.awt.Dimension(42, 14));
+        jTextFieldRotRad.setNextFocusableComponent(jButtonDeformApplyRemove);
         jTextFieldRotRad.setPreferredSize(new java.awt.Dimension(42, 14));
         jTextFieldRotRad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -620,6 +637,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonDeformApplyRemove.setAlignmentX(0.5F);
         jButtonDeformApplyRemove.setEnabled(false);
         jButtonDeformApplyRemove.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jButtonDeformApplyRemove.setNextFocusableComponent(jButtonDeformReset);
         jButtonDeformApplyRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeformApplyRemoveActionPerformed(evt);
@@ -2007,6 +2025,15 @@ public class MainWindow extends javax.swing.JFrame {
         this.autoColorOptions.setVisible(true);
     }//GEN-LAST:event_jButtonAutoColorOnPhiActionPerformed
 
+    private void jButtonLinkCompressionDeformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLinkCompressionDeformActionPerformed
+        this.gscUI.compressionXandYareLinked = ! this.gscUI.compressionXandYareLinked;
+        if (this.gscUI.compressionXandYareLinked) {
+            jButtonLinkCompressionDeform.setIcon(linkedIcon);
+        } else {
+            jButtonLinkCompressionDeform.setIcon(unlinkedIcon);
+        }
+    }//GEN-LAST:event_jButtonLinkCompressionDeformActionPerformed
+
     public void handleDoAutoColorOnPhi() {
         if (! this.autoColorOptions.isDoAction()) { return; }
         GSPebbleSet canonicalPebbles = this.gscUI.gsc.pebbleSets.get(0);
@@ -2272,11 +2299,15 @@ public class MainWindow extends javax.swing.JFrame {
             this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressX.equals(controlField)) {
-            this.setValueForControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
+            if (this.gscUI.compressionXandYareLinked) {
+                this.setValueForControl(this.jTextFieldCompressY, 1/Double.parseDouble(this.jTextFieldCompressX.getText()));
+            }
             this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldCompressY.equals(controlField)) {
-            this.setValueForControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
+            if (this.gscUI.compressionXandYareLinked) {
+                this.setValueForControl(this.jTextFieldCompressX, 1/Double.parseDouble(this.jTextFieldCompressY.getText()));
+            }
             this.updateOtherControlsFromDeformControls();
         } else
         if (this.jTextFieldRotDeg.equals(controlField)) {

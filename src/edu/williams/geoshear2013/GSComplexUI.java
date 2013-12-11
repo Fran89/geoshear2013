@@ -80,6 +80,8 @@ class GSComplexUI extends JPanel implements Watchable {
     private boolean altIsDown = false;
 
     private boolean isDragDeform = false;
+    
+    public boolean compressionXandYareLinked = true;
 
     public static double NEW_PEBBLE_MIN_FIRST_AXIS_DRAG = 10;
     public int pebbleCreationStage;
@@ -119,6 +121,7 @@ class GSComplexUI extends JPanel implements Watchable {
         this.tentativeDeformation = new Deformation();
         this.cumuDeformation = this.gsc.getCompositeTransform();
         this.cumuTentativeDeformation = this.tentativeDeformation.times(this.cumuDeformation);
+//        this.compressionXandYareLinked = true;
         this.setStrains();
         this.setModeDeforms();
     }
@@ -329,9 +332,17 @@ class GSComplexUI extends JPanel implements Watchable {
         if (compressionFactorX < .01) { compressionFactorX = .01; }
         if (compressionFactorY < .01) { compressionFactorY = .01; }
         if (isInXDirection) {
-            this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX));
+            if (this.compressionXandYareLinked) {
+                this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX));
+            } else {
+                this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1));
+            }
         } else {
-            this.setDeformations(new Deformation(1/compressionFactorY, 0, 0, compressionFactorY));
+            if (this.compressionXandYareLinked) {
+                this.setDeformations(new Deformation(1/compressionFactorY, 0, 0, compressionFactorY));
+            } else {
+                this.setDeformations(new Deformation(1, 0, 0, compressionFactorY));
+            }
         }
         this.setStrains();
     }
