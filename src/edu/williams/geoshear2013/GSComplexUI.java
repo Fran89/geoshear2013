@@ -9,7 +9,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -301,7 +303,8 @@ class GSComplexUI extends JPanel implements Watchable {
         this.ctrlIsDown = evt.isControlDown();
         this.shiftIsDown = evt.isShiftDown();
 
-        if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown) {
+        boolean capsLockIsOn = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+        if (this.altIsDown || this.ctrlIsDown || this.shiftIsDown || capsLockIsOn) {
             this.setDeformations();
             this.setStrains();
             this.pebbleCreationStage = GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN;
@@ -416,7 +419,10 @@ class GSComplexUI extends JPanel implements Watchable {
             this.mainWindow.updateDeformAndStrainControlsFromDeformation(this.tentativeDeformation);
             this.repaint();
         } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
-            if (evt.isShiftDown()) {
+            boolean capsLockIsOn = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+            System.out.println("capsLockState is "+capsLockIsOn);
+            if (evt.isShiftDown() || capsLockIsOn) {
+//            if (evt.isShiftDown()) {
                 double dragDist = this.lastMouseDownPointInGSCSystem.distance(evtPtInGSCSystem);
                 if (this.pebbleCreationStage == GSComplexUI.PEBBLE_CREATION_STAGE_BEGIN) {
                     if (dragDist > GSComplexUI.NEW_PEBBLE_MIN_FIRST_AXIS_DRAG) {

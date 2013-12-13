@@ -26,9 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /*
  * TODO:
- *  - (1) convert JFileChooser interactions to use FileDialog instead (NOTE: also do this for charts!) - NOTE: need to set / use filters!
- *      + switch all data files to .tab (add/use that extension automatically if it's not already there)
- *      + implement / enforce image type filters in FileDialog
+ * - (.5) update help text to reflect changes in file types supported and use of caps-lock when creating pebbles
  *  - (3) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
