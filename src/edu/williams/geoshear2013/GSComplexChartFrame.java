@@ -12,6 +12,7 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Component;
+import java.awt.FileDialog;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -36,7 +37,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     MainWindow launchedFromWindow;
     GSComplexChart chart;
 
-    private final JFileChooser fileChooser = new JFileChooser ();    // needed to support snapshots
+    private final FileDialog fileDialog;    // needed to support snapshots
     private final FileFilterImage filterImage = new FileFilterImage(); // needed to support snapshots
 
 //    protected FormattedTextFieldMenuItem scaleTextItem = new FormattedTextFieldMenuItem(NumberFormat.getInstance());
@@ -44,6 +45,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
     /** Creates new form GSComplexChartFrame */
     public GSComplexChartFrame(MainWindow launchedFrom) {
+        this.fileDialog = new FileDialog(this);
         initComponents();
         this.launchedFromWindow = launchedFrom;
 
@@ -305,12 +307,19 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
             Robot robot = new Robot();
             BufferedImage image = robot.createScreenCapture (new Rectangle(this.chart.getLocationOnScreen (), this.chart.getSize ()));
 
-            fileChooser.setFileFilter(filterImage);
-
-            int returnVal = fileChooser.showSaveDialog (this);
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File saveFile = fileChooser.getSelectedFile ();
+            String filterText = "*.jpg;*.png;*.bmp";
+            fileDialog.setMode(FileDialog.SAVE);
+            fileDialog.setFile(filterText);
+            fileDialog.setVisible(true);
+            
+            File[] saveFiles = fileDialog.getFiles();
+            
+            if (saveFiles.length > 0) {
+                
+                File saveFile = saveFiles[0];
+                if (! saveFile.getName().matches(".*\\.\\w+$")) {
+                    saveFile = new File(saveFile.getPath() + ".png");
+                }
                 if (filterImage.accept (saveFile))
                 {
                     ImageIO.write (image,Util.getExtension (saveFile),saveFile);

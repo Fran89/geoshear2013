@@ -1,6 +1,7 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.awt.FileDialog;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -10,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,6 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 /*
  * TODO:
+ *  - (1) convert JFileChooser interactions to use FileDialog instead (NOTE: also do this for charts!) - NOTE: need to set / use filters!
+ *      + switch all data files to .tab (add/use that extension automatically if it's not already there)
+ *      + implement / enforce image type filters in FileDialog
  *  - (3) OPTIONAL implement change tracks in cartesian chart
  *  - (.5) OPTIONAL implement change track in polar chart
  *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
@@ -50,7 +55,8 @@ public class MainWindow extends javax.swing.JFrame {
     private boolean cachedStrainNavPrevEnableState = false;
     private boolean cachedStrainNavNextEnableState = false;
 
-    private final JFileChooser fileChooser = new JFileChooser ();
+//    private final JFileChooser fileChooser = new JFileChooser ();
+    private final FileDialog fileDialog;
     private final FileFilterImage filterImage = new FileFilterImage();
     private final FileFilterTab filterTab = new FileFilterTab();
     private final FileFilterGeoShear filterGeoShear = new FileFilterGeoShear();
@@ -92,7 +98,9 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
 
-//        this.jButtonLinkCompressionDeform.setVisible(false);
+        this.fileDialog = new FileDialog(this);
+
+        //        this.jButtonLinkCompressionDeform.setVisible(false);
 
         
         this.displayNumberConstraints = new HashMap();
@@ -262,10 +270,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu = new javax.swing.JMenu();
         jMenuItemSave = new javax.swing.JMenuItem();
         jMenuItemLoad = new javax.swing.JMenuItem();
-        jMenuItemExportAsTabbed = new javax.swing.JMenuItem();
-        jMenuItemImportFromTabbed = new javax.swing.JMenuItem();
         jMenuItemSaveCurrentDeformed = new javax.swing.JMenuItem();
-        jMenuItemExportCurrentDeformed = new javax.swing.JMenuItem();
         DisplayMenu = new javax.swing.JMenu();
         jCheckBoxMenuItemShowPebbleAxes = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemFillPebbles = new javax.swing.JCheckBoxMenuItem();
@@ -1133,7 +1138,7 @@ public class MainWindow extends javax.swing.JFrame {
         MainWindowMenuBar.add(GeoshearMenu);
 
         FileMenu.setText("File");
-        FileMenu.setToolTipText("Save, Open, Export");
+        FileMenu.setToolTipText("Save and load");
 
         jMenuItemSave.setText("Save");
         jMenuItemSave.setToolTipText("Save everything to a .ges file");
@@ -1153,23 +1158,6 @@ public class MainWindow extends javax.swing.JFrame {
         });
         FileMenu.add(jMenuItemLoad);
 
-        jMenuItemExportAsTabbed.setText("Export to .tab");
-        jMenuItemExportAsTabbed.setToolTipText("Save everything in a tab-delimited format");
-        jMenuItemExportAsTabbed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemExportAsTabbedActionPerformed(evt);
-            }
-        });
-        FileMenu.add(jMenuItemExportAsTabbed);
-
-        jMenuItemImportFromTabbed.setText("Import from .tab");
-        jMenuItemImportFromTabbed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemImportFromTabbedActionPerformed(evt);
-            }
-        });
-        FileMenu.add(jMenuItemImportFromTabbed);
-
         jMenuItemSaveCurrentDeformed.setText("Save current deformed");
         jMenuItemSaveCurrentDeformed.setToolTipText("Save the currently deformed view as a new basis (with no deformations)");
         jMenuItemSaveCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
@@ -1178,15 +1166,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         FileMenu.add(jMenuItemSaveCurrentDeformed);
-
-        jMenuItemExportCurrentDeformed.setText("Export current deformed to .tab");
-        jMenuItemExportCurrentDeformed.setToolTipText("Export the currently deformed view in a tab-delimted format (with no deformations)");
-        jMenuItemExportCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemExportCurrentDeformedActionPerformed(evt);
-            }
-        });
-        FileMenu.add(jMenuItemExportCurrentDeformed);
 
         MainWindowMenuBar.add(FileMenu);
 
@@ -1746,28 +1725,48 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPebbleColorApplyActionPerformed
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
-        if (saveFile == null) { return; }
-        this.handleDataToFile(saveFile,this.gscUI.gsc.serialize());
-        this.repaint ();
+//        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
+//        if (saveFile == null) { return; }
+//        this.handleDataToFile(saveFile,this.gscUI.gsc.serialize());
+//        this.repaint ();
+        this.handleExportAsTabbedActionPerformed(evt);
     }//GEN-LAST:event_jMenuItemSaveActionPerformed
 
     private File chooseFileForIO(int ioType,String buttonText) {
         FileFilter theFilter = this.filterGeoShear;
+        String filterText = "";
+        String defaultExtension = "";
         if (ioType == MainWindow.FILE_IO_TYPE_GES) {
+            System.out.println("file type .ges is deprecated");
             theFilter = this.filterGeoShear;
+            filterText = "*.ges";
+            defaultExtension = "ges";
         } 
         else if (ioType == MainWindow.FILE_IO_TYPE_TAB) {
             theFilter = this.filterTab;
+            filterText = "*.tab";
+            defaultExtension = "tab";
         }
         else if (ioType == MainWindow.FILE_IO_TYPE_IMG) {
             theFilter = this.filterImage;
+            filterText = "*.jpg;*.jpeg;*.png;*.bmp";
+            defaultExtension = "png";
         }
-        this.fileChooser.setFileFilter (theFilter);
-        int returnVal = fileChooser.showDialog(this, buttonText);
-        if (returnVal == JFileChooser.APPROVE_OPTION)
-        {
-            File saveFile = fileChooser.getSelectedFile ();
+        
+        if (buttonText.equals("Save") || buttonText.equals("Export")) {
+            fileDialog.setMode(FileDialog.SAVE);
+        } else {
+            fileDialog.setMode(FileDialog.LOAD);
+        }
+        fileDialog.setFile(filterText);
+        fileDialog.setVisible(true);
+        File[] saveFiles = fileDialog.getFiles();
+        if (saveFiles.length > 0) {
+
+            File saveFile = saveFiles[0]; //fileChooser.getSelectedFile ();
+            if (! saveFile.getName().matches(".*\\.\\w+$")) {
+                saveFile = new File(saveFile.getPath() + "."+defaultExtension);
+            }
             if (theFilter.accept (saveFile))
             {
                 return saveFile;
@@ -1797,9 +1796,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void jMenuItemLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadActionPerformed
-        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Open");
-        if (dataFile == null) { return; }
-        this.handleLoadFromFile(dataFile);
+//        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Open");
+//        if (dataFile == null) { return; }
+//        this.handleLoadFromFile(dataFile);
+        this.handleImportFromTabbedActionPerformed(evt);
     }
     
     private void handleLoadFromFile(File dataFile) {
@@ -1896,26 +1896,13 @@ public class MainWindow extends javax.swing.JFrame {
         this.repaint ();
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
-    private void jMenuItemExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportAsTabbedActionPerformed
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
-        if (saveFile == null) { return; }
-        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeToTabDelimited());
-        this.repaint ();        
-    }//GEN-LAST:event_jMenuItemExportAsTabbedActionPerformed
-
     private void jMenuItemSaveCurrentDeformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveCurrentDeformedActionPerformed
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
-        if (saveFile == null) { return; }
-        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrent());
-        this.repaint ();
+//        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_GES,"Save");
+//        if (saveFile == null) { return; }
+//        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrent());
+//        this.repaint ();
+        this.handleExportCurrentDeformedActionPerformed(evt);
     }//GEN-LAST:event_jMenuItemSaveCurrentDeformedActionPerformed
-
-    private void jMenuItemExportCurrentDeformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportCurrentDeformedActionPerformed
-        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
-        if (saveFile == null) { return; }
-        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrentToTabDelimited());
-        this.repaint ();
-    }//GEN-LAST:event_jMenuItemExportCurrentDeformedActionPerformed
 
     private void jButtonSnapshotterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSnapshotterActionPerformed
         try
@@ -1942,12 +1929,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void jMenuItemChartRf2PhiPolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartRf2PhiPolarActionPerformed
         this.chartPolarRfPhi.setVisible(true);
     }//GEN-LAST:event_jMenuItemChartRf2PhiPolarActionPerformed
-
-    private void jMenuItemImportFromTabbedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportFromTabbedActionPerformed
-        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Import");
-        if (dataFile == null) { return; }
-        this.handleLoadFromFile(dataFile);
-    }//GEN-LAST:event_jMenuItemImportFromTabbedActionPerformed
 
     private void jMenuItemChartDeformationSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChartDeformationSeriesActionPerformed
         this.windowDeformationsSeries.setVisible(true);
@@ -2034,6 +2015,26 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonLinkCompressionDeformActionPerformed
 
+    private void handleExportCurrentDeformedActionPerformed(java.awt.event.ActionEvent evt) {                                                               
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeCurrentToTabDelimited());
+        this.repaint ();
+    }                                                              
+
+    private void handleImportFromTabbedActionPerformed(java.awt.event.ActionEvent evt) {                                                          
+        File dataFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Import");
+        if (dataFile == null) { return; }
+        this.handleLoadFromFile(dataFile);
+    }                                                         
+
+    private void handleExportAsTabbedActionPerformed(java.awt.event.ActionEvent evt) {                                                        
+        File saveFile = chooseFileForIO(MainWindow.FILE_IO_TYPE_TAB,"Export");
+        if (saveFile == null) { return; }
+        this.handleDataToFile(saveFile,this.gscUI.gsc.serializeToTabDelimited());
+        this.repaint ();
+    }   
+    
     public void handleDoAutoColorOnPhi() {
         if (! this.autoColorOptions.isDoAction()) { return; }
         GSPebbleSet canonicalPebbles = this.gscUI.gsc.pebbleSets.get(0);
@@ -2580,9 +2581,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemChartDeformationSeries;
     private javax.swing.JMenuItem jMenuItemChartRf2PhiPolar;
     private javax.swing.JMenuItem jMenuItemChartRfPhiCart;
-    private javax.swing.JMenuItem jMenuItemExportAsTabbed;
-    private javax.swing.JMenuItem jMenuItemExportCurrentDeformed;
-    private javax.swing.JMenuItem jMenuItemImportFromTabbed;
     private javax.swing.JMenuItem jMenuItemLoad;
     private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JMenuItem jMenuItemSaveCurrentDeformed;

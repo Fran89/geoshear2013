@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -410,13 +411,15 @@ public class GSComplex implements Watchable {
                 img = tk.getImage (this.getBgImageFileName());
                 m.addImage (img, 0);
                 m.waitForAll ();
-                this.bgImage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_RGB);
-                this.bgImage.createGraphics ().drawImage (img,0,0,null);
+                if ((img.getWidth(null) > 0) && (img.getHeight(null) > 0)) {
+                    this.bgImage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_RGB);
+                    this.bgImage.createGraphics ().drawImage (img,0,0,null);
+                }
             }
             catch (Exception e)
             {
                 // ideally would have a more graceful failure here...
-                Util.todo("pop up alert when BG image load fails");
+                JOptionPane.showMessageDialog(this.usedUI, "could not load the background image "+this.getBgImageFileName());
                 e.printStackTrace ();
             }
         }

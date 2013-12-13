@@ -22,7 +22,7 @@ public class FileFilterTab extends FileFilter {
     /**
      * the string extension used for text files
      */
-    public static String FORMAT_TXT_EXTENSION = "txt";
+//    public static String FORMAT_TXT_EXTENSION = "txt";
 
     /**
      * Checks to see whether the give File object passes the filter. It does if the
@@ -49,7 +49,7 @@ public class FileFilterTab extends FileFilter {
      * @return a string that describes what this filter does
      */
     public String getDescription() {
-        return "Tab delimited files (tab and txt)";
+        return "Tab delimited files (tab)";
     }
 
     /**
@@ -61,8 +61,7 @@ public class FileFilterTab extends FileFilter {
     public boolean isExtensionOK(String ext)
     {
         ext = ext.toLowerCase ();
-        if (ext.equals(FileFilterTab.FORMAT_TAB_EXTENSION) ||
-            ext.equals(FileFilterTab.FORMAT_TXT_EXTENSION))
+        if (ext.equals(FileFilterTab.FORMAT_TAB_EXTENSION))
         {
             return true;
         }
