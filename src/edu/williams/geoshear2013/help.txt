@@ -1,7 +1,7 @@
 GeoShear Help
-There are two main parts to this application: the main window where sets of pebbles are created and manipulated (deformed), and additional windows that show richer information about the pebbles and/or deformations. The main window has a menu system (where you can save and load files, change the way the pebbles are displayed, and open additional windows), a set of controls on the left, and a large pebble UI panel on the right. The pebble UI panel not only shows the pebbles (i.e. ellipses) and various other info, it also allows you to deform the pebbles and change the display using the mouse and keyboard.
+There are two main parts to this application: the main window where sets of pebbles are created and manipulated (deformed), and additional windows that show richer information about the pebbles and/or deformations. The main window has a menu system (where you can save and load files, change the way the pebbles are displayed, and open additional windows), a set of controls on the left, and a large pebble UI panel on the right. The pebble UI panel not only shows the pebbles (i.e. ellipses) and various other info, it also allows you to deform the pebbles and pan and zoom using the mouse and keyboard.
 
-To use this tool you create or load a set of pebbles, then deform them using the mouse and/or on-screen controls. A given deformation is tentative until the Apply button is clicked (or Enter is pressed), at which point it is appended to the series of deformations for that set of pebbles (you can step through the series and remove deformations as well). You can open new windows with more detailed display of pebble information (in the form of Cartesian or polar RF-phi charts, or a list of the deformation steps), and the charts themselves have various display and interaction options. Once created, the pebbles (and/or any deformed view of them) can be saved for later work in GeoShear, or exported to a tab-delimited format suitable for further work in Excel or some other spreadsheet.
+To use this tool you create or load a set of pebbles, then deform them using the mouse and/or on-screen controls. A given deformation is tentative until the Apply button is clicked (or Enter is pressed), at which point it is appended to the series of deformations for that set of pebbles (you can step through the series and remove deformations as well). You can open new windows with more detailed display of pebble information (in the form of Cartesian or polar RF-phi charts, or a list of the deformation steps), and the charts themselves have various display and interaction options. Once created, the pebbles (and/or any deformed view of them) can be saved (in a .tab file) for later work in GeoShear or for further work in Excel or some other spreadsheet.
 
 When you open one or more of the chart windows you will see a representation of the current pebbles, marked in the appropriate colors and with points for selected pebbles highlighted and showing the numbers for that pebble. The charts also have many display options in their view menu (including changing the scale), and a snapshot button next to the view menu that saves an image of the chart. Clicking anywhere in the chart will show the numbers associated with that point, and shift-clicking will remove that inspection info. The charts also show reference points, which can be considered as a set of pebbles with a wide and regular range of values and which respond to all the deformations but which are not shown in the pebbles UI panel. The deformation series window shows the individual and cumulative matrices of the deformations. The current deformation is highlighted with a dark number label, while the others have gray labels.
 
@@ -14,14 +14,11 @@ The menu system for GeoShear is:
         item- Quit - exit GeoShear
             NOTE: this does NOT ask for confirmation nor does it save on exit!
     menu- File - save and load pebbles and deformations
-        item- Save - save the pebble set, deformation series, and a reference to any background image in a .ges file
-        item- Load - load a set of pebbles and a deformation series from a .ges file; also loads the background image if possible
+        item- Save - save the pebble set, deformation series, and a reference to any background image in a .tab file
+        item- Load - load a set of pebbles and a deformation series from a .tab file (of a specific format); also loads the background image if possible
             NOTE: if the background image is not loading properly it may be due to the image file changing location
             NOTE: when the save file is loaded any previously loaded/created work in the application is discarded
-        item- Export to .tab - save the same information as in a .ges file, but in a tab-delimited format that's suitable to load into a spreadsheet
-        item- Import from .tab - same as Load, but from a compatible .tab file
-        item- Save current deformed - create a .ges file, but instead of saving the base pebble set and deformation series save the data for the currently deformed pebble state as a new base set
-        item- Export currently deformed to .tab - save as Save above, but puts the data in a .tab file instead of a .ges file
+        item- Save current deformed - create a .tab file, but instead of saving the base pebble set and deformation series save the data for the currently deformed pebble state as a new base set
     menu- Display - control what information / elements are shown in the pebbles UI panel
         item- Show pebble axes - show the major and minor axes of each pebble (as opposed to just the ellipse / outline)
         item- Fill pebbles - show pebbles as solid regions of color as opposed to outlines
@@ -44,7 +41,7 @@ NOTE: You can also zoom in and out by using the mouse wheel in the pebble UI pan
 
 - DEFORM CONTROLS : create simple shear, pure shear / compression, and rotation deformations, and apply them (i.e. add the given deformation to the series of deformations). Values in these fields may either be typed in (hit enter when done putting in the number) or else the up or down arrow keys may be used to adjust the values by small increments. NOTE: the apply button here does double duty as a remove button when there's no tentative deformation in place
 
-These controls affect the values used in the 2x2 matrix that represents a given deformation. The deformation controls have four subsections - one for each type of deformation supported (simple shear, pure shear / compression, and rotation), plus a pair of buttons in the lower right of this section. These controls can be used to create a deformation by entering values directly (press Enter or Tab after putting a number in one of these control to make that number take effect). Also, when a deformation is created by dragging in the pebble UI panel these controls show the corresponding values for that deformation. Once you're satisfied with a given deformation clicking the Apply button will add it to the series. Clicking the Reset button clears / cancels the current, tentative deformation.
+These controls affect the values used in the 2x2 matrix that represents a given deformation. The deformation controls have four subsections - one for each type of deformation supported (simple shear, pure shear / compression, and rotation), plus a pair of buttons in the lower right of this section. The pure shear fields have an adjacent button that controls whether they're linked to preserve area (i.e. x and y values are inverses of each other) or decoupled. Any of these controls can be used to create a deformation by entering values directly (press Enter or Tab after putting a number in one of these control to make that number take effect). Also, when a deformation is created by dragging in the pebble UI panel these controls show the corresponding values for that deformation. Once you're satisfied with a given deformation clicking the Apply button will add it to the series. Clicking the Reset button clears / cancels the current, tentative deformation.
 
 
 - SERIES CONTROLS : navigate through the deformations that have been applied, and show information about the cumulative strain, the tentative strain, and the potential next cumulative strain
@@ -58,7 +55,7 @@ Below these matrices are two arrow buttons which let you navigate through the de
 
 - EDIT CONTROLS : go into edit mode, then change the background image, pebble colors, and use the Pebbles UI panel to create, select, and remove pebbles
 
-Below the matrix display and deformation navigation controls are the editing controls. The main button here is the Edit Mode button. This toggles edit mode on and off, which affects both which controls are active / usable and the behavior of the pebble UI panel. When in edit mode new deformations cannot be created so the deformation controls are disabled, and navigating through the deformation series is also disabled.
+Below the matrix display and deformation navigation controls are the editing controls. The main button here is the Edit Mode button. This toggles edit mode on and off, which affects both which controls are active / usable and the behavior of the pebble UI panel (see the next section for more details on how to use the UI panel, but in brief, while holding down shift or with caps lock on  drag to create a pebble axis and press space to lock it in). When in edit mode new deformations cannot be created so the deformation controls are disabled, and navigating through the deformation series is also disabled.
 
 In addition to allowing you to create or delete pebbles in the pebble UI, edit mode enables additional buttons in the control area. The Pick Color button lets you choose a color that's used for new pebbles as they're created. Next to it is a button labeled Apply, which changes the color of all selected pebbles to the color you've chosen for Pick Color. Below that is a button that lets you load a background image - once the background is loaded you can control whether or not it's shown using the Show Background Image item in the Display menu. 
 
@@ -91,13 +88,13 @@ When in Edit mode:
 - ctrl-a : select all pebbles
 - escape : de-select all pebbles
 - delete or backspace : delete all selected pebbles
-- Pebble creation is done by a series of mouse drags and space bar presses.
-    1. mouse button down (left button) : set the end point for the first axis
-    2. first drag : define one axis of the pebble
-    3. first space bar press (while keeping the mouse button pressed): lock in the first axis
-    4. second drag (don't release the mouse button between these steps) : define the second axis of the pebble
-    5. second space bar press (while keeping the mouse button pressed): lock in the second axis; NOTE: at this point the pebble is created! NOTE: if you release the mouse button at any point before this then the pebble will be cancelled
-    6. release the mouse button : the new pebble is selected and other pebbles are de-selected (if you don't want it at this point, just hit delete and it will be removed)
+- Pebble creation is done with a series of click, drags, and space-bar presses wile either the shift key is held down or caps lock is on
+    1. shift-mouse button down (left button) : set the end point for the first axis
+    2. shift-first drag : define one axis of the pebble
+    3. shift-first space bar press (while keeping the mouse button pressed): lock in the first axis
+    4. shift-second drag (don't release the mouse button between these steps) : define the second axis of the pebble
+    5. shift-second space bar press (while keeping the mouse button pressed): lock in the second axis; NOTE: at this point the pebble is created! NOTE: if you release the mouse button at any point before this then the pebble will be cancelled
+    6. shift-release the mouse button : the new pebble is selected and other pebbles are de-selected (if you don't want it at this point, just hit delete and it will be removed)
 NOTE: newly created pebbles are of the color shown on the Pick Color button in the editing controls section. Pebble color may be changed later by selecting the pebble then clicking the Apply button that's next to the Pick Color button.
 
 --------------------------------------------------------------------------------------
@@ -136,8 +133,12 @@ When a deformation is applied to a pebble there are three steps that happen. Fir
 
 --------------------------------------------------------------------------------------
     
-GeoShear supports two file formats. The main one is called .ges, but really it's just a text file in a particular format - you can open and edit .ges files in any standard text editor. The second is .tab, which can be opened directly in Excel or any other spreadsheet program. The latter format is especially useful if you want to do further analysis of pebbles. For each pebble it has a unique identifier, coordinates of the center point, lengths of major and minor radius, angle of major radius (in degrees), and color. For each deformation it stores the four elements of the matrix. Any background image is stored as a reference to a specific file - i.e. the image file itself is NOT a part of the GeoShear save files. By default it uses an absolute path name for the image, but if you manually edit the file you can change that to a relative path name. NOTE: this means that if you want to share some GeoShear work that's based on a given background image you should put the save file and the image file in a folder than edit the save file to use a relative path for the image.
+GeoShear saves its data in a specially organized .tab file. The file may be opened and edited in Excel or other spreadsheet programs as long as the format is preserved. In the file
+- each pebble it has a unique identifier, coordinates of the center point, lengths of major and minor radius, angle of major radius (in degrees), and color
+- each deformation it stores the four elements of the matrix
+- any background image is stored as a reference to a specific file - i.e. the image file itself is NOT a part of the GeoShear save files. By default it uses an absolute path name for the image, but if you manually edit the file you can change that to a relative path name. NOTE: this means that if you want to share some GeoShear work that's based on a given background image you should put the save file and the image file in a folder than edit the save file to use a relative path for the image.
+- it also stores the panel coordinates of the axis origin
 
-Normally GeoShear saves the base pebble set plus the series of deformations. However, that can make it hard to do analysis on the different stages of deformation. To get the data for a given deformation step use the Save Current Deformed or Export Current Deformed actions in the File menu. They treat the current view of the pebbles as a new base set - i.e. the .ges or .tab file for that will have the deformed centers and axes and such and will have no deformations.
+Normally GeoShear saves the base pebble set plus the series of deformations. However, that can make it hard to do analysis on the different stages of deformation. To get the data for a given deformation step use the Save Current Deformed action in the File menu. That treats the current view of the pebbles as a new base set - i.e. the .tab file for that will have the deformed values for centers and axes and such, and will have no deformations.
 
 
