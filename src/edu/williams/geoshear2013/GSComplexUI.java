@@ -334,17 +334,14 @@ class GSComplexUI extends JPanel implements Watchable {
     public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
         if (compressionFactorX < .01) { compressionFactorX = .01; }
         if (compressionFactorY < .01) { compressionFactorY = .01; }
-        if (isInXDirection) {
-            if (this.compressionXandYareLinked) {
+        if (! this.compressionXandYareLinked) {
+            this.setDeformations(new Deformation(compressionFactorX, 0, 0, compressionFactorY));
+        } 
+        else {
+            if (isInXDirection) {
                 this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1/compressionFactorX));
             } else {
-                this.setDeformations(new Deformation(compressionFactorX, 0, 0, 1));
-            }
-        } else {
-            if (this.compressionXandYareLinked) {
                 this.setDeformations(new Deformation(1/compressionFactorY, 0, 0, compressionFactorY));
-            } else {
-                this.setDeformations(new Deformation(1, 0, 0, compressionFactorY));
             }
         }
         this.setStrains();

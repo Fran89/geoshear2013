@@ -64,8 +64,9 @@ public class MainWindow extends javax.swing.JFrame {
     private GSComplexInfoFrameDeformationSeries windowDeformationsSeries;
     
     private ImageIcon linkedIcon = new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"));
+    private String linkedToolTip = "x and y compression are linked to preserve area";
     private ImageIcon unlinkedIcon = new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/unlinked.gif"));
-
+    private String unlinkedToolTip = "x and y compression are independent";
     
 /**
      * Creates new form MainWindow
@@ -149,6 +150,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.updateStateOfCurrentDeformControls();
         this.updateStrainMatricesVisibilities();
         
+        jButtonLinkCompressionDeform.setToolTipText(this.linkedToolTip);
+        jButtonLinkCompressionDeform.setIcon(linkedIcon);
+
         this.chartCartRfPhi = new GSComplexChartFrameCartRfPhi(this);
         this.gscUI.gsc.addWatcher(this.chartCartRfPhi);
         this.gscUI.addWatcher(this.chartCartRfPhi);
@@ -188,6 +192,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelShearX = new javax.swing.JLabel();
         jLabelShearY = new javax.swing.JLabel();
         jTextFieldShearY = new javax.swing.JTextField();
+        jLabelSimpleShearActionKey = new javax.swing.JLabel();
         jPanelDeformCompressControls = new javax.swing.JPanel();
         jLabelCompressControl = new javax.swing.JLabel();
         jTextFieldCompressX = new javax.swing.JTextField();
@@ -195,12 +200,14 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCompressrY = new javax.swing.JLabel();
         jTextFieldCompressY = new javax.swing.JTextField();
         jButtonLinkCompressionDeform = new javax.swing.JButton();
+        jLabelPureShearActionKey = new javax.swing.JLabel();
         jPanelDeformRotateControls = new javax.swing.JPanel();
         jLabelShearControl1 = new javax.swing.JLabel();
         jLabelShearY1 = new javax.swing.JLabel();
         jLabelShearX1 = new javax.swing.JLabel();
         jTextFieldRotDeg = new javax.swing.JTextField();
         jTextFieldRotRad = new javax.swing.JTextField();
+        jLabelRotateActionKey = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanelDeformNavControls = new javax.swing.JPanel();
         jButtonDeformApplyRemove = new javax.swing.JButton();
@@ -226,6 +233,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelNavStrainLeftBracket = new javax.swing.JLabel();
         jTextFieldNavStrainM00 = new javax.swing.JTextField();
         jTextFieldNavStrainM10 = new javax.swing.JTextField();
+        jPanelMatrixBgMostRecent = new javax.swing.JPanel();
+        jPanelMatrixBgCumu = new javax.swing.JPanel();
         jPanelDeformMatrixRight = new javax.swing.JPanel();
         jButtonStrainNavNext = new javax.swing.JButton();
         jTextFieldStrainM01 = new javax.swing.JTextField();
@@ -247,6 +256,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldNavStrainM01 = new javax.swing.JTextField();
         jLabelNavStrainRightBracket = new javax.swing.JLabel();
         jTextFieldNavStrainM11 = new javax.swing.JTextField();
+        jPanelMatrixBgCumuTent = new javax.swing.JPanel();
         jPanelEditPebbleControls = new javax.swing.JPanel();
         jToggleButtonEditPebbles = new javax.swing.JToggleButton();
         jButtonPebbleColorSet = new javax.swing.JButton();
@@ -411,7 +421,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelShearControl.setToolTipText("hold SHIFT to do this using the mouse");
         jLabelShearControl.setFocusable(false);
         jLabelShearControl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanelDeformShearControls.add(jLabelShearControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, -1));
+        jPanelDeformShearControls.add(jLabelShearControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 1, 80, -1));
 
         jTextFieldShearX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearX.setText("0.000");
@@ -434,17 +444,17 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldShearXKeyReleased(evt);
             }
         });
-        jPanelDeformShearControls.add(jTextFieldShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanelDeformShearControls.add(jTextFieldShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         jLabelShearX.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearX.setText("X");
         jLabelShearX.setFocusable(false);
-        jPanelDeformShearControls.add(jLabelShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 14, -1));
+        jPanelDeformShearControls.add(jLabelShearX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 14, -1));
 
         jLabelShearY.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearY.setText("Y");
         jLabelShearY.setFocusable(false);
-        jPanelDeformShearControls.add(jLabelShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 14, -1));
+        jPanelDeformShearControls.add(jLabelShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 14, -1));
 
         jTextFieldShearY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldShearY.setText("0.000");
@@ -467,7 +477,11 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldShearYKeyReleased(evt);
             }
         });
-        jPanelDeformShearControls.add(jTextFieldShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        jPanelDeformShearControls.add(jTextFieldShearY, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+
+        jLabelSimpleShearActionKey.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSimpleShearActionKey.setText("(SHIFT)");
+        jPanelDeformShearControls.add(jLabelSimpleShearActionKey, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 80, -1));
 
         jPanelDeformControls.add(jPanelDeformShearControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1, 110, 79));
 
@@ -481,7 +495,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCompressControl.setToolTipText("hold CONTROL to do this using the mouse");
         jLabelCompressControl.setFocusable(false);
         jLabelCompressControl.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanelDeformCompressControls.add(jLabelCompressControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 66, -1));
+        jPanelDeformCompressControls.add(jLabelCompressControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1, 66, -1));
 
         jTextFieldCompressX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressX.setText("1");
@@ -504,17 +518,17 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldCompressXKeyReleased(evt);
             }
         });
-        jPanelDeformCompressControls.add(jTextFieldCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 30, -1, -1));
+        jPanelDeformCompressControls.add(jTextFieldCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 40, -1, -1));
 
         jLabelCompressX.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCompressX.setText("X");
         jLabelCompressX.setFocusable(false);
-        jPanelDeformCompressControls.add(jLabelCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 30, 14, -1));
+        jPanelDeformCompressControls.add(jLabelCompressX, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 40, 14, -1));
 
         jLabelCompressrY.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCompressrY.setText("Y");
         jLabelCompressrY.setFocusable(false);
-        jPanelDeformCompressControls.add(jLabelCompressrY, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 50, 14, -1));
+        jPanelDeformCompressControls.add(jLabelCompressrY, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 60, 14, -1));
 
         jTextFieldCompressY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldCompressY.setText("1");
@@ -537,16 +551,21 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldCompressYKeyReleased(evt);
             }
         });
-        jPanelDeformCompressControls.add(jTextFieldCompressY, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 50, -1, -1));
+        jPanelDeformCompressControls.add(jTextFieldCompressY, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 60, -1, -1));
 
         jButtonLinkCompressionDeform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jButtonLinkCompressionDeform.setToolTipText("x and y compression are linked to preserve area");
         jButtonLinkCompressionDeform.setNextFocusableComponent(jTextFieldRotDeg);
         jButtonLinkCompressionDeform.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLinkCompressionDeformActionPerformed(evt);
             }
         });
-        jPanelDeformCompressControls.add(jButtonLinkCompressionDeform, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 22, 23, -1));
+        jPanelDeformCompressControls.add(jButtonLinkCompressionDeform, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 26, 23, -1));
+
+        jLabelPureShearActionKey.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPureShearActionKey.setText("(CTRL)");
+        jPanelDeformCompressControls.add(jLabelPureShearActionKey, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 60, -1));
 
         jPanelDeformControls.add(jPanelDeformCompressControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 1, 110, 79));
 
@@ -560,17 +579,17 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelShearControl1.setToolTipText("hold ALT to do this using the mouse");
         jLabelShearControl1.setFocusable(false);
         jLabelShearControl1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanelDeformRotateControls.add(jLabelShearControl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 11, 68, -1));
+        jPanelDeformRotateControls.add(jLabelShearControl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 68, -1));
 
         jLabelShearY1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearY1.setText("rad.");
         jLabelShearY1.setFocusable(false);
-        jPanelDeformRotateControls.add(jLabelShearY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 51, 22, -1));
+        jPanelDeformRotateControls.add(jLabelShearY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 60, 22, -1));
 
         jLabelShearX1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelShearX1.setText("deg.");
         jLabelShearX1.setFocusable(false);
-        jPanelDeformRotateControls.add(jLabelShearX1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 31, -1, -1));
+        jPanelDeformRotateControls.add(jLabelShearX1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 40, -1, -1));
 
         jTextFieldRotDeg.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRotDeg.setText("0.0");
@@ -593,7 +612,7 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldRotDegKeyReleased(evt);
             }
         });
-        jPanelDeformRotateControls.add(jTextFieldRotDeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 31, -1, -1));
+        jPanelDeformRotateControls.add(jTextFieldRotDeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 40, -1, -1));
 
         jTextFieldRotRad.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRotRad.setText("0.000");
@@ -616,13 +635,16 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextFieldRotRadKeyReleased(evt);
             }
         });
-        jPanelDeformRotateControls.add(jTextFieldRotRad, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 51, -1, -1));
+        jPanelDeformRotateControls.add(jTextFieldRotRad, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 60, -1, -1));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelRotateActionKey.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelRotateActionKey.setText("(ALT/OPT)");
+        jPanelDeformRotateControls.add(jLabelRotateActionKey, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 70, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
+        jLabel1.setToolTipText("values for degrees and radians are always linked");
         jLabel1.setEnabled(false);
-        jLabel1.setFocusable(false);
-        jPanelDeformRotateControls.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 20, 55));
+        jPanelDeformRotateControls.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 37, 20, 40));
 
         jPanelDeformControls.add(jPanelDeformRotateControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 110, 79));
 
@@ -656,13 +678,14 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelDeformControls.add(jPanelDeformNavControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 110, 79));
 
+        jPanelDeformMatrixLeft.setToolTipText("");
         jPanelDeformMatrixLeft.setPreferredSize(new java.awt.Dimension(93, 75));
         jPanelDeformMatrixLeft.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextFieldStrainM00.setEditable(false);
         jTextFieldStrainM00.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM00.setText("1.000");
-        jTextFieldStrainM00.setToolTipText("matrix for the current deformation");
+        jTextFieldStrainM00.setToolTipText("matrix for the current or most recent deformation");
         jTextFieldStrainM00.setBorder(null);
         jTextFieldStrainM00.setFocusable(false);
         jTextFieldStrainM00.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -671,7 +694,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM10.setEditable(false);
         jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM10.setText("0.000");
-        jTextFieldStrainM10.setToolTipText("matrix for the current deformation");
+        jTextFieldStrainM10.setToolTipText("matrix for the current or most recent deformation");
         jTextFieldStrainM10.setBorder(null);
         jTextFieldStrainM10.setFocusable(false);
         jTextFieldStrainM10.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -695,7 +718,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCurStrainLeftBracket.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabelCurStrainLeftBracket.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelCurStrainLeftBracket.setText("[");
-        jLabelCurStrainLeftBracket.setToolTipText("matrix for the current deformation");
+        jLabelCurStrainLeftBracket.setToolTipText("matrix for the current or most recent deformation");
         jLabelCurStrainLeftBracket.setFocusable(false);
         jLabelCurStrainLeftBracket.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jLabelCurStrainLeftBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 90));
@@ -819,6 +842,36 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldNavStrainM10.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
         jPanelDeformMatrixLeft.add(jTextFieldNavStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
 
+        jPanelMatrixBgMostRecent.setToolTipText("matrix for the current or most recent deformation");
+
+        javax.swing.GroupLayout jPanelMatrixBgMostRecentLayout = new javax.swing.GroupLayout(jPanelMatrixBgMostRecent);
+        jPanelMatrixBgMostRecent.setLayout(jPanelMatrixBgMostRecentLayout);
+        jPanelMatrixBgMostRecentLayout.setHorizontalGroup(
+            jPanelMatrixBgMostRecentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
+        );
+        jPanelMatrixBgMostRecentLayout.setVerticalGroup(
+            jPanelMatrixBgMostRecentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
+        jPanelDeformMatrixLeft.add(jPanelMatrixBgMostRecent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 190, 70));
+
+        jPanelMatrixBgCumu.setToolTipText("matrix for the cumulative deformation");
+
+        javax.swing.GroupLayout jPanelMatrixBgCumuLayout = new javax.swing.GroupLayout(jPanelMatrixBgCumu);
+        jPanelMatrixBgCumu.setLayout(jPanelMatrixBgCumuLayout);
+        jPanelMatrixBgCumuLayout.setHorizontalGroup(
+            jPanelMatrixBgCumuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
+        );
+        jPanelMatrixBgCumuLayout.setVerticalGroup(
+            jPanelMatrixBgCumuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        jPanelDeformMatrixLeft.add(jPanelMatrixBgCumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 110, 50));
+
         jPanelDeformControls.add(jPanelDeformMatrixLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 110, 230));
 
         jPanelDeformMatrixRight.setPreferredSize(new java.awt.Dimension(93, 75));
@@ -836,7 +889,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM01.setEditable(false);
         jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM01.setText("0.000");
-        jTextFieldStrainM01.setToolTipText("matrix for the current deformation");
+        jTextFieldStrainM01.setToolTipText("matrix for the current or most recent deformation");
         jTextFieldStrainM01.setBorder(null);
         jTextFieldStrainM01.setFocusable(false);
         jTextFieldStrainM01.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -845,7 +898,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM11.setEditable(false);
         jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldStrainM11.setText("1.000");
-        jTextFieldStrainM11.setToolTipText("matrix for the current deformation");
+        jTextFieldStrainM11.setToolTipText("matrix for the current or most recent deformation");
         jTextFieldStrainM11.setBorder(null);
         jTextFieldStrainM11.setFocusable(false);
         jTextFieldStrainM11.setForeground(GSComplexUI.INFO_COLOR_TENT);
@@ -869,7 +922,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCurStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabelCurStrainRightBracket.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelCurStrainRightBracket.setText("]");
-        jLabelCurStrainRightBracket.setToolTipText("matrix for the current deformation");
+        jLabelCurStrainRightBracket.setToolTipText("matrix for the current or most recent deformation");
         jLabelCurStrainRightBracket.setFocusable(false);
         jLabelCurStrainRightBracket.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jLabelCurStrainRightBracket, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 90));
@@ -982,6 +1035,21 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldNavStrainM11.setBorder(null);
         jTextFieldNavStrainM11.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
         jPanelDeformMatrixRight.add(jTextFieldNavStrainM11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, -1));
+
+        jPanelMatrixBgCumuTent.setToolTipText("matrix for the next cumulative deformation");
+
+        javax.swing.GroupLayout jPanelMatrixBgCumuTentLayout = new javax.swing.GroupLayout(jPanelMatrixBgCumuTent);
+        jPanelMatrixBgCumuTent.setLayout(jPanelMatrixBgCumuTentLayout);
+        jPanelMatrixBgCumuTentLayout.setHorizontalGroup(
+            jPanelMatrixBgCumuTentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanelMatrixBgCumuTentLayout.setVerticalGroup(
+            jPanelMatrixBgCumuTentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        jPanelDeformMatrixRight.add(jPanelMatrixBgCumuTent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 50));
 
         jPanelDeformControls.add(jPanelDeformMatrixRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 110, 230));
 
@@ -1540,6 +1608,11 @@ public class MainWindow extends javax.swing.JFrame {
         while(keyIter.hasNext()) {
             JTextField tf = (JTextField) keyIter.next();
             if (! tf.equals(stableControlField)) {
+                if ((this.jTextFieldCompressX.equals(stableControlField) || this.jTextFieldCompressY.equals(stableControlField)) && 
+                    (! this.gscUI.compressionXandYareLinked) && 
+                    (this.jTextFieldCompressX.equals(tf) || this.jTextFieldCompressY.equals(tf))) {
+                    continue;
+                }
                 tf.setText(Util.truncTextDecimal(Double.toString(((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDefaultVal()), ((ValueConstrainer)this.displayNumberConstraints.get(tf)).getDisplayPrecision()));
             }
         }
@@ -2005,8 +2078,10 @@ public class MainWindow extends javax.swing.JFrame {
         this.gscUI.compressionXandYareLinked = ! this.gscUI.compressionXandYareLinked;
         if (this.gscUI.compressionXandYareLinked) {
             jButtonLinkCompressionDeform.setIcon(linkedIcon);
+            jButtonLinkCompressionDeform.setToolTipText(this.linkedToolTip);
         } else {
             jButtonLinkCompressionDeform.setIcon(unlinkedIcon);
+            jButtonLinkCompressionDeform.setToolTipText(this.unlinkedToolTip);
         }
     }//GEN-LAST:event_jButtonLinkCompressionDeformActionPerformed
 
@@ -2335,9 +2410,9 @@ public class MainWindow extends javax.swing.JFrame {
                                                       this.jTextFieldShearX.equals(controlField));
         } else
         if ((this.jTextFieldCompressX.equals(controlField)) || (this.jTextFieldCompressY.equals(controlField))) {
-            this.gscUI.tentativeDeformationSetToCompression(Double.parseDouble(this.jTextFieldCompressX.getText()), 
-                                                            Double.parseDouble(this.jTextFieldCompressY.getText()),
-                                                            this.jTextFieldCompressX.equals(controlField));
+                this.gscUI.tentativeDeformationSetToCompression(Double.parseDouble(this.jTextFieldCompressX.getText()), 
+                                                                Double.parseDouble(this.jTextFieldCompressY.getText()),
+                                                                this.jTextFieldCompressX.equals(controlField));
         } else
         if (this.jTextFieldRotDeg.equals(controlField)) {
             this.gscUI.tentativeDeformationSetToRotate(Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
@@ -2563,13 +2638,16 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNavStrainLeftBracket;
     private javax.swing.JLabel jLabelNavStrainRightBracket;
     private javax.swing.JLabel jLabelPhi;
+    private javax.swing.JLabel jLabelPureShearActionKey;
     private javax.swing.JLabel jLabelRf;
+    private javax.swing.JLabel jLabelRotateActionKey;
     private javax.swing.JLabel jLabelShearControl;
     private javax.swing.JLabel jLabelShearControl1;
     private javax.swing.JLabel jLabelShearX;
     private javax.swing.JLabel jLabelShearX1;
     private javax.swing.JLabel jLabelShearY;
     private javax.swing.JLabel jLabelShearY1;
+    private javax.swing.JLabel jLabelSimpleShearActionKey;
     private javax.swing.JLabel jLabelStrainNavCount;
     private javax.swing.JLabel jLabelStrainNavPosition;
     private javax.swing.JLabel jLabelZoom;
@@ -2590,6 +2668,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDeformShearControls;
     private javax.swing.JPanel jPanelDisplayControls;
     private javax.swing.JPanel jPanelEditPebbleControls;
+    private javax.swing.JPanel jPanelMatrixBgCumu;
+    private javax.swing.JPanel jPanelMatrixBgCumuTent;
+    private javax.swing.JPanel jPanelMatrixBgMostRecent;
     private javax.swing.JPanel jPanelResetButtons;
     private javax.swing.JPanel jPanelSnapshotControls;
     private javax.swing.JPanel jPanelZoomControl;
