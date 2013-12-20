@@ -1204,7 +1204,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.setToolTipText("Save and load");
 
         jMenuItemSave.setText("Save");
-        jMenuItemSave.setToolTipText("Save everything to a .ges file");
+        jMenuItemSave.setToolTipText("Save everything to a .tab file");
         jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemSaveActionPerformed(evt);
@@ -1213,7 +1213,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.add(jMenuItemSave);
 
         jMenuItemLoad.setText("Load");
-        jMenuItemLoad.setToolTipText("Load new pebbles and deformations from a .ges file");
+        jMenuItemLoad.setToolTipText("Load new pebbles and deformations from a .tab file");
         jMenuItemLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemLoadActionPerformed(evt);
@@ -1337,7 +1337,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
     private void jPanelContainerDisplayComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanelContainerDisplayComponentResized
         int w = this.jPanelContainerDisplay.getWidth();
         int h = this.jPanelContainerDisplay.getHeight();

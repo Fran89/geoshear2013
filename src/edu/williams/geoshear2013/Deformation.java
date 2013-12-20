@@ -16,6 +16,11 @@ public class Deformation extends Matrix2x2 {
 
     public static String SERIALIZE_TOKEN = ";";
     
+    public static String SERIALIZE_LABEL_M00 = "m00";
+    public static String SERIALIZE_LABEL_M01 = "m01";
+    public static String SERIALIZE_LABEL_M10 = "m10";
+    public static String SERIALIZE_LABEL_M11 = "m11";
+    
     public static Color DEFORMATION_COLOR = Color.RED;
     public static int DISPLAY_RADIUS = 100;    
 
@@ -66,14 +71,14 @@ public class Deformation extends Matrix2x2 {
     /*--------------------------------------------------------------------*/
 
     public String serialize() {
-        return "m00="+this.m00+Deformation.SERIALIZE_TOKEN+
-                " m01="+this.m01+Deformation.SERIALIZE_TOKEN+
-                " m10="+this.m10+Deformation.SERIALIZE_TOKEN+
-                " m11="+this.m11;
+        return Deformation.SERIALIZE_LABEL_M00+"="+this.m00+Deformation.SERIALIZE_TOKEN+
+                " "+Deformation.SERIALIZE_LABEL_M01+"="+this.m01+Deformation.SERIALIZE_TOKEN+
+                " "+Deformation.SERIALIZE_LABEL_M10+"="+this.m10+Deformation.SERIALIZE_TOKEN+
+                " "+Deformation.SERIALIZE_LABEL_M11+"="+this.m11;
     }
     
     static String serializeHeadersToTabDelimited() {
-        return "m00\tm01\tm10\tm11";
+        return Deformation.SERIALIZE_LABEL_M00+"\t"+Deformation.SERIALIZE_LABEL_M01+"\t"+Deformation.SERIALIZE_LABEL_M10+"\t"+Deformation.SERIALIZE_LABEL_M11;
     }
 
     public String serializeToTabDelimited() {

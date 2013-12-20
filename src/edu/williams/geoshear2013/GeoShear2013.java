@@ -13,6 +13,20 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class GeoShear2013 {
 
+    private static String OS = System.getProperty("os.name").toLowerCase();
+    
+    public static boolean isWindows() {
+ 
+		return (GeoShear2013.OS.indexOf("win") >= 0);
+ 
+	}
+ 
+	public static boolean isMac() {
+ 
+		return (GeoShear2013.OS.indexOf("mac") >= 0);
+ 
+	}
+     
     /**
      * @param args the command line arguments
      */

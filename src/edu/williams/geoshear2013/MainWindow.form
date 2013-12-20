@@ -61,7 +61,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
-                <Property name="toolTipText" type="java.lang.String" value="Save everything to a .ges file"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save everything to a .tab file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSaveActionPerformed"/>
@@ -70,7 +70,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLoad">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load"/>
-                <Property name="toolTipText" type="java.lang.String" value="Load new pebbles and deformations from a .ges file"/>
+                <Property name="toolTipText" type="java.lang.String" value="Load new pebbles and deformations from a .tab file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemLoadActionPerformed"/>

@@ -65,6 +65,7 @@ public class GSDeformationSeries extends ArrayList {
         for(int i=0;i<defData.length;i++) {
             defData[i] = defData[i].trim();
             if (defData[i].isEmpty()) { continue; }
+            if (defData[i].indexOf(Deformation.SERIALIZE_LABEL_M00) > -1) { continue; }
             newDS.add(Deformation.deserialize(defData[i]));
         }
         
