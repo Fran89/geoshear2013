@@ -271,12 +271,14 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
 
     private void jRadioButtonMenuItemLinearScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemLinearScaleActionPerformed
         chart.setUseLogScale(jRadioButtonMenuItemLogScale.isSelected());
+        this.formattedTextFieldMenuItemScaleFixedActionPerformed(null);
         this.handleChartScaling();
         this.repaint();
     }//GEN-LAST:event_jRadioButtonMenuItemLinearScaleActionPerformed
 
     private void jRadioButtonMenuItemLogScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemLogScaleActionPerformed
         chart.setUseLogScale(jRadioButtonMenuItemLogScale.isSelected());
+        this.formattedTextFieldMenuItemScaleFixedActionPerformed(null);
         this.handleChartScaling();
         this.repaint();
     }//GEN-LAST:event_jRadioButtonMenuItemLogScaleActionPerformed
@@ -285,12 +287,14 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         this.jRadioButtonMenuItemLogScale.setSelected(true);
         this.jRadioButtonMenuItemLinearScale.setSelected(false);
         chart.setUseLogScale(true);
+        this.formattedTextFieldMenuItemScaleFixedActionPerformed(null);
         this.handleChartScaling();
     }
     protected void setChartScaleTypeToLinear() {
         this.jRadioButtonMenuItemLinearScale.setSelected(true);
         this.jRadioButtonMenuItemLogScale.setSelected(false);
         chart.setUseLogScale(false);
+        this.formattedTextFieldMenuItemScaleFixedActionPerformed(null);
         this.handleChartScaling();
     }
     

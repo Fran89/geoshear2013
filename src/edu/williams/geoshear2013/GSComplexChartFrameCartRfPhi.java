@@ -37,11 +37,11 @@ public class GSComplexChartFrameCartRfPhi extends GSComplexChartFrame {
         if (chart.isUseLogScale())
         {
             ch.setMinValX(0.0);
-            ch.setMaxValX(ch.getMaxValX() - 1);
+            ch.setMaxValX(ch.getMaxValX());
             
         } else {
             ch.setMinValX(1.0);
-            ch.setMaxValX(ch.getMaxValX() + 1);
+            ch.setMaxValX(ch.getMaxValX());
         }
         ch.rescaleInfo();
     }

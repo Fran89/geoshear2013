@@ -43,7 +43,7 @@ public class GSComplexChartFramePolarRfPhi extends GSComplexChartFrame {
 
         } else {
             ch.setMinValRadius(1.0);
-            ch.setMaxValRadius(ch.getMaxValRadius() + 1);
+            ch.setMaxValRadius(ch.getMaxValRadius());
         }
         ch.rescaleInfo();
     }
