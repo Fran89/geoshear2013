@@ -57,6 +57,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     protected String title = "";
     protected Font plotFont = Font.decode ("Arial-PLAIN-9");
     protected Font plotLabelFont = Font.decode ("Arial-BOLD-12");
+    public Font plotTitleFont = Font.decode ("Arial-BOLD-28");
 
     protected boolean showTrace = false;
     protected boolean showReferenceDataSparse = true;
@@ -157,12 +158,16 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
 
         this.paintMeans(g2d);
         this.paintReferencePebbles(g2d);
+        this.paintChartTitle(g2d);
         this.paintPebbles(g2d);
         this.paintInfo(g2d);
+        
     }
 
     public abstract void determineChartFrame();
 
+    protected abstract void paintChartTitle(Graphics2D g2d);
+    
     /**
      * Display the harmonic and vector means on the given Graphics2D object
      * @param g2d
@@ -616,5 +621,19 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         this.watchedDeforms = null;
         this.watchedComplexUI = null;
         this.watchedComplex = null;
+    }
+
+    /**
+     * @return the plotTitleFont
+     */
+    public Font getPlotTitleFont() {
+        return plotTitleFont;
+    }
+
+    /**
+     * @param plotTitleFont the plotTitleFont to set
+     */
+    public void setPlotTitleFont(Font plotTitleFont) {
+        this.plotTitleFont = plotTitleFont;
     }
 }

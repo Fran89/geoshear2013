@@ -26,6 +26,16 @@ public class GSComplexChartPolarRf2Phi extends GSComplexChartPolar {
     }
 
     @Override
+    protected void paintChartTitle(Graphics2D g2d) {
+        if (this.isUseLogScale()) {
+            this.setTitle(" ln(Rf) vs. 2*phi ");
+        } else {
+            this.setTitle(" Rf vs. 2*phi ");
+        }
+        super.paintChartTitle(g2d);
+    }
+
+    @Override
     protected void paintMeans(Graphics2D g2d) {
         if (this.isShowMeans() && this.watchedComplex.pebbleSets.get(0).size() > 0)
         {

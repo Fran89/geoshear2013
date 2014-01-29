@@ -5,6 +5,9 @@
 
 package edu.williams.geoshear2013;
 
+import static edu.williams.geoshear2013.GSComplexChart.STROKE_HEAVY;
+import static edu.williams.geoshear2013.GSComplexChart.STROKE_LIGHT;
+import static edu.williams.geoshear2013.GSComplexChart.TEXT_TURNER;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -152,6 +155,52 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
         g2d.setStroke(STROKE_HEAVY);
         g2d.drawLine(this.frameLeft,this.frameHeight,this.frameWidth,this.frameHeight); // x-axis
         g2d.drawLine(this.frameLeft,2,this.frameLeft,this.frameHeight); // y-axis
+        
+//        g2d.setFont(this.getPlotTitleFont());
+//        metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+//        fontHeightSpacing = metrics.getHeight() + 6;
+//        
+//        label = this.getTitle();
+////        label = "This is the TITLE!!!";
+////        this.drawTurnedString(g2d, label, this.getPlotTitleFont(), this.frameLeft - fontHeightSpacing, this.frameHeight - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
+//        
+//        g2d.setStroke(STROKE_LIGHT);
+//        g2d.setBackground(Color.WHITE);
+//        g2d.setColor(Color.WHITE);
+//        
+//        int titleWidth = (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth());
+//        int titleX = this.frameLeft + this.frameWidth/2 - titleWidth/2;
+//        int titleY = fontHeightSpacing + this.generalInset;
+//        
+//        g2d.fillRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+//        g2d.setColor(Color.BLACK);
+//        g2d.drawRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+//        
+//        g2d.drawString(label, titleX, titleY);
+
+    }
+    
+    @Override
+    protected void paintChartTitle(Graphics2D g2d) {
+        String titleText = this.getTitle();
+        
+        g2d.setFont(this.getPlotTitleFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = (int)(metrics.getHeight() * 1.8);
+        
+        int titleWidth = (int)(g2d.getFontMetrics().getStringBounds(titleText, g2d).getWidth());
+        int titleX = this.frameLeft + this.frameWidth/2 - titleWidth/2;
+        int titleY = fontHeightSpacing + this.generalInset;
+
+        // draw a cleared box in which the title will be shown
+        g2d.setStroke(STROKE_LIGHT);
+        g2d.setBackground(Color.WHITE);
+        g2d.setColor(Color.WHITE);                
+        g2d.fillRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+        
+        g2d.drawString(titleText, titleX, titleY);
     }
 
     @Override

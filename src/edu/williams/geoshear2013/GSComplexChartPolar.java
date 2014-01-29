@@ -5,6 +5,7 @@
 
 package edu.williams.geoshear2013;
 
+import static edu.williams.geoshear2013.GSComplexChart.STROKE_LIGHT;
 import static edu.williams.geoshear2013.GSComplexChart.TEXT_TURNER;
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -137,6 +138,29 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
         g2d.drawLine(ringsR, labelY, ringsR, cy);        
     }
 
+    @Override
+    protected void paintChartTitle(Graphics2D g2d) {
+        String titleText = this.getTitle();
+        
+        g2d.setFont(this.getPlotTitleFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = (int)(metrics.getHeight() * 1.8);
+        
+        int titleWidth = (int)(g2d.getFontMetrics().getStringBounds(titleText, g2d).getWidth());
+        int titleX = this.generalInset + this.generalInset;
+        int titleY = fontHeightSpacing + this.generalInset;
+
+        // draw a cleared box in which the title will be shown
+        g2d.setStroke(STROKE_LIGHT);
+        g2d.setBackground(Color.WHITE);
+        g2d.setColor(Color.WHITE);                
+        g2d.fillRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(titleX-this.generalInset, this.generalInset, titleWidth+this.generalInset+this.generalInset, fontHeightSpacing+this.generalInset+this.generalInset);
+        
+        g2d.drawString(titleText, titleX, titleY);
+    }
+    
     @Override
     protected void paintPebbles(Graphics2D g2d) {
         g2d.setStroke(STROKE_MEDIUM);
