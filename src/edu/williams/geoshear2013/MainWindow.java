@@ -1992,6 +1992,7 @@ public class MainWindow extends javax.swing.JFrame {
             exc.printStackTrace ();
         }
 
+        this.chartPolarRfPhi.validate();
         while (this.chartPolarRfPhi.chart.getWidth() < 1) {
             // there were timing problems where occasionally the program would crash on start up because of some internal timing issue where the width would nto be set before the code needed it to be non-zero
         }
