@@ -6,6 +6,7 @@
 package edu.williams.geoshear2013;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -107,25 +108,45 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
 
         g2d.setColor(Color.BLACK);
 
+        g2d.setFont(this.getPlotLabelFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = metrics.getHeight() + 4;
+        
         // label x min
         String label = this.logifyContourLabel(Util.truncForDisplay(this.getMinValX(), 2));
         g2d.drawString(label,
                 this.frameLeft - 1,
-                this.frameHeight+this.textAllowance);
+//                this.frameHeight+this.textAllowance);
+                this.frameHeight+fontHeightSpacing);
+        if (this.isUseLogScale()) {
+            label = Util.truncForDisplay(Math.exp(this.getMinValX()),3);
+            g2d.drawString(label,
+                    this.frameLeft - 1,
+                    this.frameHeight+fontHeightSpacing+fontHeightSpacing);
+            
+        }
 
         // lable x max
         label = this.logifyContourLabel(Util.truncForDisplay(this.getMaxValX(), 2));
         g2d.drawString(label,
                 this.frameLeft + this.frameWidth - this.textAllowance - this.generalInset - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()),
-                this.frameHeight+this.textAllowance);
+//                this.frameHeight+this.textAllowance);
+                this.frameHeight+fontHeightSpacing);
+        if (this.isUseLogScale()) {
+            label = "~" + Util.truncForDisplay(Math.exp(this.getMaxValX()),3);
+            g2d.drawString(label,
+                    this.frameLeft + this.frameWidth - this.textAllowance - this.generalInset - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()),
+                    this.frameHeight+fontHeightSpacing+fontHeightSpacing);
+            
+        }
 
         // label y max
         label = Util.truncForDisplay(this.getMaxValY(), 0);
-        this.drawTurnedString(g2d, label, this.frameLeft, this.frameTop-1, TEXT_TURNER);
+        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), this.frameLeft, this.frameTop-1, TEXT_TURNER);
 
         // label y min
         label = Util.truncForDisplay(this.getMinValY(), 0);
-        this.drawTurnedString(g2d, label, this.frameLeft, this.frameHeight - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
+        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), this.frameLeft, this.frameHeight - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
 
         // axes
         g2d.setStroke(STROKE_HEAVY);
@@ -142,6 +163,11 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
     protected void paintContours(Graphics2D g2d) {
 
         String contourLabel;
+
+        g2d.setFont(this.getPlotLabelFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = metrics.getHeight() + 4;
+
 
         // minor contours (ticks)
         if (this.isShowContoursMinor())
@@ -168,7 +194,16 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
                 g2d.drawLine((int)minorPosX, 2, (int)minorPosX, this.frameHeight);
                 contourLabel = this.logifyContourLabel(Util.truncForDisplay(minorValX,2));
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
-                g2d.drawString(contourLabel, (int)(minorPosX-labelOffset),this.frameHeight+this.textAllowance);
+//                g2d.drawString(contourLabel, (int)(minorPosX-labelOffset),this.frameHeight+this.textAllowance);
+                g2d.drawString(contourLabel, (int)(minorPosX-labelOffset),this.frameHeight+fontHeightSpacing);
+        
+                if (this.isUseLogScale()) {
+                    contourLabel = "~"+Util.truncForDisplay(Math.exp(minorValX),3);
+                    g2d.drawString(contourLabel,
+                        (int)(minorPosX-labelOffset),
+                        this.frameHeight+fontHeightSpacing+fontHeightSpacing);
+                }
+        
             }
             for (int i=1; i<minorTotY; i++)
             {
@@ -177,7 +212,7 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
                 minorValY -= this.minorCountourStepY;
                 contourLabel = Util.truncForDisplay(minorValY,0);
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
-                this.drawTurnedString(g2d, contourLabel, this.frameLeft, (int)(minorPosY-labelOffset), TEXT_TURNER);
+                this.drawTurnedString(g2d, contourLabel, this.getPlotLabelFont(), this.frameLeft, (int)(minorPosY-labelOffset), TEXT_TURNER);
             }
         }
 
@@ -206,8 +241,16 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
                 majorValX += this.majorCountourStepX;
                 contourLabel = this.logifyContourLabel(Util.truncForDisplay(majorValX,2));
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
-                g2d.drawString(contourLabel, (int)(majorPosX-labelOffset),this.frameHeight+this.textAllowance);
-                
+//                g2d.drawString(contourLabel, (int)(majorPosX-labelOffset),this.frameHeight+this.textAllowance);
+                g2d.drawString(contourLabel, (int)(majorPosX-labelOffset),this.frameHeight+fontHeightSpacing);
+        
+                if (this.isUseLogScale()) {
+                    contourLabel = "~"+Util.truncForDisplay(Math.exp(majorValX),3);
+                    g2d.drawString(contourLabel,
+                        (int)(majorPosX-labelOffset),
+                        this.frameHeight+fontHeightSpacing+fontHeightSpacing);
+                }
+        
             }
             for (int i=1; i<majorTotY; i++)
             {
@@ -216,7 +259,7 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
                 majorValY -= this.majorCountourStepY;
                 contourLabel = Util.truncForDisplay(majorValY,0);
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
-                this.drawTurnedString(g2d, contourLabel, this.frameLeft, (int)(majorPosY-labelOffset), TEXT_TURNER);
+                this.drawTurnedString(g2d, contourLabel, this.getPlotLabelFont(), this.frameLeft, (int)(majorPosY-labelOffset), TEXT_TURNER);
             }
         }
     }

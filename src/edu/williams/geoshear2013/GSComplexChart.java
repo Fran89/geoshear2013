@@ -56,7 +56,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     protected BufferedImage chartFrame;
     protected String title = "";
     protected Font plotFont = Font.decode ("Arial-PLAIN-9");
-    protected Font plotTitleFont = Font.decode ("Arial-BOLD-11");
+    protected Font plotLabelFont = Font.decode ("Arial-BOLD-12");
 
     protected boolean showTrace = false;
     protected boolean showReferenceDataSparse = true;
@@ -75,7 +75,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     protected int frameHeight;
 
     protected int generalInset = 4;
-    protected int textAllowance = 16;
+    protected int textAllowance = 40;
 
     
     protected int markSize = 4;
@@ -151,7 +151,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     {
         super.paint(g);
         Graphics2D g2d = (Graphics2D)g;
-
+//        g2d.setFont(this.getPlotFont());
         this.determineChartFrame();
         g2d.drawImage(this.chartFrame, null, this.frameLeft, this.frameTop);
 
@@ -329,6 +329,7 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
     }
     protected void paintInfo(Graphics2D g2d)
     {
+        g2d.setFont(this.getPlotFont());
         this.paintString(g2d, this.infoString, this.infoX, this.infoY);
     }
 
@@ -349,12 +350,13 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
 
     //--------------------------------------------------------------------------
     // useful functions
-    public void drawTurnedString(Graphics2D g2d, String s, int x, int y, AffineTransformOp op)
+    public void drawTurnedString(Graphics2D g2d, String s, Font stringFont, int x, int y, AffineTransformOp op)
     {
         Rectangle2D bounds = g2d.getFontMetrics ().getStringBounds (s,(Graphics)g2d);
         BufferedImage textImage = new BufferedImage ((int)bounds.getWidth (),(int)bounds.getHeight ()+3,BufferedImage.TYPE_INT_RGB);
 
         Graphics2D textG2D = textImage.createGraphics ();
+        textG2D.setFont(stringFont);
         textG2D.setColor (Color.WHITE);
         textG2D.fillRect (0,0,(int)bounds.getWidth (),(int)bounds.getHeight ()+3);
         textG2D.setColor (g2d.getColor());
@@ -432,12 +434,12 @@ public abstract class GSComplexChart extends javax.swing.JPanel implements Watch
         this.plotFont = plotFont;
     }
 
-    public Font getPlotTitleFont() {
-        return plotTitleFont;
+    public Font getPlotLabelFont() {
+        return plotLabelFont;
     }
 
-    public void setPlotTitleFont(Font plotTitleFont) {
-        this.plotTitleFont = plotTitleFont;
+    public void setPlotLabelFont(Font plotTitleFont) {
+        this.plotLabelFont = plotTitleFont;
     }
 
     public boolean isShowContoursMajor() {

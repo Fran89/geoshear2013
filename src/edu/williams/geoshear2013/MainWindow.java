@@ -30,6 +30,10 @@ import javax.swing.filechooser.FileFilter;
  *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
  *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
  * 
+
+* Fix bug in charts where scale max val is ignored when switching between linear and log scales
+ * 
+ * 
  * From Paul 2014/01/24- 
 1- The axes should be clearly labeled in both the polar and cartesian plots. This may require the plots to occupy a bit less space in the windows.
 
@@ -55,11 +59,6 @@ e^.5
 ~1.64...
 
 
-5- In the cartesian linear adaptive plot the Rf values are integers, but there is lots of dead space to the right of the graph toward high Rf values. Is there a way to reduce the dead space?
-
-!!!! TO DO: examine the adaptive scale process for log based charts - seems to be using linear logic on the exponents rather than checkign the actual Rf values
-
-
 6- Cartesian log fixed- weird numbers on horizontal axis, actual Rf values should be shown, lots of dead space to right even at very high strains, should be natural log of Rf
 
 see above
@@ -69,21 +68,14 @@ see above
 
 see above
 
-
-
-
+* 
 8- Polar plots never use linear scale, they only use natural log of Rf, actual values of Rf should be shown
 
-
-* make base exp for log chart e^3
 * add additional values to log chart as per cartesian chart
-* make log scale the default view for polar charts
 * add radius label of 'ln(Rf)' just to left of the numbers (or 'Rf' when switched to linear scale)
 * add angle label '2*phi' 
 * add chart title 'Rf vs 2*phi'
 
-* TODO - find message "capsLockState is false" and stop logging it to the console
-* 
  */
 
 /**

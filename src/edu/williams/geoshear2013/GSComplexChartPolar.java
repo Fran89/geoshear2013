@@ -99,7 +99,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         // angle min/max
         label = "0";
-        this.drawTurnedString(g2d, label, ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
+        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
 
         g2d.setStroke(STROKE_HEAVY);
         g2d.fillOval(cx-3, cy-3, 6, 6);
@@ -250,7 +250,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
                 }
                 Point2D.Double textPoint = new Point2D.Double(labelRadius * Math.cos(contourThetaRad),
                                                               labelRadius * Math.sin(contourThetaRad));
-                this.drawTurnedString(g2d, contourLabel, cx+(int)(textPoint.x), cy-(int)(textPoint.y), 
+                this.drawTurnedString(g2d, contourLabel, this.getPlotLabelFont(), cx+(int)(textPoint.x), cy-(int)(textPoint.y), 
                                       new AffineTransformOp (AffineTransform.getRotateInstance (labelAngle),AffineTransformOp.TYPE_NEAREST_NEIGHBOR));
             }
         }
