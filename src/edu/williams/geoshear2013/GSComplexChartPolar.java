@@ -5,7 +5,9 @@
 
 package edu.williams.geoshear2013;
 
+import static edu.williams.geoshear2013.GSComplexChart.TEXT_TURNER;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -89,17 +91,41 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         g2d.setColor(Color.BLACK);
 
+        g2d.setFont(this.getPlotLabelFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = metrics.getHeight() + 4;
+        
         // radius min
         String label = this.logifyContourLabel(Util.truncForDisplay(this.minValRadius, 2));
-        g2d.drawString(label, cx-this.generalInset, labelY+this.textAllowance);
-
+//        g2d.drawString(label, cx-this.generalInset, labelY+this.textAllowance);
+        g2d.drawString(label, cx-this.generalInset, labelY+fontHeightSpacing);
+        
+        if (this.isUseLogScale()) {
+            label = Util.truncForDisplay(Math.exp(this.minValRadius),3);
+            g2d.drawString(label,
+                    cx-this.generalInset,
+                    labelY+fontHeightSpacing+fontHeightSpacing);
+            
+        }
+        
         // radius max
         label = this.logifyContourLabel(Util.truncForDisplay(this.getMaxValRadius(), 2));
-        g2d.drawString(label, ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset, labelY+this.textAllowance);
+//        g2d.drawString(label, ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset, labelY+this.textAllowance);
+        g2d.drawString(label, ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset, labelY+fontHeightSpacing);
 
+        if (this.isUseLogScale()) {
+            label = "~"+Util.truncForDisplay(Math.exp(this.getMaxValRadius()),3);
+            g2d.drawString(label,
+                    ringsR - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())+this.generalInset,
+                    labelY+fontHeightSpacing+fontHeightSpacing);            
+        }
+        
         // angle min/max
         label = "0";
-        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
+//        fontHeightSpacing
+                
+//        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), ringsR+this.textAllowance+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
+        this.drawTurnedString(g2d, label, this.getPlotLabelFont(), ringsR+fontHeightSpacing+this.generalInset, cy - (int)((g2d.getFontMetrics().getStringBounds(label, g2d).getWidth())/2.0), TEXT_TURNER);
 
         g2d.setStroke(STROKE_HEAVY);
         g2d.fillOval(cx-3, cy-3, 6, 6);
@@ -157,6 +183,10 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
             return;
         }
 
+        g2d.setFont(this.getPlotLabelFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = metrics.getHeight() + 4;
+                
         int totContoursRadius = (this.numMajorContoursRadius+1)*(this.numMinorContoursRadius+1);
         double contourStepRadiusVal = (this.getMaxValRadius() - this.minValRadius) / totContoursRadius;
         double contourStepRadiusPos = this.frameRadius / totContoursRadius;
@@ -196,7 +226,16 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
                 contourLabel = this.logifyContourLabel(Util.truncForDisplay(contourValRadius,2));
                 double labelOffset = g2d.getFontMetrics().getStringBounds(contourLabel, g2d).getWidth() / 2;
-                g2d.drawString(contourLabel, (int)(this.frameCenter.x + contourPosRadius - labelOffset), labelY + this.textAllowance);
+//                g2d.drawString(contourLabel, (int)(this.frameCenter.x + contourPosRadius - labelOffset), labelY + this.textAllowance);
+                g2d.drawString(contourLabel, (int)(this.frameCenter.x + contourPosRadius - labelOffset), labelY + fontHeightSpacing);
+                
+                if (this.isUseLogScale()) {
+                    contourLabel = "~"+Util.truncForDisplay(Math.exp(contourValRadius),3);
+                    g2d.drawString(contourLabel,
+                            (int)(this.frameCenter.x + contourPosRadius - labelOffset),
+                            labelY+fontHeightSpacing+fontHeightSpacing);            
+                }
+                
             }
         }
 
@@ -240,9 +279,11 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
                 if (labelAngle > 0) {
                     labelAngle = labelAngle*-1 + Math.PI/2;
-                    labelRadius += this.textAllowance + this.generalInset;
+//                    labelRadius += this.textAllowance + this.generalInset;
+                    labelRadius += fontHeightSpacing + this.generalInset;
                 } else {
                     labelAngle = labelAngle*-1 - Math.PI/2;
+                    labelRadius += this.generalInset;
                 }
                 if (contourValAngle == -90) // additional label offset on the bottom to avoid collision with other drawing of the frame
                 {

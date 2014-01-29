@@ -32,6 +32,7 @@ import javax.swing.filechooser.FileFilter;
  * 
 
 * Fix bug in charts where scale max val is ignored when switching between linear and log scales
+* NOTE: looks like (at least for polar) that it's incrementing with each switch/swap
  * 
  * 
  * From Paul 2014/01/24- 
@@ -41,37 +42,15 @@ set title: 'Rf vs phi'
 set x-axis label: 'Rf'
 set y-axis label: 'phi'
 
-
+* 
 2- Instead of log base 10, the we need to use natural log for the log cartesian plot and the ln(Rf) vs Phi plot. I’m not really sure how the current polar plots are done, i.e. what the radius represents.
 
 set title: 'ln(Rf) vs phi'
 set x-axis label: 'ln(Rf)'
 
-
-3- It’s OK to show the values of ln(Rf) in the cartesian plot that uses log and the polar plot, but the actual Rf values need to be shown as well for it to make sense to the user.
-
-under the e^x labels, put apx rational vals:
-
-e^2.00
-~7.38...
-
-e^.5
-~1.64...
-
-
-6- Cartesian log fixed- weird numbers on horizontal axis, actual Rf values should be shown, lots of dead space to right even at very high strains, should be natural log of Rf
-
-see above
-
-
-7- Cartesian log adaptive- horizontal scale should use natural log of Rf and show actual Rf values, lots of dead space even at unreasonable strain values- nothing reaches right hand end until Rf>30 but it typically never exceeds 10
-
-see above
-
-* 
+ 
 8- Polar plots never use linear scale, they only use natural log of Rf, actual values of Rf should be shown
 
-* add additional values to log chart as per cartesian chart
 * add radius label of 'ln(Rf)' just to left of the numbers (or 'Rf' when switched to linear scale)
 * add angle label '2*phi' 
 * add chart title 'Rf vs 2*phi'
