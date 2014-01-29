@@ -36,24 +36,11 @@ import javax.swing.filechooser.FileFilter;
  * 
  * 
  * From Paul 2014/01/24- 
-1- The axes should be clearly labeled in both the polar and cartesian plots. This may require the plots to occupy a bit less space in the windows.
-
-set title: 'Rf vs phi'
-set x-axis label: 'Rf'
-set y-axis label: 'phi'
-
-* 
-2- Instead of log base 10, the we need to use natural log for the log cartesian plot and the ln(Rf) vs Phi plot. I’m not really sure how the current polar plots are done, i.e. what the radius represents.
-
-set title: 'ln(Rf) vs phi'
-set x-axis label: 'ln(Rf)'
-
  
 8- Polar plots never use linear scale, they only use natural log of Rf, actual values of Rf should be shown
 
 * add radius label of 'ln(Rf)' just to left of the numbers (or 'Rf' when switched to linear scale)
 * add angle label '2*phi' 
-* add chart title 'Rf vs 2*phi'
 
  */
 
@@ -1992,6 +1979,7 @@ public class MainWindow extends javax.swing.JFrame {
             exc.printStackTrace ();
         }
 
+        this.chartCartRfPhi.validate();
         this.chartPolarRfPhi.validate();
         while (this.chartPolarRfPhi.chart.getWidth() < 1) {
             // there were timing problems where occasionally the program would crash on start up because of some internal timing issue where the width would nto be set before the code needed it to be non-zero
