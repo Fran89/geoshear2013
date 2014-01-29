@@ -282,6 +282,19 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         this.repaint();
     }//GEN-LAST:event_jRadioButtonMenuItemLogScaleActionPerformed
 
+    protected void setChartScaleTypeToLog() {
+        this.jRadioButtonMenuItemLogScale.setSelected(true);
+        this.jRadioButtonMenuItemLinearScale.setSelected(false);
+        chart.setUseLogScale(true);
+        this.handleChartScaling();
+    }
+    protected void setChartScaleTypeToLinear() {
+        this.jRadioButtonMenuItemLinearScale.setSelected(true);
+        this.jRadioButtonMenuItemLogScale.setSelected(false);
+        chart.setUseLogScale(false);
+        this.handleChartScaling();
+    }
+    
     public void handleChartScaling()
     {
 

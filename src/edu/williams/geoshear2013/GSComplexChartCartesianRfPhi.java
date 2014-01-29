@@ -18,7 +18,7 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
     public GSComplexChartCartesianRfPhi() {
         super();
         this.minValX = 1.0;
-        this.maxValX = 7.0;
+        this.maxValX = 4.0;
         this.minValY = -90;
         this.maxValY = 90;
         this.numMajorContoursX = 5;

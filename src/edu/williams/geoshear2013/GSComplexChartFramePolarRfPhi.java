@@ -15,7 +15,7 @@ public class GSComplexChartFramePolarRfPhi extends GSComplexChartFrame {
 
     public GSComplexChartFramePolarRfPhi(MainWindow launchedFrom) {
         super(launchedFrom);
-        scaleTextItem.setText("5.0");
+        scaleTextItem.setText("3.0");
         double initChartWidth = java.awt.Toolkit.getDefaultToolkit ().getScreenSize().getWidth() - launchedFrom.getWidth();
         this.setSize((int)initChartWidth, launchedFrom.getHeight());
         Point startingLoc = launchedFrom.getLocation();
@@ -28,6 +28,8 @@ public class GSComplexChartFramePolarRfPhi extends GSComplexChartFrame {
     public void initChart() {
         this.chart = new GSComplexChartPolarRf2Phi();
         this.add(chart);
+//        this.setChartScaleTypeToLog();
+        this.chart.setUseLogScale(true);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class GSComplexChartFramePolarRfPhi extends GSComplexChartFrame {
         if (chart.isUseLogScale())
         {
             ch.setMinValRadius(0.0);
-            ch.setMaxValRadius(ch.getMaxValRadius() - 1);
+            ch.setMaxValRadius(ch.getMaxValRadius());
 
         } else {
             ch.setMinValRadius(1.0);

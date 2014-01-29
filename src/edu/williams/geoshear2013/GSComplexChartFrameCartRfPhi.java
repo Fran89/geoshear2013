@@ -15,7 +15,7 @@ public class GSComplexChartFrameCartRfPhi extends GSComplexChartFrame {
 
     public GSComplexChartFrameCartRfPhi(MainWindow launchedFromWindow) {
         super(launchedFromWindow);
-        scaleTextItem.setText("7.0");
+        scaleTextItem.setText("4.0");
         double initChartWidth = java.awt.Toolkit.getDefaultToolkit ().getScreenSize().getWidth() - launchedFromWindow.getWidth();
         this.setSize((int)initChartWidth, launchedFromWindow.getHeight());
         Point startingLoc = launchedFromWindow.getLocation();

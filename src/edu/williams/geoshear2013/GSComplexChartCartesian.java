@@ -230,12 +230,19 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
             double rfMax = curPebs.getMaxRf() * 1.1; // !! NOTE: ideally generalize this away from using getMaxRf - pass in the potential max instead?
             if (this.isUseLogScale())
             {
-                rfMax = Math.log(rfMax);
+                double maxX = 0;
+                double eftMaxX = Math.exp(maxX);
+                while (eftMaxX < rfMax) {
+                    maxX++;
+                    eftMaxX = Math.exp(maxX);
+                }
+                return maxX;
+            } else {
+                double maxStep = this.numMajorContoursX + 1;
+                double maxX = 0;
+                while (maxX < (rfMax - this.getMinValX())) {maxX += maxStep; }
+                return maxX + this.getMinValX();
             }
-            double maxStep = this.numMajorContoursX + 1;
-            double maxX = 0;
-            while (maxX < rfMax) {maxX += maxStep; }
-            return maxX + this.getMinValX();
         } else {
             return maxValX;
         }

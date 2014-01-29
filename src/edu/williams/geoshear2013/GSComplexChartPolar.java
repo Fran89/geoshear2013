@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 public abstract class GSComplexChartPolar extends GSComplexChart {
 
     protected double minValRadius = 1;
-    private double maxValRadius = 5;
+    protected double maxValRadius = 3;
     protected double minValAngle = -180;
     protected double maxValAngle = 180;
 
@@ -55,6 +55,11 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
     @Override
     public void determineChartFrame() {
+//        if ((this.frameWidth == 0) || (this.frameHeight == 0)) {
+//            return;
+//        }
+        //System.err.println("determining chart frame of "+this);
+
         this.frameWidth = Math.min(this.getWidth(), this.getHeight());//-this.textAllowance-this.generalInset;
         this.frameHeight = frameWidth;
         this.frameCenter = new Point2D.Double(this.frameWidth/2.0, this.frameHeight/2.0 - (this.textAllowance) + this.generalInset );
@@ -258,7 +263,7 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
     protected Double getPaintPoint(Double valueP) {
 
         double angle = Math.toRadians(valueP.y*-1);
-
+        
         double valRadius = valueP.x;
         if (this.isUseLogScale())
         {
@@ -335,17 +340,38 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         if (this.isUseAdaptiveScale())
         {
+//            GSPebbleSet curPebs = this.watchedComplex.getCurrentlyDeformedPebbleSet().clone();
+//            curPebs.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
+//            double rfMax = curPebs.getMaxRf();
+//            if (this.isUseLogScale())
+//            {
+//                rfMax = Math.log(rfMax);
+//            }
+//            double maxStep = this.numMajorContoursRadius + 1;
+//            double maxRad = 0;
+//            while (maxRad < rfMax) {maxRad += maxStep; }
+//            return maxRad + this.getMinValRadius();
+//            
             GSPebbleSet curPebs = this.watchedComplex.getCurrentlyDeformedPebbleSet().clone();
             curPebs.applyDeformation(this.watchedComplex.getUsedUI().getTentativeDeformationCopy());
-            double rfMax = curPebs.getMaxRf();
+            // NOTE: the 1.1 factor is to keep the pebbles a bit further from the right edge of the chart
+            double rfMax = curPebs.getMaxRf() * 1.1; // !! NOTE: ideally generalize this away from using getMaxRf - pass in the potential max instead?
             if (this.isUseLogScale())
             {
-                rfMax = Math.log(rfMax);
+                double maxRad = 0;
+                double eftMaxRad = Math.exp(maxRad);
+                while (eftMaxRad < rfMax) {
+                    maxRad++;
+                    eftMaxRad = Math.exp(maxRad);
+                }
+                return maxRad;
+            } else {
+                double maxStep = this.numMajorContoursRadius + 1;
+                double maxRad = 0;
+                while (maxRad < (rfMax - this.getMinValRadius())) {maxRad += maxStep; }
+                return maxRad + this.getMinValRadius();
             }
-            double maxStep = this.numMajorContoursRadius + 1;
-            double maxRad = 0;
-            while (maxRad < rfMax) {maxRad += maxStep; }
-            return maxRad + this.getMinValRadius();
+            
         } else {
             return maxValRadius;
         }

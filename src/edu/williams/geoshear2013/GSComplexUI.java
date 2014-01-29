@@ -417,7 +417,7 @@ class GSComplexUI extends JPanel implements Watchable {
             this.repaint();
         } else if (this.currentUIMode == GSComplexUI.UI_MODE_EDIT_PEBBLES) {
             boolean capsLockIsOn = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
-            System.out.println("capsLockState is "+capsLockIsOn);
+//            System.out.println("capsLockState is "+capsLockIsOn);
             if (evt.isShiftDown() || capsLockIsOn) {
 //            if (evt.isShiftDown()) {
                 double dragDist = this.lastMouseDownPointInGSCSystem.distance(evtPtInGSCSystem);

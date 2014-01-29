@@ -29,6 +29,61 @@ import javax.swing.filechooser.FileFilter;
  *  - (2) OPTIONAL in main window gscUI, implement pebble dragging when in edit mode (control down)
  *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
  *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
+ * 
+ * From Paul 2014/01/24- 
+1- The axes should be clearly labeled in both the polar and cartesian plots. This may require the plots to occupy a bit less space in the windows.
+
+set title: 'Rf vs phi'
+set x-axis label: 'Rf'
+set y-axis label: 'phi'
+
+
+2- Instead of log base 10, the we need to use natural log for the log cartesian plot and the ln(Rf) vs Phi plot. I’m not really sure how the current polar plots are done, i.e. what the radius represents.
+
+set title: 'ln(Rf) vs phi'
+set x-axis label: 'ln(Rf)'
+
+
+3- It’s OK to show the values of ln(Rf) in the cartesian plot that uses log and the polar plot, but the actual Rf values need to be shown as well for it to make sense to the user.
+
+under the e^x labels, put apx rational vals:
+
+e^2.00
+~7.38...
+
+e^.5
+~1.64...
+
+
+5- In the cartesian linear adaptive plot the Rf values are integers, but there is lots of dead space to the right of the graph toward high Rf values. Is there a way to reduce the dead space?
+
+!!!! TO DO: examine the adaptive scale process for log based charts - seems to be using linear logic on the exponents rather than checkign the actual Rf values
+
+
+6- Cartesian log fixed- weird numbers on horizontal axis, actual Rf values should be shown, lots of dead space to right even at very high strains, should be natural log of Rf
+
+see above
+
+
+7- Cartesian log adaptive- horizontal scale should use natural log of Rf and show actual Rf values, lots of dead space even at unreasonable strain values- nothing reaches right hand end until Rf>30 but it typically never exceeds 10
+
+see above
+
+
+
+
+8- Polar plots never use linear scale, they only use natural log of Rf, actual values of Rf should be shown
+
+
+* make base exp for log chart e^3
+* add additional values to log chart as per cartesian chart
+* make log scale the default view for polar charts
+* add radius label of 'ln(Rf)' just to left of the numbers (or 'Rf' when switched to linear scale)
+* add angle label '2*phi' 
+* add chart title 'Rf vs 2*phi'
+
+* TODO - find message "capsLockState is false" and stop logging it to the console
+* 
  */
 
 /**
@@ -160,6 +215,10 @@ public class MainWindow extends javax.swing.JFrame {
         this.chartPolarRfPhi = new GSComplexChartFramePolarRfPhi(this);
         this.gscUI.gsc.addWatcher(this.chartPolarRfPhi);
         this.gscUI.addWatcher(this.chartPolarRfPhi);
+        while (this.chartPolarRfPhi.chart.getWidth() < 1) {
+            // there were timing problems where occasionally the program would crash on start up because of some internal timing issue where the width would nto be set before the code needed it to be non-zero
+        }
+        this.chartPolarRfPhi.setChartScaleTypeToLog();
         
         this.windowDeformationsSeries = new GSComplexInfoFrameDeformationSeries(this);
         this.windowDeformationsSeries.markCurrentDeformation(this.gscUI.gsc.getCurrentDeformationNumber());
@@ -1961,6 +2020,12 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog (this,"Problem loading - aborted:\n"+exc.toString());
             exc.printStackTrace ();
         }
+
+        while (this.chartPolarRfPhi.chart.getWidth() < 1) {
+            // there were timing problems where occasionally the program would crash on start up because of some internal timing issue where the width would nto be set before the code needed it to be non-zero
+        }
+        this.chartPolarRfPhi.setChartScaleTypeToLog();
+
         this.repaint ();
     }//GEN-LAST:event_jMenuItemLoadActionPerformed
 
