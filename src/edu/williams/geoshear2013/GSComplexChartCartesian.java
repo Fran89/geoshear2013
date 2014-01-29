@@ -156,20 +156,21 @@ public abstract class GSComplexChartCartesian extends GSComplexChart {
         g2d.drawLine(this.frameLeft,this.frameHeight,this.frameWidth,this.frameHeight); // x-axis
         g2d.drawLine(this.frameLeft,2,this.frameLeft,this.frameHeight); // y-axis
 
-        // axis labels
-        g2d.setStroke(STROKE_LIGHT);
-        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,fontHeightSpacing,this.frameHeight+fontHeightSpacing/2); // x-axis
-        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,this.generalInset,this.frameHeight-fontHeightSpacing/2); // y-axis
-
-        label = "Rf";
-        if (this.isUseLogScale()) {
-            label = "ln(Rf)";
-        }
-        g2d.drawString(label, this.generalInset*2, this.frameHeight+fontHeightSpacing+fontHeightSpacing/2);
-        label = "phi";
-        this.drawTurnedString(g2d, label, this.getPlotLabelFont(),
-                              this.generalInset + fontHeightSpacing,
-                              this.frameHeight - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
+        this.paintAxisLabels(g2d);
+//        // axis labels
+//        g2d.setStroke(STROKE_LIGHT);
+//        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,fontHeightSpacing,this.frameHeight+fontHeightSpacing/2); // x-axis
+//        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,this.generalInset,this.frameHeight-fontHeightSpacing/2); // y-axis
+//
+//        label = "Rf";
+//        if (this.isUseLogScale()) {
+//            label = "ln(Rf)";
+//        }
+//        g2d.drawString(label, this.generalInset*2, this.frameHeight+fontHeightSpacing+fontHeightSpacing/2);
+//        label = "phi";
+//        this.drawTurnedString(g2d, label, this.getPlotLabelFont(),
+//                              this.generalInset + fontHeightSpacing,
+//                              this.frameHeight - (int)(g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
     }
     
     @Override

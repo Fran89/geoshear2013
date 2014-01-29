@@ -5,7 +5,10 @@
 
 package edu.williams.geoshear2013;
 
+import static edu.williams.geoshear2013.GSComplexChart.STROKE_LIGHT;
+import static edu.williams.geoshear2013.GSComplexChart.TEXT_TURNER;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
@@ -38,6 +41,31 @@ public class GSComplexChartCartesianRfPhi extends GSComplexChartCartesian {
             this.setTitle(" Rf vs. phi ");
         }
         super.paintChartTitle(g2d);
+    }
+    
+    @Override
+    protected void paintAxisLabels(Graphics2D g2d) {
+        g2d.setFont(this.getPlotAxisLabelFont());
+        FontMetrics metrics = g2d.getFontMetrics(this.getPlotLabelFont());
+        int fontHeightSpacing = metrics.getHeight() + 4;
+
+        // axis labels
+//        g2d.setStroke(STROKE_LIGHT);
+//        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,fontHeightSpacing,this.frameHeight+fontHeightSpacing/2); // x-axis
+//        g2d.drawLine(this.generalInset,this.frameHeight+fontHeightSpacing/2,this.generalInset,this.frameHeight-fontHeightSpacing/2); // y-axis
+        
+        String label = "Rf";
+        if (this.isUseLogScale()) {
+            label = "ln(Rf)";
+        }
+        g2d.drawString(label, 0, this.frameHeight+fontHeightSpacing+fontHeightSpacing/2);
+        label = "phi";
+//        this.drawTurnedString(g2d, label, this.getPlotAxisLabelFont(),
+//                              this.generalInset*2 + fontHeightSpacing,
+//                              this.frameHeight - (int)(1.5 * g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
+        this.drawTurnedString(g2d, label, this.getPlotAxisLabelFont(),
+                              this.generalInset*2 + fontHeightSpacing,
+                              this.frameHeight/2 - (int)(.5 * g2d.getFontMetrics().getStringBounds(label, g2d).getWidth()), TEXT_TURNER);
     }
             
     @Override

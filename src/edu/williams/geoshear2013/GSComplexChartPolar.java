@@ -135,7 +135,9 @@ public abstract class GSComplexChartPolar extends GSComplexChart {
 
         g2d.setStroke(STROKE_HEAVY_DOTTED);
         g2d.drawLine(cx, labelY, cx, cy);
-        g2d.drawLine(ringsR, labelY, ringsR, cy);        
+        g2d.drawLine(ringsR, labelY, ringsR, cy);  
+        
+        this.paintAxisLabels(g2d);
     }
 
     @Override

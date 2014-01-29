@@ -34,14 +34,6 @@ import javax.swing.filechooser.FileFilter;
 * Fix bug in charts where scale max val is ignored when switching between linear and log scales
 * NOTE: looks like (at least for polar) that it's incrementing with each switch/swap
  * 
- * 
- * From Paul 2014/01/24- 
- 
-8- Polar plots never use linear scale, they only use natural log of Rf, actual values of Rf should be shown
-
-* add radius label of 'ln(Rf)' just to left of the numbers (or 'Rf' when switched to linear scale)
-* add angle label '2*phi' 
-
  */
 
 /**

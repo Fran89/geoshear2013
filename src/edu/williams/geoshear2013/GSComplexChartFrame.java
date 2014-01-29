@@ -116,7 +116,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         });
         jMenuView.add(jCheckBoxMenuItemMinorCountours);
 
-        jCheckBoxMenuItemRefPoints.setSelected(true);
         jCheckBoxMenuItemRefPoints.setText("Reference Points");
         jCheckBoxMenuItemRefPoints.setToolTipText("show reference points");
         jCheckBoxMenuItemRefPoints.addActionListener(new java.awt.event.ActionListener() {
@@ -415,7 +414,7 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemScaleFixed;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     // End of variables declaration//GEN-END:variables
 
     //--------------------------------------------------------------------------

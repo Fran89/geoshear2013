@@ -34,7 +34,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemRefPoints">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Reference Points"/>
                 <Property name="toolTipText" type="java.lang.String" value="show reference points"/>
               </Properties>
