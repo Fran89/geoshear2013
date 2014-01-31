@@ -30,10 +30,6 @@ import javax.swing.filechooser.FileFilter;
  *  - (1) OPTIONAL in main window gscUI, implement pebble rotation when in edit mode (alt down)
  *  - (.5) OPTIONAL in main window gscUI, add a confirm dialog for pebble deletion when in edit mode
  * 
-
-* Fix bug in charts where scale max val is ignored when switching between linear and log scales
-* NOTE: looks like (at least for polar) that it's incrementing with each switch/swap
- * 
  */
 
 /**
