@@ -60,7 +60,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSave">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="text" type="java.lang.String" value="Save all deformations"/>
                 <Property name="toolTipText" type="java.lang.String" value="Save everything to a .tab file"/>
               </Properties>
               <Events>
@@ -69,7 +69,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLoad">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load"/>
+                <Property name="text" type="java.lang.String" value="Load .tab file"/>
                 <Property name="toolTipText" type="java.lang.String" value="Load new pebbles and deformations from a .tab file"/>
               </Properties>
               <Events>
@@ -162,7 +162,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRfPhiCart">
               <Properties>
-                <Property name="text" type="java.lang.String" value="RF-Phi cartesian chart"/>
+                <Property name="text" type="java.lang.String" value="RF-Phi Cartesian Plot"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartRfPhiCartActionPerformed"/>
@@ -170,7 +170,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartRf2PhiPolar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="RF-2*Phi polar chart"/>
+                <Property name="text" type="java.lang.String" value="RF-2*Phi Polar Plot"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartRf2PhiPolarActionPerformed"/>
@@ -178,7 +178,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartDeformationSeries">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Deformations series"/>
+                <Property name="text" type="java.lang.String" value="Deformations Matrices"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartDeformationSeriesActionPerformed"/>
@@ -986,7 +986,7 @@
                 <Component class="javax.swing.JLabel" name="jLabelRf">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="RF"/>
+                    <Property name="text" type="java.lang.String" value="Rf"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1046,7 +1046,7 @@
                       <Font name="Tahoma" size="10" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="RF"/>
+                    <Property name="text" type="java.lang.String" value="Rf"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1204,7 +1204,7 @@
                       <Font name="Tahoma" size="10" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="phi"/>
+                    <Property name="text" type="java.lang.String" value="Phi"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1428,7 +1428,7 @@
                 <Component class="javax.swing.JLabel" name="jLabelPhi">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="phi"/>
+                    <Property name="text" type="java.lang.String" value="Phi"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1581,7 +1581,7 @@
                       <Font name="Tahoma" size="10" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="RF"/>
+                    <Property name="text" type="java.lang.String" value="Rf"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1645,7 +1645,7 @@
                       <Font name="Tahoma" size="10" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="phi"/>
+                    <Property name="text" type="java.lang.String" value="Phi"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
@@ -1835,7 +1835,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Color by phi"/>
+                <Property name="text" type="java.lang.String" value="Color by Phi"/>
                 <Property name="toolTipText" type="java.lang.String" value="automatically color pebbles based on their phi values"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -1853,7 +1853,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Color By RF"/>
+                <Property name="text" type="java.lang.String" value="Color By Rf"/>
                 <Property name="toolTipText" type="java.lang.String" value="automatically color pebbles based on their RF values"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>

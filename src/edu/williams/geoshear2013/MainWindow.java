@@ -715,7 +715,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.add(jTextFieldRFPhiCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 6, 60, 20));
 
         jLabelRf.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelRf.setText("RF");
+        jLabelRf.setText("Rf");
         jLabelRf.setFocusable(false);
         jLabelRf.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jLabelRf, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 18, 20));
@@ -740,7 +740,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuRF.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelCumuRF.setText("RF");
+        jLabelCumuRF.setText("Rf");
         jLabelCumuRF.setFocusable(false);
         jLabelCumuRF.setForeground(GSComplexUI.INFO_COLOR_CUMU);
         jPanelDeformMatrixLeft.add(jLabelCumuRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 18, 20));
@@ -813,7 +813,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuPhi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelCumuPhi.setText("phi");
+        jLabelCumuPhi.setText("Phi");
         jLabelCumuPhi.setFocusable(false);
         jLabelCumuPhi.setForeground(GSComplexUI.INFO_COLOR_CUMU);
         jPanelDeformMatrixLeft.add(jLabelCumuPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 20, 20));
@@ -919,7 +919,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixRight.add(jTextFieldRFPhiCurrentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 60, 20));
 
         jLabelPhi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelPhi.setText("phi");
+        jLabelPhi.setText("Phi");
         jLabelPhi.setFocusable(false);
         jLabelPhi.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixRight.add(jLabelPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 20, 20));
@@ -989,7 +989,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuTentRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuTentRF.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelCumuTentRF.setText("RF");
+        jLabelCumuTentRF.setText("Rf");
         jLabelCumuTentRF.setFocusable(false);
         jLabelCumuTentRF.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 18, 20));
@@ -1016,7 +1016,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuTentPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuTentPhi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelCumuTentPhi.setText("phi");
+        jLabelCumuTentPhi.setText("Phi");
         jLabelCumuTentPhi.setFocusable(false);
         jLabelCumuTentPhi.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 20, 20));
@@ -1112,7 +1112,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelEditPebbleControls.add(jButtonBackgroundImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 52, 190, -1));
 
         jButtonAutoColorOnPhi.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButtonAutoColorOnPhi.setText("Color by phi");
+        jButtonAutoColorOnPhi.setText("Color by Phi");
         jButtonAutoColorOnPhi.setToolTipText("automatically color pebbles based on their phi values");
         jButtonAutoColorOnPhi.setEnabled(false);
         jButtonAutoColorOnPhi.addActionListener(new java.awt.event.ActionListener() {
@@ -1123,7 +1123,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelEditPebbleControls.add(jButtonAutoColorOnPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 78, 93, 19));
 
         jButtonAutoColorOnRf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButtonAutoColorOnRf.setText("Color By RF");
+        jButtonAutoColorOnRf.setText("Color By Rf");
         jButtonAutoColorOnRf.setToolTipText("automatically color pebbles based on their RF values");
         jButtonAutoColorOnRf.setEnabled(false);
         jButtonAutoColorOnRf.addActionListener(new java.awt.event.ActionListener() {
@@ -1208,7 +1208,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.setText("File");
         FileMenu.setToolTipText("Save and load");
 
-        jMenuItemSave.setText("Save");
+        jMenuItemSave.setText("Save all deformations");
         jMenuItemSave.setToolTipText("Save everything to a .tab file");
         jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1217,7 +1217,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         FileMenu.add(jMenuItemSave);
 
-        jMenuItemLoad.setText("Load");
+        jMenuItemLoad.setText("Load .tab file");
         jMenuItemLoad.setToolTipText("Load new pebbles and deformations from a .tab file");
         jMenuItemLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1294,7 +1294,7 @@ public class MainWindow extends javax.swing.JFrame {
         ChartsMenu.setText("Windows");
         ChartsMenu.setToolTipText("Open new windows to display charts");
 
-        jMenuItemChartRfPhiCart.setText("RF-Phi cartesian chart");
+        jMenuItemChartRfPhiCart.setText("RF-Phi Cartesian Plot");
         jMenuItemChartRfPhiCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRfPhiCartActionPerformed(evt);
@@ -1302,7 +1302,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         ChartsMenu.add(jMenuItemChartRfPhiCart);
 
-        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi polar chart");
+        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi Polar Plot");
         jMenuItemChartRf2PhiPolar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRf2PhiPolarActionPerformed(evt);
@@ -1310,7 +1310,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         ChartsMenu.add(jMenuItemChartRf2PhiPolar);
 
-        jMenuItemChartDeformationSeries.setText("Deformations series");
+        jMenuItemChartDeformationSeries.setText("Deformations Matrices");
         jMenuItemChartDeformationSeries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartDeformationSeriesActionPerformed(evt);
