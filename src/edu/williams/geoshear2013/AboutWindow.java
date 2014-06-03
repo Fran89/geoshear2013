@@ -88,10 +88,10 @@ public class AboutWindow extends javax.swing.JFrame {
         jLabelAboutTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabelAboutTitle.setText("GeoShear 2.0");
 
-        jLabelCopyright.setText("Copyright 2010 by Chris Warren, Williams College Office for Information Technology");
+        jLabelCopyright.setText("Copyright 2010, Williams College");
 
         jLabelAboutTagline.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelAboutTagline.setText("A program to explore and analyze shear and other deformation effects");
+        jLabelAboutTagline.setText("An interactive program to simulate strain and analyze deformation");
 
         jLabel1.setText(" ");
 
@@ -110,7 +110,7 @@ public class AboutWindow extends javax.swing.JFrame {
         jTextAreaAboutDescr.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextAreaAboutDescr.setLineWrap(true);
         jTextAreaAboutDescr.setRows(5);
-        jTextAreaAboutDescr.setText("This application was developed jointly, with Chris Warren providing the programming expertise, and Dr. Paul Karabinos of the Williams College Geology Department providing the subject matter expertise and development feedback.\n");
+        jTextAreaAboutDescr.setText("This application was developed jointly by Chris Warren, Office for Information Technology, Williams College, and Paul Karabinos, Department of Geosciences, Williams College. Warren provided the programming expertise, Karabinos created the concept and supplied the geological framework, and both designed and tested the user interface. Supported by NSF grant DUE-0942313.");
         jTextAreaAboutDescr.setWrapStyleWord(true);
         jTextAreaAboutDescr.setAlignmentX(0.0F);
         jTextAreaAboutDescr.setAutoscrolls(false);
@@ -156,15 +156,15 @@ public class AboutWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelAboutTitle)
                             .addComponent(jLabelAboutTagline)))
-                    .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelLicenseTitle)
-                            .addComponent(jLabelCopyright)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabelCopyright))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -184,10 +184,10 @@ public class AboutWindow extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jLabelCopyright)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAboutTagline)))
+                        .addComponent(jLabelAboutTagline)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
                 .addComponent(jLabelLicenseTitle)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -196,7 +196,7 @@ public class AboutWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAboutClose)
                 .addContainerGap())
         );

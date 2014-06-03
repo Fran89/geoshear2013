@@ -11,6 +11,7 @@
 
 package edu.williams.geoshear2013;
 
+import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+
+import javax.swing.JEditorPane;
+import javax.swing.text.rtf.RTFEditorKit;
 
 /**
  *
@@ -33,6 +37,12 @@ public class HelpWindow extends javax.swing.JFrame {
         initComponents();
         this.jTextAreaHelpText.setMargin(new Insets(10,10,10,10));
 
+        // Create an RTF editor window
+        RTFEditorKit rtf = new RTFEditorKit();
+        JEditorPane editor = new JEditorPane();
+        editor.setEditorKit(rtf);
+        editor.setBackground(Color.white); 
+            
         // all this is used to bind the escape key to hide this window
         JPanel theContentPanel = (JPanel) this.getContentPane();
         theContentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "hideit");

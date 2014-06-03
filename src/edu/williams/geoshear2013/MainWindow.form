@@ -60,7 +60,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSave">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save all deformations"/>
+                <Property name="text" type="java.lang.String" value="Save All History"/>
                 <Property name="toolTipText" type="java.lang.String" value="Save everything to a .tab file"/>
               </Properties>
               <Events>
@@ -69,7 +69,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLoad">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load .tab file"/>
+                <Property name="text" type="java.lang.String" value="Load .tab File"/>
                 <Property name="toolTipText" type="java.lang.String" value="Load new pebbles and deformations from a .tab file"/>
               </Properties>
               <Events>
@@ -78,7 +78,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSaveCurrentDeformed">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save current deformed"/>
+                <Property name="text" type="java.lang.String" value="Save Current State"/>
                 <Property name="toolTipText" type="java.lang.String" value="Save the currently deformed view as a new basis (with no deformations)"/>
               </Properties>
               <Events>
@@ -178,7 +178,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemChartDeformationSeries">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Deformations Matrices"/>
+                <Property name="text" type="java.lang.String" value="Deformation Matrix"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemChartDeformationSeriesActionPerformed"/>
@@ -826,20 +826,6 @@
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="10" y="20" width="70" height="-1"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/edu/williams/geoshear2013/img/linked.gif"/>
-                    </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="values for degrees and radians are always linked"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="71" y="37" width="20" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1773,7 +1759,7 @@
             <Component class="javax.swing.JButton" name="jButtonPebbleColorSet">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="0" red="0" type="rgb"/>
+                  <Color blue="ff" green="64" red="64" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="10" style="0"/>

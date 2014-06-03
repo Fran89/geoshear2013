@@ -55,7 +55,7 @@ class GSComplexUI extends JPanel implements Watchable {
     private static double zoomPerScrollFactor = .025;
 
     public static Color INFO_COLOR_TENT = new Color(240,0,0);
-    public static Color INFO_COLOR_CUMUTENT = new Color(150,0,40);
+    public static Color INFO_COLOR_CUMUTENT = new Color(0,0,240);
     public static Color INFO_COLOR_CUMU = new Color(60,0,0);
     public static Color INFO_COLOR_NAV_DEF = new Color(150,150,150);
     
@@ -106,7 +106,7 @@ class GSComplexUI extends JPanel implements Watchable {
     private boolean flagDisplayBackgroundImage = true;
     private boolean flagDisplayStrainEllipses = true;
 
-    private Color colorOfNewPebbles = Color.BLUE;
+    private Color colorOfNewPebbles = new Color(100,100,255);
 
     private final JFileChooser fileChooser = new JFileChooser ();
     private final FileFilterImage filterImage = new FileFilterImage();

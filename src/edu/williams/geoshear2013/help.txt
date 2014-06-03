@@ -1,144 +1,234 @@
-GeoShear Help
-There are two main parts to this application: the main window where sets of pebbles are created and manipulated (deformed), and additional windows that show richer information about the pebbles and/or deformations. The main window has a menu system (where you can save and load files, change the way the pebbles are displayed, and open additional windows), a set of controls on the left, and a large pebble UI panel on the right. The pebble UI panel not only shows the pebbles (i.e. ellipses) and various other info, it also allows you to deform the pebbles and pan and zoom using the mouse and keyboard.
+GETTING STARTED
 
-To use this tool you create or load a set of pebbles, then deform them using the mouse and/or on-screen controls. A given deformation is tentative until the Apply button is clicked (or Enter is pressed), at which point it is appended to the series of deformations for that set of pebbles (you can step through the series and remove deformations as well). You can open new windows with more detailed display of pebble information (in the form of Cartesian or polar RF-phi charts, or a list of the deformation steps), and the charts themselves have various display and interaction options. Once created, the pebbles (and/or any deformed view of them) can be saved (in a .tab file) for later work in GeoShear or for further work in Excel or some other spreadsheet.
+There are three main components to this application: 
 
-When you open one or more of the chart windows you will see a representation of the current pebbles, marked in the appropriate colors and with points for selected pebbles highlighted and showing the numbers for that pebble. The charts also have many display options in their view menu (including changing the scale), and a snapshot button next to the view menu that saves an image of the chart. Clicking anywhere in the chart will show the numbers associated with that point, and shift-clicking will remove that inspection info. The charts also show reference points, which can be considered as a set of pebbles with a wide and regular range of values and which respond to all the deformations but which are not shown in the pebbles UI panel. The deformation series window shows the individual and cumulative matrices of the deformations. The current deformation is highlighted with a dark number label, while the others have gray labels.
+1) The Main Window where sets of pebbles are created and deformed.
 
---------------------------------------------------------------------------------------
+2) Deformation Plot windows that show Cartesian and Polar plots of the pebble axial ratios (Rf) and the orientation of the pebble long axes (Phi).
 
-The menu system for GeoShear is:
-    menu- GeoShear - information about and control of the application as a whole
-        item- Help - display this help information
-        item- About - show a the title, version, license, etc.
-        item- Quit - exit GeoShear
-            NOTE: this does NOT ask for confirmation nor does it save on exit!
-    menu- File - save and load pebbles and deformations
-        item- Save - save the pebble set, deformation series, and a reference to any background image in a .tab file
-        item- Load - load a set of pebbles and a deformation series from a .tab file (of a specific format); also loads the background image if possible
-            NOTE: if the background image is not loading properly it may be due to the image file changing location
-            NOTE: when the save file is loaded any previously loaded/created work in the application is discarded
-        item- Save current deformed - create a .tab file, but instead of saving the base pebble set and deformation series save the data for the currently deformed pebble state as a new base set
-    menu- Display - control what information / elements are shown in the pebbles UI panel
-        item- Show pebble axes - show the major and minor axes of each pebble (as opposed to just the ellipse / outline)
-        item- Fill pebbles - show pebbles as solid regions of color as opposed to outlines
-        item- Show background axes - show/hide a set of axes centered at 0,0 and drawn before any deformations are applied; i.e. deformations affect the axes
-        item- Show background image - show/hide the background image (if one has been loaded) 
-        item- Show strain ellipses - show/hide the ellipses that are centered at 0,0 which represent the current cumulative deformation, tentative next deformation step, and tentative cumulative deformation
-    menu- Windows - open additional windows that display more detailed and/or different information about the pebble set and deformations
-        item- RF-Phi Cartesian chart - open the Cartesian RF-Phi chart, more details below
-        item- RF-2*Phi polar chart - open the polar RF-2*Phi chart, more details below
-        item- Deformation series - open a window that shows all the deformation steps and the incremental cumulative strains
+3) A Deformation Matrix window that shows the 2x2 matrix representing the linear transformation corresponding to the strain, and, in cases where more than one increment of strain is applied, the incremental and the final strain matrices.
+
+The Main Window menu system is used to get help, save and load files, change the way pebbles are displayed, and open Deformation Plots and the Deformation Matrix windows. There is also a Control Panel (CP) on the left, and a large User Interface (UI) panel on the right. The CP is used to adjust the zoom level and positioning of pebbles in the UI, simulate strain of existing pebbles in the UI, create new pebbles, and load background images for digitizing pebbles. The UI panel shows the pebbles (i.e. ellipses) as they are being deformed, and a strain ellipse to help keep track of strain. Pebbles can be deformed by dragging the cursor in the UI and holding down the SHIFT (simple shear), CONTROL (pure shear), or ALT/OPTION (rotation) keys.
+
+Begin by either loading a set of pebbles (File/Load) or by digitizing new pebbles in Edit Mode (described below). A sample file called “Random_Initial_Pebbles.tab” is included with the program. Deform pebbles by entering precise strain values in the CP options for simple shear, pure shear, or rotation. You can also drag the cursor in the UI while holding down the SHIFT (simple shear), CONTROL (pure shear), or ALT/OPTION (rotation) keys.
+
+The Reset button will undo the strain. The Apply button will ‘lock in’ the strain increment, and another strain increment of strain can be applied. Multiple increments of strain can be inspected in sequence using the forward and backward arrows.
+
+The Rf-Phi Cartesian Plot and the lnRf-2Phi Polar Plot windows show the pebble axial ratios (Rf) and the orientation of the pebble long axes (Phi). What is unique about Geoshear is that the plots change instantly as deformation is applied. These plots can be used to calculate strain using the methods described by Ramsay and Huber (1987) and Elliot (1970). The Rf-Phi Cartesian Plot and the lnRf-2Phi Polar Plot windows include many options under the Control Menu for viewing the pebble data and editing the axes. Pebbles are color coded and correspond to the colors in the UI. Pebbles selected in the UI (must be in Edit Mode to select pebbles) are also highlighted in the plots. Clicking on a point in a plot reveals the Rf and Phi values for that point; shift click hides the value. Reference points corresponding to regular grid of Rf and Phi values can be added to the plots using the Control Menu to illustrate how deformed pebbles are represented on the plots. Clicking the Camera icon in the upper-left of the plots creates a screen shot of the plot in .jpg, .png, or .bmp format.
+
+The Deformation Matrix window shows the 2x2 matrix of the simple shear, pure shear, or rotation transformations. General shear can be simulated by applying multiple increments of these transformations. As each increment of deformation is applied, another 2x2 matrix is added, and the final deformation matrix is calculated. The last deformation increment is highlighted, whereas earlier increments are gray. 
+
+Deformed pebbles and the entire deformation history can be saved (File/Save All Deformations). Alternatively, only the final state of the deformation experiment can be saved (File/Save Last Deformation). This is especially useful for instructors creating exercises for students. Both of these commands will also save a reference link to a visible background image, but not the image itself. Files saved are in a .tab format. They can be opened in Geoshear for further work or opened in a spreadsheet program, such as Excel, for more rigorous statistical analysis.
 
 --------------------------------------------------------------------------------------
 
-The controls are grouped into 5 sections. From top to bottom these are: 
+MAIN MENU
 
-- DISPLAY CONTROLS : zoom slider, plus buttons to reset the zoom (i.e. to 1x) and re-center (i.e. remove any pan / shift)
+	GeoShear Menu
 
-NOTE: You can also zoom in and out by using the mouse wheel in the pebble UI panel. Dragging in the pebble UI panel will pan it, and right-clicking will pan the view so that the point clicked is in the center.
+Help - displays this help information
 
+About - shows the title, version, and license
 
-- DEFORM CONTROLS : create simple shear, pure shear / compression, and rotation deformations, and apply them (i.e. add the given deformation to the series of deformations). Values in these fields may either be typed in (hit enter when done putting in the number) or else the up or down arrow keys may be used to adjust the values by small increments. NOTE: the apply button here does double duty as a remove button when there's no tentative deformation in place
+Quit - exit GeoShear (NOTE: this does NOT ask for confirmation nor does it save on exit!)
+            
+	File Menu
 
-These controls affect the values used in the 2x2 matrix that represents a given deformation. The deformation controls have four subsections - one for each type of deformation supported (simple shear, pure shear / compression, and rotation), plus a pair of buttons in the lower right of this section. The pure shear fields have an adjacent button that controls whether they're linked to preserve area (i.e. x and y values are inverses of each other) or decoupled. Any of these controls can be used to create a deformation by entering values directly (press Enter or Tab after putting a number in one of these control to make that number take effect). Also, when a deformation is created by dragging in the pebble UI panel these controls show the corresponding values for that deformation. Once you're satisfied with a given deformation clicking the Apply button will add it to the series. Clicking the Reset button clears / cancels the current, tentative deformation.
+Save All History - saves the pebble information (position, shape, and orientation) for the original pebble file and each deformation increment, the deformation matrix for each increment, and a reference to any background image in a .tab file.
 
+Load Tab File - loads a .tab file containing pebble information, deformation information, and a reference to a background information. (NOTE: if the background image is not loading properly it may be due to the image file having changed location. Also, when a file is loaded, any previous work in the application is discarded.)
 
-- SERIES CONTROLS : navigate through the deformations that have been applied, and show information about the cumulative strain, the tentative strain, and the potential next cumulative strain
+Save Current State - saves only the pebble information corresponding to the current state and a reference to a background image in a .tab file. For example, if four deformation increments were applied, and the Forward/Reverse arrows (see below) are used to return to the second increment, this command save the pebble information for the second increment.
 
-Below the deformation controls is an area where deformation-related matrices are shown, along with the RF and phi of the ellipses associated with those matrices.
+	Display Menu
 
-First is a large matrix in red that shows the values for the tentative deformation as it's being made. Below that and to the left is a smaller matrix (in a dark red-brown color) that shows the information for the composite deformation. To the right of that (in a slightly lighter red-purple color) is another small matrix that shows the combination of the composite and tentative deformations - i.e. what the new composite deformation will be when the current tentative deformation is applied.
+Show pebble axes - shows the major and minor axes of each pebble (as opposed to just the ellipses)
 
-Below these matrices are two arrow buttons which let you navigate through the deformation series. Once there is at least one deformation in the series the larger matrix does double duty - when it's light gray instead of red it is showing the current / last deformation. Also, when not working on setting up a tentative deformation the Apply button does double-duty as a Remove button - clicking it will remove the current deformation in the series (i.e. the show shown by the light gray, larger matrix).
+Fill pebbles - fills the pebbles with the selected colors
 
+Show background axes - shows/hides a set of x, y axes centered at 0,0 and drawn before any 
+deformations are applied
 
-- EDIT CONTROLS : go into edit mode, then change the background image, pebble colors, and use the Pebbles UI panel to create, select, and remove pebbles
+Show background image - shows/hides the background image if one has been loaded
 
-Below the matrix display and deformation navigation controls are the editing controls. The main button here is the Edit Mode button. This toggles edit mode on and off, which affects both which controls are active / usable and the behavior of the pebble UI panel (see the next section for more details on how to use the UI panel, but in brief, while holding down shift or with caps lock on  drag to create a pebble axis and press space to lock it in). When in edit mode new deformations cannot be created so the deformation controls are disabled, and navigating through the deformation series is also disabled.
+Show strain ellipses - shows/hides the ellipses that are centered at 0,0 which represent the current cumulative deformation, tentative next deformation step, and tentative cumulative deformation
 
-In addition to allowing you to create or delete pebbles in the pebble UI, edit mode enables additional buttons in the control area. The Pick Color button lets you choose a color that's used for new pebbles as they're created. Next to it is a button labeled Apply, which changes the color of all selected pebbles to the color you've chosen for Pick Color. Below that is a button that lets you load a background image - once the background is loaded you can control whether or not it's shown using the Show Background Image item in the Display menu. 
+	Windows Menu
 
-Finally, below that are two buttons which let you set the colors of pebbles based on their properties. These let you divide the pebbles into some number of groups based on either the full range of available values, the range of values of the pebbles, or by number of pebbles. The full-range option starts with the range covered (e.g. -90 to 90 degrees) and divides that into some number of buckets (e.g. with 4 buckets it would use -90 to -45, -45 to 0, 0 to 45, and 45 to 90) and then sets the color of each pebble depending on which bucket it's in. The pebble values option is similar to the full range one, but the lower and upper bonds are set by the extremes of the values in the pebble set. E.g. if the lowest phi is -20 and the largest is 60 then 4 buckets would cover -20 to 0, 0 to 20, 20 to 40, and 40 to 60. The number of pebbles option sets the bounds of the buckets dynamically so that there are (as much as possible) the same number of pebbles in each bucket. E.g. if you have 12 pebbles and 4 buckets there will be three pebbles in each, regardless of the range of possible values and any clustering. The color of each group can be chosen by clicking on the color block / button for that group number.
+Rf-Phi Cartesian Plot - opens the Cartesian Rf-Phi plot (more details below)
 
+lnRf-2Phi Polar Plot - opens the polar lnRf-2Phi plot (more details below)
 
-- SNAPSHOT BUTTON : save an image of the pebbles UI panel
-
-Lastly, at the bottom of the controls section is a snapshot button. This lets you save a copy of the view in the pebble UI panel as a png, jpg, or bmp.
-
---------------------------------------------------------------------------------------
-
-The pebble UI panel supports the following mouse and keyboard actions-
-Always:
-- mouse drag : pan / shift the view, but don't alter the underlying pebbles
-- right-click : pan / shift the view so the clicked point is in the center of the panel
-- mouse wheel : zoom the view in on or out from the point, but don't alter the underlying pebbles
-
-When NOT in Edit mode (i.e. when in Deform mode):
-- shift & mouse drag : create a simple shear deformation
-- control & mouse drag : create a pure shear or compression deformation
-- alt & mouse drag : create a rotation deformation
-- enter : apply the tentative deformation
-- escape : cancel / reset the tentative deformation
-
-When in Edit mode:
-- click anywhere : de-select all pebbles
-- click on the center of a pebble : select that pebble
-- shift-click : toggle selection for the pebble that is clicked
-- ctrl-a : select all pebbles
-- escape : de-select all pebbles
-- delete or backspace : delete all selected pebbles
-- Pebble creation is done with a series of click, drags, and space-bar presses wile either the shift key is held down or caps lock is on
-    1. shift-mouse button down (left button) : set the end point for the first axis
-    2. shift-first drag : define one axis of the pebble
-    3. shift-first space bar press (while keeping the mouse button pressed): lock in the first axis
-    4. shift-second drag (don't release the mouse button between these steps) : define the second axis of the pebble
-    5. shift-second space bar press (while keeping the mouse button pressed): lock in the second axis; NOTE: at this point the pebble is created! NOTE: if you release the mouse button at any point before this then the pebble will be cancelled
-    6. shift-release the mouse button : the new pebble is selected and other pebbles are de-selected (if you don't want it at this point, just hit delete and it will be removed)
-NOTE: newly created pebbles are of the color shown on the Pick Color button in the editing controls section. Pebble color may be changed later by selecting the pebble then clicking the Apply button that's next to the Pick Color button.
-
---------------------------------------------------------------------------------------
-    
-GeoShear offers two types of charts to represent a pebble set. Both of these show a relationship between RF (the ratio of the length of the major radius to the minor radius) and phi (the angle of the major radius). The latter is constrained to a -90 to 90 degree range. One chart shows this as a standard Cartesian plot (with RF on the x-axis and phi on the y-axis). The other as a polar plot (with RF as the radius and 2*phi as the angle - this spreads the angle information across the full range of the chart for easier viewing). Both charts dynamically display changes to the pebble information as deformations are being created in the main window.
-
-Both charts support the same kinds of options / actions. The Control menu has for each chart:
-    Major Contours - show/hide large section divisions in the chart
-    Minor Contours - show/hide small section divisions in the chart
-    Reference Points - show/hide a sparse set of background points that correspond to an even spread of potential values
-    Reference Points, Dense - show/hide a dense set of background points that correspond to an even spread of potential values
-    Selected Pebble Info - show/hide text display of the point values for pebbles that are selected in the main window
-    Harmonic & Vector Means - show/hide lines representing the harmonic (RF-based) and vector (phi-based) means
-
-    Use Log Scale - toggle back and forth between linear and log scale for the RF representation
-    Use Linear Scale
-
-    Adaptive RF Scale - toggle back and forth between a fixed upper bound on the RF scale and one the automatically adapts to make sure every pebble is shown on the chart; you can also set the value used for the fixed scale when that mode is being used
-    Fixed RF Scale
-
-    Close/Hide - close this chart window
-
-Additionally, there's a snapshot button on the menu bar just to the right of the Control menu - clicking it will let you save an image of the chart to a png, jpg, or bmp file.
-
-Finally, clicking anywhere in the main display of the chart will show the values of that point, and shift-clicking anywhere will hide that information.
+Deformation Matrix - opens a window that shows incremental and final deformation matrices
 
 --------------------------------------------------------------------------------------
 
-GeoShear has two main data sets that it cares about - pebbles and deformations. Pebbles are grouped in a set. Deformations are arranged in a series.
+CONTROL PANEL (CP)
 
-Pebbles are represented as ellipses and the system tracks the major and minor axes, the angle of the major axis (in a range of -90 to 90 degrees), the location of the center point, and the color. Internally they are also stored as a 2x2 matrices. The 2x2 matrix represents the deformation / transformation necessary to convert the unit circle into the desired ellipse. The matrix representing a pebble is created by composing a scaling matrix (stretch the unit circle to the right proportions) and a rotation matrix (rotate it to the proper angle).
+The control panel is on the left-hand side of the Main Window, and includes five types of functions. From top to bottom the controls are:
 
-Deformations are essentially the same as pebbles, but without a center point. Additionally, deformations are limited to simple transformations - simple shear, pure shear / compression, and rotation. All the deformations in a series are multiplied out to generate a composite deformation (a.k.a. strain). The pebble set is transformed in order by each deformation in the series to generate the various steps/stages of deformation.
+	Display Controls
 
-When a deformation is applied to a pebble there are three steps that happen. First, the deformation is used as an affine transform to translate/shift the center point of the pebble. Second, the deformation matrix is multiplied by the pebble matrix to get the matrix for the deformed pebble. Third, the matrix of the deformed pebble is split apart using single-value-decomposition to determine the lengths and angles of its axes (see http://en.wikipedia.org/wiki/Singular_value_decomposition and http://www.ams.org/samplings/feature-column/fcarc-svd).
+Zoom Slider -  zooms in and out of background image and pebbles in the UI. The mouse scroll button can also be used to zoom in and out.
+
+Unzoom Button - returns the background image and pebbles to their original view size.
+
+Center in view Button - returns background image and pebbles to original position. Background image and pebbles can be moved by clicking and dragging with cursor. Right-clicking on a point in the UI will shift the background image and pebbles such that the point clicked is centered.
+
+	Deformation Controls
+
+Simple Shear - applies simple shear to pebbles in the UI using either the x- or y-direction as the shear plane. There are three ways to apply the transformation: 1) type in values in the X or Y box and hit enter, 2) click in the X or Y box and use the Up or Down arrows to increase or decrease values, or 3) drag in the UI while holding down the SHIFT key. Click the Apply button to lock in the transformation. Click the Reset button to clear the transformation and return to the previous state.
+
+Pure Shear - applies pure shear to pebble in the UI by extension in the x- or y-direction. There are three ways to apply the transformation: 1) type in values in the X or Y box and hit enter, 2) click in the X or Y box and use the Up or Down arrows to increase or decrease values, or 3) drag in the UI while holding down the CONTROL key. If the Chain Link icon is closed, deformation preserves area and X and Y are reciprocals. If the Chain Link icon is open, values for X and Y are unconstrained and area can change. Click the Apply button to lock in the transformation. Click the Reset button to clear the transformation and return to the previous state.
+
+Rotation - applies a clockwise (negative) or counter-clockwise (positive) rotation. There are three ways to apply the transformation: 1) type in a rotation value as degrees (deg.) or radians (rad.) and hit enter, 2) click in the deg. or rad. box and use the Up or Down arrows to increase or decrease values, or 3) drag in the UI while holding down the ALT/OPT key. Click the Apply button to lock in the transformation. Click the Reset button to clear the transformation and return to the previous state.
+
+Apply - locks in a pending deformation applied through one of the transformations described above.
+
+Remove - only visible after the Apply button has been clicked, this button clears an Applied deformation. It can be used to clear multiple Applied deformations.
+
+Reset - undoes the most recent pending deformation applied through one of the transformations described above, but only before the Apply button is clicked.
+
+	Deformation Increment Controls
+
+Red Matrix and Red Rf and Phi Boxes - only visible if a transformation is pending, these elements show the pending transformation matrix, the axial ratio (Rf) of the strain ellipse, and the orientation of the long axis of the strain ellipse (Phi). After a pending transformation is applied, the matrix turns grey and shows the last transformation.
+
+Left Red-Brown Matrix and Left Rf and Phi Boxes - only visible if a transformation has been applied, these elements show the transformation matrix of all preceding deformations, the axial ratio (Rf) of the strain ellipse, and the orientation of the long axis of the strain ellipse (Phi).
+
+Right Red-Purple Matrix and Right Rf and Phi Boxes - only visible if more than one transformation has been applied, these elements show the transformation matrix if the pending transformation is applied, the axial ratio (Rf) of the strain ellipse, and the orientation of the long axis of the strain ellipse (Phi). These elements disappear once a pending transformation is applied.
+
+Forward and Reverse Arrows - use these arrows to cycle through the deformation increments applied to pebbles. 
+
+	Edit Controls
+
+Edit Mode - click to enter Edit Mode to digitize new pebbles, select pebbles, and delete pebbles. Pebbles can be colored while in edit mode. Background images can be added. Click Edit Mode button again to end Edit Mode. Note that deformation cannot be applied while in Edit Mode.
+
+To create a new pebble, enter Edit Mode, hold down the SHIFT key or use the Caps Lock key, left click with the mouse at one end of the pebble long axis in the UI Window, drag the cursor to the other end of the long axis and hit the space bar, drag the cursor to one side away from the long axis to define the short axis, hit the space bar again.
+The last pebble created is selected. To select a different pebble, left-click on its center.
+To delete a pebble, select it and hit the delete or backspace button.
+To change the color of a pebble, select it, click the Pick Color button, choose and color, click the Apply button.
+
+Pick Color - opens a dialog box for selecting colors for new pebbles. 
+
+Apply - use this button to change the color of selected pebbles after using the Pick Color button.
+
+Background Image - loads a background image that can be used for digitizing pebbles. Once a background image is loaded, it can be made invisible using the Display/Show Background Image option.
+
+Color by Rf - opens a dialog box for coloring pebbles based on axial ratio (Rf) values.
+
+Color by Phi - opens a dialog box for coloring pebbles base on long axis orientation (Phi) values.
+
+Both the Color by Rf and Color by Phi dialog box offers the following options:
+
+Pebble Data Set
+Original Pebbles uses the first data pebble data set loaded
+Current Pebbles uses the current pebble data set
+
+Bin Configuration
+Equal Interval over Full Range divides the full range (-90 to 90 for Phi, 1 to Rfmax for Rf) by a specified number of bins.
+Equal Interval over Actual Pebble Range divides the actual range of pebble values into a specified number of bins.
+Equal Number of Pebbles/Bin divides the number of pebbles by the number of bins and creates unequally sized bins such that each bin contain the same number of pebbles.
+
+Number of Bins 
+Assigns the number of bins from 2 to 12.
+
+	Snapshot Button
+
+Take Snapshot - opens a dialog box to save an image of the UI as in .jpg, .png, or .bmp format. 
 
 --------------------------------------------------------------------------------------
-    
-GeoShear saves its data in a specially organized .tab file. The file may be opened and edited in Excel or other spreadsheet programs as long as the format is preserved. In the file
-- each pebble it has a unique identifier, coordinates of the center point, lengths of major and minor radius, angle of major radius (in degrees), and color
-- each deformation it stores the four elements of the matrix
-- any background image is stored as a reference to a specific file - i.e. the image file itself is NOT a part of the GeoShear save files. By default it uses an absolute path name for the image, but if you manually edit the file you can change that to a relative path name. NOTE: this means that if you want to share some GeoShear work that's based on a given background image you should put the save file and the image file in a folder than edit the save file to use a relative path for the image.
-- it also stores the panel coordinates of the axis origin
 
-Normally GeoShear saves the base pebble set plus the series of deformations. However, that can make it hard to do analysis on the different stages of deformation. To get the data for a given deformation step use the Save Current Deformed action in the File menu. That treats the current view of the pebbles as a new base set - i.e. the .tab file for that will have the deformed values for centers and axes and such, and will have no deformations.
+USER INTERFACE (UI) WINDOW
 
+	The UI Window supports the following mouse and keyboard actions whether or not Edit Mode is active:
+
+Left-click and Drag - pan the background image and pebbles without deformation.
+
+Right-click - shift the background image and pebbles such that the point clicked in centered.
+
+Scroll Wheel - zoom in and out of background image and pebbles.
+
+	The UI Window supports the following mouse and keyboard actions when Edit Mode is not active:
+
+SHIFT Key and Left-click and Drag - create simple shear deformation (pending)
+
+CONTROL Key and Left-click and Drag - create pure shear deformation (pending)
+
+ALT/OPTION Key and Left-click and Drag - create rotation (pending)
+
+Enter - apply the pending deformation
+
+Escape - cancel the pending deformation
+
+	The UI Window supports the following mouse and keyboard actions when Edit Mode is active:
+
+Left-click on Pebble Center - select pebble
+
+Left-click off Pebble - deselect pebble
+
+Shift Left-click on Pebble Center - toggle selection for pebble
+
+CONTROL—A - select all pebbles
+
+ESCAPE - deselect all pebbles
+
+DELETE or BACKSPACE - delete selected pebbles (cannot be undone!)
+
+CREATE NEW PEBBLE⁃	
+To create a new pebble, hold down the SHIFT key or use the Caps Lock key, left click with the mouse at one end of the pebble long axis in the UI Window, drag the cursor to the other end of the long axis and hit the space bar, drag the cursor to one side away from the long axis to define the short axis, hit the space bar again.
+The last pebble created is selected. To select a different pebble, lift-click on its center.
+To delete a pebble, select it and hit the delete button.
+To change the color of a pebble, select it, click the Pick Color button, choose and color, click the Apply button.
+
+--------------------------------------------------------------------------------------
+
+Rf-Phi PLOT and lnRf-Phi PLOT WINDOWS
+
+	The unique feature of Geoshear 2.0 is the interactive link between pebble deformation in the UI and the Rf-Phi plots. The Rf-Phi plots change instantly as transformations are applied to a set of pebbles.
+
+Rf-Phi Plot - shows a Cartesian plot with Phi on the vertical axis and Rf on the horizontal axis. 
+
+lnRf-2Phi Plot - shows a Polar plot of lnRf on the radial scale and 2*Phi on the angular scale.
+
+For both plots use the Control Menu to:
+Show or Hide Major and Minor contours in Phi and Rf values (grids)
+Show or Hide Reference Points or Dense Reference Points in the plot
+Show or Hide Selected Pebble Information from the UI
+Show or Hide Harmonic and Vector Means of pebbles
+Change between Linear and Log Natural Rf Scale
+Change between Adaptive and Fixed Rf Scale. The maximum Rf value for the horizontal axis can be entered in the box under the Fixed Rf Scale option.
+
+Left-click on a point in either plot to show the Rf and Phi values for that point.
+
+Use the Camera Icon to create a snapshot of the plot in .jpg, .png, or .bmp format.
+
+--------------------------------------------------------------------------------------
+
+DEFORMATION MATRIX WINDOW
+
+The Deformation Matrix window shows the transformation matrices for each increment of deformation applied to a set of pebbles. The top row of matrices shows the numbered individual increments, with earlier increments on the right and later increments on the left. The bottom row shows the cumulative transformation matrices after each increment is applied, with earlier cumulative increments on the right and later cumulative increments on the left.
+
+--------------------------------------------------------------------------------------
+
+NOTES ON GEOSHEAR .TAB FILES
+
+Geoshear .tab files save information about a set of pebbles including a unique identifier, the x, y coordinates of their centers, lengths of their major and minor axes, the orientation of their long axes, and their color. Each deformation increment is saved as a 2x2 transformation matrix. Only a reference to a Background Image is save, not the image itself. 
+
+The File/Save All History command saves information about the original pebble set and the deformation increments. The File/Save Current State command saves information about the shape and orientation of the pebble set when the save command is executed. For statistical analysis of pebbles, the File/Save Current State command should be used to create a file that can be opened in a spreadsheet program.
+
+--------------------------------------------------------------------------------------
+
+NOTES ON GEOSHEAR 2.0
+
+Pebbles are grouped in a set and deformation increments are arranged in a series. Pebbles are represented as ellipses and the program tracks the lengths of the major and minor axes, orientation of major axis, x-y coordinate of the center, and color of each ellipse. Each ellipse is stored internally as the product of a diagonal matrix (length of major and minor axes) and an anti-symmetric matrix (orientation of long axis).
+
+Deformation increments are stored as linear transformations by simple shear, pure shear, and rotation. Individual increments are multiplied to compute the cumulative deformation matrix. 
+
+When a transformation is applied to a set of pebbles, the following steps occur: 
+
+The transformation matrix is used to compute the new center of each pebble
+
+The new shape of pebbles is determined by multiplying the deformation matrix by the matrix representation of each pebble
+
+The lengths of the new major and minor axes and the long axis orientation of each pebble is calculated using Singular Value Decomposition (http://en.wikipedia.org/wiki/Singular_value_decomposition; http://www.ams.org/samplings/feature-column/fcarc-svd). 
 

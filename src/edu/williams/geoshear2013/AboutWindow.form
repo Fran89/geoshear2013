@@ -33,15 +33,15 @@
                           <Component id="jLabelAboutTagline" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="553" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" alignment="0" min="-2" pref="580" max="-2" attributes="0"/>
                           <Component id="jLabelLicenseTitle" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelCopyright" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" min="-2" pref="553" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -58,22 +58,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelAboutTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="jLabelCopyright" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelAboutTagline" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="jLabelLicenseTitle" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -85,7 +85,7 @@
                       <Component id="jScrollPane2" min="-2" pref="234" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jButtonAboutClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -103,7 +103,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelCopyright">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Copyright 2010 by Chris Warren, Williams College Office for Information Technology"/>
+        <Property name="text" type="java.lang.String" value="Copyright 2010, Williams College"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelAboutTagline">
@@ -111,7 +111,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="A program to explore and analyze shear and other deformation effects"/>
+        <Property name="text" type="java.lang.String" value="An interactive program to simulate strain and analyze deformation"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -156,7 +156,7 @@
             </Property>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="This application was developed jointly, with Chris Warren providing the programming expertise, and Dr. Paul Karabinos of the Williams College Geology Department providing the subject matter expertise and development feedback.&#xa;"/>
+            <Property name="text" type="java.lang.String" value="This application was developed jointly by Chris Warren, Office for Information Technology, Williams College, and Paul Karabinos, Department of Geosciences, Williams College. Warren provided the programming expertise, Karabinos created the concept and supplied the geological framework, and both designed and tested the user interface. Supported by NSF grant DUE-0942313."/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="alignmentX" type="float" value="0.0"/>
             <Property name="autoscrolls" type="boolean" value="false"/>

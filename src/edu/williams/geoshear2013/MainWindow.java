@@ -213,7 +213,6 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldRotDeg = new javax.swing.JTextField();
         jTextFieldRotRad = new javax.swing.JTextField();
         jLabelRotateActionKey = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPanelDeformNavControls = new javax.swing.JPanel();
         jButtonDeformApplyRemove = new javax.swing.JButton();
         jButtonDeformReset = new javax.swing.JButton();
@@ -646,11 +645,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelRotateActionKey.setText("(ALT/OPT)");
         jPanelDeformRotateControls.add(jLabelRotateActionKey, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 70, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/williams/geoshear2013/img/linked.gif"))); // NOI18N
-        jLabel1.setToolTipText("values for degrees and radians are always linked");
-        jLabel1.setEnabled(false);
-        jPanelDeformRotateControls.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 37, 20, 40));
-
         jPanelDeformControls.add(jPanelDeformRotateControls, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 110, 79));
 
         jPanelDeformNavControls.setMaximumSize(new java.awt.Dimension(100, 75));
@@ -1076,7 +1070,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jPanelEditPebbleControls.add(jToggleButtonEditPebbles, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 190, -1));
 
-        jButtonPebbleColorSet.setBackground(new java.awt.Color(0, 0, 255));
+        jButtonPebbleColorSet.setBackground(new java.awt.Color(100, 100, 255));
         jButtonPebbleColorSet.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButtonPebbleColorSet.setForeground(new java.awt.Color(255, 255, 255));
         jButtonPebbleColorSet.setText("Pick Color");
@@ -1208,7 +1202,7 @@ public class MainWindow extends javax.swing.JFrame {
         FileMenu.setText("File");
         FileMenu.setToolTipText("Save and load");
 
-        jMenuItemSave.setText("Save all deformations");
+        jMenuItemSave.setText("Save All History");
         jMenuItemSave.setToolTipText("Save everything to a .tab file");
         jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1217,7 +1211,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         FileMenu.add(jMenuItemSave);
 
-        jMenuItemLoad.setText("Load .tab file");
+        jMenuItemLoad.setText("Load .tab File");
         jMenuItemLoad.setToolTipText("Load new pebbles and deformations from a .tab file");
         jMenuItemLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1226,7 +1220,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         FileMenu.add(jMenuItemLoad);
 
-        jMenuItemSaveCurrentDeformed.setText("Save current deformed");
+        jMenuItemSaveCurrentDeformed.setText("Save Current State");
         jMenuItemSaveCurrentDeformed.setToolTipText("Save the currently deformed view as a new basis (with no deformations)");
         jMenuItemSaveCurrentDeformed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1310,7 +1304,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         ChartsMenu.add(jMenuItemChartRf2PhiPolar);
 
-        jMenuItemChartDeformationSeries.setText("Deformations Matrices");
+        jMenuItemChartDeformationSeries.setText("Deformation Matrix");
         jMenuItemChartDeformationSeries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartDeformationSeriesActionPerformed(evt);
@@ -2625,7 +2619,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowBackgroundImage;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowPebbleAxes;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemShowStrainEllipses;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabelCompressControl;
     private javax.swing.JLabel jLabelCompressX;

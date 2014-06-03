@@ -78,35 +78,43 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
         jButtonCancelAutocolor = new javax.swing.JButton();
         jButtonDoAutocolor = new javax.swing.JButton();
         jRadioButtonColorRangeByCount = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(412, 325));
+        setMinimumSize(new java.awt.Dimension(560, 400));
         setName("autocolor_options"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(412, 325));
+        setPreferredSize(new java.awt.Dimension(560, 400));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroupColoringSetBasis.add(jRadioButtonColorByBasePebbles);
         jRadioButtonColorByBasePebbles.setSelected(true);
-        jRadioButtonColorByBasePebbles.setText("by base pebbles");
-        getContentPane().add(jRadioButtonColorByBasePebbles, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        jRadioButtonColorByBasePebbles.setText("Original Pebbles");
+        getContentPane().add(jRadioButtonColorByBasePebbles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
         buttonGroupColoringSetBasis.add(jRadioButtonColorByCurrentDeformation);
-        jRadioButtonColorByCurrentDeformation.setText("by current deformation");
-        getContentPane().add(jRadioButtonColorByCurrentDeformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jRadioButtonColorByCurrentDeformation.setText("Current Pebbles");
+        getContentPane().add(jRadioButtonColorByCurrentDeformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         buttonGroupColoringRange.add(jRadioButtonColorRangeFull);
         jRadioButtonColorRangeFull.setSelected(true);
-        jRadioButtonColorRangeFull.setText("across full range");
+        jRadioButtonColorRangeFull.setText("Equal Interval over Full Range (-90 to 90; 1 to RfMax)");
         jRadioButtonColorRangeFull.setToolTipText("min and max from cartesian rf-phi chart");
-        getContentPane().add(jRadioButtonColorRangeFull, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
+        jRadioButtonColorRangeFull.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonColorRangeFullActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jRadioButtonColorRangeFull, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 320, -1));
 
         buttonGroupColoringRange.add(jRadioButtonColorRangeDynamic);
-        jRadioButtonColorRangeDynamic.setText("across pebble values");
-        getContentPane().add(jRadioButtonColorRangeDynamic, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        jRadioButtonColorRangeDynamic.setText("Equal Interval over Actual Pebble Range");
+        getContentPane().add(jRadioButtonColorRangeDynamic, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 330, -1));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Number of color groups");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 380, -1));
+        jLabel1.setText("Number of color bins");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 114, 520, 30));
 
         jSliderNumberOfColorGroups.setMajorTickSpacing(1);
         jSliderNumberOfColorGroups.setMaximum(12);
@@ -120,7 +128,7 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jSliderNumberOfColorGroupsStateChanged(evt);
             }
         });
-        getContentPane().add(jSliderNumberOfColorGroups, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 380, -1));
+        getContentPane().add(jSliderNumberOfColorGroups, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 510, -1));
 
         jButtonColor1.setBackground(new java.awt.Color(255, 0, 255));
         jButtonColor1.setText("1");
@@ -129,16 +137,16 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonColor1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 51, 30));
+        getContentPane().add(jButtonColor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 70, 30));
 
-        jButtonColor2.setBackground(new java.awt.Color(255, 0, 170));
+        jButtonColor2.setBackground(new java.awt.Color(0, 255, 255));
         jButtonColor2.setText("2");
         jButtonColor2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 51, 30));
+        getContentPane().add(jButtonColor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 70, 30));
 
         jButtonColor3.setBackground(new java.awt.Color(255, 0, 85));
         jButtonColor3.setText("3");
@@ -147,34 +155,34 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonColor3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 51, 30));
+        getContentPane().add(jButtonColor3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 70, 30));
 
-        jButtonColor4.setBackground(new java.awt.Color(255, 0, 0));
+        jButtonColor4.setBackground(new java.awt.Color(0, 153, 255));
         jButtonColor4.setText("4");
         jButtonColor4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 51, 30));
+        getContentPane().add(jButtonColor4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 70, 30));
 
-        jButtonColor5.setBackground(new java.awt.Color(0, 255, 255));
+        jButtonColor5.setBackground(new java.awt.Color(255, 51, 204));
         jButtonColor5.setText("5");
         jButtonColor5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 51, 30));
+        getContentPane().add(jButtonColor5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 70, 30));
 
-        jButtonColor6.setBackground(new java.awt.Color(0, 170, 255));
+        jButtonColor6.setBackground(new java.awt.Color(102, 204, 0));
         jButtonColor6.setText("6");
         jButtonColor6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 51, 30));
+        getContentPane().add(jButtonColor6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 70, 30));
 
         jButtonColor7.setBackground(new java.awt.Color(0, 85, 255));
         jButtonColor7.setText("7");
@@ -183,34 +191,34 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonColor7ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 51, 30));
+        getContentPane().add(jButtonColor7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 70, 30));
 
-        jButtonColor8.setBackground(new java.awt.Color(0, 0, 255));
+        jButtonColor8.setBackground(new java.awt.Color(102, 0, 153));
         jButtonColor8.setText("8");
         jButtonColor8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor8ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 51, 30));
+        getContentPane().add(jButtonColor8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 70, 30));
 
-        jButtonColor9.setBackground(new java.awt.Color(255, 255, 0));
+        jButtonColor9.setBackground(new java.awt.Color(102, 255, 153));
         jButtonColor9.setText("9");
         jButtonColor9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor9ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 51, 30));
+        getContentPane().add(jButtonColor9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 70, 30));
 
-        jButtonColor10.setBackground(new java.awt.Color(170, 255, 0));
+        jButtonColor10.setBackground(new java.awt.Color(255, 255, 0));
         jButtonColor10.setText("10");
         jButtonColor10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColor10ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 51, 30));
+        getContentPane().add(jButtonColor10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 70, 30));
 
         jButtonColor11.setBackground(new java.awt.Color(85, 255, 0));
         jButtonColor11.setText("11");
@@ -219,7 +227,7 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonColor11ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 51, 30));
+        getContentPane().add(jButtonColor11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 70, 30));
 
         jButtonColor12.setBackground(new java.awt.Color(0, 255, 0));
         jButtonColor12.setText("12");
@@ -228,7 +236,7 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonColor12ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonColor12, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 51, 30));
+        getContentPane().add(jButtonColor12, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 70, 30));
 
         jButtonCancelAutocolor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonCancelAutocolor.setText("Cancel");
@@ -237,7 +245,7 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonCancelAutocolorActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonCancelAutocolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 250, 110, -1));
+        getContentPane().add(jButtonCancelAutocolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 110, -1));
 
         jButtonDoAutocolor.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonDoAutocolor.setText("Auto-color the pebbles");
@@ -246,11 +254,19 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
                 jButtonDoAutocolorActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonDoAutocolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 250, -1, -1));
+        getContentPane().add(jButtonDoAutocolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
 
         buttonGroupColoringRange.add(jRadioButtonColorRangeByCount);
-        jRadioButtonColorRangeByCount.setText("by pebble count");
-        getContentPane().add(jRadioButtonColorRangeByCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+        jRadioButtonColorRangeByCount.setText("Equal Number of Pebbles per Bin");
+        getContentPane().add(jRadioButtonColorRangeByCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 330, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Bin Configuration");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 290, 30));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Pebble Data Set");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 140, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -322,6 +338,10 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
     private void jButtonColor12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColor12ActionPerformed
         this.handleColorChoosingForButton(jButtonColor12);
     }//GEN-LAST:event_jButtonColor12ActionPerformed
+
+    private void jRadioButtonColorRangeFullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonColorRangeFullActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonColorRangeFullActionPerformed
 
     private void setColorButtonEnablesByGroupCountSlider() {
         int numGroups = this.getNumberOfColorGroups();
@@ -425,6 +445,8 @@ public class AutoColorOptionsDialog extends javax.swing.JFrame {
     private javax.swing.JButton jButtonColor9;
     private javax.swing.JButton jButtonDoAutocolor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButtonColorByBasePebbles;
     private javax.swing.JRadioButton jRadioButtonColorByCurrentDeformation;
     private javax.swing.JRadioButton jRadioButtonColorRangeByCount;

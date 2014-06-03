@@ -81,7 +81,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         jCheckBoxMenuItemRefPointsDense = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemSelPebInfo = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemMeans = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItemDefPath = new javax.swing.JCheckBoxMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jRadioButtonMenuItemLogScale = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItemLinearScale = new javax.swing.JRadioButtonMenuItem();
@@ -153,15 +152,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
             }
         });
         jMenuView.add(jCheckBoxMenuItemMeans);
-
-        jCheckBoxMenuItemDefPath.setText("Deformation Path (tbd)");
-        jCheckBoxMenuItemDefPath.setEnabled(false);
-        jCheckBoxMenuItemDefPath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItemDefPathActionPerformed(evt);
-            }
-        });
-        jMenuView.add(jCheckBoxMenuItemDefPath);
         jMenuView.add(jSeparator1);
 
         buttonGroupScaleType.add(jRadioButtonMenuItemLogScale);
@@ -258,11 +248,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
         chart.setShowInfoForSelected(jCheckBoxMenuItemSelPebInfo.isSelected());
         this.repaint();
     }//GEN-LAST:event_jCheckBoxMenuItemSelPebInfoActionPerformed
-
-    private void jCheckBoxMenuItemDefPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemDefPathActionPerformed
-        chart.setShowTrace(jCheckBoxMenuItemDefPath.isSelected());
-        this.repaint();
-    }//GEN-LAST:event_jCheckBoxMenuItemDefPathActionPerformed
 
     private void jCheckBoxMenuItemMeansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemMeansActionPerformed
         chart.setShowMeans(jCheckBoxMenuItemMeans.isSelected());
@@ -401,7 +386,6 @@ public abstract class GSComplexChartFrame extends javax.swing.JFrame implements 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupScaleAdaption;
     private javax.swing.ButtonGroup buttonGroupScaleType;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemDefPath;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemMajorCountours;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemMeans;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemMinorCountours;
