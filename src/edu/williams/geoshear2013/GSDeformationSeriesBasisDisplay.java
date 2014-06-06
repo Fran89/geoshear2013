@@ -54,7 +54,7 @@ public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel implemen
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRf1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelRf1.setText("Rf:");
+        jLabelRf1.setText("Rs:");
         add(jLabelRf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 20, 20));
 
         jTextFieldRfCumu.setEditable(false);
@@ -65,7 +65,7 @@ public class GSDeformationSeriesBasisDisplay extends javax.swing.JPanel implemen
         add(jTextFieldRfCumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 40, 20));
 
         jLabelPhi1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPhi1.setText("phi:");
+        jLabelPhi1.setText("Phi:");
         add(jLabelPhi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 30, 20));
 
         jTextFieldPhiCumu.setEditable(false);

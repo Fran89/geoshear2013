@@ -709,7 +709,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDeformMatrixLeft.add(jTextFieldRFPhiCurrentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 6, 60, 20));
 
         jLabelRf.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelRf.setText("Rf");
+        jLabelRf.setText("Rs");
         jLabelRf.setFocusable(false);
         jLabelRf.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jLabelRf, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 18, 20));
@@ -734,7 +734,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuRF.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelCumuRF.setText("Rf");
+        jLabelCumuRF.setText("Rs");
         jLabelCumuRF.setFocusable(false);
         jLabelCumuRF.setForeground(GSComplexUI.INFO_COLOR_CUMU);
         jPanelDeformMatrixLeft.add(jLabelCumuRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 18, 20));
@@ -983,7 +983,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelCumuTentRF.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuTentRF.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelCumuTentRF.setText("Rf");
+        jLabelCumuTentRF.setText("Rs");
         jLabelCumuTentRF.setFocusable(false);
         jLabelCumuTentRF.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentRF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 18, 20));
@@ -1288,7 +1288,7 @@ public class MainWindow extends javax.swing.JFrame {
         ChartsMenu.setText("Windows");
         ChartsMenu.setToolTipText("Open new windows to display charts");
 
-        jMenuItemChartRfPhiCart.setText("RF-Phi Cartesian Plot");
+        jMenuItemChartRfPhiCart.setText("Rf-Phi Cartesian Plot");
         jMenuItemChartRfPhiCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRfPhiCartActionPerformed(evt);
@@ -1296,7 +1296,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         ChartsMenu.add(jMenuItemChartRfPhiCart);
 
-        jMenuItemChartRf2PhiPolar.setText("RF-2*Phi Polar Plot");
+        jMenuItemChartRf2PhiPolar.setText("lnRf-2*Phi Polar Plot");
         jMenuItemChartRf2PhiPolar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemChartRf2PhiPolarActionPerformed(evt);
@@ -2299,6 +2299,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
         this.setValuesForCumuTentStrain();
+        this.setValuesForCumuRfPhi();
         this.updateStrainMatricesVisibilities();
     }
     

@@ -87,7 +87,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRf.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelRf.setText("Rf:");
+        jLabelRf.setText("Rs:");
         add(jLabelRf, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 20, 20));
 
         jTextFieldRfStep.setEditable(false);
@@ -98,7 +98,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         add(jTextFieldRfStep, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 40, 20));
 
         jLabelPhi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPhi.setText("phi:");
+        jLabelPhi.setText("Phi:");
         add(jLabelPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 30, 20));
 
         jTextFieldPhiStep.setEditable(false);
@@ -150,7 +150,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         add(jLabelMatrixBracketRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, 70));
 
         jLabelRf1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelRf1.setText("Rf:");
+        jLabelRf1.setText("Rs:");
         add(jLabelRf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 20, 20));
 
         jTextFieldRfCumu.setEditable(false);
@@ -161,7 +161,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         add(jTextFieldRfCumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 40, 20));
 
         jLabelPhi1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPhi1.setText("phi:");
+        jLabelPhi1.setText("Phi:");
         add(jLabelPhi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 30, 20));
 
         jTextFieldPhiCumu.setEditable(false);
