@@ -218,7 +218,8 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonDeformReset = new javax.swing.JButton();
         jPanelDeformMatrixLeft = new javax.swing.JPanel();
         jTextFieldStrainM00 = new javax.swing.JTextField();
-        jTextFieldStrainM10 = new javax.swing.JTextField();
+        jTextFieldStrainM01 = new javax.swing.JTextField();
+        jTextFieldNavStrainM01 = new javax.swing.JTextField();
         jTextFieldRFPhiCurrentRF = new javax.swing.JTextField();
         jLabelRf = new javax.swing.JLabel();
         jLabelCurStrainLeftBracket = new javax.swing.JLabel();
@@ -236,12 +237,12 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonStrainNavPrevious = new javax.swing.JButton();
         jLabelNavStrainLeftBracket = new javax.swing.JLabel();
         jTextFieldNavStrainM00 = new javax.swing.JTextField();
-        jTextFieldNavStrainM10 = new javax.swing.JTextField();
         jPanelMatrixBgMostRecent = new javax.swing.JPanel();
         jPanelMatrixBgCumu = new javax.swing.JPanel();
         jPanelDeformMatrixRight = new javax.swing.JPanel();
         jButtonStrainNavNext = new javax.swing.JButton();
-        jTextFieldStrainM01 = new javax.swing.JTextField();
+        jTextFieldStrainM10 = new javax.swing.JTextField();
+        jTextFieldNavStrainM10 = new javax.swing.JTextField();
         jTextFieldStrainM11 = new javax.swing.JTextField();
         jTextFieldRFPhiCurrentPhi = new javax.swing.JTextField();
         jLabelPhi = new javax.swing.JLabel();
@@ -257,7 +258,6 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainCumuTentRF = new javax.swing.JTextField();
         jTextFieldStrainCumuTentPhi = new javax.swing.JTextField();
         jLabelCumuTentPhi = new javax.swing.JLabel();
-        jTextFieldNavStrainM01 = new javax.swing.JTextField();
         jLabelNavStrainRightBracket = new javax.swing.JLabel();
         jTextFieldNavStrainM11 = new javax.swing.JTextField();
         jPanelMatrixBgCumuTent = new javax.swing.JPanel();
@@ -690,14 +690,21 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldStrainM00.setForeground(GSComplexUI.INFO_COLOR_TENT);
         jPanelDeformMatrixLeft.add(jTextFieldStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, -1));
 
-        jTextFieldStrainM10.setEditable(false);
-        jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldStrainM10.setText("0.000");
-        jTextFieldStrainM10.setToolTipText("matrix for the current or most recent deformation");
-        jTextFieldStrainM10.setBorder(null);
-        jTextFieldStrainM10.setFocusable(false);
-        jTextFieldStrainM10.setForeground(GSComplexUI.INFO_COLOR_TENT);
-        jPanelDeformMatrixLeft.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
+        jTextFieldStrainM01.setEditable(false);
+        jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldStrainM01.setText("0.000");
+        jTextFieldStrainM01.setToolTipText("matrix for the current or most recent deformation");
+        jTextFieldStrainM01.setBorder(null);
+        jTextFieldStrainM01.setFocusable(false);
+        jTextFieldStrainM01.setForeground(GSComplexUI.INFO_COLOR_TENT);
+        jPanelDeformMatrixLeft.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
+
+        jTextFieldNavStrainM01.setEditable(false);
+        jTextFieldNavStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldNavStrainM01.setText("0.000");
+        jTextFieldNavStrainM01.setBorder(null);
+        jTextFieldNavStrainM01.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
+        jPanelDeformMatrixLeft.add(jTextFieldNavStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
 
         jTextFieldRFPhiCurrentRF.setEditable(false);
         jTextFieldRFPhiCurrentRF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -761,7 +768,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM01.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM01.setFocusable(false);
         jLabelCumuStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanelDeformMatrixLeft.add(jLabelCumuStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 110, 33, -1));
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 33, -1));
 
         jLabelCumuStrainM10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuStrainM10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -770,7 +777,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuStrainM10.setToolTipText("matrix for the cumulative deformation");
         jLabelCumuStrainM10.setFocusable(false);
         jLabelCumuStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanelDeformMatrixLeft.add(jLabelCumuStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 33, -1));
+        jPanelDeformMatrixLeft.add(jLabelCumuStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 110, 33, -1));
 
         jLabelCumuStrainM11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -834,13 +841,6 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldNavStrainM00.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
         jPanelDeformMatrixLeft.add(jTextFieldNavStrainM00, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, -1));
 
-        jTextFieldNavStrainM10.setEditable(false);
-        jTextFieldNavStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldNavStrainM10.setText("0.000");
-        jTextFieldNavStrainM10.setBorder(null);
-        jTextFieldNavStrainM10.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
-        jPanelDeformMatrixLeft.add(jTextFieldNavStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 60, -1));
-
         jPanelMatrixBgMostRecent.setToolTipText("matrix for the current or most recent deformation");
 
         javax.swing.GroupLayout jPanelMatrixBgMostRecentLayout = new javax.swing.GroupLayout(jPanelMatrixBgMostRecent);
@@ -885,14 +885,21 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jPanelDeformMatrixRight.add(jButtonStrainNavNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 60, -1));
 
-        jTextFieldStrainM01.setEditable(false);
-        jTextFieldStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldStrainM01.setText("0.000");
-        jTextFieldStrainM01.setToolTipText("matrix for the current or most recent deformation");
-        jTextFieldStrainM01.setBorder(null);
-        jTextFieldStrainM01.setFocusable(false);
-        jTextFieldStrainM01.setForeground(GSComplexUI.INFO_COLOR_TENT);
-        jPanelDeformMatrixRight.add(jTextFieldStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
+        jTextFieldStrainM10.setEditable(false);
+        jTextFieldStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldStrainM10.setText("0.000");
+        jTextFieldStrainM10.setToolTipText("matrix for the current or most recent deformation");
+        jTextFieldStrainM10.setBorder(null);
+        jTextFieldStrainM10.setFocusable(false);
+        jTextFieldStrainM10.setForeground(GSComplexUI.INFO_COLOR_TENT);
+        jPanelDeformMatrixRight.add(jTextFieldStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
+
+        jTextFieldNavStrainM10.setEditable(false);
+        jTextFieldNavStrainM10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldNavStrainM10.setText("0.000");
+        jTextFieldNavStrainM10.setBorder(null);
+        jTextFieldNavStrainM10.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
+        jPanelDeformMatrixRight.add(jTextFieldNavStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
 
         jTextFieldStrainM11.setEditable(false);
         jTextFieldStrainM11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -954,7 +961,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM10.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM10.setFocusable(false);
         jLabelCumuTentStrainM10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, 33, -1));
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM10, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 110, 33, -1));
 
         jLabelCumuTentStrainM11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelCumuTentStrainM11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -972,7 +979,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentStrainM01.setToolTipText("matrix for the next cumulative deformation");
         jLabelCumuTentStrainM01.setFocusable(false);
         jLabelCumuTentStrainM01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 110, 33, -1));
+        jPanelDeformMatrixRight.add(jLabelCumuTentStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, 33, -1));
 
         jLabelCumuTentStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabelCumuTentStrainRightBracket.setText("]");
@@ -1014,13 +1021,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelCumuTentPhi.setFocusable(false);
         jLabelCumuTentPhi.setForeground(GSComplexUI.INFO_COLOR_CUMUTENT);
         jPanelDeformMatrixRight.add(jLabelCumuTentPhi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 20, 20));
-
-        jTextFieldNavStrainM01.setEditable(false);
-        jTextFieldNavStrainM01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldNavStrainM01.setText("0.000");
-        jTextFieldNavStrainM01.setBorder(null);
-        jTextFieldNavStrainM01.setForeground(GSComplexUI.INFO_COLOR_NAV_DEF);
-        jPanelDeformMatrixRight.add(jTextFieldNavStrainM01, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, -1));
 
         jLabelNavStrainRightBracket.setFont(new java.awt.Font("Tahoma", 0, 72)); // NOI18N
         jLabelNavStrainRightBracket.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
