@@ -126,7 +126,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         jTextFieldMatrixM10Step.setBorder(null);
         jTextFieldMatrixM10Step.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldMatrixM10Step.setEnabled(false);
-        add(jTextFieldMatrixM10Step, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 60, 40, 20));
+        add(jTextFieldMatrixM10Step, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 40, 20));
 
         jTextFieldMatrixM01Step.setEditable(false);
         jTextFieldMatrixM01Step.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -134,7 +134,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         jTextFieldMatrixM01Step.setBorder(null);
         jTextFieldMatrixM01Step.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldMatrixM01Step.setEnabled(false);
-        add(jTextFieldMatrixM01Step, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 40, 20));
+        add(jTextFieldMatrixM01Step, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 60, 40, 20));
 
         jTextFieldMatrixM11Step.setEditable(false);
         jTextFieldMatrixM11Step.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -189,7 +189,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         jTextFieldMatrixM10Cumu.setBorder(null);
         jTextFieldMatrixM10Cumu.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldMatrixM10Cumu.setEnabled(false);
-        add(jTextFieldMatrixM10Cumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 150, 40, 20));
+        add(jTextFieldMatrixM10Cumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 40, 20));
 
         jTextFieldMatrixM01Cumu.setEditable(false);
         jTextFieldMatrixM01Cumu.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -197,7 +197,7 @@ public class GSDeformationSeriesStepDisplay extends javax.swing.JPanel implement
         jTextFieldMatrixM01Cumu.setBorder(null);
         jTextFieldMatrixM01Cumu.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldMatrixM01Cumu.setEnabled(false);
-        add(jTextFieldMatrixM01Cumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 40, 20));
+        add(jTextFieldMatrixM01Cumu, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 150, 40, 20));
 
         jTextFieldMatrixM11Cumu.setEditable(false);
         jTextFieldMatrixM11Cumu.setHorizontalAlignment(javax.swing.JTextField.CENTER);
