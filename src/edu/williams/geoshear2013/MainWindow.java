@@ -1539,7 +1539,9 @@ public class MainWindow extends javax.swing.JFrame {
             this.setValueForControl(this.jTextFieldRFPhiCurrentRF, s.getMajorRadius()/s.getMinorRadius());
             this.setValueForControl(this.jTextFieldRFPhiCurrentPhi, Util.toDegrees(s.getThetaRad()*-1));
         } else {
-            this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
+//            this.updateStrainControlsFromDeformation(Deformation.createFromAngle(Double.parseDouble(this.jTextFieldRotRad.getText())));
+//            Util.debugOut("changing to use degrees field in updateOtherControlsFromDeformControls");
+            this.updateStrainControlsFromDeformation(Deformation.createFromDegreesAngle(Double.parseDouble(this.jTextFieldRotDeg.getText())));
             this.setValueForControl(this.jTextFieldRFPhiCurrentRF, 1);
             this.setValueForControl(this.jTextFieldRFPhiCurrentPhi, Double.parseDouble(this.jTextFieldRotDeg.getText()));
         }
@@ -1659,6 +1661,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCompressYKeyReleased
 
     private void jTextFieldRotDegKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRotDegKeyPressed
+//        Util.debugOut("key pressed");
         this.alterValueByKeyPressInControl(this.jTextFieldRotDeg, evt.getKeyCode());
     }//GEN-LAST:event_jTextFieldRotDegKeyPressed
 
@@ -2273,6 +2276,7 @@ public class MainWindow extends javax.swing.JFrame {
 }
     
     private void handleControlChange(javax.swing.JTextField controlField) {
+//        Util.debugOut("handling control change");
         if (this.isControlDeform(controlField)) {
             this.clearOutControlFieldsOtherThan(controlField);
         }
@@ -2412,6 +2416,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void updateGSCUITentativeDeformBasedOn(javax.swing.JTextField controlField) {
+//Util.debugOut("doing updateGSCUITentativeDeformBasedOn");
         if ((this.jTextFieldShearX.equals(controlField)) || (this.jTextFieldShearY.equals(controlField))) {
             this.gscUI.tentativeDeformationSetToShear(Double.parseDouble(this.jTextFieldShearX.getText()), 
                                                       Double.parseDouble(this.jTextFieldShearY.getText()),
@@ -2423,7 +2428,10 @@ public class MainWindow extends javax.swing.JFrame {
                                                                 this.jTextFieldCompressX.equals(controlField));
         } else
         if (this.jTextFieldRotDeg.equals(controlField)) {
-            this.gscUI.tentativeDeformationSetToRotate(Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
+//            sdafasdfas
+//Util.debugOut("    doing rot deg field");
+            this.gscUI.tentativeDeformationSetToRotateDeg(Double.parseDouble(this.jTextFieldRotDeg.getText()));
+//            this.gscUI.tentativeDeformationSetToRotate(Util.toRadians(Double.parseDouble(this.jTextFieldRotDeg.getText())));
         } else
         if (this.jTextFieldRotRad.equals(controlField)) {
             this.gscUI.tentativeDeformationSetToRotate(Double.parseDouble(this.jTextFieldRotRad.getText()));

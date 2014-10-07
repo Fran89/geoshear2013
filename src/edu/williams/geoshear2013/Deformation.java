@@ -124,6 +124,23 @@ public class Deformation extends Matrix2x2 {
         return new Deformation(Math.cos(angleRad), -1 * Math.sin(angleRad), Math.sin(angleRad), Math.cos(angleRad));
     }
 
+    public static Deformation createFromDegreesAngle(double angleDeg) {
+//Util.debugOut("    doing createFromDegreesAngle for "+Double.toString(angleDeg));
+        if (angleDeg == 90) {
+//            Util.debugOut("handling angle of 90");
+            return new Deformation(0,-1,1,0);
+        }
+        if (angleDeg == -90) {
+//            Util.debugOut("handling angle of -90");
+            return new Deformation(0,1,-1,0);
+        }
+        if ((angleDeg == 180) || (angleDeg == -180)) {
+//            Util.debugOut("handling angles of 180 and -180");
+            return new Deformation(-1,0,0,-1);
+        }
+        return Deformation.createFromAngle(Util.toRadians(angleDeg));
+    }
+    
     public static Deformation createFromRF(double rf) {
         return new Deformation(rf*Math.pow(1/rf,.5), 0, 0, Math.pow(1/rf,.5));
     }

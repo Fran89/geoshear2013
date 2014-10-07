@@ -529,4 +529,12 @@ public class Util
         String callerInfo = stackTraceElements[2].getFileName() + " " + stackTraceElements[2].getMethodName() + " - line "+ stackTraceElements[2].getLineNumber();
         System.out.println("TODO ("+callerInfo+"): "+s);
     }
+    
+    /**
+     * dump a message to stdout
+     * @param s 
+     */
+    public static void debugOut(String s) {
+        System.out.println("DEBUG: "+s);
+    }
 }

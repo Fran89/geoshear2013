@@ -330,6 +330,11 @@ class GSComplexUI extends JPanel implements Watchable {
         this.setDeformations(Deformation.createFromAngle(angleRad));
         this.setStrains();
     }
+    public void tentativeDeformationSetToRotateDeg(double angleDeg) {
+//        Util.debugOut("    doing tentativeDeformationSetToRotateDeg for "+Double.toString(angleDeg));
+        this.setDeformations(Deformation.createFromDegreesAngle(angleDeg));
+        this.setStrains();
+    }
     
     public void tentativeDeformationSetToCompression(double compressionFactorX,double compressionFactorY,boolean isInXDirection) {
         if (compressionFactorX < .01) { compressionFactorX = .01; }
